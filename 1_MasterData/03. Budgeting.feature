@@ -118,9 +118,7 @@ Scenario: 00.02 Configuring the information base
 				And I wait "IFRS settings *" window closing in 20 seconds
 			Else
 				And I execute 1C:Enterprise script at server no context
-				"""bsl
-					Константы.ВалютаУправленческогоУчета.Установить(Справочники.Валюты.НайтиПоКоду("643"));
-				"""	
+					| 'Constants.ManagementAccountingCurrency.Set(Catalogs.Currencies.FindByCode("643"));' |
 		If '$$IsERPCPM$$' Then
 			And In the command interface I select "Reference data and administration" "Company"
 			Then "Company" window is opened
@@ -132,7 +130,7 @@ Scenario: 00.02 Configuring the information base
 			And I close "Enterprise" window
 
 	If '$$IsPerform$$' Then
-		И Я создаю страну с кодом1 '643' кодом2 'RU' кодом3 'RUS' именем1 "РОССИЯ" именем2 "Российская Федерация" именем3 "The Russian Federation" если ее нет в 1C:CPMWE
+		And I create a country with code1 '643' code2 'RU' code3 'RUS' name1 "RUSSIA" name2 "Russian Federation" name3 "The Russian Federation" if it does not exist in 1C:CPMWE
 
 	* Disabling news functionality
 		If '$$IsERPCPM$$' Then
@@ -312,47 +310,57 @@ Scenario: 00.12 Creating reporting preparation regulation
 
 	* Setting currency, if necessary
 		If 'GroupStructure' table contains line Then
-			| "Консолидирующая организация\n/ Организационная единица" | "Intercompany transactions exclusion method" | "Основная валюта" | "Company status for consolidation" | "Effective share, %" |
-			| "System LLC"                                            | '- '                   | ''                | "Group"             | '- '                  |
+			| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
+			| "System LLC"                                            | '- '                   | "Group"             | '- '                  |
 			And I go to line in 'GroupStructure' table:
-				| "Консолидирующая организация\n/ Организационная единица" | "Intercompany transactions exclusion method" | "Основная валюта" | "Company status for consolidation" | "Effective share, %" |
-				| "System LLC"                                            | '- '                   | ''                | "Group"             | '- '                  |
+				| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
+				| "System LLC"                                            | '- '                   | "Group"             | '- '                  |
 			And I activate field named 'GroupStructureCurrency' in 'GroupStructure' table
 			And I select current line in 'GroupStructure' table
 			And I select 'RUB' exact value from the drop-down list named 'GroupStructureCurrency' in 'GroupStructure' table
 		If 'GroupStructure' table contains line Then
-			| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Основная валюта" | "Effective share, %" |
+			| "Company kind" | "Consolidating company\n/ Business unit" | "Effective share, %" |
+			| "VA - Package CFR"  | "Mercury LLC"                                           | '100.000'             |
+			And I go to line in 'GroupStructure' table:
+				| "Company kind" | "Consolidating company\n/ Business unit" | "Effective share, %" |
+				| "VA - Package CFR"  | "Mercury LLC"                                           | '100.000'             |
+			And I activate field named 'GroupStructureCurrency' in 'GroupStructure' table
+			And I select current line in 'GroupStructure' table
+			And I select 'RUB' exact value from the drop-down list named 'GroupStructureCurrency' in 'GroupStructure' table
+		If 'GroupStructure' table contains line Then
+			| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
 			| "Venus LLC"                                             | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
 			And I go to line in 'GroupStructure' table:
-				| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Основная валюта" | "Effective share, %" |
+				| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
 				| "Venus LLC"                                             | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
 			And I activate field named 'GroupStructureCurrency' in 'GroupStructure' table
 			And I select current line in 'GroupStructure' table
 			And I select 'RUB' exact value from the drop-down list named 'GroupStructureCurrency' in 'GroupStructure' table
 		If 'GroupStructure' table contains line Then
-			| "Консолидирующая организация\n/ Организационная единица" | "Основная валюта" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
-			| "Венера ООО"                                             | ''                | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
+			| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
+			| "Earth LLC"                                              | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
 			And I go to line in 'GroupStructure' table:
-				| "Консолидирующая организация\n/ Организационная единица" | "Основная валюта" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
-				| "Венера ООО"                                             | ''                | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
+				| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
+				| "Earth LLC"                                              | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
 			And I activate field named 'GroupStructureCurrency' in 'GroupStructure' table
 			And I select current line in 'GroupStructure' table
 			And I select 'RUB' exact value from the drop-down list named 'GroupStructureCurrency' in 'GroupStructure' table
 		If 'GroupStructure' table contains line Then
-			| "Консолидирующая организация\n/ Организационная единица" | "Основная валюта" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
-			| "Земля ООО"                                              | ''                | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
+			| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
+			| "Mars LLC"                                               | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
 			And I go to line in 'GroupStructure' table:
-				| "Консолидирующая организация\n/ Организационная единица" | "Основная валюта" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
-				| "Земля ООО"                                              | ''                | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
+				| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Company status for consolidation" | "Effective share, %" |
+				| "Mars LLC"                                               | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
 			And I activate field named 'GroupStructureCurrency' in 'GroupStructure' table
 			And I select current line in 'GroupStructure' table
 			And I select 'RUB' exact value from the drop-down list named 'GroupStructureCurrency' in 'GroupStructure' table
+
 		If 'GroupStructure' table contains line Then
-			| "Консолидирующая организация\n/ Организационная единица" | "Основная валюта" | "Метод исключения ВГО" | "Отношение к Группе" | "Эффективная доля, %" |
-			| "Mars LLC"                                               | ''                | "ЦФО"                  | "ЦФО"                | '100'                 |
+			| "Consolidating company\n/ Business unit" |
+			| "Mars LLC"                                |
 			And I go to line in 'GroupStructure' table:
-				| "Консолидирующая организация\n/ Организационная единица" | "Основная валюта" | "Метод исключения ВГО" | "Отношение к Группе" | "Эффективная доля, %" |
-				| "Mars LLC"                                               | ''                | "ЦФО"                  | "ЦФО"                | '100'                 |
+				| "Consolidating company\n/ Business unit" |
+				| "Mars LLC"                                |
 			And I activate field named 'GroupStructureCurrency' in 'GroupStructure' table
 			And I select current line in 'GroupStructure' table
 			And I select 'RUB' exact value from the drop-down list named 'GroupStructureCurrency' in 'GroupStructure' table
@@ -829,7 +837,7 @@ Scenario: 00.19 Setting nomenclature prices
 			And in the table 'TreePrices' I click the button named 'TreePricesAddNomenclature'
 			And I select "1C:ERP. Corporate performance management" by string from the drop-down list named 'TreePriceProductRange' in 'TreePrice' table
 			And I input '1,950,000.00' text in the field named 'TreePricesTypePrice*' of 'TreePrices' table
-			Если элемент 'НомерВПределахДня' присутствует на форме Тогда
+			If the field named 'NumberInDayLimits' exists on the form Then
 				And I input '1' text in the field named 'NumberWithinDay'
 			And I click the button named 'FormPostAndClose'
 			And I wait "Setting product range prices (creation) *" window closing in 20 seconds
@@ -876,7 +884,7 @@ Scenario: 00.19 Setting nomenclature prices
 			And I finish line editing in 'PriceKinds' table
 			And I click the button named 'OK'
 			Then "Setting nomenclature prices (creation) *" window is opened
-			Если элемент 'НомерВПределахДня' присутствует на форме Тогда	
+			If the field named 'NumberInDayLimits' exists on the form Then
 				And I input '1' text in the field named 'NumberWithinDay'
 			And I click the button named 'FormPostAndClose'
 			And I wait "Setting product range prices (creation) *" window closing in 20 seconds
@@ -893,7 +901,7 @@ Scenario: 00.19 Setting nomenclature prices
 			When "Change to percent" window is opened
 			And I click the button named 'OK'
 			Then "Setting nomenclature prices (creation) *" window is opened
-			Если элемент 'НомерВПределахДня' присутствует на форме Тогда	
+			If the field named 'NumberInDayLimits' exists on the form Then
 				And I input '1' text in the field named 'NumberWithinDay'
 			And I click the button named 'FormPostAndClose'
 			And I wait "Setting product range prices (creation) *" window closing in 20 seconds
@@ -920,29 +928,29 @@ Scenario: 00.20 Creating counterparties and counterparty contracts
 
 		And I create counterparty group with name "VA - Counterparties"
 
-		И Я создаю контрагента с именем "ООО \"Ганимед\"" родителем "ВА - Контрагенты" страной регистрации '643'
+		And I create counterparty with name "LLC \"Ganymede\"" parent "VA - Counterparties" registration country '643'
 		And I create contract for counterparty "LLC \"Ganymede\"" number "Ganymede-001" date '1/1/2024' currency 'RUB' company "Mercury LLC" kind "With customer" sum '10,000.00' payment terms "VA - Agreement with customer"
 		And I create contract for counterparty "LLC \"Ganymede\"" number "Ganymede-002" date '1/1/2024' currency 'RUB' company "Mercury LLC" kind "With supplier" sum '20,000.00' payment terms "VA - Agreement with customer"
 		
-		И Я создаю контрагента с именем "ООО \"Ио\"" родителем "ВА - Контрагенты" страной регистрации '643'
+		And I create counterparty with name "LLC \"Io\"" parent "VA - Counterparties" registration country '643'
 		And I create contract for counterparty "LLC \"Io\"" number "Io-001" date '1/1/2024' currency 'RUB' company "Mercury LLC" kind "With customer" sum '10,000.00' payment terms "VA - Agreement with customer"
 		And I create contract for counterparty "LLC \"Io\"" number "Io-002" date '1/1/2024' currency 'RUB' company "Mercury LLC" kind "With customer" sum '20,000.00' payment terms "VA - Agreement with customer"
 		
 	If '$$IsERPCPM$$' Then
 
-		И Я создаю партнера с именем "ООО \"Ганимед\"" тип 'Client' в 1C:ERPУХ
+		And I create a partner with name "LLC \"Ganymede\"" type 'Client' in 1C:ERP_UH
 
-		И Я создаю соглашение с клиентом с именем "VA - Agreement with customer" валютой 'RUB' в 1C:ERPУХ	
+		And I create an agreement with a client with name "VA - Agreement with customer" currency 'RUB' in 1C:ERP_UH
 
-		И Для партнера "ООО \"Ганимед\"" я создаю контрагента с именем "ООО \"Ганимед\"" вид 'Legal entity' в 1C:ERPУХ
+		And For partner "LLC \"Ganymede\"" I create a counterparty with name "LLC \"Ganymede\"" type 'Legal entity' in 1C:ERP_UH
 		And For partner "LLC \"Ganymede\"" counterparty "LLC \"Ganymede\"" I create a contract with type "With customer" number "Ganymede-001" from '1/1/2024' company "Mercury LLC" currency 'RUB' amount '10,000.00' agreement "VA - Agreement with customer" in 1C:ERP_UH
 		And For partner "LLC \"Ganymede\"" counterparty "LLC \"Ganymede\"" I create a contract with type "With customer" number "Ganymede-002" from '1/1/2024' company "Mercury LLC" currency 'RUB' amount '20,000.00' agreement "VA - Agreement with customer" in 1C:ERP_UH
 
-		И Я создаю партнера с именем "ООО \"Ио\"" тип 'Supplier' в 1C:ERPУХ
+		And I create a partner with name "LLC \"Io\"" type 'Supplier' in 1C:ERP_UH
 
-		И Я создаю соглашение с поставщиком "ООО \"Ио\"" с именем "ВА - Соглашение с поставщиком" валютой 'RUB' в 1C:ERPУХ
+		And I create an agreement with a supplier "LLC \"Io\"" with name "VA - Agreement with supplier" currency 'RUB' in 1C:ERP_UH
 
-		И Для партнера "ООО \"Ио\"" я создаю контрагента с именем "ООО \"Ио\"" вид 'Legal entity' в 1C:ERPУХ
+		And For partner "LLC \"Io\"" I create a counterparty with name "LLC \"Io\"" type 'Legal entity' in 1C:ERP_UH
 		And For partner "LLC \"Io\"" counterparty "LLC \"Io\"" I create a contract with type "With supplier" number "Io-001" from '1/1/2024' company "Mercury LLC" currency 'RUB' amount '10,000.00' agreement "VA - Agreement with supplier" in 1C:ERP_UH
 		And For partner "LLC \"Io\"" counterparty "LLC \"Io\"" I create a contract with type "With supplier" number 'Io-002' from '1/1/2024' company "Mercury LLC" currency 'RUB' amount '20,000.00' agreement "VA - Agreement with supplier" in 1C:ERP_UH
 
@@ -988,7 +996,7 @@ Scenario: 00.23 Creating document "Reflection of actual data"
 				If '$$IsERPCPM$$' Then
 					And I select "Description" exact value from the drop-down list named 'FieldSelector'
 				And I change the radio button named 'CompareType' value to "Exact match"
-				И в поле с именем 'Pattern' я ввожу текст "ООО \"Ганимед\""
+				And I input "LLC \"Ganymede\"" text in the field named 'Pattern'
 				And I click the button named 'Find'
 				Then "Counterparties*" window is opened
 				And I select current line in 'List' table
@@ -1059,7 +1067,7 @@ Scenario: 00.23 Creating document "Reflection of actual data"
 			And I select context menu item named 'ListContextMenuCopy' of the form attribute named 'List'
 			Then "Reflection of actual data (Creating)" window is opened
 			And I input '01.02.2024  0:00:00' text in the field named 'Date'
-			И из выпадающего списка с именем 'Counterparty' я выбираю по строке "ООО \"Ио\""				
+			And I select from the drop-down list named 'Counterparty'  by "LLC \"Io\"" string
 
 			* Cash flow budget
 				And I move to the tab named 'GroupCFB'

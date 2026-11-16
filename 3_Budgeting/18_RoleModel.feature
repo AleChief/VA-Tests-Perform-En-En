@@ -1143,9 +1143,9 @@ Scenario: 18.23 Interface test for user "Budgeting1" - Report types, report inst
 		And I click the button named 'FormCommonCommandUniversalApproval_AcceptForApproval'
 		And I click the button named 'BatchEditAttributes'
 		Then in the TestClient message log contains lines by template:
-			|"No person responsible for approval is specified in the responsibility assignment matrix for *. Enter proper approval status manually."|
-			|"Approval has not been initiated for object *."|
 			|"Person responsible for approval of the * object is not specified in the responsibility assignment matrix. The Status field is available for editing. Set the required approval status manually"|
+			|"Approval has not been initiated for object *."|
+			|"No person responsible for approval is specified in the responsibility assignment matrix for *. Enter proper approval status manually."|
 			|"Current user does not have the \"Superuser\" role for company \"Mercury LLC\""|
 		And I click the button named 'FormCommonCommandUniversalApproval_ApprovalRoute'
 		Then "Process management console" window is opened
@@ -1444,7 +1444,7 @@ Scenario: 18.29 Interface test for user "Budgeting1" - Companies
 			| "Mercury LLC" | "Russian tax resident" |
 		And I select current line in 'List' table
 
-		Then "Mercury LLC (Company)" window is opened
+		Then "Mercury LLC (Business unit)" window is opened
 		And In this window I click command interface button "Authorized signatories"
 		And In this window I click command interface button "Bank accounts"
 		And In this window I click command interface button "Company cash registers"
@@ -1452,7 +1452,7 @@ Scenario: 18.29 Interface test for user "Budgeting1" - Companies
 		// TO DO: Currently not working
 		//And In the current window I press the command interface button "Accounting policy settings"
 		And In this window I click command interface button "Stored files of business units"
-		And I close "Mercury LLC (Company)" window
+		And I close "Mercury LLC (Business unit)" window
 
 	ElseIf '$$IsCPM$$' Then
 

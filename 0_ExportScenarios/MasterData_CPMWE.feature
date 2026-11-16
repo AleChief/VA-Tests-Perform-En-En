@@ -5,7 +5,7 @@
 
 Feature: Export scenarios for creating reference data in 1C:CPMWE
 
-Сценарий: Я создаю страну с кодом1 'ТекКодСтраны1' кодом2 'ТекКодСтраны2' кодом3 'ТекКодСтраны3' именем1 'ТекИмяСтраны1' именем2 'ТекИмяСтраны2' именем3 'ТекИмяСтраны3' если ее нет в 1C:CPMWE
+Scenario: I create a country with code1 'TextCountryCode1' code2 'TextCountryCode2' code3 'TextCountryCode3' name1 'TextCountryName1' name2 'TextCountryName2' name3 'TextCountryName3' if it does not exist in 1C:CPMWE
 
 	* Opening a reference form
 		And I open 'WorldCountries' catalog default form
@@ -41,7 +41,7 @@ Feature: Export scenarios for creating reference data in 1C:CPMWE
 		When "Countries" window is opened
 		And I close "Countries" window
 
-Сценарий: Я устанавливаю цену с типом 'ТекТипЦены' номенклатуры 'ТекИмяНоменклатуры' на дату 'ТекДатаКурса' в значение 'ТекЗначение' 'ТекВалюта' в 1C:CPMWE
+Scenario: I set a price with type 'TextPriceType' for nomenclature 'TextNomenclatureName' on date 'TextDateOfCourse' to value 'TextValue' 'TextCurrency' in 1C:CPMWE
 
 	* Opening a list
 		And In the command interface I select "Quick menu" "Product range"

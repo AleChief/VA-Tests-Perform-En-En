@@ -59,8 +59,10 @@ Scenario: 19.04 Creating external information base "VA - ProcessImportPrice"
 	* Testing the name mask mechanism
 		And I click the button named 'NameStructureAdd'
 		And I select "Report type" exact value from the drop-down list named 'NameStructureItem' in 'NameStructure' table
+		And I finish line editing in 'NameStructure' table
 		And I select "+" exact value from the drop-down list named 'NameStructureStartElement' in 'NameStructure' table
 		And I select "Company" exact value from the drop-down list named 'NameStructureItem' in 'NameStructure' table
+		And I finish line editing in 'NameStructure' table
 		And I cancel line editing in 'NameStructure' table
 		Then the form attribute named 'FullNameMask' became equal to "$ProjectPath$\3_Budgeting\Layouts\19\<Report type>+<Company>.xls?"
 
@@ -260,13 +262,8 @@ Scenario: 19.09 Configuring reporting preparation process
 			And in the table 'BusinessUnitsFilterDCSSettingsFilter' I click the button named 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
 			And I select "Business unit" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterLeftValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			And I select "In list" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterComparisonType' in 'BusinessUnitsFilterDCSSettingsFilter' table
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю кнопку выбора у реквизита с именем 'BusinessUnitsFilterDCSSettingsFilterRightValue'
-			Тогда открылось окно "Value list"
-			И я нажимаю на кнопку с именем 'Add'
 			And I select 'Mercury LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
-			И я нажимаю на кнопку с именем 'Add'
 			And I select 'Venus LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
-			И я нажимаю на кнопку с именем 'OK'
 			Then "Step of report preparation process (Universal process step) *" window is opened
 		* Regulation settings
 			And I move to the tab named 'Page_RegulationSettings'
@@ -329,13 +326,8 @@ Scenario: 19.09 Configuring reporting preparation process
 			And in the table 'BusinessUnitsFilterDCSSettingsFilter' I click the button named 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
 			And I select "Business unit" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterLeftValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			And I select "In list" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterComparisonType' in 'BusinessUnitsFilterDCSSettingsFilter' table
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю кнопку выбора у реквизита с именем 'BusinessUnitsFilterDCSSettingsFilterRightValue'
-			Тогда открылось окно "Value list"
-			И я нажимаю на кнопку с именем 'Add'
 			And I select 'Mercury LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
-			И я нажимаю на кнопку с именем 'Add'
 			And I select 'Venus LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
-			И я нажимаю на кнопку с именем 'OK'
 			Then "Step of report preparation process (Universal process step) *" window is opened
 		* Regulation settings
 			And I move to the tab named 'Page_RegulationSettings'
@@ -371,7 +363,7 @@ Scenario: 19.09 Configuring reporting preparation process
 				And I wait "Settings of document template processing *" window closing in 20 seconds
 			* Venus
 				When "Document processing setting" window is opened
-				And in 'Result' spreadsheet document I move to "R5C3" cell
+				And in 'Result' spreadsheet document I move to "R5C7" cell
 				And in 'Result' spreadsheet document I double-click the current cell
 				Then "Settings of document template processing" window is opened
 				And I select "Import" exact value from the drop-down list named 'ReportGenerationMethod'
@@ -400,13 +392,8 @@ Scenario: 19.09 Configuring reporting preparation process
 			And in the table 'BusinessUnitsFilterDCSSettingsFilter' I click the button named 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
 			And I select "Business unit" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterLeftValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			And I select "In list" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterComparisonType' in 'BusinessUnitsFilterDCSSettingsFilter' table
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю кнопку выбора у реквизита с именем 'BusinessUnitsFilterDCSSettingsFilterRightValue'
-			Тогда открылось окно "Value list"
-			И я нажимаю на кнопку с именем 'Add'
 			And I select 'Mercury LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
-			И я нажимаю на кнопку с именем 'Add'
 			And I select 'Venus LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
-			И я нажимаю на кнопку с именем 'OK'
 			Then "Step of report preparation process (Universal process step) *" window is opened
 		* Saving
 			And I click the button named 'FormWriteAndClose'
@@ -435,7 +422,7 @@ Scenario: 19.09 Configuring reporting preparation process
 			And I click the button named 'DocumentProcessingSettings'
 			Then "Document processing setting" window is opened
 			* System
-				And in 'Result' spreadsheet document I move to "R5C7" cell
+				And in 'Result' spreadsheet document I move to "R5C6" cell
 				And in 'Result' spreadsheet document I double-click the current cell
 				Then "Settings of document template processing" window is opened
 				And drop-down list named 'ReportGenerationMethod' is equal to:

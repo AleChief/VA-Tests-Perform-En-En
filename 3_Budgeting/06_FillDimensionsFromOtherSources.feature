@@ -536,7 +536,7 @@ Scenario: 06.06 Checking for recursive nesting of dimension extension
 		* Receiving an error message
 			Then "1C:Enterprise" window is opened
 			And I click the button named 'OK'
-			Затем я жду, что в сообщениях пользователю будет подстрока "Data source used to add data to dimensions cannot contain dimension filling method \"Another source field\"." в течение 30 секунд
+			Then I wait that in user messages the "Data source used to add data to dimensions cannot contain dimension filling method \"Another source field\"." substring will appear in "30" seconds
 
 	* Closing all windows
 		When "Data source (create)*" window is opened

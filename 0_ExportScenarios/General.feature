@@ -13,10 +13,7 @@ Scenario: I initialize variables
 			
 	And I save '?(CommonClientServerCPM.ConfigurationName() = "HoldingManagementERP", "True", "False")' in '$$IsERPCPM$$' variable
 
-	Если в панели разделов есть команда 'Бюджетирование, отчетность и анализ' Тогда
-		И Я запоминаю значение выражения 'Ru' в переменную '$$ЯзыкИнтерфейса$$'
-	ИначеЕсли в панели разделов есть команда 'Budgeting, reporting, and analysis' Тогда
-		И Я запоминаю значение выражения 'En' в переменную '$$ЯзыкИнтерфейса$$'
+	And I save 'En' in '$$LanguageInterface$$' variable
 		
 Scenario: I check table 'TheTable' contains 'TheNumberOfLines' rows from list:
 

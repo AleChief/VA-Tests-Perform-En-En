@@ -157,7 +157,7 @@ Scenario: I set link to indicator with code 'TheIndicatorCode' of report type 'T
 	When "Report indicators" window is opened
 	And I click Choice button of the field named 'ReportKind'
 	Then "Report types" window is opened
-	And I click the button named 'Find'
+	And I click the button named 'FormFind'
 	Then "Find" window is opened
 	And I select "Description" exact value from the drop-down list named 'FieldSelector'
 	And I change the radio button named 'CompareType' value to "Exact match"
