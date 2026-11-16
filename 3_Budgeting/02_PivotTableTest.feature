@@ -1045,9 +1045,9 @@ Scenario: 02.11 Checking pivot table
 		And I click choice button of the attribute named 'FiltersSettingsFilterValue' in 'FiltersSettings' table
 		Then "Value list" window is opened
 		And I click the button named 'Add'
-		And I select "1C:ERP. Corporate performance management" exact value from the drop-down list named 'value' in 'ValueList' table
+		And I select "1C:ERP. Corporate performance management" by string from the drop-down list named "Value" in "ValueList" table
 		And I click the button named 'Add'
-		And I select "5C:Corporate performance management" exact value from the drop-down list named 'value' in 'ValueList' table
+		And I select "5C:Corporate performance management" by string from the drop-down list named "Value" in "ValueList" table
 		And I click the button named 'OK'
 		Then '$WindowTitle$' window is opened
 		And I finish line editing in 'FiltersSettings' table
