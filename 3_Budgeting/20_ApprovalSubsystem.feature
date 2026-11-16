@@ -1,522 +1,522 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 20. Тестирование подсистемы согласования
+Feature: 20. Testing the approval subsystem
 
-	Как Администратор я хочу
-	Протестировать подсистему согласования 
-	чтобы исключить ошибки при разработке   
+	As Administrator I want to
+	Test the approval subsystem
+	To eliminate errors during development
 
-Контекст:
+Background:
 
-	И я закрыл все окна клиентского приложения
+	And I close all client application windows
 
-Сценарий: 20.00 Определение типа приложения
+Scenario: 20.00 Determining the application type
 	
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 20.01 Создание ролей
+Scenario: 20.01 Creating roles
 
-	* Создать роли и добавить их в матрицу адресации
-		И Я создаю роль контактных лиц "VA - Addressing by Role"
-		И Я создаю роль контактных лиц "VA - The role of extended addressing"
+	* Create roles and add them to the addressing matrix
+		And I create contact persons role "VA - Addressing by Role"
+		And I create contact persons role "VA - The role of extended addressing"
 
-		И Я создаю элемент расширенной адресации "VA - Extended Addressing" роль "VA - The role of extended addressing"
+		And I create extended addressing element "VA - Extended Addressing" role "VA - The role of extended addressing"
 
-		И Я добавляю строку в матрицу адресации роль "VA - Addressing by Role" пользователь "Budgeting2"
-		И Я добавляю строку в матрицу адресации роль "VA - The role of extended addressing" пользователь "Budgeting3"
+		And I add row to addressing matrix role "VA - Addressing by Role" user "Budgeting2"
+		And I add row to addressing matrix role "VA - The role of extended addressing" user "Budgeting3"
 
-	* Создать роль Суперпользователя
-		И Я создаю роль контактных лиц "Superuser"
+	* Create the Superuser role
+		And I create contact persons role "Superuser"
 
-		И В командном интерфейсе я выбираю "General catalogs and settings" "General settings"
-		Тогда открылось окно "General settings*"
-		И я нажимаю кнопку выбора у поля с именем 'RoleSuperUser'
-		И Я в списке "Contact person roles" по полю "Description" ищу и выбираю элемент "Superuser" "Exact match"
-		Тогда открылось окно "General settings *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "General settings *" в течение 20 секунд
+		And In the command interface I select "General catalogs and settings" "General settings"
+		Then "General settings*" window is opened
+		And I click Choice button of the field named 'RoleSuperUser'
+		And I search and select element "Superuser" "Exact match" by field "Description" in list "Contact person roles"
+		Then "General settings *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "General settings *" window closing in 20 seconds
 		
-		И Я добавляю строку в матрицу адресации роль "Superuser" пользователь "Administrator"
-		И Я добавляю строку в матрицу адресации роль "Superuser" пользователь "Budgeting4"
+		And I add row to addressing matrix role "Superuser" user "Administrator"
+		And I add row to addressing matrix role "Superuser" user "Budgeting4"
 
-Сценарий: 20.02 Настройка документа ИБ	
+Scenario: 20.02 Configuring the security document
 
-	И В командном интерфейсе я выбираю "General catalogs and settings" "Documents"
+	And In the command interface I select "General catalogs and settings" "Documents"
 	
-	Тогда открылось окно "Current infobase documents"
-	И в таблице 'List' я нажимаю на кнопку с именем 'ListFind'
-	Тогда открылось окно "Find"
-	И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Document"
-	И я меняю значение переключателя с именем 'CompareType' на "Anywhere in the line"
-	И в поле с именем 'Pattern' я ввожу текст "Report instance"
+	Then "Current infobase documents" window is opened
+	And in the table 'List' I click the button named 'ListFind'
+	Then "Find" window is opened
+	And I select "Document" exact value from the drop-down list named 'FieldSelector'
+	And I change the radio button named 'CompareType' value to "Anywhere in the line"
+	And I input "Report instance" text in the field named 'Pattern'
 
-	И я нажимаю на кнопку с именем 'Find'
-	Тогда открылось окно "Current infobase documents"
-	И я жду, что в таблице 'List' количество строк будет "равно" 1 в течение 20 секунд
-	И в таблице 'List' я выбираю текущую строку
+	And I click the button named 'Find'
+	Then "Current infobase documents" window is opened
+	And I wait that in 'List' table number of lines will be "equal" 1 for 20 seconds
+	And I select current line in 'List' table
 
-	Тогда открылось окно "Report instance (Infobase document)"
-	И я перехожу к закладке с именем 'ApprovalGroup'
-	И я устанавливаю флаг с именем 'ShouldDivideByCompanies'
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
-	И я жду закрытия окна "Report instance (Infobase document) *" в течение 20 секунд
-	Тогда открылось окно "Current infobase documents"
-	И Я закрываю окно "Current infobase documents"
+	Then "Report instance (Infobase document)" window is opened
+	And I move to the tab named 'ApprovalGroup'
+	And I set checkbox named 'ShouldDivideByCompanies'
+	And I click the button named 'FormWriteAndClose'
+	And I wait "Report instance (Infobase document) *" window closing in 20 seconds
+	Then "Current infobase documents" window is opened
+	And I close "Current infobase documents" window
 
-Сценарий: 20.03 Создание вида отчета
+Scenario: 20.03 Creating a report type
 
-	* Создаем вид отчета
-		И Я создаю вид отчета с именем "VA - Coordination" и родителем "VA - Report group"
+	* Creating a report type
+		And I create report type with name "VA - Coordination" and parent "VA - Report group"
 
-	* Настраиваем структуру
-		И я открываю контруктор отчета с именем "VA - Coordination"
-		И Я в конструкторе отчета добавляю строки
+	* Configuring structure
+		And I open report wizard with name "VA - Coordination"
+		And I add rows in report wizard
 			| "Description" |
 			| "Line 1"     |
 			| "Line 2"     |
 			| "Line 3"     |
-		И Я в конструкторе отчета добавляю колонки
+		And I add columns in report wizard
 			| "Description" |
 			| "Count"   |
 			| "Price"         |
 			| "Amount"        |
 
-	* Настраиваем формулы
-		И Я в конструкторе отчета для ячейки 'R2C4' задаю формулу произведение ячеек 'R2C2' 'R2C3'
-		И Я в конструкторе отчета для ячейки 'R3C4' задаю формулу произведение ячеек 'R3C2' 'R3C3'
-		И Я в конструкторе отчета для ячейки 'R4C4' задаю формулу произведение ячеек 'R4C2' 'R4C3'
+	* Configuring formulas
+		And I set product formula for cell 'R2C2' of cells 'R2C3' 'R2C4' in report wizard
+		And I set product formula for cell 'R3C2' of cells 'R3C3' 'R3C4' in report wizard
+		And I set product formula for cell 'R4C2' of cells 'R4C3' 'R4C4' in report wizard
 
-	* Закрываем конструктор
-		Когда открылось окно "Report wizard"
-		И Я закрываю окно "Report wizard"
+	* Closing report wizard
+		When "Report wizard" window is opened
+		And I close "Report wizard" window
 		
-	* Создаем бланк
-		И Я Для вида отчета "VA - Coordination" создаю бланк по умолчанию	
+	* Creating a template
+		And I create default template for report type "VA - Coordination"
 
-Сценарий: 20.04 Создание экземпляра отчета
+Scenario: 20.04 Creating a report instance
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Coordination" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Coordination" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 
-	И Я ввожу значение '3.00000' в ячейку 'R6C2'
-	И Я ввожу значение '4.00000' в ячейку 'R7C2'
-	И Я ввожу значение '5.00000' в ячейку 'R8C2'
-	И Я ввожу значение '100.00000' в ячейку 'R6C3'
-	И Я ввожу значение '200.00000' в ячейку 'R7C3'
-	И Я ввожу значение '300.00000' в ячейку 'R8C3'
+	And I enter value '3.00000' in cell 'R6C2'
+	And I enter value '4.00000' in cell 'R7C2'
+	And I enter value '5.00000' in cell 'R8C2'
+	And I enter value '100.00000' in cell 'R6C3'
+	And I enter value '200.00000' in cell 'R7C3'
+	And I enter value '300.00000' in cell 'R8C3'
 
-	Когда открылось окно '$WindowTitle$'
-	И я нажимаю на кнопку с именем 'WriteAndClose'
-	И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	When '$WindowTitle$' window is opened
+	And I click the button named 'WriteAndClose'
+	And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: 20.05 Создание шаблона процесса согласования
+Scenario: 20.05 Creating an approval process template
 
-	* Проверить наличие группы шаблонов
-		И В командном интерфейсе я выбираю "Processes and approval" "Process templates"
-		Тогда открылось окно "Universal process templates"
-		И Я в списке "Universal process templates" по полю "Description" ищу элемент "VA - Approval Process Group" "Exact match"
-		Если в таблице 'List' количество строк "=" 0 Тогда
-			И я нажимаю на кнопку с именем 'FormCancelSearch'
-			И я нажимаю на кнопку с именем 'FormCreateFolder'
-			Тогда открылось окно "Universal process templates (create folder)"
-			И в поле с именем 'Description' я ввожу текст "VA - Approval Process Group"
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "Universal process templates (create folder) *" в течение 20 секунд
+	* Check for the presence of a template group
+		And In the command interface I select "Processes and approval" "Process templates"
+		Then "Universal process templates" window is opened
+		And I search element "VA - Approval Process Group" "Exact match" by field "Description" in list "Universal process templates"
+		If number of 'List' table lines is "=" 0 Then
+			And I click the button named 'FormCancelSearch'
+			And I click the button named 'FormCreateFolder'
+			Then "Universal process templates (create folder)" window is opened
+			And I input "VA - Approval Process Group" text in the field named 'Description'
+			And I click the button named 'FormWriteAndClose'
+			And I wait "Universal process templates (create folder) *" window closing in 20 seconds
 
-	* Удаляем существующие шаблоны
-		Тогда открылось окно "Universal process templates"
-		И Я в списке "Universal process templates" по полю "Description" ищу элемент "VA - Approval Process Template" "Exact match"
-		И пока в таблице 'List' количество строк ">" 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Editing process stages: VA - Approval Process Template"
-			И я нажимаю на кнопку с именем 'FormOpenProcessProperties'
-			Тогда открылось окно "VA - Approval Process Template (Universal process template)"
-			И Я запоминаю значение выражения '"DimenKind - (удалить) " + StrReplace(New UUID, "-", "")' в переменную 'UID_Description'
-			И в поле с именем 'Description' я ввожу значение переменной 'UID_Description'
-			И я нажимаю на кнопку с именем 'FormWrite'
-			Тогда открылось окно "$UID_Description$ (Universal process template)"
-			И я нажимаю на кнопку с именем 'FormSetDeletionMark'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
-			Тогда открылось окно "$UID_Description$ (Universal process template)"
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "$UID_Description$ (Universal process template)" в течение 20 секунд
-			Тогда открылось окно "Editing process stages: VA - Approval Process Template"
-			И Я закрываю окно "Editing process stages: VA - Approval Process Template"
+	* Deleting existing templates
+		Then "Universal process templates" window is opened
+		And I search element "VA - Approval Process Template" "Exact match" by field "Description" in list "Universal process templates"
+		And While the number of 'List' table lines ">" 0 Then
+			And I select current line in 'List' table
+			Then "Editing process stages: VA - Approval Process Template" window is opened
+			And I click the button named 'FormOpenProcessProperties'
+			Then "VA - Approval Process Template (Universal process template)" window is opened
+			And I save '"VA - (delete) " + StrReplace(New UUID, "-", "")' in 'UID_Description' variable
+			And I input 'UID_Description' variable value in the field named 'Description'
+			And I click the button named 'FormWrite'
+			Then "$UID_Description$ (Universal process template)" window is opened
+			And I click the button named 'FormSetDeletionMark'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
+			Then "$UID_Description$ (Universal process template)" window is opened
+			And I click the button named 'FormWriteAndClose'
+			And I wait "$UID_Description$ (Universal process template)" window closing in 20 seconds
+			Then "Editing process stages: VA - Approval Process Template" window is opened
+			And I close "Editing process stages: VA - Approval Process Template" window
 
-	* Создаем шаблон
-		Тогда открылось окно "Universal process templates"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Universal process template (create)"
-		И в поле с именем 'Description' я ввожу текст "VA - Approval Process Template"
-		И из выпадающего списка с именем 'Parent' я выбираю по строке "VA - Approval Process Group"
-		И из выпадающего списка с именем 'ProcessPurpose' я выбираю точное значение "Approval route"
-		И из выпадающего списка с именем 'CatalogName' я выбираю точное значение "Current infobase document"
-		И я нажимаю кнопку выбора у поля с именем 'ApprovalObjectType'
-		И Я в списке "Infobase documents" по полю "Document" ищу и выбираю элемент "Report instance" "Anywhere in the line"
-		Тогда открылось окно "Universal process template (create) *"
-		И я нажимаю на кнопку с именем 'FormWrite'
-		Тогда открылось окно "Editing process stages: VA - Approval Process Template"
+	* Creating a template
+		Then "Universal process templates" window is opened
+		And I click the button named 'FormCreate'
+		Then "Universal process template (create)" window is opened
+		And I input "VA - Approval Process Template" text in the field named 'Description'
+		And I select from the drop-down list named 'Parent'  by "VA - Approval Process Group" string
+		And I select "Approval route" exact value from the drop-down list named 'ProcessPurpose'
+		And I select "Current infobase document" exact value from the drop-down list named 'CatalogName'
+		And I click Choice button of the field named 'ApprovalObjectType'
+		And I search and select element "Report instance" "Anywhere in the line" by field "Document" in list "Infobase documents"
+		Then "Universal process template (create) *" window is opened
+		And I click the button named 'FormWrite'
+		Then "Editing process stages: VA - Approval Process Template" window is opened
 
-	* Настраиваем схему процесса		
-		И Я добавляю этап согласования с наименованием "Approval step 1" способ адресации "User" пользователь "Budgeting1" роль '' расширенная адресация ''
-		И Я добавляю этап согласования с наименованием "Approval step 2" способ адресации "Role" пользователь "Budgeting2" роль "VA - Addressing by Role" расширенная адресация ''
-		И Я добавляю этап согласования с наименованием "Approval step 3" способ адресации "Extended addressing" пользователь "Budgeting3" роль '' расширенная адресация "VA - Extended Addressing"
-		И Я добавляю этап согласования с наименованием "Approval step 4" способ адресации "User" пользователь "Budgeting4" роль '' расширенная адресация ''
-		И Я добавляю этап согласования с наименованием "Approval step 5" способ адресации "Role" пользователь "Budgeting2" роль "VA - Addressing by Role" расширенная адресация ''
-		И Я добавляю этап согласования с наименованием "Approval step 6" способ адресации "Extended addressing" пользователь "Budgeting3" роль '' расширенная адресация "VA - Extended Addressing"
-		И Я добавляю этап согласования с наименованием "Approval step 7" способ адресации "User" пользователь "Budgeting4" роль '' расширенная адресация ''
-		И Я добавляю этап согласования с наименованием "Approval step 8" способ адресации "User" пользователь "Budgeting1" роль '' расширенная адресация ''
-		И Я добавляю этап согласования с наименованием "Approval step 9" способ адресации "User" пользователь "Budgeting1" роль '' расширенная адресация ''
+	* Configuring the process scheme
+		And I add approval step with name "Approval step 1" addressing method "User" user "Budgeting1" role '' extended addressing ''
+		And I add approval step with name "Approval step 2" addressing method "Role" user "Budgeting2" role "VA - Addressing by Role" extended addressing ''
+		And I add approval step with name "Approval step 3" addressing method "Extended addressing" user "Budgeting3" role '' extended addressing "VA - Extended Addressing"
+		And I add approval step with name "Approval step 4" addressing method "User" user "Budgeting4" role '' extended addressing ''
+		And I add approval step with name "Approval step 5" addressing method "Role" user "Budgeting2" role "VA - Addressing by Role" extended addressing ''
+		And I add approval step with name "Approval step 6" addressing method "Extended addressing" user "Budgeting3" role '' extended addressing "VA - Extended Addressing"
+		And I add approval step with name "Approval step 7" addressing method "User" user "Budgeting4" role '' extended addressing ''
+		And I add approval step with name "Approval step 8" addressing method "User" user "Budgeting1" role '' extended addressing ''
+		And I add approval step with name "Approval step 9" addressing method "User" user "Budgeting1" role '' extended addressing ''
 
-		И в табличном документе 'PossibleStepsTableBox' я перехожу к ячейке 'AutoConfirmation'
-		И я нажимаю на кнопку с именем 'AddSelectedStep'
-		Тогда открылось окно "Automatic document confirmation (Universal process step)"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Automatic document confirmation (Universal process step)" в течение 20 секунд
+		And in 'PossibleStepsTableBox' spreadsheet document I move to 'AutoConfirmation' cell
+		And I click the button named 'AddSelectedStep'
+		Then "Automatic document confirmation (Universal process step)" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Automatic document confirmation (Universal process step)" window closing in 20 seconds
 		
-		И в табличном документе 'PossibleStepsTableBox' я перехожу к ячейке 'ConditionalTransition'
-		И я нажимаю на кнопку с именем 'AddSelectedStep'
-		Тогда открылось окно "Conditional transition (Universal process step)"
-		И в поле с именем 'Description' я ввожу текст "Conditional transition 1"
-		И я нажимаю на кнопку с именем 'OpenConditionalTransitionSetting'
-		Тогда открылось окно "Conditional transition settings"
-		И в таблице 'FilterTree' я нажимаю на кнопку с именем 'FilterTreeAddDataSource'
-		Тогда открылось окно "Data source (create)"
-		И в поле с именем 'Description' я ввожу текст "Source 1"
-		И я нажимаю кнопку выбора у поля с именем 'ReportTypeFilter'
+		And in 'PossibleStepsTableBox' spreadsheet document I move to 'ConditionalTransition' cell
+		And I click the button named 'AddSelectedStep'
+		Then "Conditional transition (Universal process step)" window is opened
+		And I input "Conditional transition 1" text in the field named 'Description'
+		And I click the button named 'OpenConditionalTransitionSetting'
+		Then "Conditional transition settings" window is opened
+		And in the table 'FilterTree' I click the button named 'FilterTreeAddDataSource'
+		Then "Data source (create)" window is opened
+		And I input "Source 1" text in the field named 'Description'
+		And I click Choice button of the field named 'ReportTypeFilter'
 
-		И Я в списке "Report types" по полю "Description" ищу элемент "VA - Coordination" "Exact match"
-		И в таблице 'List' количество строк 'равно' 1
-		И в таблице 'List' я выбираю текущую строку
+		And I search element "VA - Coordination" "Exact match" by field "Description" in list "Report types"
+		And the number of 'List' table lines is 'equal' 1
+		And I select current line in 'List' table
 
-		Тогда открылось окно "Data source (create) *"
-		И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-		Тогда открылось окно "Report indicators"
-		И я меняю значение переключателя с именем 'IndicatorChoiceMode' на "Structure layout"				
-		И в табличном документе 'SpreadsheetDocSelectIndicator' я перехожу к ячейке "Line3_Amount"
-		И я нажимаю на кнопку с именем 'FormSelectItems'
-		Тогда открылось окно "Data source (create) *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-		Тогда открылось окно "Conditional transition settings *"
-		И в таблице 'TransitionTableBox' я нажимаю на кнопку с именем 'TransitionTableBoxAddCondition'
-		И в таблице 'FilterTree' я разворачиваю строку:
+		Then "Data source (create) *" window is opened
+		And I click Choice button of the field named 'IndicatorFilter'
+		Then "Report indicators" window is opened
+		And I change the radio button named 'IndicatorChoiceMode' value to "Structure layout"
+		And in 'SpreadsheetDocSelectIndicator' spreadsheet document I move to "Line3_Amount" cell
+		And I click the button named 'FormSelectItems'
+		Then "Data source (create) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Data source (create) *" window closing in 20 seconds
+		Then "Conditional transition settings *" window is opened
+		And in the table 'TransitionTableBox' I click the button named 'TransitionTableBoxAddCondition'
+		And I expand a line in 'FilterTree' table
 			| "Item"    |
 			| "Source 1" |
-		И в таблице 'FilterTree' я перехожу к строке:
+		And I go to line in 'FilterTree' table:
 			| "Item"                    |
 			| "Indicator: Line 3 amount" |
-		Когда открылось окно "Conditional transition settings *"
-		И в таблице 'FilterTree' я нажимаю на кнопку с именем 'TransferConditionItem'
-		Когда открылось окно "Conditional transition settings *"
-		И в таблице 'TransitionTableBox' я активизирую поле с именем 'TransitionTableBoxValue'
-		И в таблице 'TransitionTableBox' я выбираю текущую строку
-		И в таблице 'TransitionTableBox' из выпадающего списка с именем 'TransitionTableBoxValue' я выбираю точное значение "Equal to"
-		И в таблице 'TransitionTableBox' я активизирую поле с именем 'TransitionTableBoxFilterValue'
-		И в таблице 'TransitionTableBox' в поле с именем 'TransitionTableBoxFilterValue' я ввожу текст '1536.7852'
-		И в таблице 'TransitionTableBox' я завершаю редактирование строки
-		Когда открылось окно "Conditional transition settings *"
-		И в таблице 'TransitionTableBox' я перехожу к строке:
+		When "Conditional transition settings *" window is opened
+		And in the table 'FilterTree' I click the button named 'TransferConditionItem'
+		When "Conditional transition settings *" window is opened
+		And I activate field named 'TransitionTableBoxValue' in 'TransitionTableBox' table
+		And I select current line in 'TransitionTableBox' table
+		And I select "Equal to" exact value from the drop-down list named 'TransitionTableBoxValue' in 'TransitionTableBox' table
+		And I activate field named 'TransitionTableBoxFilterValue' in 'TransitionTableBox' table
+		And I input '1,536.7852' text in the field named 'TransitionTableBoxFilterValue' of 'TransitionTableBox' table
+		And I finish line editing in 'TransitionTableBox' table
+		When "Conditional transition settings *" window is opened
+		And I go to line in 'TransitionTableBox' table:
 			| "Action" |
 			| "Then"    |
-		И в таблице 'TransitionTableBox' я активизирую поле с именем 'TransitionTableBoxActionDisplayText'
-		И в таблице 'TransitionTableBox' я нажимаю на кнопку с именем 'TransitionTableBoxAddAction'
-		И в таблице 'TransitionTableBox' я активизирую поле с именем 'TransitionTableBoxValue'
-		И в таблице 'TransitionTableBox' я выбираю текущую строку
+		And I activate field named 'TransitionTableBoxActionDisplayText' in 'TransitionTableBox' table
+		And in the table 'TransitionTableBox' I click the button named 'TransitionTableBoxAddAction'
+		And I activate field named 'TransitionTableBoxValue' in 'TransitionTableBox' table
+		And I select current line in 'TransitionTableBox' table
 		
-		И Я в списке "Universal process steps" по полю "Description" ищу элемент "Approval step 2" "Exact match"
-		И в таблице 'List' количество строк 'равно' 1
-		И в таблице 'List' я выбираю текущую строку
+		And I search element "Approval step 2" "Exact match" by field "Description" in list "Universal process steps"
+		And the number of 'List' table lines is 'equal' 1
+		And I select current line in 'List' table
 
-		Тогда открылось окно "Conditional transition settings *"
-		И в таблице 'TransitionTableBox' я завершаю редактирование строки		
-		Когда открылось окно "Conditional transition settings *"
-		И в таблице 'TransitionTableBox' я перехожу к строке:
+		Then "Conditional transition settings *" window is opened
+		And I finish line editing in 'TransitionTableBox' table
+		When "Conditional transition settings *" window is opened
+		And I go to line in 'TransitionTableBox' table:
 			| "Action" |
 			| "Else"    |
-		И в таблице 'TransitionTableBox' я активизирую поле с именем 'TransitionTableBoxActionDisplayText'
-		И в таблице 'TransitionTableBox' я нажимаю на кнопку с именем 'TransitionTableBoxAddAction'
-		И в таблице 'TransitionTableBox' я активизирую поле с именем 'TransitionTableBoxValue'
-		И в таблице 'TransitionTableBox' я выбираю текущую строку
+		And I activate field named 'TransitionTableBoxActionDisplayText' in 'TransitionTableBox' table
+		And in the table 'TransitionTableBox' I click the button named 'TransitionTableBoxAddAction'
+		And I activate field named 'TransitionTableBoxValue' in 'TransitionTableBox' table
+		And I select current line in 'TransitionTableBox' table
 		
-		И Я в списке "Universal process steps" по полю "Description" ищу элемент "Approval step 5" "Exact match"
-		И в таблице 'List' количество строк 'равно' 1
-		И в таблице 'List' я выбираю текущую строку
+		And I search element "Approval step 5" "Exact match" by field "Description" in list "Universal process steps"
+		And the number of 'List' table lines is 'equal' 1
+		And I select current line in 'List' table
 
-		Тогда открылось окно "Conditional transition settings *"
-		И в таблице 'TransitionTableBox' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormApply'
-		Тогда открылось окно "Conditional transition (Universal process step) *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Conditional transition (Universal process step) *" в течение 20 секунд
+		Then "Conditional transition settings *" window is opened
+		And I finish line editing in 'TransitionTableBox' table
+		And I click the button named 'FormApply'
+		Then "Conditional transition (Universal process step) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Conditional transition (Universal process step) *" window closing in 20 seconds
 		
-		И Я добавляю связь этапа "Approval step 1" с этапом "Approval step 9"
-		И Я добавляю связь этапа "Approval step 9" с этапом "Approval step 8"
-		И Я добавляю связь этапа "Approval step 8" с этапом "Conditional transition 1"
-		И Я добавляю связь этапа "Approval step 2" с этапом "Approval step 3"
-		И Я добавляю связь этапа "Approval step 3" с этапом "Approval step 4"
-		И Я добавляю связь этапа "Approval step 4" с этапом "Automatic document confirmation"
-		И Я добавляю связь этапа "Approval step 5" с этапом "Approval step 6"
-		И Я добавляю связь этапа "Approval step 6" с этапом "Approval step 7"
-		И Я добавляю связь этапа "Approval step 7" с этапом "Automatic document confirmation"
+		And I add link from step "Approval step 1" to step "Approval step 9"
+		And I add link from step "Approval step 9" to step "Approval step 8"
+		And I add link from step "Approval step 8" to step "Conditional transition 1"
+		And I add link from step "Approval step 2" to step "Approval step 3"
+		And I add link from step "Approval step 3" to step "Approval step 4"
+		And I add link from step "Approval step 4" to step "Automatic document confirmation"
+		And I add link from step "Approval step 5" to step "Approval step 6"
+		And I add link from step "Approval step 6" to step "Approval step 7"
+		And I add link from step "Approval step 7" to step "Automatic document confirmation"
 
-		И Я закрываю окно "Editing process stages: VA - Approval Process Template"
-		Тогда открылось окно "VA - Approval Process Template (Universal process template)"
-		И в таблице 'ProcessParameters' я активизирую поле с именем 'ProcessParametersDefaultValue'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "VA - Approval Process Template (Universal process template)" в течение 20 секунд
+		And I close "Editing process stages: VA - Approval Process Template" window
+		Then "VA - Approval Process Template (Universal process template)" window is opened
+		And I activate field named 'ProcessParametersDefaultValue' in 'ProcessParameters' table
+		And I click the button named 'FormWriteAndClose'
+		And I wait "VA - Approval Process Template (Universal process template)" window closing in 20 seconds
 
-Сценарий: 20.06 Настройка матрицы полномочий
+Scenario: 20.06 Configuring the authority matrix
 	
-	И В командном интерфейсе я выбираю "Processes and approval" "Responsibility assignment matrix"
-	Тогда открылось окно "Responsibility assignment matrix"
-	И я нажимаю кнопку выбора у поля с именем 'DocumentTypeSelection'
-	И Я в списке "Infobase documents" по полю "Document" ищу и выбираю элемент "Report instance" "Anywhere in the line"
-	Тогда открылось окно "Responsibility assignment matrix"
-	И я нажимаю кнопку выбора у поля с именем 'RegulationVersion'
-	И Я в списке "Regulations for preparing reports" по полю "Description" ищу и выбираю элемент "VA - Main regulations" "Exact match"
+	And In the command interface I select "Processes and approval" "Responsibility assignment matrix"
+	Then "Responsibility assignment matrix" window is opened
+	And I click Choice button of the field named 'DocumentTypeSelection'
+	And I search and select element "Report instance" "Anywhere in the line" by field "Document" in list "Infobase documents"
+	Then "Responsibility assignment matrix" window is opened
+	And I click Choice button of the field named 'RegulationVersion'
+	And I search and select element "VA - Main regulations" "Exact match" by field "Description" in list "Regulations for preparing reports"
 	
-	Когда открылось окно "Responsibility assignment matrix"
-	И я перехожу к закладке с именем 'GroupList'
+	When "Responsibility assignment matrix" window is opened
+	And I move to the tab named 'GroupList'
 
-	* Удаляем существующие записи
-		И в таблице 'ResponsibilitiesRegister' я нажимаю на кнопку с именем 'ResponsibilitiesRegisterListSettings'	
-		Тогда открылось окно "List Options"
-		И я удаляю все строки таблицы 'SettingsComposerUserSettingsItem0Filter'
-		И в таблице 'SettingsComposerUserSettingsItem0Filter' я нажимаю на кнопку с именем 'SettingsComposerUserSettingsItem0FilterAddFilterItem'
-		И в таблице 'SettingsComposerUserSettingsItem0Filter' я перехожу к последней строке
-		И в таблице 'SettingsComposerUserSettingsItem0Filter' из выпадающего списка с именем 'SettingsComposerUserSettingsItem0FilterLeftValue' я выбираю точное значение "Database document template"
-		И в таблице 'SettingsComposerUserSettingsItem0Filter' я активизирую поле с именем 'SettingsComposerUserSettingsItem0FilterComparisonType'
-		И в таблице 'SettingsComposerUserSettingsItem0Filter' из выпадающего списка с именем 'SettingsComposerUserSettingsItem0FilterComparisonType' я выбираю точное значение "Equal to"
-		И в таблице 'SettingsComposerUserSettingsItem0Filter' я нажимаю кнопку выбора у реквизита с именем 'SettingsComposerUserSettingsItem0FilterRightValue'
-		Тогда открылось окно "Select data type"
-		И в таблице "" я перехожу к строке:
+	* Deleting existing records
+		And in the table 'ResponsibilitiesRegister' I click the button named 'ResponsibilitiesRegisterListSettings'
+		Then "List Options" window is opened
+		And I delete all lines of 'SettingsComposerUserSettingsItem0Filter' table
+		And in the table 'SettingsComposerUserSettingsItem0Filter' I click the button named 'SettingsComposerUserSettingsItem0FilterAddFilterItem'
+		And I go to the last line in 'SettingsComposerUserSettingsItem0Filter' table
+		And I select "Database document template" exact value from the drop-down list named 'SettingsComposerUserSettingsItem0FilterLeftValue' in 'SettingsComposerUserSettingsItem0Filter' table
+		And I activate field named 'SettingsComposerUserSettingsItem0FilterComparisonType' in 'SettingsComposerUserSettingsItem0Filter' table
+		And I select "Equal to" exact value from the drop-down list named 'SettingsComposerUserSettingsItem0FilterComparisonType' in 'SettingsComposerUserSettingsItem0Filter' table
+		And I click choice button of the attribute named 'SettingsComposerUserSettingsItem0FilterRightValue' in 'SettingsComposerUserSettingsItem0Filter' table
+		Then "Select data type" window is opened
+		And I go to line in "" table:
 			| ''             |
 			| "Report types" |
-		И в таблице "" я выбираю текущую строку
-		И Я в списке "Report types" по полю "Description" ищу и выбираю элемент "VA - Coordination" "Exact match"
-		И я нажимаю на кнопку с именем 'FormEndEdit'
+		And I select current line in "" table
+		And I search and select element "VA - Coordination" "Exact match" by field "Description" in list "Report types"
+		And I click the button named 'FormEndEdit'
 
-		И Пока в таблице 'ResponsibilitiesRegister' количество строк ">" 0 Тогда
-			Когда открылось окно "Responsibility assignment matrix"
-			И в таблице 'ResponsibilitiesRegister' я нажимаю на кнопку с именем 'ResponsibilitiesRegisterDelete'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
+		And While the number of 'ResponsibilitiesRegister' table lines ">" 0 Then
+			When "Responsibility assignment matrix" window is opened
+			And in the table 'ResponsibilitiesRegister' I click the button named 'ResponsibilitiesRegisterDelete'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
 
-		Когда открылось окно "Responsibility assignment matrix"
-		И в таблице 'ResponsibilitiesRegister' я нажимаю на кнопку с именем 'ResponsibilitiesRegisterListSettings'
-		И Я снимаю все отборы в форме списка
+		When "Responsibility assignment matrix" window is opened
+		And in the table 'ResponsibilitiesRegister' I click the button named 'ResponsibilitiesRegisterListSettings'
+		And I remove all filters in list form
 			
-	* Создаем новый элемент
-		И в таблице 'ResponsibilitiesRegister' я нажимаю на кнопку с именем 'ResponsibilitiesRegisterCreate'
-		Тогда открылось окно "Register of responsibility assignment matrix (create)"
-		И я нажимаю кнопку выбора у поля с именем 'DBDocumentTemplate'
-		Тогда открылось окно "Select data type"
-		И в таблице "" я перехожу к строке:
+	* Creating a new element
+		And in the table 'ResponsibilitiesRegister' I click the button named 'ResponsibilitiesRegisterCreate'
+		Then "Register of responsibility assignment matrix (create)" window is opened
+		And I click Choice button of the field named 'DBDocumentTemplate'
+		Then "Select data type" window is opened
+		And I go to line in "" table:
 			| ''             |
 			| "Report types" |
-		И в таблице "" я выбираю текущую строку
-		И Я в списке "Report types" по полю "Description" ищу и выбираю элемент "VA - Coordination" "Exact match"
+		And I select current line in "" table
+		And I search and select element "VA - Coordination" "Exact match" by field "Description" in list "Report types"
 		
-		Тогда открылось окно "Register of responsibility assignment matrix (create) *"
-		И я нажимаю кнопку выбора у поля с именем 'Organization'
-		И Я выбираю организацию "Mercury LLC"
+		Then "Register of responsibility assignment matrix (create) *" window is opened
+		And I click Choice button of the field named 'Organization'
+		And I select company "Mercury LLC"
 
-		Тогда открылось окно "Register of responsibility assignment matrix (create) *"
-		И я нажимаю кнопку выбора у поля с именем 'Approval'
-		Тогда открылось окно "Select data type"
-		И в таблице "" я перехожу к строке:
+		Then "Register of responsibility assignment matrix (create) *" window is opened
+		And I click Choice button of the field named 'Approval'
+		Then "Select data type" window is opened
+		And I go to line in "" table:
 			| ''                               |
 			| "Universal process template" |
-		И в таблице "" я выбираю текущую строку
-		И Я в списке "Universal process templates" по полю "Description" ищу и выбираю элемент "VA - Approval Process Template" "Exact match"
+		And I select current line in "" table
+		And I search and select element "VA - Approval Process Template" "Exact match" by field "Description" in list "Universal process templates"
 
-		Тогда открылось окно "Register of responsibility assignment matrix (create) *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Register of responsibility assignment matrix (create) *" в течение 20 секунд	
+		Then "Register of responsibility assignment matrix (create) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Register of responsibility assignment matrix (create) *" window closing in 20 seconds
 
-Сценарий: 20.07 Сохранение настроек формы списка экземпляров отчетов	
+Scenario: 20.07 Saving the report instances list form settings
 
-	* Откроем экземпляры отчетов
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report instances"
-		Тогда открылось окно "Report instances"
-		Тогда я устанавливаю флаг с именем 'ShouldShowStandardFilters'
-		И в таблице 'Filter' я нажимаю на кнопку с именем 'FilterUncheckAll'
+	* Opening report instances
+		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
+		Then "Report instances" window is opened
+		Then I set checkbox named 'ShouldShowStandardFilters'
+		And in the table 'Filter' I click the button named 'FilterUncheckAll'
 
-	* Установим фильтры
-		И я перехожу к закладке с именем 'Standard1'
+	* Setting filters
+		And I move to the tab named 'Standard1'
 
-		И в таблице 'Filter' я перехожу к строке:
+		And I go to line in 'Filter' table:
 			| "Comparison type" | "Use" | "Left value"        | "Display mode" |
 			| "Equal to"         | "No"           | "Company" | "Quick access"    |
-		И в таблице 'Filter' из выпадающего списка с именем 'FilterRightValue' я выбираю по строке "Mercury LLC"
+		And I select "Mercury LLC" by string from the drop-down list named 'FilterRightValue' in 'Filter' table
 		
-		И в таблице 'Filter' я перехожу к строке:
+		And I go to line in 'Filter' table:
 			| "Comparison type" | "Use" | "Left value"          | "Display mode" |
 			| "Equal to"         | "No"           | "Report period" | "Quick access"    |
-		И в таблице 'Filter' я нажимаю кнопку выбора у реквизита с именем 'FilterRightValue'
-		И Я в списке "Periods" по полю "Description" ищу и выбираю элемент "January 2024" "At beginning of line"
+		And I click choice button of the attribute named 'FilterRightValue' in 'Filter' table
+		And I search and select element "January 2024" "At beginning of line" by field "Description" in list "Periods"
 	
-		Тогда открылось окно "Report instances"
-		И в таблице 'Filter' я перехожу к строке:
+		Then "Report instances" window is opened
+		And I go to line in 'Filter' table:
 			| "Comparison type" | "Use" | "Left value"     | "Display mode" |
 			| "Equal to"         | "No"           | "Scenario" | "Quick access"    |
-		И в таблице 'Filter' из выпадающего списка с именем 'FilterRightValue' я выбираю по строке "VA - Main scenario"
+		And I select "VA - Main scenario" by string from the drop-down list named 'FilterRightValue' in 'Filter' table
 		
-		И в таблице 'Filter' я перехожу к строке:
+		And I go to line in 'Filter' table:
 			| "Comparison type" | "Use" | "Left value"       | "Display mode" |
 			| "Equal to"         | "No"           | "Report type" | "Quick access"    |
-		И в таблице 'Filter' из выпадающего списка с именем 'FilterRightValue' я выбираю по строке "VA - Coordination"
+		And I select "VA - Coordination" by string from the drop-down list named 'FilterRightValue' in 'Filter' table
 
-	* Сохраним настройку
-		Когда открылось окно "Report instances"
-		И я нажимаю на кнопку с именем 'SaveSettingAs'	
-		И Я в списке "Saved settings" по полю "Description" ищу элемент "VA - Coordination - Mercury LLC" "Exact match"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И Я запоминаю значение выражения '"Delete_" + StrReplace(New UUID, "-", "")' в переменную 'UID'
-			И я выбираю пункт контекстного меню с именем 'ListContextMenuChange' на элементе формы с именем 'List'
-			Тогда открылось окно "VA - Coordination - Mercury LLC (Setup option)"
-			И в поле с именем 'Description' я ввожу значение переменной 'UID'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "VA - Manual entry for all analytics - Venus LLC *" в течение 20 секунд
+	* Saving the setting
+		When "Report instances" window is opened
+		And I click the button named 'SaveSettingAs'
+		And I search element "VA - Coordination - Mercury LLC" "Exact match" by field "Description" in list "Saved settings"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I save '"Delete_" + StrReplace(New UUID, "-", "")' in 'UID' variable
+			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
+			Then "VA - Coordination - Mercury LLC (Setup option)" window is opened
+			And I input 'UID' variable value in the field named 'Description'
+			And I click the button named 'FormWriteAndClose'
+			And I wait "VA - Manual entry for all analytics - Venus LLC *" window closing in 20 seconds
 			
-	Тогда открылось окно "Saved settings"
-	И в поле с именем 'Description' я ввожу текст "VA - Coordination - Mercury LLC"
-	И я нажимаю на кнопку с именем 'FormSaveVariant'
+	Then "Saved settings" window is opened
+	And I input "VA - Coordination - Mercury LLC" text in the field named 'Description'
+	And I click the button named 'FormSaveVariant'
 
-	Когда открылось окно "Report instances"
-	И я нажимаю на кнопку открытия поля с именем 'SavedSetting'
+	When "Report instances" window is opened
+	And I click Open button of the field named 'SavedSetting'
 
-	* Настраиваем пользователей
-		Когда открылось окно "VA - Coordination - Mercury LLC (Setup option)"
-		И в таблице 'Users' я нажимаю на кнопку с именем 'UsersAdd'
-		И в таблице 'Users' я нажимаю кнопку выбора у реквизита с именем 'UsersUser'
-		Тогда открылось окно "Select data type"
-		И в таблице "" я перехожу к строке:
+	* Configuring users
+		When "VA - Coordination - Mercury LLC (Setup option)" window is opened
+		And in the table 'Users' I click the button named 'UsersAdd'
+		And I click choice button of the attribute named 'UsersUser' in 'Users' table
+		Then "Select data type" window is opened
+		And I go to line in "" table:
 			| ''                     |
 			| "User group" |
-		И в таблице "" я выбираю текущую строку
-		И Я в списке "Select user group" по полю "Description" ищу и выбираю элемент "VA - Budgeting" "Exact match"
-		Тогда открылось окно "VA - Coordination - Mercury LLC (Setup option) *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "VA - Coordination - Mercury LLC (Setup option) *" в течение 20 секунд				
+		And I select current line in "" table
+		And I search and select element "VA - Budgeting" "Exact match" by field "Description" in list "Select user group"
+		Then "VA - Coordination - Mercury LLC (Setup option) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "VA - Coordination - Mercury LLC (Setup option) *" window closing in 20 seconds
 
-Сценарий: 20.08 Настройка прав для пользователей
+Scenario: 20.08 Configuring rights for users
 
-	И Я добавляю право "Read, write" для вида отчета "VA - Coordination" пользователя "Budgeting1" по всем организациям
-	И Я добавляю право "Read, write" для вида отчета "VA - Coordination" пользователя "Budgeting2" по всем организациям
-	И Я добавляю право "Read, write" для вида отчета "VA - Coordination" пользователя "Budgeting3" по всем организациям
-	И Я добавляю право "Read, write" для вида отчета "VA - Coordination" пользователя "Budgeting4" по всем организациям
+	And I add right "Read, write" for report type "VA - Coordination" user "Budgeting1" for all companies
+	And I add right "Read, write" for report type "VA - Coordination" user "Budgeting2" for all companies
+	And I add right "Read, write" for report type "VA - Coordination" user "Budgeting3" for all companies
+	And I add right "Read, write" for report type "VA - Coordination" user "Budgeting4" for all companies
 
-Сценарий: 20.09 Согласование по пользователеми
+Scenario: 20.09 Approval by users
 
-	* Согласование 1 (часть 1)
-		И я закрываю TestClient "CPM - Budget"
-		И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	* Approval 1 (part 1)
+		And I close "CPM - Budget" TestClient
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-		И Я открываю экземпляр отчета по сохраненной настройке "VA - Coordination - Mercury LLC"
-		И Открылся экземпляр отчета для вида отчета "VA - Coordination" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' ''
+		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
+		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
 
-		И я нажимаю на кнопку с именем 'AcceptForApproval'
+		And I click the button named 'AcceptForApproval'
 		
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'ApproveDocument'
-		Тогда открылось окно "Approval"
-		И я нажимаю на кнопку с именем 'MarkReportAsApproved'
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'ApproveDocument'
+		Then "Approval" window is opened
+		And I click the button named 'MarkReportAsApproved'
 
-	* Добавим заместителя
-		И Для пользователя 'Budgeting1' я добавляю заместителя 'Budgeting3'
+	* Adding a deputy
+		And I add deputy 'Budgeting3' for user 'Budgeting1'
 		
-	* Согласование3 (заместитель)
-		И я закрываю TestClient "CPM - Budget"
-		И я подключаю TestClient "CPM - Budget" логин "Budgeting3" пароль ''
+	* Approval 3 (deputy)
+		And I close "CPM - Budget" TestClient
+		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
-		И Я открываю экземпляр отчета по сохраненной настройке "VA - Coordination - Mercury LLC"
-		И Открылся экземпляр отчета для вида отчета "VA - Coordination" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' ''
+		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
+		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
 		
-		И я нажимаю на кнопку с именем 'ApproveDocument'
-		Тогда открылось окно "Approval"
-		И я нажимаю на кнопку с именем 'MarkReportAsApproved'
+		And I click the button named 'ApproveDocument'
+		Then "Approval" window is opened
+		And I click the button named 'MarkReportAsApproved'
 
-	* Согласование 1 (часть 2)
-		И я закрываю TestClient "CPM - Budget"
-		И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	* Approval 1 (part 2)
+		And I close "CPM - Budget" TestClient
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-		И Я открываю экземпляр отчета по сохраненной настройке "VA - Coordination - Mercury LLC"
-		И Открылся экземпляр отчета для вида отчета "VA - Coordination" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' ''
+		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
+		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
 		
-		И я нажимаю на кнопку с именем 'ApproveDocument'
-		Тогда открылось окно 'Approval'
-		И я нажимаю на кнопку с именем 'AddApprovers'
-		Тогда открылось окно "Additional approval"
-		И я нажимаю на кнопку с именем 'FormAddApprovers'
+		And I click the button named 'ApproveDocument'
+		Then 'Approval' window is opened
+		And I click the button named 'AddApprovers'
+		Then "Additional approval" window is opened
+		And I click the button named 'FormAddApprovers'
 		
-		И Я в списке "Select user" по полю "Full name" ищу элемент 'Budgeting2' "Exact match"
-		И в таблице 'UsersList' количество строк 'равно' 1
-		И в таблице 'UsersList' я выбираю текущую строку
+		And I search element 'Budgeting2' "Exact match" by field "Full name" in list "Select user"
+		And the number of 'UsersList' table lines is 'equal' 1
+		And I select current line in 'UsersList' table
 
-		Тогда открылось окно "Additional approval"
-		И я нажимаю на кнопку с именем 'FormClose'
-		Тогда открылось окно "Approval"
-		И я нажимаю на кнопку с именем 'MarkReportAsApproved'
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'ApprovalRoute'
-		И Я закрываю окно "Approval: Report instance *"
+		Then "Additional approval" window is opened
+		And I click the button named 'FormClose'
+		Then "Approval" window is opened
+		And I click the button named 'MarkReportAsApproved'
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'ApprovalRoute'
+		And I close "Approval: Report instance *" window
 
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "Report instances"
-		И Я закрываю окно "Report instances"
+		And I close '$WindowTitle$' window
+		Then "Report instances" window is opened
+		And I close "Report instances" window
 		
-	* Согласование 2
-		И я закрываю TestClient "CPM - Budget"
-		И я подключаю TestClient "CPM - Budget" логин "Budgeting2" пароль ''
+	* Approval 2
+		And I close "CPM - Budget" TestClient
+		And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
 
-		И Я открываю экземпляр отчета по сохраненной настройке "VA - Coordination - Mercury LLC"
-		И Открылся экземпляр отчета для вида отчета "VA - Coordination" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' ''
+		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
+		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
 	
-		И я нажимаю на кнопку с именем 'ApproveDocument'
-		Тогда открылось окно "Approval"
-		И я нажимаю на кнопку с именем 'MarkReportAsApproved'
+		And I click the button named 'ApproveDocument'
+		Then "Approval" window is opened
+		And I click the button named 'MarkReportAsApproved'
 
-		И я нажимаю на кнопку с именем 'ApproveDocument'
-		Тогда открылось окно "Approval"
-		И я нажимаю на кнопку с именем 'MarkReportAsApproved'
+		And I click the button named 'ApproveDocument'
+		Then "Approval" window is opened
+		And I click the button named 'MarkReportAsApproved'
 
-	* Согласование 3
-		И я закрываю TestClient "CPM - Budget"
-		И я подключаю TestClient "CPM - Budget" логин "Budgeting3" пароль ''
+	* Approval 3
+		And I close "CPM - Budget" TestClient
+		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
-		И Я открываю экземпляр отчета по сохраненной настройке "VA - Coordination - Mercury LLC"
-		И Открылся экземпляр отчета для вида отчета "VA - Coordination" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' ''
+		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
+		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
 		
-		И я нажимаю на кнопку с именем 'ApproveDocument'
-		Тогда открылось окно "Approval"
-		И я нажимаю на кнопку с именем 'MarkReportAsApproved'
+		And I click the button named 'ApproveDocument'
+		Then "Approval" window is opened
+		And I click the button named 'MarkReportAsApproved'
 
-	* Согласование 4
-		И я закрываю TestClient "CPM - Budget"
-		И я подключаю TestClient "CPM - Budget" логин "Budgeting4" пароль ''
+	* Approval 4
+		And I close "CPM - Budget" TestClient
+		And I connect "CPM - Budget" TestClient using "Budgeting4" login and '' password
 
-		И Я открываю экземпляр отчета по сохраненной настройке "VA - Coordination - Mercury LLC"
-		И Открылся экземпляр отчета для вида отчета "VA - Coordination" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' ''
+		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
+		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
 		
-		И я нажимаю на кнопку с именем 'ApproveDocument'
-		Тогда открылось окно "Approval"
-		И я нажимаю на кнопку с именем 'MarkReportAsApproved'
+		And I click the button named 'ApproveDocument'
+		Then "Approval" window is opened
+		And I click the button named 'MarkReportAsApproved'
 
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'CancelApproval'
-		Если открылось окно "Reason for canceling approval" Тогда
-			И я нажимаю на кнопку с именем 'OK'
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'CancelApproval'
+		If "Reason for canceling approval" window is opened Then
+			And I click the button named 'OK'
 
-	* История согласования
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'ApprovalHistory'
-		И табличный документ 'Result' равен макету "3_Budgeting\Templates\20\VA_TestingСогласованияHistory_Mercury.mxl" по шаблону			
+	* Approval history
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'ApprovalHistory'
+		And 'Result' spreadsheet document is equal to "3_Budgeting\Layouts\20\VA_ApprovalTestingHistory_Mercury.mxl" by template

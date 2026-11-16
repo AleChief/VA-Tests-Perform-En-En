@@ -1,409 +1,409 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для настройки пользователей и прав доступа
+Feature: Export scenarios for configuring users and access rights
 
-Сценарий: Я создаю профиль с именем 'TheName' на основании профиля 'TheProfile'
+Scenario: I create profile with name 'TheName' based on profile 'TheProfile'
 
-	* Открываем список
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Reference data and administration" "Users and rights settings"
-		Иначе			
-			И В командном интерфейсе я выбираю "Administration" "Users and rights settings"
-		Тогда открылось окно "Users and rights settings"
-		И я нажимаю на кнопку с именем 'OpenAccessGroupsProfiles'
+	* Opening a list
+		If '$$IsERPCPM$$' Then
+			And In the command interface I select "Reference data and administration" "Users and rights settings"
+		Else
+			And In the command interface I select "Administration" "Users and rights settings"
+		Then "Users and rights settings" window is opened
+		And I click the button named 'OpenAccessGroupsProfiles'
 
-	* Удаляем существующий профиль
-		И Я в списке "Access group profiles" по полю "Description" ищу элемент '[TheName]' "Exact match"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление	
-				И Я удаляю текущую строку в списке 'List'
-			* Переименовываем
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "* (Access group profile)"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Access group profile) *" в течение 20 секунд
+	* Deleting the existing profile
+		And I search element '[TheName]' "Exact match" by field "Description" in list "Access group profiles"
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "* (Access group profile)" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Access group profile) *" window closing in 20 seconds
 
-	* Ищем предопределенный профиль
-		Тогда открылось окно "Access group profiles"
-		И я выбираю пункт контекстного меню с именем 'ListContextMenuFind' на элементе формы с именем 'List'				
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		И в поле с именем 'Pattern' я ввожу текст '[TheProfile]'
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Access group profiles"
-		И в таблице 'List' количество строк 'равно' 1
+	* Searching for the predefined profile
+		Then "Access group profiles" window is opened
+		And I select context menu item named 'ListContextMenuFind' of the form attribute named 'List'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheProfile]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then "Access group profiles" window is opened
+		And the number of 'List' table lines is 'equal' 1
 
-	* Копируем профиль
-		И я выбираю пункт контекстного меню с именем 'ListContextMenuCopy' на элементе формы с именем "List"
-		Тогда открылось окно "Access group profile (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И я нажимаю на кнопку с именем 'FormWrite'	
+	* Copying the profile
+		And I select context menu item named 'ListContextMenuCopy' of the form attribute named "List"
+		Then "Access group profile (create)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		And I click the button named 'FormWrite'
 	
-	* Закрываем окна
-		Тогда открылось окно "[TheName] (Access group profile)"	
-		И я закрываю окно "[TheName] (Access group profile)"
-		Тогда открылось окно "Access group profiles"
-		И Я закрываю окно "Access group profiles"	
+	* Closing windows
+		Then "[TheName] (Access group profile)" window is opened
+		And I close "[TheName] (Access group profile)" window
+		Then "Access group profiles" window is opened
+		And I close "Access group profiles" window
 
-Сценарий: Я добавляю в профиль 'TheProfile' ограничение доступа с видом 'TheType' значением	'TheValue'
+Scenario: I add access restriction with kind 'TheType' value 'TheValue' to profile 'TheProfile'
 
-	* Открываем список
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Reference data and administration" "Users and rights settings"
-		Иначе			
-			И В командном интерфейсе я выбираю "Administration" "Users and rights settings"
-		Тогда открылось окно "Users and rights settings"
-		И я нажимаю на кнопку с именем 'OpenAccessGroupsProfiles'
+	* Opening a list
+		If '$$IsERPCPM$$' Then
+			And In the command interface I select "Reference data and administration" "Users and rights settings"
+		Else
+			And In the command interface I select "Administration" "Users and rights settings"
+		Then "Users and rights settings" window is opened
+		And I click the button named 'OpenAccessGroupsProfiles'
 
-	* Ищем существующий профиль
-		И Я в списке "Access group profiles" по полю "Description" ищу элемент '[TheProfile]' "Exact match"
-		И в таблице 'List' количество строк 'равно' 1
-		И в таблице 'List' я выбираю текущую строку
+	* Searching for the existing profile
+		And I search element '[TheProfile]' "Exact match" by field "Description" in list "Access group profiles"
+		And the number of 'List' table lines is 'equal' 1
+		And I select current line in 'List' table
 
-	* Удаляем вид доступа если он уже задан
-		Тогда открылось окно "[TheProfile] (Access group profile)"
-		И я перехожу к закладке с именем 'AccessKindsAndValues'
-		И Я запоминаю значение выражения '[TheType]' в переменную 'ТекущийТип'
-		Если в таблице 'AccessKinds' есть строка Тогда
+	* Deleting the access type if it is already set
+		Then "[TheProfile] (Access group profile)" window is opened
+		And I move to the tab named 'AccessKindsAndValues'
+		And I save '[TheType]' in 'CurrentType' variable
+		If 'AccessKinds' table contains line Then
 			| "Access kind"  |
-			| '$ТекущийТип$' |
-			И в таблице 'AccessKinds' я перехожу к строке
+			| '$CurrentType$' |
+			And I go to line in 'AccessKinds' table
 				| "Access kind" |
-				| '$ТекущийТип$' |
-			И я выбираю пункт контекстного меню с именем 'AccessKindsContextMenuDelete' на элементе формы с именем 'AccessKinds'
+				| '$CurrentType$' |
+			And I select context menu item named 'AccessKindsContextMenuDelete' of the form attribute named 'AccessKinds'
 						
-	* Добавляем ограничение доступа		
-		И в таблице 'AccessKinds' я нажимаю на кнопку с именем 'AccessKindsAdd'
-		И в таблице 'AccessKinds' из выпадающего списка с именем 'ВидыДоступаВидДоступаПредставление' я выбираю точное значение '[TheType]'
-		И я перехожу к следующему реквизиту
-		И в таблице 'AccessKinds' из выпадающего списка с именем 'AccessKindsAllAllowedPresentation' я выбираю точное значение '[TheValue]'
-		И в таблице 'AccessKinds' я завершаю редактирование строки
-		И я делаю 5 раз
-			И в таблице 'AccessKinds' я нажимаю на кнопку с именем 'AccessKindsMoveUp'
+	* Adding an access restriction
+		And in the table 'AccessKinds' I click the button named 'AccessKindsAdd'
+		And I select '[TheType]' exact value from the drop-down list named 'AccessKindsAccessKindPresentation' in 'AccessKinds' table
+		And I move to the next attribute
+		And I select '[TheValue]' exact value from the drop-down list named 'AccessKindsAllAllowedPresentation' in 'AccessKinds' table
+		And I finish line editing in 'AccessKinds' table
+		And I repeat 5 times
+			And in the table 'AccessKinds' I click the button named 'AccessKindsMoveUp'
 
-	* Записываем элемент
-		Когда открылось окно "[TheProfile] (Access group profile) *"		
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'		
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		И я жду закрытия окна "[TheProfile] (Access group profile) *" в течение 20 секунд
-		Тогда открылось окно "Access group profiles"
-		И Я закрываю окно "Access group profiles"
+	* Saving the element
+		When "[TheProfile] (Access group profile) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		And I wait "[TheProfile] (Access group profile) *" window closing in 20 seconds
+		Then "Access group profiles" window is opened
+		And I close "Access group profiles" window
 
-Сценарий: Я добавляю в профиль 'TheProfile' роль 'TheRole'
+Scenario: I add role 'TheRole' to profile 'TheProfile'
 
-	* Открываем список
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Reference data and administration" "Users and rights settings"
-		Иначе			
-			И В командном интерфейсе я выбираю "Administration" "Users and rights settings"
-		Тогда открылось окно "Users and rights settings"
-		И я нажимаю на кнопку с именем 'OpenAccessGroupsProfiles'
+	* Opening a list
+		If '$$IsERPCPM$$' Then
+			And In the command interface I select "Reference data and administration" "Users and rights settings"
+		Else
+			And In the command interface I select "Administration" "Users and rights settings"
+		Then "Users and rights settings" window is opened
+		And I click the button named 'OpenAccessGroupsProfiles'
 
-	* Ищем существующий профиль
-		И Я в списке "Access group profiles" по полю "Description" ищу элемент '[TheProfile]' "Exact match"
-		И в таблице 'List' количество строк 'равно' 1
-		И в таблице 'List' я выбираю текущую строку
+	* Searching for the existing profile
+		And I search element '[TheProfile]' "Exact match" by field "Description" in list "Access group profiles"
+		And the number of 'List' table lines is 'equal' 1
+		And I select current line in 'List' table
 
-	* Добавляем роль
-		Тогда открылось окно "[TheProfile] (Access group profile)"
-		И в таблице 'Roles' я нажимаю на кнопку с именем 'RolesShowSelectedRolesOnly'
+	* Adding a role
+		Then "[TheProfile] (Access group profile)" window is opened
+		And in the table 'Roles' I click the button named 'RolesShowSelectedRolesOnly'
 		
-	* Ищем существующую роль
-		И в таблице 'Roles' я нажимаю на кнопку с именем 'RolesFind'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем "FieldSelector" я выбираю точное значение 'Check, Allowed action (role)'
-		И я меняю значение переключателя с именем 'CompareType' на 'Exact match'
-		И в поле с именем 'Pattern' я ввожу текст '[TheRole]'
-		И я нажимаю на кнопку с именем 'Find'
-		И в таблице 'Roles' количество строк 'равно' 1
-		И в таблице 'Roles' я выбираю текущую строку
+	* Searching for the existing role
+		And in the table 'Roles' I click the button named 'RolesFind'
+		Then "Find" window is opened
+		And I select 'Check, Allowed action (role)' exact value from the drop-down list named "FieldSelector"
+		And I change the radio button named 'CompareType' value to 'Exact match'
+		And I input '[TheRole]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		And the number of 'Roles' table lines is 'equal' 1
+		And I select current line in 'Roles' table
 
-	* Устанавливаем флаг роли
-		И в таблице 'Roles' я устанавливаю флаг с именем 'RolesCheck'
-		И в таблице 'Roles' я завершаю редактирование строки
+	* Setting the role flag
+		And I set checkbox named 'RolesCheck' in 'Roles' table
+		And I finish line editing in 'Roles' table
 
-	* Записываем элемент
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "[TheProfile] (Access group profile) *" в течение 20 секунд
-		И Я закрываю окно "Access group profiles"
-		Тогда открылось окно "Users and rights settings"
-		И Я закрываю окно "Users and rights settings"
+	* Saving the element
+		And I click the button named 'FormWriteAndClose'
+		And I wait "[TheProfile] (Access group profile) *" window closing in 20 seconds
+		And I close "Access group profiles" window
+		Then "Users and rights settings" window is opened
+		And I close "Users and rights settings" window
 
-Сценарий: Я удаляю из профиля 'TheProfile' роль 'TheRole'
+Scenario: I remove role 'TheRole' from profile 'TheProfile'
 
-	* Открываем список
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Reference data and administration" "Users and rights settings"
-		Иначе			
-			И В командном интерфейсе я выбираю "Administration" "Users and rights settings"
-		Тогда открылось окно "Users and rights settings"
-		И я нажимаю на кнопку с именем 'OpenAccessGroupsProfiles'
+	* Opening a list
+		If '$$IsERPCPM$$' Then
+			And In the command interface I select "Reference data and administration" "Users and rights settings"
+		Else
+			And In the command interface I select "Administration" "Users and rights settings"
+		Then "Users and rights settings" window is opened
+		And I click the button named 'OpenAccessGroupsProfiles'
 
-	* Ищем существующий профиль
-		И Я в списке "Access group profiles" по полю "Description" ищу элемент '[TheProfile]' "Exact match"
-		И в таблице 'List' количество строк 'равно' 1
-		И в таблице 'List' я выбираю текущую строку
+	* Searching for the existing profile
+		And I search element '[TheProfile]' "Exact match" by field "Description" in list "Access group profiles"
+		And the number of 'List' table lines is 'equal' 1
+		And I select current line in 'List' table
 
-	* Удаляем роль
-		Тогда открылось окно "[TheProfile] (Access group profile)"
-		И в таблице 'Roles' я нажимаю на кнопку с именем 'RolesShowSelectedRolesOnly'
+	* Deleting the role
+		Then "[TheProfile] (Access group profile)" window is opened
+		And in the table 'Roles' I click the button named 'RolesShowSelectedRolesOnly'
 		
-	* Ищем существующую роль
-		И в таблице 'Roles' я нажимаю на кнопку с именем 'RolesFind'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем "FieldSelector" я выбираю точное значение 'Check, Allowed action (role)'
-		И я меняю значение переключателя с именем 'CompareType' на 'Exact match'
-		И в поле с именем 'Pattern' я ввожу текст '[TheRole]'
-		И я нажимаю на кнопку с именем 'Find'
-		И в таблице 'Roles' количество строк 'равно' 1
-		И в таблице 'Roles' я выбираю текущую строку
+	* Searching for the existing role
+		And in the table 'Roles' I click the button named 'RolesFind'
+		Then "Find" window is opened
+		And I select 'Check, Allowed action (role)' exact value from the drop-down list named "FieldSelector"
+		And I change the radio button named 'CompareType' value to 'Exact match'
+		And I input '[TheRole]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		And the number of 'Roles' table lines is 'equal' 1
+		And I select current line in 'Roles' table
 
-	* Устанавливаем флаг роли
-		И в таблице 'Roles' я снимаю флаг с именем 'RolesCheck'
-		И в таблице 'Roles' я завершаю редактирование строки
+	* Setting the role flag
+		And I remove checkbox named 'RolesCheck' in 'Roles' table
+		And I finish line editing in 'Roles' table
 
-	* Записываем элемент
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "[TheProfile] (Access group profile) *" в течение 20 секунд
-		И Я закрываю окно "Access group profiles"
-		Тогда открылось окно "Users and rights settings"
-		И Я закрываю окно "Users and rights settings"
+	* Saving the element
+		And I click the button named 'FormWriteAndClose'
+		And I wait "[TheProfile] (Access group profile) *" window closing in 20 seconds
+		And I close "Access group profiles" window
+		Then "Users and rights settings" window is opened
+		And I close "Users and rights settings" window
 
-Сценарий: Я создаю группу доступа с именем 'TheName' по профилю 'TheProfile'
+Scenario: I create access group with name 'TheName' by profile 'TheProfile'
 
-	* Открываем список
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Reference data and administration" "Users and rights settings"
-		Иначе			
-			И В командном интерфейсе я выбираю "Administration" "Users and rights settings"
-		Тогда открылось окно "Users and rights settings"
-		И я нажимаю на кнопку с именем 'OpenAccessGroups'
+	* Opening a list
+		If '$$IsERPCPM$$' Then
+			And In the command interface I select "Reference data and administration" "Users and rights settings"
+		Else
+			And In the command interface I select "Administration" "Users and rights settings"
+		Then "Users and rights settings" window is opened
+		And I click the button named 'OpenAccessGroups'
 
-	И Я в списке "Access groups" по полю "Description" ищу элемент '[TheProfile]' "Exact match"	
+	And I search element '[TheProfile]' "Exact match" by field "Description" in list "Access groups"
 
-	Если '"[TheName]" = "Открытие внешних отчетов и обработок" ИЛИ "[TheName]" = "Open external reports and data processors"' Тогда
+	If '"[TheName]" = "Opening external reports and data processors" OR "[TheName]" = "Open external reports and data processors"' Then
 
-		* Проверяем, что у гурппы доступа правильный профиль
-			И в таблице 'List' количество строк 'равно' 1
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Open external reports and data processors (Access group)"
-			Тогда элемент формы с именем 'Profile' стал равен '[TheProfile]'
+		* Checking that the access group has the correct profile
+			And the number of 'List' table lines is 'equal' 1
+			And I select current line in 'List' table
+			Then "Open external reports and data processors (Access group)" window is opened
+			Then the form attribute named 'Profile' became equal to '[TheProfile]'
 
-	Иначе
+	Else
 
-		* Удаляем существующую группу доступа			
-			И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-				* Ставим пометку на удаление	
-					И Я удаляю текущую строку в списке 'List'
-				* Переименовываем
-					И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-					И в таблице 'List' я выбираю текущую строку
-					Тогда открылось окно "* (Access group)"
-					И в поле с именем 'Description' я ввожу значение переменной 'UID'
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					И я жду закрытия окна "* (Access group) *" в течение 20 секунд
+		* Deleting the existing access group
+			And While the number of 'List' table lines 'more' 0 Then
+				* Marking for deletion
+					And I delete current row in list 'List'
+				* Renaming
+					And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+					And I select current line in 'List' table
+					Then "* (Access group)" window is opened
+					And I input 'UID' variable value in the field named 'Description'
+					And I click the button named 'FormWriteAndClose'
+					And I wait "* (Access group) *" window closing in 20 seconds
 
-		* Создаем группу доступа
-			Тогда открылось окно "Access groups"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Access group (create)"
-			И в поле с именем 'Description' я ввожу текст '[TheName]'
+		* Creating an access group
+			Then "Access groups" window is opened
+			And I click the button named 'FormCreate'
+			Then "Access group (create)" window is opened
+			And I input '[TheName]' text in the field named 'Description'
 
-		* Обновляем настройки
-			И из выпадающего списка с именем "Profile" я выбираю по строке '[TheProfile]'
-			И я нажимаю на кнопку с именем 'FormWrite'
-			Тогда открылось окно "[TheName] (Access group)"
+		* Updating the settings
+			And I select from the drop-down list named "Profile"  by '[TheProfile]' string
+			And I click the button named 'FormWrite'
+			Then "[TheName] (Access group)" window is opened
 
-	И я закрываю окно "[TheName] (Access group)"
-	Тогда открылось окно "Access groups"
-	И Я закрываю окно "Access groups"		
+	And I close "[TheName] (Access group)" window
+	Then "Access groups" window is opened
+	And I close "Access groups" window
 
-Сценарий: Я добавляю в группу доступа 'TheProfile' значения доступа с видом 'TheType' из таблицы
+Scenario: I add access values with kind 'TheType' from table to access group 'TheProfile'
 
-	* Открываем список
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Reference data and administration" "Users and rights settings"
-		Иначе			
-			И В командном интерфейсе я выбираю "Administration" "Users and rights settings"
-		Тогда открылось окно "Users and rights settings"
-		И я нажимаю на кнопку с именем 'OpenAccessGroups'
+	* Opening a list
+		If '$$IsERPCPM$$' Then
+			And In the command interface I select "Reference data and administration" "Users and rights settings"
+		Else
+			And In the command interface I select "Administration" "Users and rights settings"
+		Then "Users and rights settings" window is opened
+		And I click the button named 'OpenAccessGroups'
 	
-	* Ищем группу доступа
-		И Я в списке "Access groups" по полю "Description" ищу элемент '[TheProfile]' "Exact match"
-		И в таблице 'List' количество строк 'равно' 1
-		И в таблице 'List' я выбираю текущую строку
+	* Searching for the access group
+		And I search element '[TheProfile]' "Exact match" by field "Description" in list "Access groups"
+		And the number of 'List' table lines is 'equal' 1
+		And I select current line in 'List' table
 
-	* Настраиваем ограничения
-		Тогда открылось окно "[TheProfile] (Access group)"
-		И я перехожу к закладке с именем 'Access'
-		И я заполняю таблицу 'AccessValues' данными
-			| '$ТекущаяТаблица$' |
+	* Configuring the restrictions
+		Then "[TheProfile] (Access group)" window is opened
+		And I move to the tab named 'Access'
+		And I fill 'AccessValues' table with data
+			| '$CurrentTable$' |
 
-	* Сохраняем профиль
-		Когда открылось окно "[TheProfile] (Access group) *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "[TheProfile] (Access group) *" в течение 20 секунд
-		Тогда открылось окно "Access groups"
-		И Я закрываю окно "Access groups"
+	* Saving the profile
+		When "[TheProfile] (Access group) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "[TheProfile] (Access group) *" window closing in 20 seconds
+		Then "Access groups" window is opened
+		And I close "Access groups" window
 
-Сценарий: Я нахожу или создаю группу пользователей с именем 'TheName'
+Scenario: I find or create user group with name 'TheName'
 
-	* Открываем список
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Reference data and administration" "Users and rights settings"
-		Иначе			
-			И В командном интерфейсе я выбираю "Administration" "Users and rights settings"
-		Тогда открылось окно "Users and rights settings"
-		И я нажимаю на кнопку с именем 'OpenUsers'
-		Тогда открылось окно "Users"
+	* Opening a list
+		If '$$IsERPCPM$$' Then
+			And In the command interface I select "Reference data and administration" "Users and rights settings"
+		Else
+			And In the command interface I select "Administration" "Users and rights settings"
+		Then "Users and rights settings" window is opened
+		And I click the button named 'OpenUsers'
+		Then "Users" window is opened
 
-	* Ищем или создаем нужную группу
-		И я выбираю пункт контекстного меню с именем 'UserGroupsContextMenuFind' на элементе формы с именем 'UserGroups'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		И я меняю значение переключателя с именем 'CompareType' на "Anywhere in the line"
-		И в поле с именем 'Pattern' я ввожу текст '[TheName]'
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Users"
-		Если в таблице 'UserGroups' количество строк "равно" 0 Тогда
-			И я нажимаю на кнопку с именем 'CreateUsersGroup'	
-			Когда открылось окно "User group (create)"
-			И в поле с именем 'Description' я ввожу текст '[TheName]'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "User group (create) *" в течение 20 секунд
+	* Searching for or creating the required group
+		And I select context menu item named 'UserGroupsContextMenuFind' of the form attribute named 'UserGroups'
+		Then "Find" window is opened
+		And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Anywhere in the line"
+		And I input '[TheName]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then "Users" window is opened
+		If number of 'UserGroups' table lines is "equal" 0 Then
+			And I click the button named 'CreateUsersGroup'
+			When "User group (create)" window is opened
+			And I input '[TheName]' text in the field named 'Description'
+			And I click the button named 'FormWriteAndClose'
+			And I wait "User group (create) *" window closing in 20 seconds
 
-	Тогда открылось окно "Users"
-	И Я закрываю окно "Users"
+	Then "Users" window is opened
+	And I close "Users" window
 
-Сценарий: Я нахожу или создаю пользователя 'TheUser' группа доступа 'TheProfile' группа 'TheGroup'
+Scenario: I find or create user 'TheUser' access group 'TheProfile' group 'TheGroup'
 
-	* Открываем список
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Reference data and administration" "Users and rights settings"
-		Иначе			
-			И В командном интерфейсе я выбираю "Administration" "Users and rights settings"
-		Тогда открылось окно "Users and rights settings"
-		И я нажимаю на кнопку с именем 'OpenUsers'
-		Тогда открылось окно "Users"
+	* Opening a list
+		If '$$IsERPCPM$$' Then
+			And In the command interface I select "Reference data and administration" "Users and rights settings"
+		Else
+			And In the command interface I select "Administration" "Users and rights settings"
+		Then "Users and rights settings" window is opened
+		And I click the button named 'OpenUsers'
+		Then "Users" window is opened
 
-	* Ищем или создаем нужного пользователя
-		И я выбираю пункт контекстного меню с именем 'UsersListContextMenuFind' на элементе формы с именем 'UsersList'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Full name"
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"				
-		И в поле с именем 'Pattern' я ввожу текст '[TheUser]'
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Users"
-		И пауза 1
-		Если в таблице 'UsersList' количество строк "равно" 0 Тогда
-			И я нажимаю на кнопку с именем 'CreateUser'
-			Тогда открылось окно "User (create)"
-			И в поле с именем 'Description' я ввожу текст '[TheUser]'
-		Иначе
-			И в таблице 'UsersList' я выбираю текущую строку
+	* Searching for or creating the required user
+		And I select context menu item named 'UsersListContextMenuFind' of the form attribute named 'UsersList'
+		Then "Find" window is opened
+		And I select "Full name" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I input '[TheUser]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then "Users" window is opened
+		And Delay 1
+		If number of 'UsersList' table lines is "equal" 0 Then
+			And I click the button named 'CreateUser'
+			Then "User (create)" window is opened
+			And I input '[TheUser]' text in the field named 'Description'
+		Else
+			And I select current line in 'UsersList' table
 							
-	* Обновляем настройки
-		И я устанавливаю флаг с именем 'CanSignIn'
-		И я устанавливаю флаг с именем 'IBUserStandardAuthentication'
-		И я устанавливаю флаг с именем 'IBUserShowInList'
-		И я нажимаю на кнопку с именем 'FormWrite'		
-		Если открылось окно "Conversations (interaction system)" Тогда
-			И я устанавливаю флаг с именем 'NeverAskAgain'
-			И я нажимаю на кнопку с именем 'Command2'
-		Тогда открылось окно "[TheUser] (User)"
+	* Updating the settings
+		And I set checkbox named 'CanSignIn'
+		And I set checkbox named 'IBUserStandardAuthentication'
+		And I set checkbox named 'IBUserShowInList'
+		And I click the button named 'FormWrite'
+		If "Conversations (interaction system)" window is opened Then
+			And I set checkbox named 'NeverAskAgain'
+			And I click the button named 'Command2'
+		Then "[TheUser] (User)" window is opened
 
-	Если 'NOT IsBlankString("[TheProfile]")' Тогда
-		И В текущем окне я нажимаю кнопку командного интерфейса "Access rights"
-		Если '"[TheProfile]" = "Администраторы"' Тогда
-			* Группа "Administrators"
-				Если в таблице 'AccessGroups' есть строка Тогда
+	If 'NOT IsBlankString("[TheProfile]")' Then
+		And In this window I click command interface button "Access rights"
+		If '"[TheProfile]" = "Administrators"' Then
+			* Group "Administrators"
+				If 'AccessGroups' table contains line Then
 					| "Description"   | "Profile"        |
 					| "Administrators" | "Administrator"  |
-					И в таблице 'AccessGroups' я перехожу к строке:
+					And I go to line in 'AccessGroups' table:
 						| "Description"   |
 						| "Administrators" |	
-				Иначе
-					И в таблице 'AccessGroups' я нажимаю на кнопку с именем 'AccessGroupsAddToGroup'
-					Тогда открылось окно "Access groups"
-					И в таблице 'AccessGroups' я перехожу к строке:
+				Else
+					And in the table 'AccessGroups' I click the button named 'AccessGroupsAddToGroup'
+					Then "Access groups" window is opened
+					And I go to line in 'AccessGroups' table:
 						| "Description"   |
 						| "Administrators" |
-					И в таблице 'AccessGroups' я выбираю текущую строку	
-			* Группа "Open external reports and data processors"
-				Если в таблице 'AccessGroups' есть строка Тогда
+					And I select current line in 'AccessGroups' table
+			* Group "Open external reports and data processors"
+				If 'AccessGroups' table contains line Then
 					| "Description"                         | "Profile"                              |
 					| "Open external reports and data processors" | "Open external reports and data processors" |
-					И в таблице 'AccessGroups' я перехожу к строке:
+					And I go to line in 'AccessGroups' table:
 						| "Description"                         |
 						| "Open external reports and data processors" |
-				Иначе
-					И в таблице 'AccessGroups' я нажимаю на кнопку с именем 'AccessGroupsAddToGroup'
-					Тогда открылось окно "Access groups"
-					И в таблице 'AccessGroups' я перехожу к строке:
+				Else
+					And in the table 'AccessGroups' I click the button named 'AccessGroupsAddToGroup'
+					Then "Access groups" window is opened
+					And I go to line in 'AccessGroups' table:
 						| "Description"                         |
 						| "Open external reports and data processors" |
-					И в таблице 'AccessGroups' я выбираю текущую строку
-		Иначе
-			* Очищаем группы и устанавливаем переданную				
-				И пока в таблице 'AccessGroups' количество строк ">" 0 Тогда
-					И в таблице 'AccessGroups' я нажимаю на кнопку с именем 'AccessGroupsRemoveFromGroup'	
-				И в таблице 'AccessGroups' я нажимаю на кнопку с именем 'AccessGroupsAddToGroup'
-				Тогда открылось окно "Access groups"
-				И я выбираю пункт контекстного меню с именем 'AccessGroupsFind' на элементе формы с именем 'AccessGroups'
-				Тогда открылось окно "Find"
-				И в поле с именем 'Pattern' я ввожу текст '[TheProfile]'
-				И я нажимаю на кнопку с именем 'Find'
-				Тогда открылось окно "Access groups"
-				И в таблице 'AccessGroups' я выбираю текущую строку
+					And I select current line in 'AccessGroups' table
+		Else
+			* Clearing the groups and setting the passed one
+				And While the number of 'AccessGroups' table lines ">" 0 Then
+					And in the table 'AccessGroups' I click the button named 'AccessGroupsRemoveFromGroup'
+				And in the table 'AccessGroups' I click the button named 'AccessGroupsAddToGroup'
+				Then "Access groups" window is opened
+				And I select context menu item named 'AccessGroupsFind' of the form attribute named 'AccessGroups'
+				Then "Find" window is opened
+				And I input '[TheProfile]' text in the field named 'Pattern'
+				And I click the button named 'Find'
+				Then "Access groups" window is opened
+				And I select current line in 'AccessGroups' table
 
-	Если 'NOT IsBlankString("[TheGroup]")' Тогда
-		Когда открылось окно "[TheUser] (User)"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Groups"
-		И Я запоминаю значение выражения '[TheGroup]' в переменную 'CurrentGroup'
-		И в таблице 'GroupsTree' я перехожу к строке:
+	If 'NOT IsBlankString("[TheGroup]")' Then
+		When "[TheUser] (User)" window is opened
+		And In this window I click command interface button "Groups"
+		And I save '[TheGroup]' in 'CurrentGroup' variable
+		And I go to line in 'GroupsTree' table:
 			| 'Group'         |
 			| '$CurrentGroup$' |
-		И в таблице 'GroupsTree' я устанавливаю флаг с именем 'GroupsTreeCheck'
-		И в таблице 'GroupsTree' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'					
+		And I set checkbox named 'GroupsTreeCheck' in 'GroupsTree' table
+		And I finish line editing in 'GroupsTree' table
+		And I click the button named 'FormWriteAndClose'
 
-	Когда открылось окно "[TheUser] (User)"	
-	И я закрываю окно "[TheUser] (User)"			
-	Тогда открылось окно "Users"
-	И Я закрываю окно "Users"				
+	When "[TheUser] (User)" window is opened
+	And I close "[TheUser] (User)" window
+	Then "Users" window is opened
+	And I close "Users" window
 
-Сценарий: Я включаю производительный режим работы ограничений на уровне записей
+Scenario: I enable performance mode of restrictions at record level
 
-	Если '$$ЭтоЕРПУХ$$' Тогда
-		И В командном интерфейсе я выбираю "Reference data and administration" "Users and rights settings"
-	Иначе			
-		И В командном интерфейсе я выбираю "Administration" "Users and rights settings"
-	Тогда открылось окно "Users and rights settings"
-	И я разворачиваю группу с именем 'AccessGroupsGroup'
-	Если элемент формы с именем 'LimitAccessAtRecordLevelUniversally' присутствует на форме Тогда
-		И из выпадающего списка с именем 'LimitAccessAtRecordLevelUniversally' я выбираю точное значение "High performance"
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
+	If '$$IsERPCPM$$' Then
+		And In the command interface I select "Reference data and administration" "Users and rights settings"
+	Else
+		And In the command interface I select "Administration" "Users and rights settings"
+	Then "Users and rights settings" window is opened
+	And I expand the group named 'AccessGroupsGroup'
+	If the field named 'LimitAccessAtRecordLevelUniversally' exists on the form Then
+		And I select "High performance" exact value from the drop-down list named 'LimitAccessAtRecordLevelUniversally'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
 		
-	Тогда открылось окно "Users and rights settings"
-	И я нажимаю на кнопку с именем 'AccessUpdateOnRecordsLevel'
-	Тогда открылось окно "Update record-level access"
-	И Пауза 1
+	Then "Users and rights settings" window is opened
+	And I click the button named 'AccessUpdateOnRecordsLevel'
+	Then "Update record-level access" window is opened
+	And Delay 1
 
-	И я разворачиваю группу с именем 'BriefDetailed'
-	Если элемент формы с именем 'StartAccessUpdateImmediately' доступен Тогда
-		И я нажимаю на кнопку с именем 'StartAccessUpdateImmediately'
-		Если открылось окно "1C:Enterprise" Тогда
-			И я нажимаю на кнопку с именем 'Button0'
-	И у элемента с именем 'LastAccessUpdateCompletion' я жду значения "(completed *)" в течение 600 секунд по шаблону
-	И я жду, что в таблице 'Lists' количество строк будет "равно" 0 в течение 60 секунд
-	Когда в таблице 'Lists' количество строк "равно" 0
+	And I expand the group named 'BriefDetailed'
+	If form attribute named 'StartAccessUpdateImmediately' is available Then
+		And I click the button named 'StartAccessUpdateImmediately'
+		If "1C:Enterprise" window is opened Then
+			And I click the button named 'Button0'
+	And I wait "(completed *)" value by template of the attribute named 'LastAccessUpdateCompletion' for 600 seconds
+	And I wait that in 'Lists' table number of lines will be "equal" 0 for 60 seconds
+	When the number of 'Lists' table lines is "equal" 0
 
-	Когда открылось окно "Update record-level access"
-	И Я закрываю окно "Update record-level access"
+	When "Update record-level access" window is opened
+	And I close "Update record-level access" window

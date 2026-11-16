@@ -1,135 +1,135 @@
-﻿#language: ru
+﻿#language: en
 
 @tree
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для управлением НСИ - Статьи доходов и расходов
+Feature: Export scenarios for managing reference data - Income and expense items
 
-Как Тестировщик я хочу
-иметь экспортные сценарии по статьям ДДС
-чтобы было проще писать и поддерживать тесты
+As a Tester I want
+to have export scenarios for cash flow statement items
+to make it easier to write and maintain tests
 
-Контекст:
-	   И Я запускаю сценарий открытия TestClient или подключаю уже существующий
-	   И я закрываю все окна клиентского приложения
+Background:
+	   And I launch TestClient opening script or connect the existing one
+	   And I close all client application windows
 
-Сценарий: Я создаю группу статей ДиР с именем 'TheName'
+Scenario: I create income statement item group with name 'TheName'
 
-	* Открываем форму списка
-		Если '$$ЭтоPerform$$' Тогда
-			И я открываю основную форму списка справочника 'IncomeAndExpenseItems'
-		Иначе
-			И В командном интерфейсе я выбираю "Planning and control" "Income and expense items"
+	* Opening list form
+		If '$$IsPerform$$' Then
+			And I open 'IncomeAndExpenseItems' catalog default form
+		Else
+			And In the command interface I select "Planning and control" "Income and expense items"
 	
-	* Удаляем элемент
-		И Я в списке "Income and expense items" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "[TheName] (Income and expense items)" очищая
+	* Deleting an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Income and expense items"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "[TheName] (Income and expense items)" clearing
 
-	* Создаем элемент
-		Тогда открылось окно "Income and expense items"
-		И я нажимаю на кнопку с именем 'FormCreateFolder'
-		Тогда открылось окно "Income and expense items (create group)"
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Income and expense items (create group) *" в течение 20 секунд
+	* Creating an element
+		Then "Income and expense items" window is opened
+		And I click the button named 'FormCreateFolder'
+		Then "Income and expense items (create group)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Income and expense items (create group) *" window closing in 20 seconds
 
-	* Закрываем форму списка
-		Когда открылось окно "Income and expense items"
-		И Я закрываю окно "Income and expense items"
+	* Closing a list form
+		When "Income and expense items" window is opened
+		And I close "Income and expense items" window
 
-Сценарий: Я создаю статью ДиР с именем 'TheName' родителем 'TheParent'
+Scenario: I create income statement item with name 'TheName' parent 'TheParent'
 
-	* Открываем форму списка
-		Если '$$ЭтоPerform$$' Тогда
-			И я открываю основную форму списка справочника 'IncomeAndExpenseItems'
-		Иначе
-			И В командном интерфейсе я выбираю "Planning and control" "Income and expense items"
+	* Opening list form
+		If '$$IsPerform$$' Then
+			And I open 'IncomeAndExpenseItems' catalog default form
+		Else
+			And In the command interface I select "Planning and control" "Income and expense items"
 	
-	* Удаляем элемент
-		И Я в списке "Income and expense items" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "[TheName] (Income and expense item)" очищая
+	* Deleting an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Income and expense items"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "[TheName] (Income and expense item)" clearing
 
-	* Создаем элемент
-		Тогда открылось окно "Income and expense items"'
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Income and expense item (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И из выпадающего списка с именем 'Parent' я выбираю по строке '[TheParent]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Income and expense item (create) *" в течение 20 секунд
+	* Creating an element
+		Then "Income and expense items" window is opened
+		And I click the button named 'FormCreate'
+		Then "Income and expense item (create)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		And I select from the drop-down list named 'Parent'  by '[TheParent]' string
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Income and expense item (create) *" window closing in 20 seconds
 
-	* Закрываем форму списка
-		Когда открылось окно "Income and expense items"'
-		И Я закрываю окно "Income and expense items"'
+	* Closing a list form
+		When "Income and expense items" window is opened
+		And I close "Income and expense items" window
 
 
-Сценарий: Я для статьи ДиР с именем 'TheName' определяю группу раскрытия 'TheAnalyticsGroup'
+Scenario: I define expansion group 'TheAnalyticsGroup' for income statement item with name 'TheName'
 	
-	* Открываем форму списка
-		Если '$$ЭтоPerform$$' Тогда
-			И я открываю основную форму списка справочника 'IncomeAndExpenseItems'
-		Иначе
-			И В командном интерфейсе я выбираю "Planning and control" "Income and expense items"
+	* Opening list form
+		If '$$IsPerform$$' Then
+			And I open 'IncomeAndExpenseItems' catalog default form
+		Else
+			And In the command interface I select "Planning and control" "Income and expense items"
 
-	* Находим и заполняем элемент
-		И Я в списке "Income and expense items" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"
-		И в таблице "List" я выбираю текущую строку
-		Тогда открылось окно '[TheName] (Income and expense item)'
-		Если элемент формы с именем "DrillDownGroup" стал равен '[TheAnalyticsGroup]' тогда
-			И я жду закрытия окна '[TheName] (Income and expense item) *' в течение 20 секунд
-		Иначе 
-			И я меняю значение переключателя с именем 'DrillDownGroupRadioButton' на '1'
-			И из выпадающего списка с именем "DrillDownGroup" я выбираю по строке '[TheAnalyticsGroup]'
+	* Finding and filling an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Income and expense items"
+		And I select current line in "List" table
+		Then '[TheName] (Income and expense item)' window is opened
+		If the form attribute named "DrillDownGroup" became equal to '[TheAnalyticsGroup]' Then
+			And I wait '[TheName] (Income and expense item) *' window closing in 20 seconds
+		Else
+			And I change the radio button named 'DrillDownGroupRadioButton' value to '1'
+			And I select from the drop-down list named "DrillDownGroup"  by '[TheAnalyticsGroup]' string
 			
-	* Закрываем форму элемента
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна '[TheName] (Income and expense item) *' в течение 20 секунд
-		И Я закрываю окно "Income and expense items"'
+	* Closing an element form
+		And I click the button named 'FormWriteAndClose'
+		And I wait '[TheName] (Income and expense item) *' window closing in 20 seconds
+		And I close "Income and expense items" window
 
-Сценарий: Я для статьи ДиР с именем 'TheName' определяю виды аналитики 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6'
+Scenario: I define dimension types 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6' for income statement item with name 'TheName'
 	
-	* Открываем форму списка
-		Если '$$ЭтоPerform$$' Тогда
-			И я открываю основную форму списка справочника 'IncomeAndExpenseItems'
-		Иначе
-			И В командном интерфейсе я выбираю "Planning and control" "Income and expense items"
+	* Opening list form
+		If '$$IsPerform$$' Then
+			And I open 'IncomeAndExpenseItems' catalog default form
+		Else
+			And In the command interface I select "Planning and control" "Income and expense items"
 
-	* Находим и заполняем элемент
-		И Я в списке "Income and expense items" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"
-		И в таблице "List" я выбираю текущую строку
-		Тогда открылось окно '[TheName] (Income and expense item)'
+	* Finding and filling an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Income and expense items"
+		And I select current line in "List" table
+		Then '[TheName] (Income and expense item)' window is opened
 
-		Если элемент формы с именем "DrillDownGroup" стал равен '' тогда
-			И Я заполняю виды аналитики 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6'
-			И я нажимаю на кнопку с именем 'FormWrite'
-		Иначе 
-			И я жду закрытия окна '[TheName] (Income and expense item) *' в течение 20 секунд
+		If the form attribute named "DrillDownGroup" became equal to '' Then
+			And I fill dimension types 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6'
+			And I click the button named 'FormWrite'
+		Else
+			And I wait '[TheName] (Income and expense item) *' window closing in 20 seconds
 
-	* Закрываем форму элемента
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна '[TheName] (Income and expense item) *' в течение 20 секунд
-		И Я закрываю окно "Income and expense items"'
+	* Closing an element form
+		And I click the button named 'FormWriteAndClose'
+		And I wait '[TheName] (Income and expense item) *' window closing in 20 seconds
+		And I close "Income and expense items" window
 
-Сценарий: Я для статьи ДиР с именем 'TheName' определяю тип движения статьи 'TheTypeDirection'
+Scenario: I define item movement type 'TheTypeDirection' for income statement item with name 'TheName'
 
-	* Открываем форму списка
-		Если '$$ЭтоPerform$$' Тогда
-			И я открываю основную форму списка справочника 'IncomeAndExpenseItems'
-		Иначе
-			И В командном интерфейсе я выбираю "Planning and control" "Income and expense items"
+	* Opening list form
+		If '$$IsPerform$$' Then
+			And I open 'IncomeAndExpenseItems' catalog default form
+		Else
+			And In the command interface I select "Planning and control" "Income and expense items"
 
-	* Находим и заполняем элемент
-		И Я в списке "Income and expense items" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"
-		И в таблице "List" я выбираю текущую строку
-		И я меняю значение переключателя с именем 'ArrivalExpense' на '[TheTypeDirection]'
-		И я нажимаю на кнопку с именем 'FormWrite'
+	* Finding and filling an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Income and expense items"
+		And I select current line in "List" table
+		And I change the radio button named 'ArrivalExpense' value to '[TheTypeDirection]'
+		And I click the button named 'FormWrite'
 	
-	* Закрываем форму элемента
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна '[TheName] (Income and expense item) *' в течение 20 секунд
-		И Я закрываю окно "Income and expense items"'
+	* Closing an element form
+		And I click the button named 'FormWriteAndClose'
+		And I wait '[TheName] (Income and expense item) *' window closing in 20 seconds
+		And I close "Income and expense items" window

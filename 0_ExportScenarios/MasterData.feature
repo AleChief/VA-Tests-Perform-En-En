@@ -1,1146 +1,1146 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для создания НСИ
+Feature: Export scenarios for creating reference data
 
-Сценарий: Я создаю единицу измерения с кодом 'TheCode' если ее нет, наименование 'TheName', наименование полное 'TheNameFull'
+Scenario: I create unit of measure with code 'TheCode' if it does not exist, name 'TheName', full name 'TheNameFull'
 
-	* Открываем форму списка
-		И я открываю основную форму списка справочника 'UnitOfMeasureClassifier'
-		Тогда открылось окно "Classifier of Measurement Units"
+	* Opening list form
+		And I open 'UnitOfMeasureClassifier' catalog default form
+		Then "Classifier of Measurement Units" window is opened
 
-	* Создадим элемент, если его нет
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Code"
-		И в поле с именем 'Pattern' я ввожу текст '[TheCode]'
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И я нажимаю на кнопку с именем 'Find'
-		Если в таблице 'List' количество строк 'равно' 0 Тогда
-			Если '$$ЭтоPerform$$' Тогда
-				И я нажимаю на кнопку с именем 'FormCreate'
-				Тогда открылось окно "Classifier of Measurement Units (create)"
-				И в поле с именем 'Code' я ввожу текст '[TheCode]'
-				И в поле с именем 'Наименование' я ввожу текст '[TheName]'				
-				И в поле с именем 'DescriptionFull' я ввожу текст '[TheNameFull]'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Classifier of Measurement Units (create) *" в течение 20 секунд							
-			Иначе
-				И я нажимаю на кнопку с именем 'FormPickFromTemplate'
-				Тогда открылось окно "All-Russian Classifier of Measurement Units"
-				И в поле с именем 'SearchString' я ввожу текст '[TheCode]'
-				И я нажимаю на кнопку с именем 'SearchForward'
-				И Пауза 1
-				И я нажимаю на кнопку с именем 'FormSelect'						
-				Тогда открылось окно "Classifier of Measurement Units (create)"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Classifier of Measurement Units (create)" в течение 20 секунд
-				Тогда открылось окно "All-Russian Classifier of Measurement Units"
-				И я нажимаю на кнопку с именем 'Close'
+	* Creating element if it doesn't exist
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Code" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheCode]' text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I click the button named 'Find'
+		If number of 'List' table lines is 'equal' 0 Then
+			If '$$IsPerform$$' Then
+				And I click the button named 'FormCreate'
+				Then "Classifier of Measurement Units (create)" window is opened
+				And I input '[TheCode]' text in the field named 'Code'
+				And I input '[TheName]' text in the field named 'Description'
+				And I input '[TheNameFull]' text in the field named 'DescriptionFull'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Classifier of Measurement Units (create) *" window closing in 20 seconds
+			Else
+				And I click the button named 'FormPickFromTemplate'
+				Then "All-Russian Classifier of Measurement Units" window is opened
+				And I input '[TheCode]' text in the field named 'SearchString'
+				And I click the button named 'SearchForward'
+				And Delay 1
+				And I click the button named 'FormSelect'
+				Then "Classifier of Measurement Units (create)" window is opened
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Classifier of Measurement Units (create)" window closing in 20 seconds
+				Then "All-Russian Classifier of Measurement Units" window is opened
+				And I click the button named 'Close'
 
-	* Закрываем список
-		Когда открылось окно "Classifier of Measurement Units"
-		И Я закрываю окно "Classifier of Measurement Units"
+	* Closing a list
+		When "Classifier of Measurement Units" window is opened
+		And I close "Classifier of Measurement Units" window
 
-Сценарий: Я создаю валюту с цифровым кодом 'TheCodeDigital' символьным кодом 'TheCodeSymbol' и наименованием 'TheCurrencyName' если ее нет
+Scenario: I create currency with digital code 'TheCodeDigital' symbol code 'TheCodeSymbol' and name 'TheCurrencyName' if it does not exist
 
-	* Открываем форму списка
-		И В командном интерфейсе я выбираю "General catalogs and settings" "Currencies"
-		Тогда открылось окно "Currencies"
+	* Opening list form
+		And In the command interface I select "General catalogs and settings" "Currencies"
+		Then "Currencies" window is opened
 
-	* Создадим валюту, если ее нет		
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Numeric code"
-		И в поле с именем 'Pattern' я ввожу текст '[TheCodeDigital]'
-		И я нажимаю на кнопку с именем 'Find'
-		Если в таблице 'Currencies' количество строк 'равно' 0 Тогда
-			И я нажимаю на кнопку с именем 'CreateCurrency'
-			Тогда открылось окно "Currency (create)"
-			И я запоминаю заголовок текущего окна как 'WindowTitle'			
-		Иначе
-			И в таблице 'Currencies' я выбираю текущую строку
-			И я запоминаю заголовок текущего окна как 'WindowTitle'
-		И в поле с именем 'DescriptionFull' я ввожу текст '[TheCurrencyName]'
-		И в поле с именем 'Code' я ввожу текст '[TheCodeDigital]'
-		И в поле с именем 'Description' я ввожу текст '[TheCodeSymbol]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "$ЗаголовокОкна$ *" в течение 20 секунд
+	* Creating currency if it doesn't exist
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Numeric code" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheCodeDigital]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		If number of 'Currencies' table lines is 'equal' 0 Then
+			And I click the button named 'CreateCurrency'
+			Then "Currency (create)" window is opened
+			And I save the current window title as 'WindowTitle'
+		Else
+			And I select current line in 'Currencies' table
+			And I save the current window title as 'WindowTitle'
+		And I input '[TheCurrencyName]' text in the field named 'DescriptionFull'
+		And I input '[TheCodeDigital]' text in the field named 'Code'
+		And I input '[TheCodeSymbol]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "$WindowTitle$ *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Currencies"
-		И Я закрываю окно "Currencies"
+	* Closing a list
+		When "Currencies" window is opened
+		And I close "Currencies" window
 
-Сценарий: Я устанавливаю курс валюты 'TheCodeSymbol' на дату 'TheCourseDate' в значение 'TheCourseValue' кратность 'TheCourseRepetition' базовая валюта 'TheBaseCurrencyCodeSymbol'
+Scenario: I set currency rate 'TheCodeSymbol' on date 'TheCourseDate' to value 'TheCourseValue' repetition 'TheCourseRepetition' base currency 'TheBaseCurrencyCodeSymbol'
 
-	* Откроем валюту
-		И В командном интерфейсе я выбираю "General catalogs and settings" "Currencies"
-		Тогда открылось окно "Currencies"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Alphabetic code"
-		И в поле с именем 'Pattern' я ввожу текст '[TheCodeSymbol]'
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда в таблице 'Currencies' количество строк 'равно' 1
-		И в таблице 'Currencies' я выбираю текущую строку		
-		Тогда открылось окно "* (Currency)"
+	* Opening currency
+		And In the command interface I select "General catalogs and settings" "Currencies"
+		Then "Currencies" window is opened
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Alphabetic code" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheCodeSymbol]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then the number of 'Currencies' table lines is 'equal' 1
+		And I select current line in 'Currencies' table
+		Then "* (Currency)" window is opened
 
-	* Установим курс
-		И В текущем окне я нажимаю кнопку командного интерфейса "Exchange rates"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Effective on"
-		И в поле с именем 'Pattern' я ввожу текст '[TheCourseDate]'
-		И я нажимаю на кнопку с именем 'Find'
-		Если в таблице 'List' количество строк 'равно' 0 Тогда
-			И я нажимаю на кнопку с именем 'FormCreate'
-		Иначе
-			И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Exchange rate*"
-		И в поле с именем 'Period' я ввожу текст '[TheCourseDate]'
-		Если '$$ЭтоУХ$$' Тогда
-			И в поле с именем 'Rate' я ввожу текст '[TheCourseValue]'
-			И в поле с именем 'Кратность' я ввожу текст '[TheCourseRepetition]'
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И в поле с именем 'КурсЗнаменатель' я ввожу текст '[TheCourseRepetition]'
-			И из выпадающего списка с именем 'Currency' я выбираю точное значение '[TheCodeSymbol]'
-			И в поле с именем 'КурсЧислитель' я ввожу текст '[TheCourseValue]'
-			И из выпадающего списка с именем 'BasicCurrency' я выбираю точное значение '[TheBaseCurrencyCodeSymbol]'						
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Exchange rate*" в течение 20 секунд		
+	* Setting exchange rate
+		And In this window I click command interface button "Exchange rates"
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Effective on" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheCourseDate]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		If number of 'List' table lines is 'equal' 0 Then
+			And I click the button named 'FormCreate'
+		Else
+			And I select current line in 'List' table
+		Then "Exchange rate*" window is opened
+		And I input '[TheCourseDate]' text in the field named 'Period'
+		If '$$IsCPM$$' Then
+			And I input '[TheCourseValue]' text in the field named 'Rate'
+			And I input '[TheCourseRepetition]' text in the field named 'Кратность'
+		ElseIf '$$IsERPCPM$$' Then
+			And I input '[TheCourseRepetition]' text in the field named 'RateDenominator'
+			And I select '[TheCodeSymbol]' exact value from the drop-down list named 'Currency'
+			And I input '[TheCourseValue]' text in the field named 'RateNumerator'
+			And I select '[TheBaseCurrencyCodeSymbol]' exact value from the drop-down list named 'BasicCurrency'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Exchange rate*" window closing in 20 seconds
 
-	* Закрываем окна
-		Тогда открылось окно "* (Currency)"
-		И Я закрываю окно "* (Currency)"
-		Тогда открылось окно "Currencies"
-		И Я закрываю окно "Currencies"
+	* Closing windows
+		Then "* (Currency)" window is opened
+		And I close "* (Currency)" window
+		Then "Currencies" window is opened
+		And I close "Currencies" window
 
-Сценарий: Я создаю вид организационной единицы с именем 'TheBusinessUnitName'
+Scenario: I create organizational unit type with name 'TheBusinessUnitName'
 
-	* Открываем форму справочника
-		И я открываю основную форму списка справочника 'BusinessUnitKinds'
+	* Opening a reference form
+		And I open 'BusinessUnitKinds' catalog default form
 
-	* Удаляем элемент
-		Тогда открылось окно "Business unit kinds"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		И в поле с именем 'Pattern' я ввожу текст '[TheBusinessUnitName]'
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Business unit kinds"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление	
-				И Я удаляю текущую строку в списке 'List'
-			* Переименовываем
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "* (Business unit kind)"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Business unit kind) *" в течение 20 секунд
+	* Deleting an element
+		Then "Business unit kinds" window is opened
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheBusinessUnitName]' text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I click the button named 'Find'
+		Then "Business unit kinds" window is opened
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "* (Business unit kind)" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Business unit kind) *" window closing in 20 seconds
 	
-	* Создаем элементм
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Business unit kind (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheBusinessUnitName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Business unit kind (create) *" в течение 20 секунд
+	* Creating element
+		And I click the button named 'FormCreate'
+		Then "Business unit kind (create)" window is opened
+		And I input '[TheBusinessUnitName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Business unit kind (create) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Business unit kinds"
-		И Я закрываю окно "Business unit kinds"
+	* Closing a list
+		When "Business unit kinds" window is opened
+		And I close "Business unit kinds" window
 
-Сценарий: я нахожу организацию с именем 'TheBusinessUnitName'
-	Если '$$ЭтоУХ$$' Тогда
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Business units"
-	Если '$$ЭтоЕРПУХ$$' Тогда
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Companies"
+Scenario: I find company with name 'TheBusinessUnitName'
+	If '$$IsCPM$$' Then
+		And In the command interface I select "Budgeting, reporting, and analysis" "Business units"
+	If '$$IsERPCPM$$' Then
+		And In the command interface I select "Budgeting, reporting, and analysis" "Companies"
 
-	* Открываем организацию
-		Когда открылось окно "Business units"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		ИначеЕсли '$$ЭтоPerform$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		ИначеЕсли '$$ЭтоУХ$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Name in the application"
-		И в поле с именем 'Pattern' я ввожу текст '[TheBusinessUnitName]'
-		И я меняю значение переключателя с именем 'CompareType' на "At the beginning of the line"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Business units"
-		Если в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "* (Business unit)"
+	* Opening company
+		When "Business units" window is opened
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		If '$$IsERPCPM$$' Then
+			And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		ElseIf '$$IsPerform$$' Then
+			And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		ElseIf '$$IsCPM$$' Then
+			And I select "Name in the application" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheBusinessUnitName]' text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "At the beginning of the line"
+		And I click the button named 'Find'
+		Then "Business units" window is opened
+		If number of 'List' table lines is 'more' 0 Then
+			And I select current line in 'List' table
+			Then "* (Business unit)" window is opened
 
-Сценарий: Я создаю организацию с именем 'TheBusinessUnitName' типом 'TheBusinessUnitType' видом 'TheBusinessUnitKind' налогооблажением 'TheTaxation'
+Scenario: I create company with name 'TheBusinessUnitName' type 'TheBusinessUnitType' kind 'TheBusinessUnitKind' taxation 'TheTaxation'
 
-	Если '$$ЭтоУХ$$' Тогда
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Business units"
-	Если '$$ЭтоЕРПУХ$$' Тогда
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Companies"
+	If '$$IsCPM$$' Then
+		And In the command interface I select "Budgeting, reporting, and analysis" "Business units"
+	If '$$IsERPCPM$$' Then
+		And In the command interface I select "Budgeting, reporting, and analysis" "Companies"
 
-	* Удаляем текущий элемент		
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		ИначеЕсли '$$ЭтоPerform$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		ИначеЕсли '$$ЭтоУХ$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Name in the application"
-		И я меняю значение переключателя с именем 'CompareType' на "At the beginning of the line"
-		И в поле с именем 'Pattern' я ввожу текст '[TheBusinessUnitName]'
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Business units"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление
-				И Я удаляю текущую строку в списке 'List'
-			И в таблице 'List' я выбираю текущую строку
-			Когда открылось окно "* (Business unit)"
-			Если '$$ЭтоУХ$$' Тогда
-				* Удаляем все подразделения
-					И В текущем окне я нажимаю кнопку командного интерфейса "Departments"
-					И я нажимаю на кнопку с именем 'FormListSettings'
-					И Я устанавливаю отбор в форме списка "Description" "Does not begin with" 'Delete_'
-					И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-						И Я запоминаю значение выражения '"Удалить_" + СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-						И в таблице 'List' я выбираю текущую строку
-						Тогда открылось окно "* (Department)"
-						И в поле с именем 'Description' я ввожу значение переменной 'UID'
-						И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					Когда открылось окно "* (Business unit)"						
-					И я нажимаю на кнопку с именем 'FormListSettings'
-					И Я снимаю все отборы в форме списка
-					И В текущем окне я нажимаю кнопку командного интерфейса "IsMain"				
-			* Переименовываем организацию
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И в поле с именем 'DescriptionFull' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Business unit) *" в течение 20 секунд
+	* Deleting the current element
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		If '$$IsERPCPM$$' Then
+			And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		ElseIf '$$IsPerform$$' Then
+			And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		ElseIf '$$IsCPM$$' Then
+			And I select "Name in the application" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "At the beginning of the line"
+		And I input '[TheBusinessUnitName]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then "Business units" window is opened
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			And I select current line in 'List' table
+			When "* (Business unit)" window is opened
+			If '$$IsCPM$$' Then
+				* Deleting all subdivisions
+					And In this window I click command interface button "Departments"
+					And I click the button named 'FormListSettings'
+					And I set filter in list form "Description" "Does not begin with" 'Delete_'
+					And While the number of 'List' table lines 'more' 0 Then
+						And I save '"Delete_" + StrReplace(New UUID, "-", "")' in 'UID' variable
+						And I select current line in 'List' table
+						Then "* (Department)" window is opened
+						And I input 'UID' variable value in the field named 'Description'
+						And I click the button named 'FormWriteAndClose'
+					When "* (Business unit)" window is opened
+					And I click the button named 'FormListSettings'
+					And I remove all filters in list form
+					And In this window I click command interface button "IsMain"
+			* Renaming company
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I input 'UID' variable value in the field named 'Description'
+				And I input 'UID' variable value in the field named 'DescriptionFull'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Business unit) *" window closing in 20 seconds
 
-	* Создаем новую организацию
-		Если '$$ЭтоPerform$$' Тогда
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Business unit (create)"
-			Если '"[TheBusinessUnitType]"="ВыбратьРФ"' Тогда
-				И из выпадающего списка с именем 'CompanyTypeCPM' я выбираю точное значение "Company"
-			ИначеЕсли '"[TheBusinessUnitKind]"="ВыбратьЭл"' Тогда
-				И из выпадающего списка с именем 'CompanyTypeCPM' я выбираю точное значение "Eliminating business unit"
-			ИначеЕсли '"[TheBusinessUnitType]"="ВыбратьЦФО"' Тогда
-				И из выпадающего списка с именем 'CompanyTypeCPM' я выбираю точное значение "Financial responsibility center or consolidating business unit"	
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда			
-			Если '"[TheBusinessUnitType]"="ВыбратьРФ"' Тогда
-				Если '"[TheBusinessUnitKind]"="ВыбратьЮЛ"' Тогда
-					И я нажимаю на кнопку с именем 'LegalEntity'
-				Иначе
-					И я нажимаю на кнопку с именем 'IndividualEntrepreneur'
-				Если элемент формы с именем 'RegistrationCountry' присутствует на форме Тогда
-					И из выпадающего списка с именем 'RegistrationCountry' я выбираю по строке "643"										
-			ИначеЕсли '"[TheBusinessUnitType]"="ВыбратьЦФО"' Тогда
-				Если '"[TheBusinessUnitKind]"="ВыбратьЭл"' Тогда
-					И я нажимаю на кнопку с именем 'FormCreateEliminating'
-				Иначе
-					И я нажимаю на кнопку с именем 'FormCreateConsolidating'
-				Если элемент формы с именем 'RegistrationCountry' присутствует на форме Тогда
-					И из выпадающего списка с именем 'RegistrationCountry' я выбираю по строке "643"	
-			ИначеЕсли '"[TheBusinessUnitType]"="ВыбратьИн"' Тогда
-				// Нет примеров											
-		ИначеЕсли '$$ЭтоУХ$$' Тогда
-			И я нажимаю на кнопку с именем 'CreateNewCompany'
-			Тогда открылось окно "Company type"
-			И я нажимаю на кнопку с именем '[TheBusinessUnitType]'
-			Если '"[TheBusinessUnitType]"="ВыбратьРФ"' Тогда
-				Когда открылось окно "Company kind"
-				И я нажимаю на кнопку с именем '[TheBusinessUnitKind]'
-				Если '"[TheBusinessUnitKind]"="ВыбратьЮЛ"' Тогда
-					Когда открылось окно "Legal entity"
-					И я нажимаю на кнопку с именем '[TheTaxation]'	
-			ИначеЕсли '"[TheBusinessUnitType]"="ВыбратьИн"' Тогда
-				// Нет примеров
-			ИначеЕсли '"[TheBusinessUnitType]"="ВыбратьЦФО"' Тогда
-				Если '"[TheBusinessUnitKind]"="ВыбратьЭл"' Тогда
-					И из выпадающего списка с именем 'CompanyTypeCPM' я выбираю точное значение "Eliminating business unit"
-			И в поле с именем 'НаименованиеСокращенное' я ввожу текст '[TheBusinessUnitName]'
-		И в поле с именем 'Наименование' я ввожу текст '[TheBusinessUnitName]'
-		И в поле с именем 'DescriptionFull' я ввожу текст '[TheBusinessUnitName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Compan *" в течение 20 секунд
+	* Creating new company
+		If '$$IsPerform$$' Then
+			And I click the button named 'FormCreate'
+			Then "Business unit (create)" window is opened
+			If '"[TheBusinessUnitType]"="SelectRF"' Then
+				And I select "Company" exact value from the drop-down list named 'CompanyTypeCPM'
+			ElseIf '"[TheBusinessUnitKind]"="SelectEl"' Then
+				And I select "Eliminating business unit" exact value from the drop-down list named 'CompanyTypeCPM'
+			ElseIf '"[TheBusinessUnitType]"="SelectCFO"' Then
+				And I select "Financial responsibility center or consolidating business unit" exact value from the drop-down list named 'CompanyTypeCPM'
+		ElseIf '$$IsERPCPM$$' Then
+			If '"[TheBusinessUnitType]"="SelectRF"' Then
+				If '"[TheBusinessUnitKind]"="SelectLE"' Then
+					And I click the button named 'LegalEntity'
+				Else
+					And I click the button named 'IndividualEntrepreneur'
+				If the field named 'RegistrationCountry' exists on the form Then
+					And I select from the drop-down list named 'RegistrationCountry'  by "643" string
+			ElseIf '"[TheBusinessUnitType]"="SelectCFO"' Then
+				If '"[TheBusinessUnitKind]"="SelectEl"' Then
+					And I click the button named 'FormCreateEliminating'
+				Else
+					And I click the button named 'FormCreateConsolidating'
+				If the field named 'RegistrationCountry' exists on the form Then
+					And I select from the drop-down list named 'RegistrationCountry'  by "643" string
+			ElseIf '"[TheBusinessUnitType]"="SelectInstance"' Then
+				// No examples
+		ElseIf '$$IsCPM$$' Then
+			And I click the button named 'CreateNewCompany'
+			Then "Company type" window is opened
+			And I click the button named '[TheBusinessUnitType]'
+			If '"[TheBusinessUnitType]"="SelectRF"' Then
+				When "Company kind" window is opened
+				And I click the button named '[TheBusinessUnitKind]'
+				If '"[TheBusinessUnitKind]"="SelectLE"' Then
+					When "Legal entity" window is opened
+					And I click the button named '[TheTaxation]'
+			ElseIf '"[TheBusinessUnitType]"="SelectInstance"' Then
+				// No examples
+			ElseIf '"[TheBusinessUnitType]"="SelectCFO"' Then
+				If '"[TheBusinessUnitKind]"="SelectEl"' Then
+					And I select "Eliminating business unit" exact value from the drop-down list named 'CompanyTypeCPM'
+			And I input '[TheBusinessUnitName]' text in the field named 'DescriptionShort'
+		And I input '[TheBusinessUnitName]' text in the field named 'Description'
+		And I input '[TheBusinessUnitName]' text in the field named 'DescriptionFull'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Compan *" window closing in 20 seconds
 
-	* Закрываем форму списка
-		Когда открылось окно "Business units"
-		И Я закрываю окно "Business units"	
+	* Closing a list form
+		When "Business units" window is opened
+		And I close "Business units" window
 
-Сценарий: Я для организации 'TheBusinessUnitName' создаю подразделение с именем 'TheSubdivisionName' 
+Scenario: I create subdivision with name 'TheSubdivisionName' for company 'TheBusinessUnitName'
 
-	* Открываем список организаций
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Business units"
+	* Opening company list
+		And In the command interface I select "Budgeting, reporting, and analysis" "Business units"
 
-	* Открываем организацию
-		Когда открылось окно "Business units"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		ИначеЕсли '$$ЭтоPerform$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		ИначеЕсли '$$ЭтоУХ$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Name in the application"
-		И в поле с именем 'Pattern' я ввожу текст '[TheBusinessUnitName]'
-		И я меняю значение переключателя с именем 'CompareType' на "At the beginning of the line"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Business units"
-		Если в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "* (Business unit)"
-			И В текущем окне я нажимаю кнопку командного интерфейса "Departments"
-			Когда открылось окно "* (Business unit)"
-			И я нажимаю на кнопку с именем 'FormFind'
-			Тогда открылась форма с именем 'UniversalListFindExtForm'
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-			И в поле с именем 'Pattern' я ввожу текст '[TheSubdivisionName]'
-			И я нажимаю на кнопку с именем 'Find'
-			И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-				* Ставим пометку на удаление
-					И Я удаляю текущую строку в списке 'List'
-				* Переименовываем подразделение
-					И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-					И в таблице 'List' я выбираю текущую строку					
-					Тогда открылось окно "* (Department)"
-					И в поле с именем 'Description' я ввожу значение переменной 'UID'
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					И я жду закрытия окна "* (Department) *" в течение 20 секунд
+	* Opening company
+		When "Business units" window is opened
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		If '$$IsERPCPM$$' Then
+			And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		ElseIf '$$IsPerform$$' Then
+			And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		ElseIf '$$IsCPM$$' Then
+			And I select "Name in the application" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheBusinessUnitName]' text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "At the beginning of the line"
+		And I click the button named 'Find'
+		Then "Business units" window is opened
+		If number of 'List' table lines is 'more' 0 Then
+			And I select current line in 'List' table
+			Then "* (Business unit)" window is opened
+			And In this window I click command interface button "Departments"
+			When "* (Business unit)" window is opened
+			And I click the button named 'FormFind'
+			Then the form named 'UniversalListFindExtForm' is opened
+			And I select "Description" exact value from the drop-down list named 'FieldSelector'
+			And I input '[TheSubdivisionName]' text in the field named 'Pattern'
+			And I click the button named 'Find'
+			And While the number of 'List' table lines 'more' 0 Then
+				* Marking for deletion
+					And I delete current row in list 'List'
+				* Renaming subdivision
+					And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+					And I select current line in 'List' table
+					Then "* (Department)" window is opened
+					And I input 'UID' variable value in the field named 'Description'
+					And I click the button named 'FormWriteAndClose'
+					And I wait "* (Department) *" window closing in 20 seconds
 	
-	* Создаем элемент
-		Когда открылось окно "* (Business unit)"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Department (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheSubdivisionName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Department (create) *" в течение 20 секунд
+	* Creating an element
+		When "* (Business unit)" window is opened
+		And I click the button named 'FormCreate'
+		Then "Department (create)" window is opened
+		And I input '[TheSubdivisionName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Department (create) *" window closing in 20 seconds
 
-	* Закрываем организацию
-		Когда открылось окно "* (Business unit)"
-		И Я закрываю окно "* (Business unit)"
+	* Closing company
+		When "* (Business unit)" window is opened
+		And I close "* (Business unit)" window
 
-	* Закрываем список организаций
-		Когда открылось окно "Business units"
-		И Я закрываю окно "Business units"
+	* Closing company list
+		When "Business units" window is opened
+		And I close "Business units" window
 
-Сценарий: Я для организации 'TheBusinessUnitName' для реквизита 'TheAttributeName' выбираю значение 'TheValuesName' 
+Scenario: I select value 'TheValuesName' for attribute 'TheAttributeName' for company 'TheBusinessUnitName'
 
-	Если '$$ЭтоУХ$$' Тогда
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Business units"
-	Если '$$ЭтоЕРПУХ$$' Тогда
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Companies"
+	If '$$IsCPM$$' Then
+		And In the command interface I select "Budgeting, reporting, and analysis" "Business units"
+	If '$$IsERPCPM$$' Then
+		And In the command interface I select "Budgeting, reporting, and analysis" "Companies"
 
-	* Открываем организацию
-		Когда открылось окно "Business units"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		ИначеЕсли '$$ЭтоPerform$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		ИначеЕсли '$$ЭтоУХ$$' Тогда
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Name in the application"
-		И в поле с именем 'Pattern' я ввожу текст '[TheBusinessUnitName]'
-		И я меняю значение переключателя с именем 'CompareType' на "At the beginning of the line"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Business units"
-		Если в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "* (Business unit)"
-			И я разворачиваю группу с именем 'GroupConsolidationParametersCPM'
-			И из выпадающего списка с именем '[TheAttributeName]' я выбираю по строке '[TheValuesName]'						
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "* (Business unit) *" в течение 20 секунд							
+	* Opening company
+		When "Business units" window is opened
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		If '$$IsERPCPM$$' Then
+			And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		ElseIf '$$IsPerform$$' Then
+			And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		ElseIf '$$IsCPM$$' Then
+			And I select "Name in the application" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheBusinessUnitName]' text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "At the beginning of the line"
+		And I click the button named 'Find'
+		Then "Business units" window is opened
+		If number of 'List' table lines is 'more' 0 Then
+			And I select current line in 'List' table
+			Then "* (Business unit)" window is opened
+			And I expand the group named 'GroupConsolidationParametersCPM'
+			And I select from the drop-down list named '[TheAttributeName]'  by '[TheValuesName]' string
+			And I click the button named 'FormWriteAndClose'
+			And I wait "* (Business unit) *" window closing in 20 seconds
 
-	* Закрываем список организаций
-		Когда открылось окно "Business units"
-		И Я закрываю окно "Business units"
+	* Closing company list
+		When "Business units" window is opened
+		And I close "Business units" window
 
-Сценарий: Я для организации 'TheBusinessUnitName' для реквизита 'TheAttributeName' ввожу значение 'TheValuesName'
-	* Находим организацию
-		И я нахожу организацию с именем '[TheBusinessUnitName]'
+Scenario: I enter value 'TheValuesName' for attribute 'TheAttributeName' for company 'TheBusinessUnitName'
+	* Finding company
+		And I find company with name '[TheBusinessUnitName]'
 	
-	* Вводим значение для реквизита
-		И в поле с именем '[TheAttributeName]' я ввожу текст '[TheValuesName]'	
-		И я перехожу к следующему реквизиту
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "* (Business unit) *" в течение 20 секунд		
+	* Entering value for attribute
+		And I input '[TheValuesName]' text in the field named '[TheAttributeName]'
+		And I move to the next attribute
+		And I click the button named 'FormWriteAndClose'
+		And I wait "* (Business unit) *" window closing in 20 seconds
 
-Сценарий: Я для организации с именем 'TheBusinessUnitName' указываю ИНН 'TheTIN', КПП 'TheRRC', ОГРН 'TheOGRN', дата регистрации 'TheRegistrationDate'
-	* Находим организацию
-		И я нахожу организацию с именем '[TheBusinessUnitName]'
+Scenario: I specify TIN 'TheTIN', RRC 'TheRRC', OGRN 'TheOGRN', registration date 'TheRegistrationDate' for company with name 'TheBusinessUnitName'
+	* Finding company
+		And I find company with name '[TheBusinessUnitName]'
 	
-	* Вводим значения
-		И в таблице "List" я выбираю текущую строку
-		И в поле с именем 'TIN' я ввожу текст '[TheTIN]'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'КПП' я ввожу текст '[TheRRC]'
-		И я перехожу к следующему реквизиту
-		И в поле 'ОГРН' я ввожу текст '[TheOGRN]'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'ДатаРегистрации' я ввожу текст '[TheRegistrationDate]'
-		И я перехожу к следующему реквизиту
-		И я нажимаю на кнопку с именем 'FormWrite'	
-		Тогда элемент формы с именем "TIN" стал равен '[TheTIN]'
-		Тогда элемент формы с именем "КПП" стал равен '[TheRRC]'
-		Тогда элемент формы с именем "ОГРН" стал равен '[TheOGRN]'
-		Тогда элемент формы с именем "RegistrationDate" стал равен '[TheRegistrationDate]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "* (Business unit) *" в течение 20 секунд
+	* Entering values
+		And I select current line in "List" table
+		And I input '[TheTIN]' text in the field named 'TIN'
+		And I move to the next attribute
+		And I input '[TheRRC]' text in the field named 'KPP'
+		And I move to the next attribute
+		And I input '[TheOGRN]' text in 'OGRN' field
+		And I move to the next attribute
+		And I input '[TheRegistrationDate]' text in the field named 'DateRegistration'
+		And I move to the next attribute
+		And I click the button named 'FormWrite'
+		Then the form attribute named "TIN" became equal to '[TheTIN]'
+		Then the form attribute named "RRC" became equal to '[TheRRC]'
+		Then the form attribute named "OGRN" became equal to '[TheOGRN]'
+		Then the form attribute named "RegistrationDate" became equal to '[TheRegistrationDate]'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "* (Business unit) *" window closing in 20 seconds
 
-Сценарий: Я для организации 'TheBusinessUnitName' создаю банковский счет 'TheBank' 'TheBankAccount' 
-	* Создание элемента
-		Если '$$ЭтоУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Business units"
-			И я нажимаю на кнопку с именем 'FormFind'
-			Тогда открылось окно 'Find'
-			И в поле с именем 'Pattern' я ввожу текст '[TheBusinessUnitName]'
-			И я нажимаю на кнопку с именем 'Find'
-			И в таблице "List" я выбираю текущую строку
-			И В текущем окне я нажимаю кнопку командного интерфейса 'Bank accounts'
-			И я нажимаю на кнопку с именем 'CreateBankAccount'
-			И из выпадающего списка с именем "Bank" я выбираю по строке '[TheBank]'
-			И я перехожу к следующему реквизиту
-			И в поле с именем 'AccountNumber' я ввожу текст '[TheBankAccount]'
-			И я нажимаю на кнопку с именем 'FormCommandSaveAndClose'
-			И я жду закрытия окна 'Bank account (create) *' в течение 20 секунд
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Companies"
-			И я нажимаю на кнопку с именем 'FormFind'
-			Тогда открылось окно 'Find'
-			И в поле с именем 'Pattern' я ввожу текст '[TheBusinessUnitName]'
-			И я нажимаю на кнопку с именем 'Find'
-			И в таблице "List" я выбираю текущую строку
-			И В текущем окне я нажимаю кнопку командного интерфейса 'Bank accounts'	
-			И в таблице "List" я нажимаю на кнопку с именем 'ListCreate'
-			Тогда открылось окно 'Company bank account (create)'
-			И в поле с именем 'AccountNumber' я ввожу текст '[TheBankAccount]'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна 'Company bank account (create) *' в течение 20 секунд					
+Scenario: I create bank account 'TheBank' 'TheBankAccount' for company 'TheBusinessUnitName'
+	* Creating element
+		If '$$IsCPM$$' Then
+			And In the command interface I select "Budgeting, reporting, and analysis" "Business units"
+			And I click the button named 'FormFind'
+			Then 'Find' window is opened
+			And I input '[TheBusinessUnitName]' text in the field named 'Pattern'
+			And I click the button named 'Find'
+			And I select current line in "List" table
+			And In this window I click command interface button 'Bank accounts'
+			And I click the button named 'CreateBankAccount'
+			And I select from the drop-down list named "Bank"  by '[TheBank]' string
+			And I move to the next attribute
+			And I input '[TheBankAccount]' text in the field named 'AccountNumber'
+			And I click the button named 'FormCommandSaveAndClose'
+			And I wait 'Bank account (create) *' window closing in 20 seconds
+		If '$$IsERPCPM$$' Then
+			And In the command interface I select "Budgeting, reporting, and analysis" "Companies"
+			And I click the button named 'FormFind'
+			Then 'Find' window is opened
+			And I input '[TheBusinessUnitName]' text in the field named 'Pattern'
+			And I click the button named 'Find'
+			And I select current line in "List" table
+			And In this window I click command interface button 'Bank accounts'
+			And in the table "List" I click the button named 'ListCreate'
+			Then 'Company bank account (create)' window is opened
+			And I input '[TheBankAccount]' text in the field named 'AccountNumber'
+			And I click the button named 'FormWriteAndClose'
+			And I wait 'Company bank account (create) *' window closing in 20 seconds
 
-Сценарий: Я создаю отношение к группе с именем 'TheRelationsToGroupName' и видом 'TheRelationsToGroupKind'
+Scenario: I create relation to group with name 'TheRelationsToGroupName' and kind 'TheRelationsToGroupKind'
 
-	* Открываем форму справочника
-		И я открываю основную форму списка справочника 'CounterpartiesGroups'
+	* Opening a reference form
+		And I open 'CounterpartiesGroups' catalog default form
 
-	* Удаляем элемент
-		Тогда открылось окно "Company statuses for consolidation"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		И в поле с именем 'Pattern' я ввожу текст '[TheRelationsToGroupName]'
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Company statuses for consolidation"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление	
-				И Я удаляю текущую строку в списке 'List'
-			* Переименовываем
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "* (Company statuses for consolidation)"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Company statuses for consolidation) *" в течение 20 секунд
+	* Deleting an element
+		Then "Company statuses for consolidation" window is opened
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheRelationsToGroupName]' text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I click the button named 'Find'
+		Then "Company statuses for consolidation" window is opened
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "* (Company statuses for consolidation)" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Company statuses for consolidation) *" window closing in 20 seconds
 	
-	* Создаем элементм
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Company statuses for consolidation (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheRelationsToGroupName]'
-		И из выпадающего списка с именем 'GroupRelationType' я выбираю точное значение '[TheRelationsToGroupKind]'				
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Company statuses for consolidation (create) *" в течение 20 секунд
+	* Creating element
+		And I click the button named 'FormCreate'
+		Then "Company statuses for consolidation (create)" window is opened
+		And I input '[TheRelationsToGroupName]' text in the field named 'Description'
+		And I select '[TheRelationsToGroupKind]' exact value from the drop-down list named 'GroupRelationType'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Company statuses for consolidation (create) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Company statuses for consolidation"
-		И Я закрываю окно "Company statuses for consolidation"
+	* Closing a list
+		When "Company statuses for consolidation" window is opened
+		And I close "Company statuses for consolidation" window
 
-Сценарий: Я создаю группу номенклатуры с именем 'TheProductGroupName'
+Scenario: I create nomenclature folder with name 'TheProductGroupName'
 
-	* Открываем список
-		Если в панели разделов есть команда 'Catalogs' Тогда
-			И В командном интерфейсе я выбираю "Catalogs" "Product range"
-		Иначе
-			И В командном интерфейсе я выбираю "Quick menu" "Product range"
+	* Opening a list
+		If sections panel contains 'Catalogs' command Then
+			And In the command interface I select "Catalogs" "Product range"
+		Else
+			And In the command interface I select "Quick menu" "Product range"
 
-	* Удаляем текущий элемент
-		И Я в списке "Product range" по полю "Description" ищу элемент '[TheProductGroupName]' "At the beginning of the line" 
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда	
-			* Ставим пометку на удаление
-				И Я удаляю текущую строку в списке 'List'
-			* Перименовываем
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'	
-				И в таблице 'List' я выбираю текущую строку
-				Когда открылось окно "* (Product range)"		
-				Тогда в поле с именем 'Description' я ввожу значение переменной 'UID'
+	* Deleting the current element
+		And I search element '[TheProductGroupName]' "At the beginning of the line" by field "Description" in list "Product range"
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				When "* (Product range)" window is opened
+				Then I input 'UID' variable value in the field named 'Description'
 				Если элемент 'Parent' присутствует на форме Тогда
-					И в поле с именем 'Parent' я ввожу текст ''								
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Product range)" в течение 20 секунд 
+					And I input '' text in the field named 'Parent'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Product range)" window closing in 20 seconds
 
-	* Создаем новый элемент
-		Когда открылось окно "Product range"
-		И я нажимаю на кнопку с именем 'FormCreateFolder'
-		Тогда открылось окно "Product range (create group)"
-		И в поле с именем 'Description' я ввожу текст '[TheProductGroupName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Product range (create group) *" в течение 20 секунд
+	* Creating a new element
+		When "Product range" window is opened
+		And I click the button named 'FormCreateFolder'
+		Then "Product range (create group)" window is opened
+		And I input '[TheProductGroupName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Product range (create group) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Product range"
-		И Я закрываю окно "Product range"
+	* Closing a list
+		When "Product range" window is opened
+		And I close "Product range" window
 
-Сценарий: Я создаю тип цен с именем 'TheName' валютой 'TheCurrency'
+Scenario: I create price type with name 'TheName' currency 'TheCurrency'
 
-	* Открываем форму справочника
-		И я открываю основную форму списка справочника 'ProductsPricesTypes'
+	* Opening a reference form
+		And I open 'ProductsPricesTypes' catalog default form
 
-	* Удаляем элемент
-		И Я в списке "Product range price types" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "* (Product range price type)" очищая
+	* Deleting an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Product range price types"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "* (Product range price type)" clearing
 	
-	* Создаем элементм
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Product range price type (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
+	* Creating element
+		And I click the button named 'FormCreate'
+		Then "Product range price type (create)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
 		Если элемент 'CurrencyPrice' присутствует на форме Тогда
-			И из выпадающего списка с именем 'CurrencyPrice' я выбираю точное значение '[TheCurrency]'
+			And I select '[TheCurrency]' exact value from the drop-down list named 'CurrencyPrice'
 		Если элемент 'PriceIncludesVAT' присутствует на форме Тогда
-			И я изменяю флаг с именем 'PriceIncludesVAT'		
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Product range price type (create) *" в течение 20 секунд
+			And I change checkbox named 'PriceIncludesVAT'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Product range price type (create) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Product range price types"
-		И Я закрываю окно "Product range price types"
+	* Closing a list
+		When "Product range price types" window is opened
+		And I close "Product range price types" window
 
-Сценарий: Я создаю условие оплаты с именем 'TheName'
+Scenario: I create payment terms with name 'TheName'
 
-	* Открываем форму списка
-		И В командном интерфейсе я выбираю "Управление обязательствами" "Условия оплаты"
+	* Opening list form
+		And In the command interface I select "Liability management" "Payment terms"
 
-	* Удаляем текущий элемент
-		И Я в списке "Payment terms" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "* (Payment condition)" очищая
+	* Deleting the current element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Payment terms"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "* (Payment condition)" clearing
 
-	* Создаем элемент
-		Тогда открылось окно "Payment terms"	
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Payment condition (creation)"
-		И в таблице 'ЭтапыОплаты' я нажимаю на кнопку с именем 'ЭтапыОплатыДобавить'
-		И в таблице 'ЭтапыОплаты' из выпадающего списка с именем 'ЭтапыОплатыВариантОплаты' я выбираю точное значение "Постоплата (после базовой даты)"
-		И в таблице 'StepsPayment' из выпадающего списка с именем 'StepsPaymentDueDate' я выбираю точное значение "60"
-		И в таблице 'ЭтапыОплаты' в поле с именем 'ЭтапыОплатыПроцентОплаты' я ввожу текст '100'
-		И в таблице 'PaymentStages' я завершаю редактирование строки
-		И я изменяю флаг с именем 'AutoName'
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Payment condition (creation) *" в течение 20 секунд	
+	* Creating an element
+		Then "Payment terms" window is opened
+		And I click the button named 'FormCreate'
+		Then "Payment condition (creation)" window is opened
+		And in the table 'PaymentStages' I click the button named 'PaymentStagesAdd'
+		And I select "Postpayment (after base date)" exact value from the drop-down list named 'PaymentStagesPaymentVariant' in 'PaymentStages' table
+		And I select "60" exact value from the drop-down list named 'StepsPaymentDueDate' in 'StepsPayment' table
+		And I input '100' text in the field named 'StepsPaymentPercentPayment' of 'StepsPayment' table
+		And I finish line editing in 'PaymentStages' table
+		And I change checkbox named 'AutoName'
+		And I input '[TheName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Payment condition (creation) *" window closing in 20 seconds
 
-	* Закрываем список	
-		Тогда открылось окно "Payment terms"
-		И Я закрываю окно "Payment terms"
+	* Closing a list
+		Then "Payment terms" window is opened
+		And I close "Payment terms" window
 
-Сценарий: Я создаю условие оплаты аванс 'S1'\'P1' и постоплата 'S2'\'P2'
+Scenario: I create payment terms advance 'S1'\'P1' and postpayment 'S2'\'P2'
 
-	* Открываем форму списка
-		И В командном интерфейсе я выбираю "Управление обязательствами" "Условия оплаты"
+	* Opening list form
+		And In the command interface I select "Liability management" "Payment terms"
 
-	* Удаляем текущий элемент
-		И Я в списке "Условия оплаты" по полю "Description" ищу элемент "Аванс [P1]% за [S1] к.д., Постоплата [P2]% через [S2] к.д." "Anywhere in the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И я снимаю флаг с именем 'AutoName'
-			И я нажимаю на кнопку с именем 'FormWrite'										
-			И Я удаляю текущий элемент в окне "* (Payment condition)" очищая
+	* Deleting the current element
+		And I search element "Аванс [P1]% за [S1] к.д., Постоплата [P2]% через [S2] к.д." "Anywhere in the line" by field "Description" in list "Payment terms"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I remove checkbox named 'AutoName'
+			And I click the button named 'FormWrite'
+			And I delete current element in window "* (Payment condition)" clearing
 
-	* Создаем элемент
-		Тогда открылось окно "Payment terms"	
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Payment condition (creation)"
-		И в таблице 'ЭтапыОплаты' я нажимаю на кнопку с именем 'ЭтапыОплатыДобавить'
-		И в таблице 'ЭтапыОплаты' из выпадающего списка с именем 'ЭтапыОплатыВариантОплаты' я выбираю точное значение "Аванс (до базовой даты)"
-		И в таблице 'StagesPayment' в поле с именем 'ЭтапыОплатыСрок' я ввожу текст '[S1]'
-		И в таблице 'ЭтапыОплаты' в поле с именем 'ЭтапыОплатыПроцентОплаты' я ввожу текст '[P1]'
-		И в таблице 'PaymentStages' я завершаю редактирование строки
-		Если 'НЕ ПустаяСтрока("[S2]")' Тогда
-			И в таблице 'ЭтапыОплаты' я нажимаю на кнопку с именем 'ЭтапыОплатыДобавить'
-			И в таблице 'ЭтапыОплаты' из выпадающего списка с именем 'ЭтапыОплатыВариантОплаты' я выбираю точное значение "Постоплата (после базовой даты)"
-			И в таблице 'StagesPayment' в поле с именем 'ЭтапыОплатыСрок' я ввожу текст '[S2]'
-			И в таблице 'ЭтапыОплаты' в поле с именем 'ЭтапыОплатыПроцентОплаты' я ввожу текст '[P2]'
-			И в таблице 'PaymentStages' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormWrite'
-		И я запоминаю значение поля с именем 'Description' как 'ConditionPayment'		
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Payment condition (creation) *" в течение 20 секунд	
+	* Creating an element
+		Then "Payment terms" window is opened
+		And I click the button named 'FormCreate'
+		Then "Payment condition (creation)" window is opened
+		And in the table 'PaymentStages' I click the button named 'PaymentStagesAdd'
+		And I select "Advance (before base date)" exact value from the drop-down list named 'PaymentStagesPaymentVariant' in 'PaymentStages' table
+		And I input '[S1]' text in the field named 'StagesPaymentDueDate' of 'StagesPayment' table
+		And I input '[P1]' text in the field named 'StagesPaymentPercentPayment' of 'StagesPayment' table
+		And I finish line editing in 'PaymentStages' table
+		If 'NOT IsBlankString("[S2]")' Then
+			And in the table 'PaymentStages' I click the button named 'PaymentStagesAdd'
+			And I select "Postpayment (after base date)" exact value from the drop-down list named 'PaymentStagesPaymentVariant' in 'PaymentStages' table
+			And I input '[S2]' text in the field named 'StagesPaymentDueDate' of 'StagesPayment' table
+			And I input '[P2]' text in the field named 'StagesPaymentPercentPayment' of 'StagesPayment' table
+			And I finish line editing in 'PaymentStages' table
+		And I click the button named 'FormWrite'
+		And I save the value of the field named 'Description' as 'ConditionPayment'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Payment condition (creation) *" window closing in 20 seconds
 
-	* Закрываем список	
-		Тогда открылось окно "Payment terms"
-		И Я закрываю окно "Payment terms"
+	* Closing a list
+		Then "Payment terms" window is opened
+		And I close "Payment terms" window
 
-Сценарий: Я создаю группу контрагентов с именем 'TheName'
+Scenario: I create counterparty group with name 'TheName'
 
-	* Открываем форму списка
-		Если '$$ЭтоPerform$$' Тогда
-			И В командном интерфейсе я выбираю "Quick menu" "Counterparties"
-			И Я в списке "Counterparties" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"
-		Иначе
-			И В командном интерфейсе я выбираю "Catalogs" "Counterparties"
-			И Я в списке "Counterparties" по полю "Name in the application" ищу элемент '[TheName]' "At the beginning of the line"
+	* Opening list form
+		If '$$IsPerform$$' Then
+			And In the command interface I select "Quick menu" "Counterparties"
+			And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Counterparties"
+		Else
+			And In the command interface I select "Catalogs" "Counterparties"
+			And I search element '[TheName]' "At the beginning of the line" by field "Name in the application" in list "Counterparties"
 	
-	* Удаляем текущий элемент
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "* (Counterparties)" очищая
+	* Deleting the current element
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "* (Counterparties)" clearing
 
-	* Создаем новый элемент
-		И я нажимаю на кнопку с именем 'FormCreateFolder'
-		Тогда открылось окно "Counterparties (create group)"
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Counterparties (create group) *" в течение 20 секунд
+	* Creating a new element
+		And I click the button named 'FormCreateFolder'
+		Then "Counterparties (create group)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Counterparties (create group) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Counterparties"
-		И Я закрываю окно "Counterparties"
+	* Closing a list
+		When "Counterparties" window is opened
+		And I close "Counterparties" window
 
-Сценарий: Я создаю контрагента с именем 'TheName' родителем 'TheParent' страной регистрации 'TheCountry'
+Scenario: I create counterparty with name 'TheName' parent 'TheParent' registration country 'TheCountry'
 
-	* Открываем форму списка
-		Если '$$ЭтоPerform$$' Тогда
-			И В командном интерфейсе я выбираю "Quick menu" "Counterparties"
-			И Я в списке "Counterparties" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"
-		Иначе
-			И В командном интерфейсе я выбираю "Catalogs" "Counterparties"
-			И Я в списке "Counterparties" по полю "Name in the application" ищу элемент '[TheName]' "At the beginning of the line"
+	* Opening list form
+		If '$$IsPerform$$' Then
+			And In the command interface I select "Quick menu" "Counterparties"
+			And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Counterparties"
+		Else
+			And In the command interface I select "Catalogs" "Counterparties"
+			And I search element '[TheName]' "At the beginning of the line" by field "Name in the application" in list "Counterparties"
 
-	* Удаляем текущий элемент
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление
-				И Я удаляю текущую строку в списке 'List'
-			И в таблице 'List' я выбираю текущую строку
-			Когда открылось окно "* (Counterparty)"
-			* Удаляем все договоры				
-				И В текущем окне я нажимаю кнопку командного интерфейса "Contracts"
-				И я нажимаю на кнопку с именем 'FormListSettings'
-				И Я устанавливаю отбор в форме списка "Description" "Does not begin with" 'Delete_'
-				И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-					И Я запоминаю значение выражения '"Удалить_" + СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-					И в таблице 'List' я выбираю текущую строку
-					Тогда открылось окно "*"
-					И в поле с именем 'Description' я ввожу значение переменной 'UID'
-					И я нажимаю на кнопку с именем 'FormWrite'
-					Тогда открылось окно "*"
-					И Я закрываю окно "*"		
-				И я нажимаю на кнопку с именем 'FormListSettings'
-				И Я снимаю все отборы в форме списка
-				И В текущем окне я нажимаю кнопку командного интерфейса "IsMain"								
-			* Удаляем контрагента
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'	
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				Если '$$ЭтоPerform$$' Тогда
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				Иначе
-					И я нажимаю на кнопку с именем 'FormCommandSaveAndClose'
-				И я жду закрытия окна "* (Counterparty)" в течение 20 секунд			
+	* Deleting the current element
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			And I select current line in 'List' table
+			When "* (Counterparty)" window is opened
+			* Deleting all contracts
+				And In this window I click command interface button "Contracts"
+				And I click the button named 'FormListSettings'
+				And I set filter in list form "Description" "Does not begin with" 'Delete_'
+				And While the number of 'List' table lines 'more' 0 Then
+					And I save '"Delete_" + StrReplace(New UUID, "-", "")' in 'UID' variable
+					And I select current line in 'List' table
+					Then "*" window is opened
+					And I input 'UID' variable value in the field named 'Description'
+					And I click the button named 'FormWrite'
+					Then "*" window is opened
+					And I close "*" window
+				And I click the button named 'FormListSettings'
+				And I remove all filters in list form
+				And In this window I click command interface button "IsMain"
+			* Deleting counterparty
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I input 'UID' variable value in the field named 'Description'
+				If '$$IsPerform$$' Then
+					And I click the button named 'FormWriteAndClose'
+				Else
+					And I click the button named 'FormCommandSaveAndClose'
+				And I wait "* (Counterparty)" window closing in 20 seconds
 
-	* Создаем новый элемент
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Counterparty (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И из выпадающего списка с именем 'Parent' я выбираю по строке '[TheParent]'
-		И из выпадающего списка с именем 'RegistrationCountry' я выбираю по строке '[TheCountry]'				
-		Если '$$ЭтоPerform$$' Тогда
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		Иначе
-			И я нажимаю на кнопку с именем 'FormCommandSaveAndClose'
-		И я жду закрытия окна "Counterparty (create) *" в течение 20 секунд
+	* Creating a new element
+		And I click the button named 'FormCreate'
+		Then "Counterparty (create)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		And I select from the drop-down list named 'Parent'  by '[TheParent]' string
+		And I select from the drop-down list named 'RegistrationCountry'  by '[TheCountry]' string
+		If '$$IsPerform$$' Then
+			And I click the button named 'FormWriteAndClose'
+		Else
+			And I click the button named 'FormCommandSaveAndClose'
+		And I wait "Counterparty (create) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Counterparties"
-		И Я закрываю окно "Counterparties"
+	* Closing a list
+		When "Counterparties" window is opened
+		And I close "Counterparties" window
 
-Сценарий: Я для контрагента с именем 'TheName' создаю банковский счет 'TheBank' 'TheBankAccount' 
-	* Создание элемента
-		Если '$$ЭтоУХ$$' Тогда
-			И В командном интерфейсе я выбираю 'Catalogs' 'Counterparties'
-			И я нажимаю на кнопку с именем 'FormFind'
-			Тогда открылось окно 'Find'
-			И в поле с именем 'Pattern' я ввожу текст '[TheName]'
-			И я нажимаю на кнопку с именем 'Find'
-			Тогда открылось окно 'Counterparties'
-			И в таблице "List" я выбираю текущую строку
-			И В текущем окне я нажимаю кнопку командного интерфейса 'Bank accounts'
-			И я нажимаю на кнопку с именем 'Create'
-			Тогда открылось окно 'Bank account (create)'
-			И из выпадающего списка с именем "Bank" я выбираю по строке '[TheBank]'
-			И в поле с именем 'AccountNumber' я ввожу текст '[TheBankAccount]'
-			И я нажимаю на кнопку с именем 'FormCommandSaveAndClose'
-			И я жду закрытия окна 'Bank account (create) *' в течение 20 секунд
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю 'General catalogs and settings' 'Counterparties'	
-			Когда открылось окно 'Counterparties (legal or natural persons)'
-			И в таблице "List" я нажимаю на кнопку с именем 'ListFind'			
-			Тогда открылось окно 'Find'
-			И в поле с именем 'Pattern' я ввожу текст '[TheName]'
-			И я нажимаю на кнопку с именем 'Find'
-			Тогда открылось окно 'Counterparties (legal or natural persons)'
-			И в таблице "List" я выбираю текущую строку
-			И В текущем окне я нажимаю кнопку командного интерфейса 'Bank accounts'
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно 'Bank account (create)'
-			И в поле с именем 'AccountNumber' я ввожу текст '[TheBankAccount]'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна 'Bank account (create) *' в течение 20 секунд
+Scenario: I create bank account 'TheBank' 'TheBankAccount' for counterparty with name 'TheName'
+	* Creating element
+		If '$$IsCPM$$' Then
+			And In the command interface I select 'Catalogs' 'Counterparties'
+			And I click the button named 'FormFind'
+			Then 'Find' window is opened
+			And I input '[TheName]' text in the field named 'Pattern'
+			And I click the button named 'Find'
+			Then 'Counterparties' window is opened
+			And I select current line in "List" table
+			And In this window I click command interface button 'Bank accounts'
+			And I click the button named 'Create'
+			Then 'Bank account (create)' window is opened
+			And I select from the drop-down list named "Bank"  by '[TheBank]' string
+			And I input '[TheBankAccount]' text in the field named 'AccountNumber'
+			And I click the button named 'FormCommandSaveAndClose'
+			And I wait 'Bank account (create) *' window closing in 20 seconds
+		ElseIf '$$IsERPCPM$$' Then
+			And In the command interface I select 'General catalogs and settings' 'Counterparties'
+			When 'Counterparties (legal or natural persons)' window is opened
+			And in the table "List" I click the button named 'ListFind'
+			Then 'Find' window is opened
+			And I input '[TheName]' text in the field named 'Pattern'
+			And I click the button named 'Find'
+			Then 'Counterparties (legal or natural persons)' window is opened
+			And I select current line in "List" table
+			And In this window I click command interface button 'Bank accounts'
+			And I click the button named 'FormCreate'
+			Then 'Bank account (create)' window is opened
+			And I input '[TheBankAccount]' text in the field named 'AccountNumber'
+			And I click the button named 'FormWriteAndClose'
+			And I wait 'Bank account (create) *' window closing in 20 seconds
 
-Сценарий: Я для контрагента с именем 'TheName' указываю ИНН 'TheTIN' и КПП 'TheRRC' 
-		Если '$$ЭтоУХ$$' Тогда
-			И В командном интерфейсе я выбираю 'Catalogs' 'Counterparties'
-			И я нажимаю на кнопку с именем 'FormFind'
-			Тогда открылось окно 'Find'
-			И в поле с именем 'Pattern' я ввожу текст '[TheName]'
-			И я нажимаю на кнопку с именем 'Find'
-			Тогда открылось окно 'Counterparties'
-			И в таблице "List" я выбираю текущую строку
-			И в поле с именем 'TIN' я ввожу текст '[TheTIN]'
-			И я перехожу к следующему реквизиту
-			И в поле с именем 'KPP' я ввожу текст '[TheRRC]'
-			И я перехожу к следующему реквизиту
-			И я нажимаю на кнопку с именем 'FormWrite'
-			Если открылось окно '1C:Enterprise' тогда
-				И я нажимаю на кнопку 'Save'	
-			Тогда элемент формы с именем "TIN" стал равен '[TheTIN]'
-			Тогда элемент формы с именем "RRC" стал равен '[TheRRC]'
+Scenario: I specify TIN 'TheTIN' and RRC 'TheRRC' for counterparty with name 'TheName'
+		If '$$IsCPM$$' Then
+			And In the command interface I select 'Catalogs' 'Counterparties'
+			And I click the button named 'FormFind'
+			Then 'Find' window is opened
+			And I input '[TheName]' text in the field named 'Pattern'
+			And I click the button named 'Find'
+			Then 'Counterparties' window is opened
+			And I select current line in "List" table
+			And I input '[TheTIN]' text in the field named 'TIN'
+			And I move to the next attribute
+			And I input '[TheRRC]' text in the field named 'KPP'
+			And I move to the next attribute
+			And I click the button named 'FormWrite'
+			If '1C:Enterprise' window is opened Then
+				And I click 'Save' button
+			Then the form attribute named "TIN" became equal to '[TheTIN]'
+			Then the form attribute named "RRC" became equal to '[TheRRC]'
 
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю 'General catalogs and settings' 'Counterparties'	
-			Когда открылось окно 'Counterparties (legal or natural persons)'
-			И в таблице "List" я нажимаю на кнопку с именем 'ListFind'			
-			Тогда открылось окно 'Find'
-			И в поле с именем 'Pattern' я ввожу текст '[TheName]'
-			И я нажимаю на кнопку с именем 'Find'
-			Тогда открылось окно 'Counterparties (legal or natural persons)'
-			И в таблице "List" я выбираю текущую строку
-			И в поле с именем 'TIN' я ввожу текст '[TheTIN]'
-			И я перехожу к следующему реквизиту
-			Если открылось окно '1C:Enterprise' тогда
-				И я нажимаю на кнопку с именем 'Button0'
-			И в поле с именем 'KPP' я ввожу текст '[TheRRC]'
-			И я перехожу к следующему реквизиту
-			Если открылось окно '1C:Enterprise' Тогда
-				И я нажимаю на кнопку с именем 'Button0'
-			И я нажимаю на кнопку с именем 'FormWrite'
-			Тогда элемент формы с именем "TIN" стал равен '[TheTIN]'
-			Тогда элемент формы с именем "RRC" стал равен '[TheRRC]'
+		ElseIf '$$IsERPCPM$$' Then
+			And In the command interface I select 'General catalogs and settings' 'Counterparties'
+			When 'Counterparties (legal or natural persons)' window is opened
+			And in the table "List" I click the button named 'ListFind'
+			Then 'Find' window is opened
+			And I input '[TheName]' text in the field named 'Pattern'
+			And I click the button named 'Find'
+			Then 'Counterparties (legal or natural persons)' window is opened
+			And I select current line in "List" table
+			And I input '[TheTIN]' text in the field named 'TIN'
+			And I move to the next attribute
+			If '1C:Enterprise' window is opened Then
+				And I click the button named 'Button0'
+			And I input '[TheRRC]' text in the field named 'KPP'
+			And I move to the next attribute
+			If '1C:Enterprise' window is opened Then
+				And I click the button named 'Button0'
+			And I click the button named 'FormWrite'
+			Then the form attribute named "TIN" became equal to '[TheTIN]'
+			Then the form attribute named "RRC" became equal to '[TheRRC]'
 
-Сценарий: Я создаю договор для контрагента 'TheName' номер 'TheNumber' дата 'TheDate' валюта 'TheCurrency' организация 'TheBusinessUnit' вид 'TheContractKind' сумма 'TheSum' условие оплаты 'TheTermsOfPayment'
+Scenario: I create contract for counterparty 'TheName' number 'TheNumber' date 'TheDate' currency 'TheCurrency' company 'TheBusinessUnit' kind 'TheContractKind' sum 'TheSum' payment terms 'TheTermsOfPayment'
 
-	* Открываем форму списка
-		Если '$$ЭтоPerform$$' Тогда
-			И В командном интерфейсе я выбираю "Quick menu" "Counterparties"
-			И Я в списке "Counterparties" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"
-		Иначе
-			И В командном интерфейсе я выбираю "Catalogs" "Counterparties"
-			И Я в списке "Counterparties" по полю "Name in the application" ищу элемент '[TheName]' "At the beginning of the line"
+	* Opening list form
+		If '$$IsPerform$$' Then
+			And In the command interface I select "Quick menu" "Counterparties"
+			And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Counterparties"
+		Else
+			And In the command interface I select "Catalogs" "Counterparties"
+			And I search element '[TheName]' "At the beginning of the line" by field "Name in the application" in list "Counterparties"
 
-	* Ищем контрагента
-		И в таблице 'List' количество строк 'равно' 1
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "* (Counterparty)"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Contracts"
+	* Finding counterparty
+		And the number of 'List' table lines is 'equal' 1
+		And I select current line in 'List' table
+		Then "* (Counterparty)" window is opened
+		And In this window I click command interface button "Contracts"
 
-	* Удаляем текущий элемент
-		И Я в списке "* (Counterparty)" по полю "Description" ищу элемент "[TheNumber] from [TheDate]" "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление
-				И Я удаляю текущую строку в списке 'List'
-			* Переименовываем
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "*"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWrite'
-				Тогда открылось окно "*"
-				И Я закрываю окно "*"
+	* Deleting the current element
+		And I search element "[TheNumber] from [TheDate]" "At the beginning of the line" by field "Description" in list "* (Counterparty)"
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "*" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWrite'
+				Then "*" window is opened
+				And I close "*" window
 
-	* Создаем элемент
-		Когда открылось окно "* (Counterparty)"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Если '$$ЭтоPerform$$' Тогда
-			Когда открылось окно "Contract (create)*"
-			И из выпадающего списка с именем 'TypeOfAgreement' я выбираю точное значение "TheContractKind"
-		Иначе	
-			Тогда открылось окно "Select contract type"
-			И в таблице 'TypesOfContracts' я перехожу к строке:
+	* Creating an element
+		When "* (Counterparty)" window is opened
+		And I click the button named 'FormCreate'
+		If '$$IsPerform$$' Then
+			When "Contract (create)*" window is opened
+			And I select "TheContractKind" exact value from the drop-down list named 'TypeOfAgreement'
+		Else
+			Then "Select contract type" window is opened
+			And I go to line in 'TypesOfContracts' table:
 				| "Contract kind"     |
 				| '[TheContractKind]' |
-			И в таблице 'KindsOfContracts' я выбираю текущую строку
-		Тогда открылось окно "* (create)*"
-		И в поле с именем 'Number' я ввожу текст '[TheNumber]'
-		И в поле с именем 'Date' я ввожу текст '[TheDate]'
-		И в поле с именем 'Наименование' я ввожу текст "[TheNumber] from [TheDate]"
-		И из выпадающего списка с именем 'Organization' я выбираю по строке '[TheBusinessUnit]'
-		И из выпадающего списка с именем 'ARAPCurrency' я выбираю точное значение '[TheCurrency]'
-		Если '$$ЭтоPerform$$' Тогда
-			И в поле с именем 'Sum' я ввожу текст '[TheSum]'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		Иначе
-			Если флаг с именем "ФиксированнаяСуммаДоговора" равен "Ложь" Тогда
-				И я изменяю флаг с именем 'FixedContractAmount' 
-			И в поле с именем 'СуммаДоговора' я ввожу текст '[TheSum]'
-			И я перехожу к закладке с именем 'GroupCalculations'
-			И из выпадающего списка с именем 'PaymentCondition' я выбираю по строке '[TheTermsOfPayment]'			
-			И я нажимаю на кнопку с именем 'FormPostAndClose'	
-		И я жду закрытия окна "Contract (create) *" в течение 20 секунд
+			And I select current line in 'KindsOfContracts' table
+		Then "* (create)*" window is opened
+		And I input '[TheNumber]' text in the field named 'Number'
+		And I input '[TheDate]' text in the field named 'Date'
+		And I input "[TheNumber] from [TheDate]" text in the field named 'Description'
+		And I select from the drop-down list named 'Organization'  by '[TheBusinessUnit]' string
+		And I select '[TheCurrency]' exact value from the drop-down list named 'ARAPCurrency'
+		If '$$IsPerform$$' Then
+			And I input '[TheSum]' text in the field named 'Sum'
+			And I click the button named 'FormWriteAndClose'
+		Else
+			If checkbox named "FixedAmountContract" is equal to "False" Then
+				And I change checkbox named 'FixedContractAmount'
+			And I input '[TheSum]' text in the field named 'AmountContract'
+			And I move to the tab named 'GroupCalculations'
+			And I select from the drop-down list named 'PaymentCondition'  by '[TheTermsOfPayment]' string
+			And I click the button named 'FormPostAndClose'
+		And I wait "Contract (create) *" window closing in 20 seconds
 
-	* Закрываем формы
-		Когда открылось окно "* (Counterparty)"
-		И Я закрываю окно "* (Counterparty)"
-		Тогда открылось окно "Counterparties"
-		И Я закрываю окно "Counterparties"
+	* Closing forms
+		When "* (Counterparty)" window is opened
+		And I close "* (Counterparty)" window
+		Then "Counterparties" window is opened
+		And I close "Counterparties" window
 
-Сценарий: Я создаю номенклатуру с именем 'TheProductName' родителем 'TheProductParent' видом номенклатуры 'TheProductKind' артикулом 'TheProductID'
+Scenario: I create nomenclature with name 'TheProductName' parent 'TheProductParent' nomenclature kind 'TheProductKind' article 'TheProductID'
 
-	* Открываем список
-		Если '$$ЭтоPerform$$' Тогда
-			И В командном интерфейсе я выбираю "Quick menu" "Product range"		
-		ИначеЕсли '$$ЭтоУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Catalogs" "Product range"
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Quick menu" "Product range"
-			И я снимаю флаг с именем 'UseFilters'		
-		Тогда открылось окно "Product range"
+	* Opening a list
+		If '$$IsPerform$$' Then
+			And In the command interface I select "Quick menu" "Product range"
+		ElseIf '$$IsCPM$$' Then
+			And In the command interface I select "Catalogs" "Product range"
+		ElseIf '$$IsERPCPM$$' Then
+			And In the command interface I select "Quick menu" "Product range"
+			And I remove checkbox named 'UseFilters'
+		Then "Product range" window is opened
 
-	* Удаляем текущий элемент
-		Если '$$ЭтоУХ$$' Тогда
-			И Я в списке "Product range" по полю "Description" ищу элемент '[TheProductName]' "At the beginning of the line"		
-			И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-				И в таблице 'List' я выбираю текущую строку
-				И Я удаляю текущий элемент в окне "* (Product range)" очищая 'Product ID'
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И пауза 1
-			И я нажимаю кнопку очистить у поля с именем 'SearchStringProductRange'					
-			И в поле с именем 'SearchStringProductRange' я ввожу текст '[TheProductName]'
-			И я нажимаю на кнопку с именем 'Find'				
-			Если появилось окно с заголовком 'Search' в течение 1 секунд Тогда
-				И я нажимаю на кнопку с именем 'Button0'
-			Тогда открылось окно "Product range"
-			И Пока в таблице 'ListAdvancedSearchProducts' количество строк 'больше' 0 Тогда
-				* Ставим пометку на удаление
-					Если в таблице 'ListAdvancedSearchProducts' текущая строка не помечена на удаление Тогда
-						И я выбираю пункт контекстного меню с именем 'ListAdvancedSearchProductsContextMenuSetDeletionMark' на элементе формы с именем 'ListAdvancedSearchProducts'
-						Тогда открылось окно "1C:Enterprise"
-						И я нажимаю на кнопку с именем 'Button0'
-				* Переименовываем
-					И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-					И в таблице 'ListAdvancedSearchProducts' я выбираю текущую строку
-					Когда открылось окно "* (Product range)"
-					И я перехожу к закладке с именем 'PageProductAttributes'
-					Если появилось окно с заголовком 'Useful tip' в течение 1 секунд Тогда
-						И я нажимаю на кнопку с именем 'Button0'
-					Когда открылось окно "* (Product range)"								
-					Тогда в поле с именем 'Description' я ввожу значение переменной 'UID'
-					И в поле с именем 'SKU' я ввожу текст ' '	
-					И я нажимаю на кнопку с именем 'FillDescriptionForPrintByTemplate'
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					И я жду закрытия окна "* (Product range)" в течение 20 секунд
-					Если появилось окно с заголовком 'Search' в течение 1 секунд Тогда
-						И я нажимаю на кнопку с именем 'Button0'
+	* Deleting the current element
+		If '$$IsCPM$$' Then
+			And I search element '[TheProductName]' "At the beginning of the line" by field "Description" in list "Product range"
+			And While the number of 'List' table lines 'more' 0 Then
+				And I select current line in 'List' table
+				And I delete current element in window "* (Product range)" clearing 'Product ID'
+		ElseIf '$$IsERPCPM$$' Then
+			And Delay 1
+			And I click Clear button of the field named 'SearchStringProductRange'
+			And I input '[TheProductName]' text in the field named 'SearchStringProductRange'
+			And I click the button named 'Find'
+			If the window with 'Search' header appeared in 1 seconds Then
+				And I click the button named 'Button0'
+			Then "Product range" window is opened
+			And While the number of 'ListAdvancedSearchProducts' table lines 'more' 0 Then
+				* Marking for deletion
+					If the current row in 'ListAdvancedSearchProducts' table is not marked for deletion Then
+						And I select context menu item named 'ListAdvancedSearchProductsContextMenuSetDeletionMark' of the form attribute named 'ListAdvancedSearchProducts'
+						Then "1C:Enterprise" window is opened
+						And I click the button named 'Button0'
+				* Renaming
+					And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+					And I select current line in 'ListAdvancedSearchProducts' table
+					When "* (Product range)" window is opened
+					And I move to the tab named 'PageProductAttributes'
+					If the window with 'Useful tip' header appeared in 1 seconds Then
+						And I click the button named 'Button0'
+					When "* (Product range)" window is opened
+					Then I input 'UID' variable value in the field named 'Description'
+					And I input ' ' text in the field named 'SKU'
+					And I click the button named 'FillDescriptionForPrintByTemplate'
+					And I click the button named 'FormWriteAndClose'
+					And I wait "* (Product range)" window closing in 20 seconds
+					If the window with 'Search' header appeared in 1 seconds Then
+						And I click the button named 'Button0'
 
-	* Создаем новый элемент
-		Когда открылось окно "Product range"
-		Если '$$ЭтоУХ$$' Тогда			
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Product range (create)"
-			И в поле с именем 'Description' я ввожу текст '[TheProductName]'
-			И в поле с именем 'SKU' я ввожу текст '[TheProductID]'
-			И из выпадающего списка с именем 'Parent' я выбираю по строке '[TheProductParent]'
-			И из выпадающего списка с именем 'UnitOfMeasure' я выбираю по строке "PCs"
-			Если 'НЕ $$ЭтоPerform$$' Тогда
-				И из выпадающего списка с именем 'ProductKind' я выбираю по строке '[TheProductKind]'
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И я нажимаю на кнопку с именем 'ListAdvancedSearchProductsCreate'
-			Тогда открылось окно "Product range (create)"
-			И из выпадающего списка с именем 'ProductKindRequiredFields' я выбираю по строке '[TheProductKind]'
-			И я меняю значение переключателя с именем 'НастройкаВидимостиФормы' на 'Показать все'
-			И в поле с именем 'Description' я ввожу текст '[TheProductName]'
-			И в поле с именем 'SKU' я ввожу текст '[TheProductID]'			
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Product range (create) *" в течение 20 секунд
+	* Creating a new element
+		When "Product range" window is opened
+		If '$$IsCPM$$' Then
+			And I click the button named 'FormCreate'
+			Then "Product range (create)" window is opened
+			And I input '[TheProductName]' text in the field named 'Description'
+			And I input '[TheProductID]' text in the field named 'SKU'
+			And I select from the drop-down list named 'Parent'  by '[TheProductParent]' string
+			And I select from the drop-down list named 'UnitOfMeasure'  by "PCs" string
+			If 'NOT $$IsPerform$$' Then
+				And I select from the drop-down list named 'ProductKind'  by '[TheProductKind]' string
+		ElseIf '$$IsERPCPM$$' Then
+			And I click the button named 'ListAdvancedSearchProductsCreate'
+			Then "Product range (create)" window is opened
+			And I select from the drop-down list named 'ProductKindRequiredFields'  by '[TheProductKind]' string
+			And I change the radio button named 'SettingVisibilityForm' value to 'Show all'
+			And I input '[TheProductName]' text in the field named 'Description'
+			And I input '[TheProductID]' text in the field named 'SKU'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Product range (create) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Product range"
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И я устанавливаю флаг с именем 'UseFilters'
-		И Я закрываю окно "Product range"	
+	* Closing a list
+		When "Product range" window is opened
+		If '$$IsERPCPM$$' Then
+			And I set checkbox named 'UseFilters'
+		And I close "Product range" window
 
-Сценарий: Я создаю вид номенклатуры с именем 'TheProductKindName'
+Scenario: I create nomenclature kind with name 'TheProductKindName'
 
-	* Открываем список
-		И В командном интерфейсе я выбираю "Catalogs" "Product range"
-		Когда открылось окно "Product range"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Nomenclature types"
+	* Opening a list
+		And In the command interface I select "Catalogs" "Product range"
+		When "Product range" window is opened
+		And In this window I click command interface button "Nomenclature types"
 
-	* Удаляем текущий элемент
-		И Я в списке "Product range" по полю "Description" ищу элемент '[TheProductKindName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "* (Product range types)" очищая
+	* Deleting the current element
+		And I search element '[TheProductKindName]' "At the beginning of the line" by field "Description" in list "Product range"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "* (Product range types)" clearing
 
-	* Создаем новый элемент
-		Когда открылось окно "Product range"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Product range types (creation)"
-		И в поле с именем 'Description' я ввожу текст '[TheProductKindName]'
-		И я меняю значение переключателя с именем 'УХ_ТипОбъектаЗакупки' на 'Товар'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Product range types (creation) *" в течение 20 секунд
+	* Creating a new element
+		When "Product range" window is opened
+		And I click the button named 'FormCreate'
+		Then "Product range types (creation)" window is opened
+		And I input '[TheProductKindName]' text in the field named 'Description'
+		And I change the radio button named 'UH_TypeObjectPurchases' value to 'Goods'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Product range types (creation) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Product range"
-		И Я закрываю окно "Product range"
+	* Closing a list
+		When "Product range" window is opened
+		And I close "Product range" window
 
-Сценарий: Я создаю товарную категорию с именем 'TheProductCategoryName' видом номенклатуры 'TheProductKind'
+Scenario: I create product category with name 'TheProductCategoryName' nomenclature kind 'TheProductKind'
 
-	* Найдем вид номенклатуры
-		Если '$$ЭтоУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Corporate purchasing" "Product categories"
-			Тогда открылось окно "Product categories"
-			И я нажимаю на кнопку с именем 'FormFind'
-			Тогда открылась форма с именем 'UniversalListFindExtForm'
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "CRM и маркетинг" "Настройки и справочники"
-			Тогда открылось окно "Settings and directories for CRM and marketing"
-			И я нажимаю на кнопку с именем 'OpenProductCategories'
-			Когда открылось окно "Product categories"
-			И я выбираю пункт контекстного меню с именем 'СписокВидовНоменклатурыКонтекстноеМенюНайти' на элементе формы с именем 'СписокВидовНоменклатуры'
-			Тогда открылась форма с именем 'UniversalListFindExtForm'
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Product range type"
-			И в поле с именем 'Pattern' я ввожу текст '[TheProductKind]'
-			И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-			И я нажимаю на кнопку с именем 'Find'
-			Тогда открылось окно "Product categories"
-			И в таблице 'СписокВидовНоменклатуры' количество строк 'равно' 1
-			И в таблице 'List' я нажимаю на кнопку с именем 'ListFind'
-			Тогда открылась форма с именем 'UniversalListFindExtForm'
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Product category"		
+	* Finding nomenclature type
+		If '$$IsCPM$$' Then
+			And In the command interface I select "Corporate purchasing" "Product categories"
+			Then "Product categories" window is opened
+			And I click the button named 'FormFind'
+			Then the form named 'UniversalListFindExtForm' is opened
+			And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		If '$$IsERPCPM$$' Then
+			And In the command interface I select "CRM and marketing" "Settings and directories"
+			Then "Settings and directories for CRM and marketing" window is opened
+			And I click the button named 'OpenProductCategories'
+			When "Product categories" window is opened
+			And I select context menu item named 'ListProductRangeKindsContextMenuFind' of the form attribute named 'ListProductRangeKinds'
+			Then the form named 'UniversalListFindExtForm' is opened
+			And I select "Product range type" exact value from the drop-down list named 'FieldSelector'
+			And I input '[TheProductKind]' text in the field named 'Pattern'
+			And I change the radio button named 'CompareType' value to "Exact match"
+			And I click the button named 'Find'
+			Then "Product categories" window is opened
+			And the number of 'ListOfNomenclatureTypes' table lines is 'equal' 1
+			And in the table 'List' I click the button named 'ListFind'
+			Then the form named 'UniversalListFindExtForm' is opened
+			And I select "Product category" exact value from the drop-down list named 'FieldSelector'
 
-	* Удаляем текущий элемент 
-		И в поле с именем 'Pattern' я ввожу текст '[TheProductCategoryName]'
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И я нажимаю на кнопку с именем 'Find'
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление
-				И Я удаляю текущую строку в списке 'List'
-			* Перименовываем 
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Когда открылось окно "* (Product categories)"
-				Тогда в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Product categories) *" в течение 20 секунд
+	* Deleting the current element
+		And I input '[TheProductCategoryName]' text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I click the button named 'Find'
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				When "* (Product categories)" window is opened
+				Then I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Product categories) *" window closing in 20 seconds
 
-	* Создаем новый элемент
-		Если '$$ЭтоУХ$$' Тогда
-			И я нажимаю на кнопку с именем 'FormCreate'
-			И из выпадающего списка с именем 'ProductKind' я выбираю по строке '[TheProductKind]'		
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И в таблице 'Список' я нажимаю на кнопку с именем 'List'				
-			И из выпадающего списка с именем 'Owner' я выбираю по строке '[TheProductKind]'
-		Тогда открылось окно "Product categories (creation) *"
-		И в поле с именем 'Description' я ввожу текст '[TheProductCategoryName]'
-		И из выпадающего списка с именем 'VATRate' я выбираю точное значение "20%"
-		И из выпадающего списка с именем 'UnitOfMeasure' я выбираю по строке "PCs"					
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Product categories (creation) *" в течение 20 секунд
+	* Creating a new element
+		If '$$IsCPM$$' Then
+			And I click the button named 'FormCreate'
+			And I select from the drop-down list named 'ProductKind'  by '[TheProductKind]' string
+		If '$$IsERPCPM$$' Then
+			And in the table 'List' I click the button named 'List'
+			And I select from the drop-down list named 'Owner'  by '[TheProductKind]' string
+		Then "Product categories (creation) *" window is opened
+		And I input '[TheProductCategoryName]' text in the field named 'Description'
+		And I select "20%" exact value from the drop-down list named 'VATRate'
+		And I select from the drop-down list named 'UnitOfMeasure'  by "PCs" string
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Product categories (creation) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Product categories"
-		И Я закрываю окно "Product categories"
+	* Closing a list
+		When "Product categories" window is opened
+		And I close "Product categories" window
 
-Сценарий: Я создаю номенклатурную группу с именем 'TheName'
+Scenario: I create nomenclature group with name 'TheName'
 
-	* Открываем список
-		И я открываю основную форму списка справочника 'ProductRangeGroups'
-		Тогда открылось окно "Product range groups"
+	* Opening a list
+		And I open 'ProductRangeGroups' catalog default form
+		Then "Product range groups" window is opened
 
-	* Удаляем элемент
-		И Я в списке "Product range groups" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "[TheName] (Product range group)" очищая
+	* Deleting an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Product range groups"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "[TheName] (Product range group)" clearing
 
-	* Создаем элементм
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Product range group (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Product range group (create) *" в течение 20 секунд
+	* Creating element
+		And I click the button named 'FormCreate'
+		Then "Product range group (create)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Product range group (create) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Product range groups"
-		И Я закрываю окно "Product range groups"
+	* Closing a list
+		When "Product range groups" window is opened
+		And I close "Product range groups" window
 
-Сценарий: Я для номенклатуры с именем 'TheProductName' для реквизита 'TheAttributeName' выбираю значение 'TheValuesName' в группе 'TheGroupName' 
+Scenario: I select value 'TheValuesName' in group 'TheGroupName' for attribute 'TheAttributeName' for nomenclature with name 'TheProductName'
 
-	* Открываем список
-		Если '$$ЭтоPerform$$' Тогда
-			И В командном интерфейсе я выбираю "Quick menu" "Product range"		
-		ИначеЕсли '$$ЭтоУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Catalogs" "Product range"
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И В командном интерфейсе я выбираю "Quick menu" "Product range"
-			И я снимаю флаг с именем 'UseFilters'		
-		Тогда открылось окно "Product range"
+	* Opening a list
+		If '$$IsPerform$$' Then
+			And In the command interface I select "Quick menu" "Product range"
+		ElseIf '$$IsCPM$$' Then
+			And In the command interface I select "Catalogs" "Product range"
+		ElseIf '$$IsERPCPM$$' Then
+			And In the command interface I select "Quick menu" "Product range"
+			And I remove checkbox named 'UseFilters'
+		Then "Product range" window is opened
 
-	* Ищем текущий элемент
-		Если '$$ЭтоУХ$$' Тогда
-			И Я в списке "Product range" по полю "Description" ищу и выбираю элемент '[TheProductName]' "At the beginning of the line" 
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И пауза 1
-			И я нажимаю кнопку очистить у поля с именем 'SearchStringProductRange'					
-			И в поле с именем 'SearchStringProductRange' я ввожу текст '[TheProductName]'
-			И я нажимаю на кнопку с именем 'Find'				
-			Если появилось окно с заголовком 'Search' в течение 1 секунд Тогда
-				И я нажимаю на кнопку с именем 'Button0'
-			Когда открылось окно "Product range"
-			И я устанавливаю флаг с именем 'UseFilters'					
-			И в таблице 'ListAdvancedSearchProducts' я выбираю текущую строку
-			Тогда открылось окно "* (Product range)"
-			И я перехожу к закладке с именем 'PageProductAttributes'
-			Если появилось окно с заголовком 'Useful tip' в течение 1 секунд Тогда
-				И я нажимаю на кнопку с именем 'Button0'
+	* Finding current element
+		If '$$IsCPM$$' Then
+			And I search and select element '[TheProductName]' "At the beginning of the line" by field "Description" in list "Product range"
+		ElseIf '$$IsERPCPM$$' Then
+			And Delay 1
+			And I click Clear button of the field named 'SearchStringProductRange'
+			And I input '[TheProductName]' text in the field named 'SearchStringProductRange'
+			And I click the button named 'Find'
+			If the window with 'Search' header appeared in 1 seconds Then
+				And I click the button named 'Button0'
+			When "Product range" window is opened
+			And I set checkbox named 'UseFilters'
+			And I select current line in 'ListAdvancedSearchProducts' table
+			Then "* (Product range)" window is opened
+			And I move to the tab named 'PageProductAttributes'
+			If the window with 'Useful tip' header appeared in 1 seconds Then
+				And I click the button named 'Button0'
 
-	* Устанавливаем реквизит		
-		Тогда открылось окно "* (Product range)"
-		Если 'НЕ ПустаяСтрока(\"[TheGroupName]\")' Тогда
-			И я разворачиваю группу с именем '[TheGroupName]'
-		Если 'ПустаяСтрока(\"[TheValuesName]\")' Тогда
-			И в поле с именем '[TheAttributeName]' я ввожу текст ''
-		Иначе						
-			И из выпадающего списка с именем '[TheAttributeName]' я выбираю по строке '[TheValuesName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "* (Product range) *" в течение 20 секунд
+	* Setting attribute
+		Then "* (Product range)" window is opened
+		If 'NOT IsBlankString(\"[TheGroupName]\")' Then
+			And I expand the group named '[TheGroupName]'
+		If 'IsBlankString(\"[TheValuesName]\")' Then
+			And I input '' text in the field named '[TheAttributeName]'
+		Else
+			And I select from the drop-down list named '[TheAttributeName]'  by '[TheValuesName]' string
+		And I click the button named 'FormWriteAndClose'
+		And I wait "* (Product range) *" window closing in 20 seconds
 
-	* Закрываем формы
-		Тогда открылось окно "Product range"
-		И Я закрываю окно "Product range"
+	* Closing forms
+		Then "Product range" window is opened
+		And I close "Product range" window
 
-Сценарий: Я для номенклатуры с именем 'TheProductName' для типа цен с именем 'TheName' устанавливаю значение 'TheValuesName' 
+Scenario: I set value 'TheValuesName' for price type with name 'TheName' for nomenclature with name 'TheProductName'
 
-	* Открываем список
-		И В командном интерфейсе я выбираю "Catalogs" "Product range"
-		Тогда открылось окно "Product range"
+	* Opening a list
+		And In the command interface I select "Catalogs" "Product range"
+		Then "Product range" window is opened
 
-	* Ищем текущий элемент
-		И Я в списке "Product range" по полю "Description" ищу и выбираю элемент '[TheProductName]' "At the beginning of the line" 
+	* Finding current element
+		And I search and select element '[TheProductName]' "At the beginning of the line" by field "Description" in list "Product range"
 	
-		* Устанавливаем реквизит		
-		Тогда открылось окно "* (Product range)"
-		И В текущем окне я нажимаю кнопку командного интерфейса 'Prices'
-		И в поле с именем 'ДатаЦен' я ввожу значение выражения "Строка(НачалоГода(ТекущаяДата()))" 
-		И я перехожу к следующему реквизиту
-		И Я в таблице 'ItemsPricesPrice' по полю 'Price type' ищу значение '[TheName]' 	
-		И в таблице "ItemsPrices" я активизирую поле с именем "ItemsPricesPrice"
-		И в таблице "ItemsPricesPrice" я выбираю текущую строку
-		И в таблице "ItemsPrices" в поле с именем 'ItemsPricesPrice' я ввожу текст '[TheValuesName]'
-		И в таблице "ItemsPrices" я завершаю редактирование строки
-		И в таблице "ItemsPrices" я нажимаю на кнопку с именем 'WritePrices'
+		* Setting attribute
+		Then "* (Product range)" window is opened
+		And In this window I click command interface button 'Prices'
+		And I input "String(BeginOfYear(CurrentDate()))" expression value in the field named 'ДатаЦен'
+		And I move to the next attribute
+		And I search value '[TheName]' by field 'Price type' in table 'ItemsPricesPrice'
+		And I activate field named "ItemsPricesPrice" in "ItemsPrices" table
+		And I select current line in "ItemsPricesPrice" table
+		And I input '[TheValuesName]' text in the field named 'ItemsPricesPrice' of "ItemsPrices" table
+		And I finish line editing in "ItemsPrices" table
+		And in the table "ItemsPrices" I click the button named 'WritePrices'
 
-	* Закрываем формы
-		И Я закрываю окно '* (Product range)'
-		Тогда открылось окно "Product range"
-		И Я закрываю окно "Product range"
+	* Closing forms
+		And I close '* (Product range)' window
+		Then "Product range" window is opened
+		And I close "Product range" window
 
-Сценарий: Я создаю места поставки с именем 'TheName' с видом 'TheField' на складе 'TheStorage'
-	* Открываем список
-		И я открываю основную форму списка справочника 'DeliveryPlaces'
-		Тогда открылось окно 'Places of delivery of goods (rendering of services)'		
+Scenario: I create delivery place with name 'TheName' kind 'TheField' at warehouse 'TheStorage'
+	* Opening a list
+		And I open 'DeliveryPlaces' catalog default form
+		Then 'Places of delivery of goods (rendering of services)' window is opened
 
-	* Удаляем элемент
-		И Я в списке "Places of goods delivery (service provision)" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "[TheName] (Place of goods delivery (services rendering))" очищая
+	* Deleting an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Places of goods delivery (service provision)"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "[TheName] (Place of goods delivery (services rendering))" clearing
 
-	* Создаем элементм
-		И я нажимаю на кнопку с именем 'FormCreate'
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И из выпадающего списка с именем "Kind" я выбираю точное значение '[TheField]'	
-		Если '$$ЭтоУХ$$' Тогда
-			И я нажимаю кнопку выбора у поля с именем "Warehouse"
-			И Я в списке "List" по полю "Description" ищу и выбираю элемент "[TheStorage]" "Exact match" 					
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			Если элемент формы 'Type' стал равен 'Warehouse'
-				И я нажимаю кнопку выбора у поля с именем "Warehouse"
-				И Я в списке "List" по полю "Description" ищу и выбираю элемент "[TheStorage]" "Exact match" 								
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Place of delivery of goods (rendering of services) (creation) *" в течение 20 секунд
+	* Creating element
+		And I click the button named 'FormCreate'
+		And I input '[TheName]' text in the field named 'Description'
+		And I select '[TheField]' exact value from the drop-down list named "Kind"
+		If '$$IsCPM$$' Then
+			And I click Choice button of the field named "Warehouse"
+			And I search and select element "[TheStorage]" "Exact match" by field "Description" in list "List"
+		ElseIf '$$IsERPCPM$$' Then
+			If 'Type' form attribute became equal to 'Warehouse'
+				And I click Choice button of the field named "Warehouse"
+				And I search and select element "[TheStorage]" "Exact match" by field "Description" in list "List"
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Place of delivery of goods (rendering of services) (creation) *" window closing in 20 seconds
 
-	* Закрываем список
-			И Я закрываю окно 'Delivery locations for goods (services)'
+	* Closing a list
+			And I close 'Delivery locations for goods (services)' window
 
-Сценарий: Я создаю склад с именем 'TheName' с видом 'TheField' с типом цен 'ThePrice'
-	* Открываем список
-		И я открываю основную форму списка справочника 'Warehouses'		
+Scenario: I create warehouse with name 'TheName' kind 'TheField' price type 'ThePrice'
+	* Opening a list
+		And I open 'Warehouses' catalog default form
 
-	* Удаляем элемент
-		Если '$$ЭтоУХ$$' Тогда
-			И Я в списке "Warehouses" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"	
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И Я в списке "Warehouses and stores" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"			
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "[TheName] (Warehouse)" очищая
+	* Deleting an element
+		If '$$IsCPM$$' Then
+			And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Warehouses"
+		ElseIf '$$IsERPCPM$$' Then
+			And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Warehouses and stores"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "[TheName] (Warehouse)" clearing
 
-	* Создаем элементм
-		Если '$$ЭтоУХ$$' Тогда
-			И я нажимаю на кнопку с именем 'FormCreate'
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И я нажимаю на кнопку с именем 'ListCreateWholesaleWarehouse'			
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		Если '$$ЭтоУХ$$' Тогда
-			И из выпадающего списка с именем "WarehouseType" я выбираю точное значение '[TheField]'	
-			И я нажимаю кнопку выбора у поля "Price type"
-			И Я в списке "List" по полю "Description" ищу и выбираю элемент "[ThePrice]" "Exact match" 					
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Warehouse (create) *" в течение 20 секунд	
+	* Creating element
+		If '$$IsCPM$$' Then
+			And I click the button named 'FormCreate'
+		ElseIf '$$IsERPCPM$$' Then
+			And I click the button named 'ListCreateWholesaleWarehouse'
+		And I input '[TheName]' text in the field named 'Description'
+		If '$$IsCPM$$' Then
+			And I select '[TheField]' exact value from the drop-down list named "WarehouseType"
+			And I click Select button of "Price type" field
+			And I search and select element "[ThePrice]" "Exact match" by field "Description" in list "List"
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Warehouse (create) *" window closing in 20 seconds
 
-	* Закрываем список
-		Если '$$ЭтоУХ$$' Тогда	
-			И Я закрываю окно 'Warehouses'
-		ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-			И Я закрываю окно'Warehouses and stores'			
+	* Closing a list
+		If '$$IsCPM$$' Then
+			And I close 'Warehouses' window
+		ElseIf '$$IsERPCPM$$' Then
+			And I close 'Warehouses and stores' window
 
-Сценарий: Я создаю Приказ о назначении закупочной комиссии для организации 'TheBusinessUnitName' 
+Scenario: I create procurement commission appointment order for company 'TheBusinessUnitName'
 
-		И В командном интерфейсе я выбираю 'Корпоративные закупки' 'Приказы закупочной комиссии'
-		Тогда открылось окно 'Procurement commission orders'
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно 'Procurement commission orders (creating)'	
-		И в таблице "ЗакупочнаяКомиссия" я нажимаю на кнопку с именем 'ЗакупочнаяКомиссияДобавить'
-		И в таблице "ЗакупочнаяКомиссия" я нажимаю кнопку выбора у реквизита с именем "ЗакупочнаяКомиссияОрганизация"		
-		Если '$$ЭтоУХ$$' Тогда	
-			И Я в списке "List" по полю "Name in the application" ищу и выбираю элемент "[TheBusinessUnitName]" "Exact match" 	
-		Если '$$ЭтоЕРПУХ$$' Тогда
-			И Я в списке "List" по полю "Working name" ищу и выбираю элемент "[TheBusinessUnitName]" "Exact match" 	
+		And In the command interface I select 'Corporate procurement' 'Procurement commission orders'
+		Then 'Procurement commission orders' window is opened
+		And I click the button named 'FormCreate'
+		Then 'Procurement commission orders (creating)' window is opened
+		And in the table "PurchaseCommission" I click the button named 'PurchaseCommissionAdd'
+		And I click choice button of the attribute named "PurchaseCommissionOrganization" in "PurchaseCommission" table
+		If '$$IsCPM$$' Then
+			And I search and select element "[TheBusinessUnitName]" "Exact match" by field "Name in the application" in list "List"
+		If '$$IsERPCPM$$' Then
+			And I search and select element "[TheBusinessUnitName]" "Exact match" by field "Working name" in list "List"
 
-		И в таблице "PurchaseCommission" я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormPostAndClose'
-		И я жду закрытия окна 'Purchasing committee orders (Creating) *' в течение 20 секунд
-		Тогда открылось окно 'Procurement commission orders'
-		И Я закрываю окно 'Purchasing committee orders'
+		And I finish line editing in "PurchaseCommission" table
+		And I click the button named 'FormPostAndClose'
+		And I wait 'Purchasing committee orders (Creating) *' window closing in 20 seconds
+		Then 'Procurement commission orders' window is opened
+		And I close 'Purchasing committee orders' window

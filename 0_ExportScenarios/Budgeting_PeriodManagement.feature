@@ -1,127 +1,127 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для работы с подсистемой "Budgeting" - "Reporting period management"
+Feature: Export scenarios for working with the "Budgeting" subsystem - "Reporting period management"
 
-Сценарий: Я создаю документ управления периодом со сценарием 'TheScenario' регламентом 'TheRegulation' периодичностью 'TheFrequency' датой начала 'TheDateBegin' датой окончания 'TheDateEnd'
+Scenario: I create period management document with scenario 'TheScenario' regulation 'TheRegulation' frequency 'TheFrequency' start date 'TheDateBegin' end date 'TheDateEnd'
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Reporting period management"
-	Тогда открылось окно "Reporting period management"
-	И я нажимаю на кнопку с именем 'FormCreate'
-	Тогда открылось окно "Reporting period management (create)"
-	И из выпадающего списка с именем 'Сценарий' я выбираю по строке '[TheScenario]'
-	И из выпадающего списка с именем 'ScenarioFrequency' я выбираю точное значение '[TheFrequency]'
-	И я нажимаю на кнопку с именем 'ChangePeriod'
-	Тогда открылось окно "Select period"
-	И в поле с именем 'DateBegin' я ввожу текст '[TheDateBegin]'
-	И я перехожу к следующему реквизиту
-	И в поле с именем 'DateEnd' я ввожу текст '[TheDateEnd]'
-	И я нажимаю на кнопку с именем 'Select'
-	Тогда открылось окно "Reporting period management (create) *"
-	И из выпадающего списка с именем 'OrganizationalStructureVersion' я выбираю по строке '[TheRegulation]'
-	И я нажимаю на кнопку с именем 'FormGoForward'
-	Тогда открылось окно "1C:Enterprise"
-	И я нажимаю на кнопку с именем 'Button0'
-	И я запоминаю заголовок формы в переменную 'FormCaption'
-	Тогда открылось окно '$ЗаголовокФормы$'
-	И в таблице 'RatesEditTable' я нажимаю на кнопку с именем 'RatesEditTableRatesTable_Update'
-	И я нажимаю на кнопку с именем 'FormGoForward'
-	Тогда открылось окно "1C:Enterprise"
-	И я нажимаю на кнопку с именем 'Button0'		
-	Когда открылось окно '$ЗаголовокФормы$'
-	И я нажимаю на кнопку с именем 'FormGoForward'
-	Тогда открылось окно '$ЗаголовокФормы$'
-	И я нажимаю на кнопку с именем 'FormClose'
+	And In the command interface I select "Budgeting, reporting, and analysis" "Reporting period management"
+	Then "Reporting period management" window is opened
+	And I click the button named 'FormCreate'
+	Then "Reporting period management (create)" window is opened
+	And I select from the drop-down list named 'Scenario'  by '[TheScenario]' string
+	And I select '[TheFrequency]' exact value from the drop-down list named 'ScenarioFrequency'
+	And I click the button named 'ChangePeriod'
+	Then "Select period" window is opened
+	And I input '[TheDateBegin]' text in the field named 'DateBegin'
+	And I move to the next attribute
+	And I input '[TheDateEnd]' text in the field named 'DateEnd'
+	And I click the button named 'Select'
+	Then "Reporting period management (create) *" window is opened
+	And I select from the drop-down list named 'OrganizationalStructureVersion'  by '[TheRegulation]' string
+	And I click the button named 'FormGoForward'
+	Then "1C:Enterprise" window is opened
+	And I click the button named 'Button0'
+	And I save form header as 'FormCaption' variable
+	Then '$FormCaption$' window is opened
+	And in the table 'RatesEditTable' I click the button named 'RatesEditTableRatesTable_Update'
+	And I click the button named 'FormGoForward'
+	Then "1C:Enterprise" window is opened
+	And I click the button named 'Button0'
+	When '$FormCaption$' window is opened
+	And I click the button named 'FormGoForward'
+	Then '$FormCaption$' window is opened
+	And I click the button named 'FormClose'
 
-Сценарий: Я заполняю таблицу курсов в управлении периодом сценария
+Scenario: I fill exchange rates table in scenario period management
 
-	И я перехожу к закладке с именем 'ExchangeRates'
-	И в таблице 'RatesEditTable' я нажимаю на кнопку с именем 'RatesEditTableRatesTable_Update'
-	И в таблице 'RatesEditTable' я нажимаю на кнопку с именем 'RatesEditTableRatesTable_Write'
-	И в таблице 'RatesViewTable' я нажимаю на кнопку с именем 'RatesTable_ChangeModeWithoutSave'		
+	And I move to the tab named 'ExchangeRates'
+	And in the table 'RatesEditTable' I click the button named 'RatesEditTableRatesTable_Update'
+	And in the table 'RatesEditTable' I click the button named 'RatesEditTableRatesTable_Write'
+	And in the table 'RatesViewTable' I click the button named 'RatesTable_ChangeModeWithoutSave'
 	* EUR
-		И в таблице 'RatesEditTable' я перехожу к строке:
+		And I go to line in 'RatesEditTable' table:
 			| "Currency" | "Multiplier" | "Rate period"   |
 			| 'EUR'    | '1.0000'    | "January 2024" |
-		И в таблице 'RatesEditTable' я выбираю текущую строку
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodStart_CurrentValue' я ввожу текст '90.7932'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodEnd_CurrentValue' я ввожу текст '92.2963'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriod_CurrentValue' я ввожу текст '90.4971'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' я ввожу текст '90.4537'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' я ввожу текст '91.5448'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' я ввожу текст '0'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' я ввожу текст '0'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' я ввожу текст '0'
-		И в таблице 'RatesEditTable' я перехожу к строке:
+		And I select current line in 'RatesEditTable' table
+		And I input '90.7932' text in the field named 'RatesEditTableRateAtPeriodStart_CurrentValue' of 'RatesEditTable' table
+		And I input '92.2963' text in the field named 'RatesEditTableRateAtPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '90.4971' text in the field named 'RatesEditTableAverageRateForPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '90.4537' text in the field named 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+		And I input '91.5448' text in the field named 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' of 'RatesEditTable' table
+		And I input '0' text in the field named 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '0' text in the field named 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '0' text in the field named 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+		And I go to line in 'RatesEditTable' table:
 			| "Currency" | "Multiplier" | "Rate period"    |
 			| 'EUR'    | '1.0000'    | "February 2024" |
-		И в таблице 'RatesEditTable' я выбираю текущую строку
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodStart_CurrentValue' я ввожу текст '92.2963'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodEnd_CurrentValue' я ввожу текст '90.3743'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriod_CurrentValue' я ввожу текст '89.9321'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' я ввожу текст '90.0038'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' я ввожу текст '91.3353'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' я ввожу текст '92.2963'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' я ввожу текст '90.4971'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' я ввожу текст '90.4537'	
-		И в таблице 'RatesEditTable' я перехожу к строке:
+		And I select current line in 'RatesEditTable' table
+		And I input '92.2963' text in the field named 'RatesEditTableRateAtPeriodStart_CurrentValue' of 'RatesEditTable' table
+		And I input '90.3743' text in the field named 'RatesEditTableRateAtPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '89.9321' text in the field named 'RatesEditTableAverageRateForPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '90.0038' text in the field named 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+		And I input '91.3353' text in the field named 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' of 'RatesEditTable' table
+		And I input '92.2963' text in the field named 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '90.4971' text in the field named 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '90.4537' text in the field named 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+		And I go to line in 'RatesEditTable' table:
 			| "Currency" | "Multiplier" | "Rate period" |
 			| 'EUR'    | '1.0000'    | "March 2024" |
-		И в таблице 'RatesEditTable' я выбираю текущую строку
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodStart_CurrentValue' я ввожу текст '90.3743'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodEnd_CurrentValue' я ввожу текст '88.8821'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriod_CurrentValue' я ввожу текст '88.6820'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' я ввожу текст '88.7338'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' я ввожу текст '89.6282'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' я ввожу текст '90.3743'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' я ввожу текст '89.9321'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' я ввожу текст '90.0038'	
+		And I select current line in 'RatesEditTable' table
+		And I input '90.3743' text in the field named 'RatesEditTableRateAtPeriodStart_CurrentValue' of 'RatesEditTable' table
+		And I input '88.8821' text in the field named 'RatesEditTableRateAtPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '88.6820' text in the field named 'RatesEditTableAverageRateForPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '88.7338' text in the field named 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+		And I input '89.6282' text in the field named 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' of 'RatesEditTable' table
+		And I input '90.3743' text in the field named 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '89.9321' text in the field named 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '90.0038' text in the field named 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
 	* USD
-		И в таблице 'RatesEditTable' я перехожу к строке:
+		And I go to line in 'RatesEditTable' table:
 			| "Currency" | "Multiplier" | "Rate period"   |
 			| 'USD'    | '1.0000'    | "January 2024" |
-		И в таблице 'RatesEditTable' я выбираю текущую строку
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodStart_CurrentValue' я ввожу текст '73.8757'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodEnd_CurrentValue' я ввожу текст '76.2527'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriod_CurrentValue' я ввожу текст '74.2204'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' я ввожу текст '74.1489'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' я ввожу текст '75.0642'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' я ввожу текст '0'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' я ввожу текст '0'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' я ввожу текст '0'
-		И в таблице 'RatesEditTable' я перехожу к строке:
+		And I select current line in 'RatesEditTable' table
+		And I input '73.8757' text in the field named 'RatesEditTableRateAtPeriodStart_CurrentValue' of 'RatesEditTable' table
+		And I input '76.2527' text in the field named 'RatesEditTableRateAtPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '74.2204' text in the field named 'RatesEditTableAverageRateForPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '74.1489' text in the field named 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+		And I input '75.0642' text in the field named 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' of 'RatesEditTable' table
+		And I input '0' text in the field named 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '0' text in the field named 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '0' text in the field named 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+		And I go to line in 'RatesEditTable' table:
 			| "Currency" | "Multiplier" | "Rate period"    |
 			| 'USD'    | '1.0000'    | "February 2024" |
-		И в таблице 'RatesEditTable' я выбираю текущую строку
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodStart_CurrentValue' я ввожу текст '76.2527'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodEnd_CurrentValue' я ввожу текст '74.4373'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriod_CurrentValue' я ввожу текст '74.3747'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' я ввожу текст '74.4435'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' я ввожу текст '75.3450'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' я ввожу текст '76.2527'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' я ввожу текст '74.2204'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' я ввожу текст '74.1489'	
-		И в таблице 'RatesEditTable' я перехожу к строке:
+		And I select current line in 'RatesEditTable' table
+		And I input '76.2527' text in the field named 'RatesEditTableRateAtPeriodStart_CurrentValue' of 'RatesEditTable' table
+		And I input '74.4373' text in the field named 'RatesEditTableRateAtPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '74.3747' text in the field named 'RatesEditTableAverageRateForPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '74.4435' text in the field named 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+		And I input '75.3450' text in the field named 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' of 'RatesEditTable' table
+		And I input '76.2527' text in the field named 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '74.2204' text in the field named 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '74.1489' text in the field named 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+		And I go to line in 'RatesEditTable' table:
 			| "Currency" | "Multiplier" | "Rate period" |
 			| 'USD'    | '1.0000'    | "March 2024" |
-		И в таблице 'RatesEditTable' я выбираю текущую строку
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodStart_CurrentValue' я ввожу текст '74.4373'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPeriodEnd_CurrentValue' я ввожу текст '75.7023'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriod_CurrentValue' я ввожу текст '74.4035'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' я ввожу текст '74.3689'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' я ввожу текст '75.0698'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' я ввожу текст '74.4373'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' я ввожу текст '74.3747'
-		И в таблице 'RatesEditTable' в поле с именем 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' я ввожу текст '74.4435'	
-	И в таблице 'RatesEditTable' я завершаю редактирование строки
-	И в таблице 'RatesEditTable' я нажимаю на кнопку с именем 'RatesEditTableRatesTable_Write'
+		And I select current line in 'RatesEditTable' table
+		And I input '74.4373' text in the field named 'RatesEditTableRateAtPeriodStart_CurrentValue' of 'RatesEditTable' table
+		And I input '75.7023' text in the field named 'RatesEditTableRateAtPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '74.4035' text in the field named 'RatesEditTableAverageRateForPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '74.3689' text in the field named 'RatesEditTableAverageRateForPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+		And I input '75.0698' text in the field named 'RatesEditTableAverageRateForPeriodIFRS_CurrentValue' of 'RatesEditTable' table
+		And I input '74.4373' text in the field named 'RatesEditTableRateAtPreviousPeriodEnd_CurrentValue' of 'RatesEditTable' table
+		And I input '74.3747' text in the field named 'RatesEditTableAverageRateForPreviousPeriod_CurrentValue' of 'RatesEditTable' table
+		And I input '74.4435' text in the field named 'RatesEditTableAverageRateForPreviousPeriodCentralBank_CurrentValue' of 'RatesEditTable' table
+	And I finish line editing in 'RatesEditTable' table
+	And in the table 'RatesEditTable' I click the button named 'RatesEditTableRatesTable_Write'
 
-Сценарий: Я нахожу и выбираю документ управления отчетным периодом по сценарию "TheScenario" и периоду начала "ThePeriod"
+Scenario: I find and select reporting period management document by scenario "TheScenario" and start period "ThePeriod"
 
-	Тогда открылось окно "Reporting period management"		
-	И Я в списке "Управление отчетным периодом" по полю "Scenario" ищу элемент "[TheScenario]" "Exact match"
-	И Я в списке "Reporting period management" по полю "Start period" ищу элемент "[ThePeriod]" "At the beginning of the line"	
-	Тогда в таблице 'List' количество строк "равно" 1
-	И в таблице 'List' я выбираю текущую строку
+	Then "Reporting period management" window is opened
+	And I search element "[TheScenario]" "Exact match" by field "Scenario" in list "Reporting period management"
+	And I search element "[ThePeriod]" "At the beginning of the line" by field "Start period" in list "Reporting period management"
+	Then the number of 'List' table lines is "equal" 1
+	And I select current line in 'List' table

@@ -1,122 +1,122 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для работы с подсистемой 'Budgeting'
+Feature: Export scenarios for working with the 'Budgeting' subsystem
 		
-Сценарий: Я нахожу в списке вид отчета с именем 'TheReportKindDescription'
+Scenario: I find report type with name 'TheReportKindDescription' in list
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report types and templates"
-	Тогда открылось окно "Report types and templates"
-	И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
-	Тогда открылась форма с именем 'UniversalListFindExtForm'
-	И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
-	И я меняю значение переключателя с именем 'CompareType' на "Anywhere in the line"
-	И в поле с именем 'Pattern' я ввожу текст '[TheReportKindDescription]'
-	И я нажимаю на кнопку с именем 'Find'
-	Тогда в таблице 'ReportKindList' количество строк 'равно' 1
+	And In the command interface I select "Budgeting, reporting, and analysis" "Report types and templates"
+	Then "Report types and templates" window is opened
+	And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
+	Then the form named 'UniversalListFindExtForm' is opened
+	And I select "Report type" exact value from the drop-down list named 'FieldSelector'
+	And I change the radio button named 'CompareType' value to "Anywhere in the line"
+	And I input '[TheReportKindDescription]' text in the field named 'Pattern'
+	And I click the button named 'Find'
+	Then the number of 'ReportKindList' table lines is 'equal' 1
 
-Сценарий: Открылся экземпляр отчета для вида отчета "TheReportKind" валюта "TheCurrency" организация "TheBusinessUnit" сценарий 'TheScenario' периодичность 'TheFrequency' проект 'TheProject' аналитики 'TheDimension1' 'TheDimension2' 'TheDimension3' 'TheDimension4' 'TheDimension5' 'TheDimension6' 
+Scenario: I open report instance for report type "TheReportKind" currency "TheCurrency" company "TheBusinessUnit" scenario 'TheScenario' frequency 'TheFrequency' project 'TheProject' dimensions 'TheDimension1' 'TheDimension2' 'TheDimension3' 'TheDimension4' 'TheDimension5' 'TheDimension6'
 
-	Если '$$ЯзыкИнтерфейса$$ = "Ru"' Тогда
-		И я запоминаю строку 'Экземпляр отчета \"[TheReportKind]\": <[TheCurrency]> <[TheBusinessUnit]> <* - * (Периодичность: [TheFrequency]) <[TheScenario]>>' в переменную 'WindowTitle'
-	ИначеЕсли '$$ЯзыкИнтерфейса$$ = "En"' Тогда
-		И я запоминаю строку 'The \"[TheReportKind]\" report instance: <[TheCurrency]> <[TheBusinessUnit]> <* - * (Frequency: [TheFrequency]) <[TheScenario]>>' в переменную 'WindowTitle'			
+	If '$$LanguageInterface$$ = "Ru"' Then
+		And I save 'Report instance "[TheReportKind]": <[TheCurrency]> <[TheBusinessUnit]> <* - * (Frequency: [TheFrequency]) <[TheScenario]>>' line to the variable 'WindowTitle'
+	ElseIf '$$LanguageInterface$$ = "En"' Then
+		And I save 'The \"[TheReportKind]\" report instance: <[TheCurrency]> <[TheBusinessUnit]> <* - * (Frequency: [TheFrequency]) <[TheScenario]>>' line to the variable 'WindowTitle'
 
-	Если 'НЕ ПустаяСтрока("[TheProject]")' Тогда
-		И я запоминаю строку '$ЗаголовокОкна$ <[TheProject]>' в переменную 'WindowTitle'
-	Если 'НЕ ПустаяСтрока("[TheDimension1]")' Тогда
-		И я запоминаю строку '$ЗаголовокОкна$ <[TheDimension1]>' в переменную 'WindowTitle'
-	Если 'НЕ ПустаяСтрока("[TheDimension2]")' Тогда
-		И я запоминаю строку '$ЗаголовокОкна$ <[TheDimension2]>' в переменную 'WindowTitle'
-	Если 'НЕ ПустаяСтрока("[TheDimension3]")' Тогда
-		И я запоминаю строку '$ЗаголовокОкна$ <[TheDimension3]>' в переменную 'WindowTitle'
-	Если 'НЕ ПустаяСтрока("[TheDimension4]")' Тогда
-		И я запоминаю строку '$ЗаголовокОкна$ <[TheDimension4]>' в переменную 'WindowTitle'	
-	Если 'НЕ ПустаяСтрока("[TheDimension5]")' Тогда
-		И я запоминаю строку '$ЗаголовокОкна$ <[TheDimension5]>' в переменную 'WindowTitle'
-	Если 'НЕ ПустаяСтрока("[TheDimension6]")' Тогда
-		И я запоминаю строку '$ЗаголовокОкна$ <[TheDimension6]>' в переменную 'WindowTitle'
+	If 'NOT IsBlankString("[TheProject]")' Then
+		And I save '$WindowTitle$ <[TheProject]>' line to the variable 'WindowTitle'
+	If 'NOT IsBlankString("[TheDimension1]")' Then
+		And I save '$WindowTitle$ <[TheDimension1]>' line to the variable 'WindowTitle'
+	If 'NOT IsBlankString("[TheDimension2]")' Then
+		And I save '$WindowTitle$ <[TheDimension2]>' line to the variable 'WindowTitle'
+	If 'NOT IsBlankString("[TheDimension3]")' Then
+		And I save '$WindowTitle$ <[TheDimension3]>' line to the variable 'WindowTitle'
+	If 'NOT IsBlankString("[TheDimension4]")' Then
+		And I save '$WindowTitle$ <[TheDimension4]>' line to the variable 'WindowTitle'
+	If 'NOT IsBlankString("[TheDimension5]")' Then
+		And I save '$WindowTitle$ <[TheDimension5]>' line to the variable 'WindowTitle'
+	If 'NOT IsBlankString("[TheDimension6]")' Then
+		And I save '$WindowTitle$ <[TheDimension6]>' line to the variable 'WindowTitle'
 
-	И я запоминаю строку '$ЗаголовокОкна$*' в переменную 'WindowTitle'
-	И я жду открытия окна '$ЗаголовокОкна$' в течение 30 секунд
+	And I save '$WindowTitle$*' line to the variable 'WindowTitle'
+	And I wait '$WindowTitle$' window opening in 30 seconds
 
-Сценарий: Открылся документ управления периодом для сценария 'TheScenario' периодичность 'TheFrequency' 
+Scenario: I open period management document for scenario 'TheScenario' frequency 'TheFrequency'
 
-	Если '$$ЯзыкИнтерфейса$$ = "Ru"' Тогда
-		И я запоминаю строку '* - * (Периодичность: [TheFrequency]) <[TheScenario]>' в переменную 'WindowTitle'
-	ИначеЕсли '$$ЯзыкИнтерфейса$$ = "En"' Тогда
-		И я запоминаю строку '* - * (Frequency: [TheFrequency]) <[TheScenario]>' в переменную 'WindowTitle'
+	If '$$LanguageInterface$$ = "Ru"' Then
+		And I save '* - * (Periodicity: [TheFrequency]) <[TheScenario]>' line to the variable 'WindowTitle'
+	ElseIf '$$LanguageInterface$$ = "En"' Then
+		And I save '* - * (Frequency: [TheFrequency]) <[TheScenario]>' line to the variable 'WindowTitle'
 
-	И открылось окно '$ЗаголовокОкна$'
+	And '$WindowTitle$' window is opened
 
-Сценарий: Открылся регламент подготовки отчетности 'TheDescription' 
+Scenario: I open reporting preparation regulation 'TheDescription'
 
-	Если '$$ЯзыкИнтерфейса$$ = "Ru"' Тогда
-		Если 'ПустаяСтрока("[TheDescription]")' Тогда
-			И я запоминаю строку 'Regulation from * (Create)*' в переменную 'WindowTitle'
-		Иначе
-			И я запоминаю строку '[TheDescription] from * (Reporting preparation regulation)*' в переменную 'WindowTitle'
-	ИначеЕсли '$$ЯзыкИнтерфейса$$ = "En"' Тогда
-		Если 'ПустаяСтрока("[TheDescription]")' Тогда
-			И я запоминаю строку 'Regulation from * (Create)*' в переменную 'WindowTitle'
-		Иначе
-			И я запоминаю строку '[TheDescription] from * (Regulation for preparing reports)*' в переменную 'WindowTitle'
+	If '$$LanguageInterface$$ = "Ru"' Then
+		If 'IsBlankString("[TheDescription]")' Then
+			And I save 'Regulation from * (Create)*' line to the variable 'WindowTitle'
+		Else
+			And I save '[TheDescription] from * (Reporting preparation regulation)*' line to the variable 'WindowTitle'
+	ElseIf '$$LanguageInterface$$ = "En"' Then
+		If 'IsBlankString("[TheDescription]")' Then
+			And I save 'Regulation from * (Create)*' line to the variable 'WindowTitle'
+		Else
+			And I save '[TheDescription] from * (Regulation for preparing reports)*' line to the variable 'WindowTitle'
 
-	И открылось окно '$ЗаголовокОкна$'	
+	And '$WindowTitle$' window is opened
 
-Сценарий: Открылся бланк для вида отчета 'TheReportKind'
+Scenario: I open template for report type 'TheReportKind'
 
-	И я запоминаю строку "Template [TheReportKind] report type: [TheReportKind]*" в переменную 'WindowTitle'
-	И открылось окно '$ЗаголовокОкна$'
+	And I save "Template [TheReportKind] report type: [TheReportKind]*" line to the variable 'WindowTitle'
+	And '$WindowTitle$' window is opened
 
-Сценарий: Открылся бланк сводной таблицы для вида отчета 'TheReportKind'
+Scenario: I open pivot table template for report type 'TheReportKind'
 
-	И я запоминаю строку "Pivot table template: [TheReportKind] (pivot table)*" в переменную 'WindowTitle'
-	И открылось окно '$ЗаголовокОкна$'
+	And I save "Pivot table template: [TheReportKind] (pivot table)*" line to the variable 'WindowTitle'
+	And '$WindowTitle$' window is opened
 
-Сценарий: Открылась сводная таблица для вида отчета 'TheReportKind'
+Scenario: I open pivot table for report type 'TheReportKind'
 
-	И я запоминаю строку "Pivot table: [TheReportKind] (pivot table)*" в переменную 'WindowTitle'
-	И я жду открытия окна '$ЗаголовокОкна$' в течение 20 секунд
+	And I save "Pivot table: [TheReportKind] (pivot table)*" line to the variable 'WindowTitle'
+	And I wait '$WindowTitle$' window opening in 20 seconds
 
-Сценарий: Открылась сводная таблица для варианта 'TheVariant'
+Scenario: I open pivot table for variant 'TheVariant'
 
-	И я жду открытия окна "Pivot table: [TheVariant]*" в течение 20 секунд
+	And I wait "Pivot table: [TheVariant]*" window opening in 20 seconds
 
-Сценарий: Открылась правило расчета для вида отчета 'TheReportKind'
+Scenario: I open calculation rule for report type 'TheReportKind'
 
-	И открылось окно "[TheReportKind] (Calculation rules)*"
+	And "[TheReportKind] (Calculation rules)*" window is opened
 	
-Сценарий: Я подставляю в строку 'TheLine' параметры 'TheParameter1' 'TheParameter2' 'TheParameter3'
+Scenario: I substitute parameters 'TheParameter1' 'TheParameter2' 'TheParameter3' in row 'TheLine'
 
-	И Я запоминаю значение выражения 'СтрШаблон("[TheLine]", "[TheParameter1]", "[TheParameter2]", "[TheParameter3]")' в переменную 'FinalRow'
+	And I save 'StrTemplate("[TheLine]", "[TheParameter1]", "[TheParameter2]", "[TheParameter3]")' in 'FinalRow' variable
 
-Сценарий: Я выбираю показатель с кодом 'TheIndicatorCode'
+Scenario: I select indicator with code 'TheIndicatorCode'
 
-	Если '$$ЯзыкИнтерфейса$$ = "Ru"' Тогда
-		Тогда открылось окно "Report indicators"
-		И я меняю значение переключателя с именем 'IndicatorChoiceMode' на "Structure layout"
-		И в табличном документе 'SpreadsheetDocSelectIndicator' я перехожу к ячейке '[TheIndicatorCode]'
-		И в табличном документе 'SpreadsheetDocSelectIndicator' я делаю двойной клик на текущей ячейке
-	Иначе
-		Тогда открылось окно "Indicator list"
-		И я меняю значение переключателя с именем 'IndicatorChoiceMode' на "Indicator list"
-		И в таблице 'Список' я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Code"
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И в поле с именем 'Pattern' я ввожу текст '[TheIndicatorCode]'
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Report indicators"
-		И в таблице 'List' я выбираю текущую строку
+	If '$$LanguageInterface$$ = "Ru"' Then
+		Then "Report indicators" window is opened
+		And I change the radio button named 'IndicatorChoiceMode' value to "Structure layout"
+		And in 'SpreadsheetDocSelectIndicator' spreadsheet document I move to '[TheIndicatorCode]' cell
+		And in 'SpreadsheetDocSelectIndicator' spreadsheet document I double-click the current cell
+	Else
+		Then "Indicator list" window is opened
+		And I change the radio button named 'IndicatorChoiceMode' value to "Indicator list"
+		And in the table 'List' I click the button named 'Find'
+		Then "Find" window is opened
+		And I select "Code" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I input '[TheIndicatorCode]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then "Report indicators" window is opened
+		And I select current line in 'List' table
 
-Сценарий: Я выбираю организацию 'TheName'
+Scenario: I select company 'TheName'
 
-	Если '$$ЭтоPerform$$' Тогда
-		И Я в списке "Business units" по полю "Description" ищу и выбираю элемент '[TheName]' "At the beginning of the line"
-	ИначеЕсли '$$ЭтоУХ$$' Тогда
-		И Я в списке "Business units" по полю "Name in the application" ищу и выбираю элемент '[TheName]' "Exact match"
-	ИначеЕсли '$$ЭтоЕРПУХ$$' Тогда
-		И Я в списке "Companies" по полю "Working name" ищу и выбираю элемент '[TheName]' "Exact match"
+	If '$$IsPerform$$' Then
+		And I search and select element '[TheName]' "At the beginning of the line" by field "Description" in list "Business units"
+	ElseIf '$$IsCPM$$' Then
+		And I search and select element '[TheName]' "Exact match" by field "Name in the application" in list "Business units"
+	ElseIf '$$IsERPCPM$$' Then
+		And I search and select element '[TheName]' "Exact match" by field "Working name" in list "Companies"

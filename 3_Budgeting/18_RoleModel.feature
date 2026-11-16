@@ -1,1322 +1,1322 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 18. Проверка ролевой модели в Бюджетировании
+Feature: 18. Checking role model in Budgeting
 
-	Как Администратор я хочу
-	Проверить что ролевая модель в Бюджетировании
-	работают корректно
+	As Administrator I want to
+	Check that the role model in Budgeting
+	works correctly
 
-Контекст:
+Background:
 	
-	И я закрыл все окна клиентского приложения
+	And I close all client application windows
 
-Сценарий: 18.00 Определение типа приложения
+Scenario: 18.00 Determining application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-	И Я включаю производительный режим работы ограничений на уровне записей
+	And I enable performance mode of restrictions at record level
 	
-Сценарий: 18.01 Создание группы видов отчетов "VA - Checking access settings (group)"
+Scenario: 18.01 Creating report type group "VA - Checking access settings (group)"
 
-	И Я создаю группу видов отчетов с именем "VA - Checking access settings (group)" и родителем "VA - Report group"
+	And I create report type group with name "VA - Checking access settings (group)" and parent "VA - Report group"
 
-Сценарий: 18.02 Создание вида отчета "VA - Checking access settings (no)"	
+Scenario: 18.02 Creating report type "VA - Checking access settings (no)"
 
-	* Создаем вид отчета
-		И Я создаю вид отчета с именем "VA - Checking access settings (no)" и родителем "VA - Checking access settings (group)"	
+	* Creating a report type
+		And I create report type with name "VA - Checking access settings (no)" and parent "VA - Checking access settings (group)"
 
-	* Настраиваем вид отчета
-		И Я открываю вид отчета с именем "VA - Checking access settings (no)"
-		И я устанавливаю флаг с именем 'ProjectSeparation'
-		И я перехожу к закладке с именем 'DimensionsOfReport'
-		И из выпадающего списка с именем 'DimensionKind1' я выбираю по строке "Company business units"
-		И я нажимаю на кнопку с именем 'RecordButtonForm'
-		Тогда открылось окно "Data restructuring"
-		И я нажимаю на кнопку с именем 'FormOK'
-		И я нажимаю на кнопку с именем 'EditTree'
+	* Configuring report type
+		And I open report type with name "VA - Checking access settings (no)"
+		And I set checkbox named 'ProjectSeparation'
+		And I move to the tab named 'DimensionsOfReport'
+		And I select from the drop-down list named 'DimensionKind1'  by "Company business units" string
+		And I click the button named 'RecordButtonForm'
+		Then "Data restructuring" window is opened
+		And I click the button named 'FormOK'
+		And I click the button named 'EditTree'
 
-	* Редактируем структуру отчета
-		И Я в конструкторе отчета добавляю строку с именем "ReportLine"
-		И Я в конструкторе отчета добавляю строку с именем "ReportRowX2"
-		И Я в конструкторе отчета добавляю колонку с именем "Amount"
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0IEItems" в ячейку 'R3C3'
+	* Editing the report structure
+		And I add row with name "ReportLine" in report wizard
+		And I add row with name "ReportRowX2" in report wizard
+		And I add column with name "Amount" in report wizard
+		And I add dimension with code "VA0IEItems" in cell 'R3C3' in report wizard
 
-	* Настраиваем формулы
-		Когда открылось окно "Report wizard"
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R3C2"
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Когда открылось окно "Report wizard"
-		И я нажимаю на кнопку с именем 'TotalByAccount1'
-		Тогда открылось окно "Data source (create)"
-		И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Checking access settings (no)"
-		И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-		Тогда открылось окно "Report indicators"
-		И я меняю значение переключателя с именем 'IndicatorChoiceMode' на "Indicator list"
-		Когда открылось окно "Report indicators"
-		И в таблице 'List' я перехожу к строке по шаблону:
+	* Configuring formulas
+		When "Report wizard" window is opened
+		And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R3C2" cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		When "Report wizard" window is opened
+		And I click the button named 'TotalByAccount1'
+		Then "Data source (create)" window is opened
+		And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Checking access settings (no)" string
+		And I click Choice button of the field named 'IndicatorFilter'
+		Then "Report indicators" window is opened
+		And I change the radio button named 'IndicatorChoiceMode' value to "Indicator list"
+		When "Report indicators" window is opened
+		And I go to line in 'List' table by template:
 			| "Code"               | "Description"       |
 			| "ReportLine_Amount*" | "ReportLine amount" |
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Data source (create) *"
-		И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-		И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-		И в таблице 'ComplianceTable' я завершаю редактирование строки
-		И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-		И в таблице 'ComplianceTable' я выбираю текущую строку
-		И Я в списке "Income and expense items" по полю "Description" ищу и выбираю элемент "2Software implementation" "Exact match"		
-		Когда открылось окно "Data source (create) *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-		Тогда открылось окно "Report wizard *"
-		И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст "[VACheckingAccessSettingsNo_ReportLine_Amount] * 2"
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		Когда открылось окно "Report wizard"
-		И Я закрываю окно "Report wizard"
+		And I select current line in 'List' table
+		Then "Data source (create) *" window is opened
+		And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+		And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+		And I finish line editing in 'ComplianceTable' table
+		And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+		And I select current line in 'ComplianceTable' table
+		And I search and select element "2Software implementation" "Exact match" by field "Description" in list "Income and expense items"
+		When "Data source (create) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Data source (create) *" window closing in 20 seconds
+		Then "Report wizard *" window is opened
+		And I input "[VACheckingAccessSettingsNo_ReportLine_Amount] * 2" text in the field named 'TextDocumentFieldProcedure'
+		And I click the button named 'WriteAndCollapse'
+		When "Report wizard" window is opened
+		And I close "Report wizard" window
 
-	И Я Для вида отчета "VA - Checking access settings (no)" создаю бланк по умолчанию
-	И Я для вида отчета "VA - Checking access settings (no)" создаю бланк сводной таблицы по умолчанию с отборами "Company business units" "Project"
+	And I create default template for report type "VA - Checking access settings (no)"
+	And I for report type "Company business units" create default pivot table template with filters "Project" "VA - Checking access settings (no)"
 
-Структура сценария: 18.03 Копирование вида отчета "VA - Checking access settings (no)"
+Scenario Outline: 18.03 Copying report type "VA - Checking access settings (no)"
 
-	* Открываем список
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report types and templates"
+	* Opening a list
+		And In the command interface I select "Budgeting, reporting, and analysis" "Report types and templates"
 
-	* Удаляем текущий элемент
-		Тогда открылось окно "Report types and templates"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
-		И я меняю значение переключателя с именем 'CompareType' на "Anywhere in the line"
-		И в поле с именем 'Pattern' я ввожу текст <ТекВидОтчета>
-		И я нажимаю на кнопку с именем 'Find'
-		И Пока в таблице 'ReportKindList' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление
-					И Я удаляю текущую строку в списке 'ReportKindList'
-						И я выбираю пункт контекстного меню с именем 'ReportKindListContextMenuSetDeletionMark' на элементе формы с именем 'ReportKindList'
-						Тогда открылось окно "1C:Enterprise"
-						Если элемент формы с именем 'Message' стал равен "Mark * for deletion?" по шаблону Тогда
-								И я нажимаю на кнопку с именем 'Button0'
-						Иначе
-								И я нажимаю на кнопку с именем 'Button1'
-						И я жду доступности элемента с именем 'ReportKindList' в течение 20 секунд
-			* Перименовываем
-				И Я запоминаю значение выражения '"Delete_" + StrReplace(New UUID, "-", "")' в переменную 'UID'
-				И в таблице 'ReportKindList' я выбираю текущую строку
-				Тогда открылось окно "* (Report types)"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И в поле с именем 'FullDescr' я ввожу значение переменной 'UID'
-				И в поле с именем 'Code' я ввожу значение переменной 'UID'
-				И в поле с именем 'Parent' я ввожу текст ''
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Report types)" в течение 20 секунд
+	* Deleting the current element
+		Then "Report types and templates" window is opened
+		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Anywhere in the line"
+		And I input <TextReportKind> text in the field named 'Pattern'
+		And I click the button named 'Find'
+		And While the number of 'ReportKindList' table lines 'more' 0 Then
+			* Marking for deletion
+					And I delete current row in list 'ReportKindList'
+						And I select context menu item named 'ReportKindListContextMenuSetDeletionMark' of the form attribute named 'ReportKindList'
+						Then "1C:Enterprise" window is opened
+						If form element named 'Message' became equal to "Mark * for deletion?" by template Then
+								And I click the button named 'Button0'
+						Else
+								And I click the button named 'Button1'
+						And I wait the attribute named 'ReportKindList' availability in 20 seconds
+			* Renaming
+				And I save '"Delete_" + StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'ReportKindList' table
+				Then "* (Report types)" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I input 'UID' variable value in the field named 'FullDescr'
+				And I input 'UID' variable value in the field named 'Code'
+				And I input '' text in the field named 'Parent'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Report types)" window closing in 20 seconds
 
-	* Ищем отчет для копирования
-		Тогда открылось окно "Report types and templates"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
-		И я меняю значение переключателя с именем 'CompareType' на "Anywhere in the line"
-		И в поле с именем 'Pattern' я ввожу текст "VA - Checking access settings (no)"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда в таблице 'ReportKindList' количество строк "равно" 1
-		Когда открылось окно "Report types and templates"
-		И я выбираю пункт контекстного меню с именем 'ReportKindListContextMenuCopy' на элементе формы с именем 'ReportKindList'
-		Тогда открылось окно "Copy report type"
-		И я нажимаю на кнопку с именем 'FormOK'
-		Когда открылось окно "Report types (create)"
-		И в поле с именем 'Description' я ввожу текст <ТекВидОтчета>
-		И в поле с именем 'FullDescr' я ввожу текст <ТекВидОтчета>
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Report types (create) *" в течение 20 секунд
+	* Searching for report to copy
+		Then "Report types and templates" window is opened
+		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Anywhere in the line"
+		And I input "VA - Checking access settings (no)" text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then the number of 'ReportKindList' table lines is "equal" 1
+		When "Report types and templates" window is opened
+		And I select context menu item named 'ReportKindListContextMenuCopy' of the form attribute named 'ReportKindList'
+		Then "Copy report type" window is opened
+		And I click the button named 'FormOK'
+		When "Report types (create)" window is opened
+		And I input <TextReportKind> text in the field named 'Description'
+		And I input <TextReportKind> text in the field named 'FullDescr'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Report types (create) *" window closing in 20 seconds
 
-	* Создаем бланк сводной таблицы
-		// ДОДЕЛАТЬ: Бланки должны корректно копироваться вместе с видом отчета	
-		Когда открылось окно "Report types and templates"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
-		И я меняю значение переключателя с именем 'CompareType' на "Anywhere in the line"
-		И в поле с именем 'Pattern' я ввожу текст <ТекВидОтчета>
-		И я нажимаю на кнопку с именем 'Find'
-		Когда открылось окно "Report types and templates"
-		Тогда в таблице 'ReportKindList' количество строк "равно" 1				
-		И в таблице 'List' я перехожу к строке:
+	* Creating pivot table template
+		// TO DO: Templates should be correctly copied along with the report type
+		When "Report types and templates" window is opened
+		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Anywhere in the line"
+		And I input <TextReportKind> text in the field named 'Pattern'
+		And I click the button named 'Find'
+		When "Report types and templates" window is opened
+		Then the number of 'ReportKindList' table lines is "equal" 1
+		And I go to line in 'List' table:
 			| "Description"                                           |
 			| "VA - Checking access settings (no) (pivot table)" |
-		И в таблице 'List' я выбираю текущую строку	
-		Когда открылось окно "Pivot table template: *"
-		И я нажимаю на кнопку с именем 'ShowListOfRows'
-		Тогда открылось окно "Set up line list"
-		И в таблице 'TreeOfSelectedLines' я перехожу к строке по шаблону:
+		And I select current line in 'List' table
+		When "Pivot table template: *" window is opened
+		And I click the button named 'ShowListOfRows'
+		Then "Set up line list" window is opened
+		And I go to line in 'TreeOfSelectedLines' table by template:
 			| "Code"         | "Report line" |
 			| "ReportLine*" | "ReportLine"  |
-		И я нажимаю на кнопку с именем 'Delete'
-		И я нажимаю на кнопку с именем 'Delete'
-		И я нажимаю на кнопку с именем 'MoveLeftAll'
-		И я нажимаю на кнопку с именем 'ApplyTheChanges'
-		Тогда открылось окно "Pivot table template: *"
-		И я нажимаю на кнопку с именем 'ShowListOfColumns'
-		Тогда открылось окно "Set up column list"
-		И в таблице 'PivotTableColumnsListSettings' я нажимаю на кнопку с именем 'PivotTableColumnsListSettingsDelete'
-		И в таблице 'PivotTableColumnsListSettings' я нажимаю на кнопку с именем 'PivotTableColumnsListSettingsPopulateColumns'
-		И я нажимаю на кнопку с именем 'FormApply'
-		Тогда открылось окно "Pivot table template: *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Pivot table template: *" в течение 20 секунд	
+		And I click the button named 'Delete'
+		And I click the button named 'Delete'
+		And I click the button named 'MoveLeftAll'
+		And I click the button named 'ApplyTheChanges'
+		Then "Pivot table template: *" window is opened
+		And I click the button named 'ShowListOfColumns'
+		Then "Set up column list" window is opened
+		And in the table 'PivotTableColumnsListSettings' I click the button named 'PivotTableColumnsListSettingsDelete'
+		And in the table 'PivotTableColumnsListSettings' I click the button named 'PivotTableColumnsListSettingsPopulateColumns'
+		And I click the button named 'FormApply'
+		Then "Pivot table template: *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Pivot table template: *" window closing in 20 seconds
 
-Примеры:
-	| ТекВидОтчета                              |
+Examples:
+	| TextReportKind                              |
 	| "VA - Checking access settings (record)" |
 	| "VA - Checking access settings (reading)" |
 
-Структура сценария: 18.04 Создание шаблонов корректировки значений показателей
+Scenario Outline: 18.04 Creating indicator value adjustment templates
 
-	И Я создаю шаблон корректировки значений показателей с имененм <ТекВидОтчета> и видами отчетов
+	And I create indicator values adjustment template with name <TextReportKind> and report types
 		| "Report type"   |
-		| <ТекВидОтчета> |
+		| <TextReportKind> |
 
-	И Для шаблона корректировки значений показателей с имененм <ТекВидОтчета> я заполняю таблицу корректировок значениями
+	And I fill adjustment table with values for indicator values adjustment template with name <TextReportKind>
 		| "Report type"   | "Indicator"           |
-		| <ТекВидОтчета> | "ReportLine amount"   |
-		| <ТекВидОтчета> | "ReportRowX2 amount" |
+		| <TextReportKind> | "ReportLine amount"   |
+		| <TextReportKind> | "ReportRowX2 amount" |
 
-Примеры:
-	| ТекВидОтчета                              |
+Examples:
+	| TextReportKind                              |
 	| "VA - Checking access settings (no)"    |
 	| "VA - Checking access settings (record)" |
 	| "VA - Checking access settings (reading)" |
 
-Структура сценария: 18.05 Создание корректировок значений показателей
+Scenario Outline: 18.05 Creating indicator value adjustments
 
-	И Я создаю корректировку значений показателей сценарий "VA - Main scenario" период "January 2024" периодичность "Month" организация <ТекОрганизация> значения
+	And I create indicator values adjustment scenario "VA - Main scenario" period "January 2024" frequency "Month" company <TextOrganization> values
 		| "Report type"   | "Indicator"         | "Company"    | "Report period"  | "Dimension 1"   | "Project"               | "Adjustment" |
-		| <ТекВидОтчета> | "ReportLine amount" | <ТекОрганизация> | "January 2024" | "Administration" | "VA - Main project" | "20.00000"      |
+		| <TextReportKind> | "ReportLine amount" | <TextOrganization> | "January 2024" | "Administration" | "VA - Main project" | "20.00000"      |
 
-Примеры:
-	| ТекВидОтчета                              | ТекОрганизация |
+Examples:
+	| TextReportKind                              | TextOrganization |
 	| "VA - Checking access settings (no)"    | "Mercury LLC" |
 	| "VA - Checking access settings (record)" | "Mercury LLC" |
 	| "VA - Checking access settings (reading)" | "Venus LLC"   |
 	| "VA - Checking access settings (reading)" | "System LLC"  |
 
-Сценарий: 18.06 Создание двойного шаблона корректировки значений показателей	
+Scenario: 18.06 Creating double indicator value adjustment template
 
-	И Я создаю шаблон корректировки значений показателей с имененм "VA - Checking access settings (some)" и видами отчетов
+	And I create indicator values adjustment template with name "VA - Checking access settings (some)" and report types
 		| "Report type"                              |
 		| "VA - Checking access settings (no)"    |
 		| "VA - Checking access settings (record)" |
 
-	И Для шаблона корректировки значений показателей с имененм "VA - Checking access settings (some)" я заполняю таблицу корректировок значениями
+	And I fill adjustment table with values for indicator values adjustment template with name "VA - Checking access settings (some)"
 		| "Report type"                              | "Indicator"         |
 		| "VA - Checking access settings (no)"    | "ReportLine amount" |
 		| "VA - Checking access settings (record)" | "ReportLine amount" |
 
-Сценарий: 18.07 Создание двойной корректировки значений показателей	
+Scenario: 18.07 Creating double indicator value adjustment
 
-	И Я открываю новую корректировку значений показателей сценарий "VA - Main scenario" период "January 2024" периодичность "Month" организация "Mercury LLC"
+	And I open new indicator values adjustment scenario "VA - Main scenario" period "January 2024" frequency "Month" company "Mercury LLC"
 
-	Когда открылось окно "Indicator value adjustment (create) *"
-	И из выпадающего списка с именем 'TemplateOfAdjustment' я выбираю по строке "VA - Checking access settings (some)"
-	И в таблице 'KeyAttributes' я нажимаю на кнопку с именем 'KeyAttributesPopulateKeyAttributes'
-	Тогда открылось окно "Attribute population form"
-	И из выпадающего списка с именем 'Organization' я выбираю точное значение "Mercury LLC"
-	И из выпадающего списка с именем 'ReportPeriod' я выбираю по строке "January 2024"
-	И я нажимаю на кнопку с именем 'FormOK'
-	Тогда открылось окно "Indicator value adjustment (create) *"
-	И в таблице 'TableOfAdjustments' я нажимаю на кнопку с именем 'FillFromTemplate'
-	// ДОДЕЛАТЬ: При заполнении по шаблону нет возможности указать аналитику вида отчета и проект
-	И я нажимаю на кнопку с именем 'FormPostAndClose'
-	И я жду закрытия окна "Indicator value adjustment (create) *" в течение 20 секунд	
+	When "Indicator value adjustment (create) *" window is opened
+	And I select from the drop-down list named 'TemplateOfAdjustment'  by "VA - Checking access settings (some)" string
+	And in the table 'KeyAttributes' I click the button named 'KeyAttributesPopulateKeyAttributes'
+	Then "Attribute population form" window is opened
+	And I select "Mercury LLC" exact value from the drop-down list named 'Organization'
+	And I select from the drop-down list named 'ReportPeriod'  by "January 2024" string
+	And I click the button named 'FormOK'
+	Then "Indicator value adjustment (create) *" window is opened
+	And in the table 'TableOfAdjustments' I click the button named 'FillFromTemplate'
+	// TO DO: When filling by template, there is no way to specify the report type dimension and project
+	And I click the button named 'FormPostAndClose'
+	And I wait "Indicator value adjustment (create) *" window closing in 20 seconds
 
-Структура сценария: 18.08 Создание экземпляров отчетов
+Scenario Outline: 18.08 Creating report instances
 
-	И Я создаю экземпляр отчета для вида отчета <ТекВидОтчета> сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация <ТекОрганизация> проект "VA - Main project" аналитики "Administration" '' '' '' '' ''
-	Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_20.mxl'
-	И Я ввожу значение '100' в ячейку 'R6C2'	
-	Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_100.mxl'
-	И я нажимаю на кнопку с именем 'WriteAndClose'
-	И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	And I create report instance for report type <TextReportKind> scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company <TextOrganization> project "VA - Main project" dimensions "Administration" '' '' '' '' ''
+	Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_20.mxl'
+	And I enter value '100' in cell 'R6C2'
+	Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_100.mxl'
+	And I click the button named 'WriteAndClose'
+	And I wait '$WindowTitle$' window closing in 20 seconds
 
-Примеры:
-	| ТекВидОтчета                              | ТекОрганизация |
+Examples:
+	| TextReportKind                              | TextOrganization |
 	| "VA - Checking access settings (no)"    | "Mercury LLC" |
 	| "VA - Checking access settings (record)" | "Mercury LLC" |
 	| "VA - Checking access settings (reading)" | "Venus LLC"   |
 	| "VA - Checking access settings (reading)" | "System LLC"  |
 
-Сценарий: 18.09 Настройка прав для пользователей
+Scenario: 18.09 Configuring rights for users
 
-	// Группа доступа "VA - Budgeting (Edit)", организации - все
-	И Я добавляю право "Read, write" для вида отчета "VA - Checking access settings (record)" пользователя "Budgeting1" по всем организациям
-	И Я добавляю право "Read" для вида отчета "VA - Checking access settings (reading)" пользователя "Budgeting1" по всем организациям
+	// Access group "VA - Budgeting (Edit)", companies - all
+	And I add right "Read, write" for report type "VA - Checking access settings (record)" user "Budgeting1" for all companies
+	And I add right "Read" for report type "VA - Checking access settings (reading)" user "Budgeting1" for all companies
 
-	// Группа доступа "VA - Budgeting (Edit)", организации - все
-	И Я добавляю право "Read, write" для вида отчета "VA - Checking access settings (record)" пользователя "Budgeting2" организации "Mercury LLC" 
-	И Я добавляю право "Read" для вида отчета "VA - Checking access settings (reading)" пользователя "Budgeting2" организации "Venus LLC"
+	// Access group "VA - Budgeting (Edit)", companies - all
+	And I add right "Read, write" for report type "VA - Checking access settings (record)" user "Budgeting2" company "Mercury LLC"
+	And I add right "Read" for report type "VA - Checking access settings (reading)" user "Budgeting2" company "Venus LLC"
 
-	// Группа доступа "VA - Budgeting (View)", организации - "Mercury LLC" и "Venus LLC"
-	И Я добавляю право "Read, write" для вида отчета "VA - Checking access settings (record)" пользователя "Budgeting3" организации "Mercury LLC" 
+	// Access group "VA - Budgeting (View)", companies - "Mercury LLC" and "Venus LLC"
+	And I add right "Read, write" for report type "VA - Checking access settings (record)" user "Budgeting3" company "Mercury LLC"
 
-	И я закрываю сеанс текущего клиента тестирования
+	And I close current test client session
 
-Сценарий: 18.10 Проверка видов отчетов для "Budgeting1"
+Scenario: 18.10 Checking report types for "Budgeting1"
 	
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Отчета "VA - Checking access settings (no)" не должно быть в списке
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report types and templates"
-		Тогда открылось окно "Report types and templates"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
-		И я меняю значение переключателя с именем 'CompareType' на "Anywhere in the line"
-		И в поле с именем 'Pattern' я ввожу текст "VA - Checking access settings (no)"
-		И я нажимаю на кнопку с именем 'Find'				
-		Тогда в таблице 'ReportKindList' количество строк "равно" 0
+	* Report "VA - Checking access settings (no)" should not be in the list
+		And In the command interface I select "Budgeting, reporting, and analysis" "Report types and templates"
+		Then "Report types and templates" window is opened
+		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Anywhere in the line"
+		And I input "VA - Checking access settings (no)" text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then the number of 'ReportKindList' table lines is "equal" 0
 				
-	* Ищем отчет "VA - Checking access settings (record)"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
-		И я меняю значение переключателя с именем 'CompareType' на "Anywhere in the line"
-		И в поле с именем 'Pattern' я ввожу текст "VA - Checking access settings (record)"
-		И я нажимаю на кнопку с именем 'Find'				
-		Тогда в таблице 'ReportKindList' количество строк "равно" 1	
-		И Я закрываю окно "Report types and templates"
+	* Searching for report "VA - Checking access settings (record)"
+		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Anywhere in the line"
+		And I input "VA - Checking access settings (record)" text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then the number of 'ReportKindList' table lines is "equal" 1
+		And I close "Report types and templates" window
 
-Сценарий: 18.11 Проверка корректировок значений покзаталей для "Budgeting1"
+Scenario: 18.11 Checking indicator value adjustments for "Budgeting1"
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Открываем список с отборами
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Indicator value adjustment"
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'
-		И Я устанавливаю отбор в форме списка "Synthetic adjustment.Report type.Description" "Contains" "VA - Checking access settings"
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'
-		И Я добавляю отбор в форме списка "Deletion mark" "Equal to" "No"
+	* Opening list with filters
+		And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustment"
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I set filter in list form "Synthetic adjustment.Report type.Description" "Contains" "VA - Checking access settings"
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I add filter in list form "Deletion mark" "Equal to" "No"
 
-	* Проверяем состав списка
-		Тогда Таблица 'List' содержит '4' строк из списка:
+	* Checking list composition
+		Then I check table 'List' contains '4' rows from list:
 			| "Company"  | "Scenario"               | "Adjustment template"                       | "Adjustment input method" |
-			| "Mercury LLC" | "VA - Main scenario" | ""                                           | "Manual entry"                |
-			| "Venus LLC"   | "VA - Main scenario" | ""                                           | "Manual entry"                |
-			| "System LLC"  | "VA - Main scenario" | ""                                           | "Manual entry"                |
-			| "Mercury LLC" | "VA - Main scenario" | "VA - Checking access settings (some)" | "Manual entry"                |
+			| "Mercury LLC" | "VA - Main scenario" | ""                                           | "Manual entry"                  |
+			| "Venus LLC"   | "VA - Main scenario" | ""                                           | "Manual entry"                  |
+			| "System LLC"  | "VA - Main scenario" | ""                                           | "Manual entry"                  |
+			| "Mercury LLC" | "VA - Main scenario" | "VA - Checking access settings (some)" | "Manual entry"                  |
 
-	* Открываем документ без доступа
-		И в таблице 'List' я перехожу к строке:
+	* Opening document without access
+		And I go to line in 'List' table:
 			| "Company"  | "Scenario"               | "Adjustment template"                       | "Adjustment input method" |
-			| "Mercury LLC" | "VA - Main scenario" | "VA - Checking access settings (some)" | "Manual entry"                |
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Indicator value adjustment"
-		Тогда в логе сообщений TestClient есть строки:
+			| "Mercury LLC" | "VA - Main scenario" | "VA - Checking access settings (some)" | "Manual entry"                  |
+		And I select current line in 'List' table
+		Then "Indicator value adjustment" window is opened
+		Then there are lines in TestClient message log
 			|"Insufficient access rights to view the document.\nCheck settings in Report type access matrix."|
-		И я очищаю окно сообщений пользователю
+		And I clear user message window
 		
-	* Отменяем проведение документа без доступа
-		И я выбираю пункт контекстного меню с именем 'ListContextMenuUndoPosting' на элементе формы с именем 'List'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'OK'
-		Тогда в логе сообщений TestClient есть строки:
+	* Cancelling posting of document without access
+		And I select context menu item named 'ListContextMenuUndoPosting' of the form attribute named 'List'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'OK'
+		Then there are lines in TestClient message log
 			|"Insufficient access rights to save the document.\nCheck settings in Report type access matrix."|
-		И я очищаю окно сообщений пользователю	
+		And I clear user message window
 
-	* Открываем документ с доступом
-		Когда открылось окно "Indicator value adjustment"
-		И в таблице 'List' я перехожу к строке:
+	* Opening document with access
+		When "Indicator value adjustment" window is opened
+		And I go to line in 'List' table:
 			| "Company"  | "Scenario"               | "Adjustment template" | "Adjustment input method" |
-			| "Mercury LLC" | "VA - Main scenario" | ""                     | "Manual entry"                |
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Indicator value adjustment *"
-		И я нажимаю на кнопку с именем 'FormPostAndClose'
-		И я жду закрытия окна "Indicator value adjustment *" в течение 20 секунд
-		И в логе сообщений TestClient нет строки "*"
+			| "Mercury LLC" | "VA - Main scenario" | ""                     | "Manual entry"                  |
+		And I select current line in 'List' table
+		Then "Indicator value adjustment *" window is opened
+		And I click the button named 'FormPostAndClose'
+		And I wait "Indicator value adjustment *" window closing in 20 seconds
+		And TestClient log message does not contain "*" string
 
-	* Открываем документ с доступом на чтение
-		Когда открылось окно "Indicator value adjustment"
-		И в таблице 'List' я перехожу к строке:
+	* Opening document with read access
+		When "Indicator value adjustment" window is opened
+		And I go to line in 'List' table:
 			| "Company" | "Scenario"               | "Adjustment template" | "Adjustment input method" |
-			| "Venus LLC"  | "VA - Main scenario" | ""                     | "Manual entry"                |
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Indicator value adjustment *"									
-		И я нажимаю на кнопку с именем 'FormPostAndClose'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'OK'
-		Тогда в логе сообщений TestClient есть строки:
+			| "Venus LLC"  | "VA - Main scenario" | ""                     | "Manual entry"                  |
+		And I select current line in 'List' table
+		Then "Indicator value adjustment *" window is opened
+		And I click the button named 'FormPostAndClose'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'OK'
+		Then there are lines in TestClient message log
 			|"Insufficient access rights to save the document.\nCheck settings in Report type access matrix."|
-		И я закрываю окно "Indicator value adjustment *"					
+		And I close "Indicator value adjustment *" window
 		
-	* Снимаем отборы
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'			
-		И Я снимаю все отборы в форме списка			
+	* Removing filters
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I remove all filters in list form
 
-Сценарий: 18.12 Проверка экземпляров отчетов для "Budgeting1"
+Scenario: 18.12 Checking report instances for "Budgeting1"
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Ищем экземпляры отчетов	
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report instances"
-		И Я в списке "Report instances" по полю "Report type" ищу элемент "VA - Checking access settings" "At beginning of line"
-		И я нажимаю кнопку очистить у поля с именем 'SavedSetting'
-		Тогда таблица 'List' содержит "3" строк из списка:
+	* Searching for report instances
+		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
+		And I search element "VA - Checking access settings" "At beginning of line" by field "Report type" in list "Report instances"
+		And I click Clear button of the field named 'SavedSetting'
+		Then I check table 'List' contains "3" rows from list:
 			| "Report type"                              | "Company"  | "Report period"  | "End period" | "Scenario"               | "State" | "Project"               | "Dimension 1"   | "Dimension 2" | "Dimension 3" | "Dimension 4" | "Dimension 5" | "Dimension 6" | "Primary currency" | "External infobase" |
 			| "VA - Checking access settings (reading)" | "System LLC"  | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
 			| "VA - Checking access settings (reading)" | "Venus LLC"   | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
 			| "VA - Checking access settings (record)" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
 
-	* Открываем документ с доступом на запись
-		И в таблице 'List' я перехожу к строке:
+	* Opening document with write access
+		And I go to line in 'List' table:
 			| "Report type"                              | "Company"  | "Report period"  | "End period" | "Scenario"               | "State" | "Project"               | "Dimension 1"   | "Primary currency" |
 			| "VA - Checking access settings (record)" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | "RUB"             |
-		И в таблице 'List' я выбираю текущую строку
-		И Открылся экземпляр отчета для вида отчета "VA - Checking access settings (record)" валюта "RUB" организация "Mercury LLC" сценарий "VA - Main scenario" периодичность 'Month' проект "VA - Main project" аналитики "Administration" '' '' '' '' '' 
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_100.mxl'
-		И я нажимаю на кнопку с именем 'FormVersionsManagement'
-		Тогда открылось окно "Indicator version management"
-		И я нажимаю на кнопку с именем 'ListDeleteVersions'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		Тогда открылось окно "Indicator version management *"
-		И Я закрываю окно "Indicator version management *"
-		И открылось окно '$WindowTitle$'	
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_20.mxl'
-		И я нажимаю на кнопку с именем 'EnableEdit'				
-		И Я ввожу значение '100' в ячейку 'R6C2'
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_100.mxl'
-		И я нажимаю на кнопку с именем 'WriteAndClose'
-		И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
-		Когда открылось окно "Report instances"
-		И в таблице 'List' я выбираю текущую строку
-		И открылось окно '$WindowTitle$'
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_100.mxl'
-		И я закрываю окно '$WindowTitle$'
+		And I select current line in 'List' table
+		And I open report instance for report type "VA - Checking access settings (record)" currency "RUB" company "Mercury LLC" scenario "VA - Main scenario" frequency 'Month' project "VA - Main project" dimensions "Administration" '' '' '' '' ''
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_100.mxl'
+		And I click the button named 'FormVersionsManagement'
+		Then "Indicator version management" window is opened
+		And I click the button named 'ListDeleteVersions'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		Then "Indicator version management *" window is opened
+		And I close "Indicator version management *" window
+		And '$WindowTitle$' window is opened
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_20.mxl'
+		And I click the button named 'EnableEdit'
+		And I enter value '100' in cell 'R6C2'
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_100.mxl'
+		And I click the button named 'WriteAndClose'
+		And I wait '$WindowTitle$' window closing in 20 seconds
+		When "Report instances" window is opened
+		And I select current line in 'List' table
+		And '$WindowTitle$' window is opened
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_100.mxl'
+		And I close '$WindowTitle$' window
 				
-	* Открываем документ с доступом на чтение
-		Когда открылось окно "Report instances"
-		И в таблице 'List' я перехожу к строке:
+	* Opening document with read access
+		When "Report instances" window is opened
+		And I go to line in 'List' table:
 			| "Report type"                              | "Company" | "Report period"  | "End period" | "Scenario"               | "State" | "Project"               | "Dimension 1"   | "Primary currency" |
 			| "VA - Checking access settings (reading)" | "Venus LLC"  | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | "RUB"             |
-		И в таблице 'List' я выбираю текущую строку
-		И Открылся экземпляр отчета для вида отчета "VA - Checking access settings (reading)" валюта "RUB" организация "Venus LLC" сценарий "VA - Main scenario" периодичность 'Month' проект "VA - Main project" аналитики "Administration" '' '' '' '' '' 
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_100.mxl'
-		И элемент формы с именем 'EnableEdit' не доступен
-		И я закрываю окно '$WindowTitle$'
+		And I select current line in 'List' table
+		And I open report instance for report type "VA - Checking access settings (reading)" currency "RUB" company "Venus LLC" scenario "VA - Main scenario" frequency 'Month' project "VA - Main project" dimensions "Administration" '' '' '' '' ''
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_100.mxl'
+		And form attribute named 'EnableEdit' is unavailable
+		And I close '$WindowTitle$' window
 
-	* Помечаем на удаление документ
-		Когда открылось окно "Report instances"
-		И я выбираю пункт контекстного меню с именем 'ListContextMenuSetDeletionMark' на элементе формы с именем 'List'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		Когда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'OK'				
-		Тогда в логе сообщений TestClient есть строки:
-			|"Insufficient access rights to save the document.\nCheck settings in Report type access matrix."|				
+	* Marking document for deletion
+		When "Report instances" window is opened
+		And I select context menu item named 'ListContextMenuSetDeletionMark' of the form attribute named 'List'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		When "1C:Enterprise" window is opened
+		And I click the button named 'OK'
+		Then there are lines in TestClient message log
+			|"Insufficient access rights to save the document.\nCheck settings in Report type access matrix."|
 
-Сценарий: 18.13 Проверка формы настроек экземпляров отчетов для "Budgeting1"
+Scenario: 18.13 Checking report instances settings form for "Budgeting1"
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	И Я открываю первый экземпляр отчета для вида отчета "VA - Checking access settings (record)"
-	Тогда Открылся экземпляр отчета для вида отчета "VA - Checking access settings (record)" валюта "RUB" организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект "VA - Main project" аналитики "Administration" '' '' '' '' '' 
+	And I open first report instance for report type "VA - Checking access settings (record)"
+	Then I open report instance for report type "VA - Checking access settings (record)" currency "RUB" company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project "VA - Main project" dimensions "Administration" '' '' '' '' ''
 
-	* Проверяем форму настроек
-		И я нажимаю на кнопку с именем 'FormOpenSettings'
-		Когда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'ReportKind'
-		Тогда открылось окно "VA - Checking access settings (record) (Report types)"
-		И Я закрываю окно "VA - Checking access settings (record) (Report types)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'TemplateForReport'
-		Тогда открылось окно "Template VA - Checking access settings (no) report type: VA - Checking access settings (record)"
-		И Я закрываю окно "Template VA - Checking access settings (no) report type: VA - Checking access settings (record)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'Project'
-		Тогда открылось окно "VA - Main project (Projects and phases)"
-		И Я закрываю окно "VA - Main project (Projects and phases)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'Dimension1'
-		Когда открылось окно "Administration (Department)"
-		И Я закрываю окно "Administration (Department)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'Scenario'
-		Тогда открылось окно "Scenarios: VA - Main scenario (Scenarios)"
-		И Я закрываю окно "Scenarios: VA - Main scenario (Scenarios)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'PeriodManagement'
-		Тогда открылось окно "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>"
-		И Я закрываю окно "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'Organization'
-		Тогда открылось окно "Mercury LLC (Business unit*)"
-		И Я закрываю окно "Mercury LLC (Business unit*)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'RegulationVersion'
-		Тогда открылось окно "VA - Main regulations from * (Regulation for preparing reports)"
-		И Я закрываю окно "VA - Main regulations from * (Regulation for preparing reports)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'MainCurrency'
-		Тогда открылось окно "RUB (Currency)"
-		И Я закрываю окно "RUB (Currency)"
-		Тогда открылось окно "Document settings"
-		И я перехожу к закладке с именем 'GroupPageReportSettings'
-		И я нажимаю на кнопку открытия поля с именем 'ProcessingRule'
-		Тогда открылось окно "VA - Checking access settings (no) (Calculation rules)"
-		И Я закрываю окно "VA - Checking access settings (no) (Calculation rules)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'ExternalInfobase'
-		Тогда открылось окно "Current infobase (External infobases)"
-		И Я закрываю окно "Current infobase (External infobases)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'CheckRule'
-		Тогда открылось окно "VA - Checking access settings (no) (Check rules)"
-		И Я закрываю окно "VA - Checking access settings (no) (Check rules)"
+	* Checking settings form
+		And I click the button named 'FormOpenSettings'
+		When "Document settings" window is opened
+		And I click Open button of the field named 'ReportKind'
+		Then "VA - Checking access settings (record) (Report types)" window is opened
+		And I close "VA - Checking access settings (record) (Report types)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'TemplateForReport'
+		Then "Template VA - Checking access settings (no) report type: VA - Checking access settings (record)" window is opened
+		And I close "Template VA - Checking access settings (no) report type: VA - Checking access settings (record)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'Project'
+		Then "VA - Main project (Projects and phases)" window is opened
+		And I close "VA - Main project (Projects and phases)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'Dimension1'
+		When "Administration (Department)" window is opened
+		And I close "Administration (Department)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'Scenario'
+		Then "Scenarios: VA - Main scenario (Scenarios)" window is opened
+		And I close "Scenarios: VA - Main scenario (Scenarios)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'PeriodManagement'
+		Then "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>" window is opened
+		And I close "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'Organization'
+		Then "Mercury LLC (Business unit*)" window is opened
+		And I close "Mercury LLC (Business unit*)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'RegulationVersion'
+		Then "VA - Main regulations from * (Regulation for preparing reports)" window is opened
+		And I close "VA - Main regulations from * (Regulation for preparing reports)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'MainCurrency'
+		Then "RUB (Currency)" window is opened
+		And I close "RUB (Currency)" window
+		Then "Document settings" window is opened
+		And I move to the tab named 'GroupPageReportSettings'
+		And I click Open button of the field named 'ProcessingRule'
+		Then "VA - Checking access settings (no) (Calculation rules)" window is opened
+		And I close "VA - Checking access settings (no) (Calculation rules)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'ExternalInfobase'
+		Then "Current infobase (External infobases)" window is opened
+		And I close "Current infobase (External infobases)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'CheckRule'
+		Then "VA - Checking access settings (no) (Check rules)" window is opened
+		And I close "VA - Checking access settings (no) (Check rules)" window
 
-	* Меняем период
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку с именем 'ChangePeriod'
-		Тогда открылось окно "Select period"
-		И в поле с именем 'DateBegin' я ввожу текст '1/1/2023'
-		И в поле с именем 'DateEnd' я ввожу текст '3/31/2023'
-		И я нажимаю на кнопку с именем 'select'
-		И открылось окно "Document settings *"
-		Тогда в логе сообщений TestClient есть строки:
+	* Changing period
+		Then "Document settings" window is opened
+		And I click the button named 'ChangePeriod'
+		Then "Select period" window is opened
+		And I input '1/1/2023' text in the field named 'DateBegin'
+		And I input '3/31/2023' text in the field named 'DateEnd'
+		And I click the button named 'select'
+		And "Document settings *" window is opened
+		Then there are lines in TestClient message log
 			|"Cannot identify a reporting period management document by the parameters:\n	Scenario: VA - Main scenario,\n	Period: January 2023"|
-		И я очищаю окно сообщений пользователю
-		Тогда элемент формы с именем 'PeriodManagement' стал равен ""
-		Тогда элемент формы с именем 'Organization' стал равен ""	
-		Тогда элемент формы с именем 'ReportFrequency' стал равен "Month"
-		Тогда элемент формы с именем 'ReportPeriod' стал равен ""	
-		Тогда элемент формы с именем 'EndingPeriod' стал равен ""	
-		Тогда элемент формы с именем 'RegulationVersion' стал равен ""	
-		Тогда элемент формы с именем 'MainCurrency' стал равен ""			
+		And I clear user message window
+		Then the form attribute named 'PeriodManagement' became equal to ""
+		Then the form attribute named 'Organization' became equal to ""
+		Then the form attribute named 'ReportFrequency' became equal to "Month"
+		Then the form attribute named 'ReportPeriod' became equal to ""
+		Then the form attribute named 'EndingPeriod' became equal to ""
+		Then the form attribute named 'RegulationVersion' became equal to ""
+		Then the form attribute named 'MainCurrency' became equal to ""
 
-	* Выбираем документ управления периодом
-		Тогда открылось окно "Document settings *"
-		И я нажимаю кнопку выбора у поля с именем 'PeriodManagement'
-		И Я нахожу и выбираю документ управления отчетным периодом по сценарию "VA - Main scenario" и периоду начала "January 2024"
-		Тогда открылось окно "Document settings *"
-		И элемент формы с именем 'AdditionalCurrencies' стал равен "USD; EUR"
-		И элемент формы с именем 'Organization' стал равен ""
-		И элемент формы с именем 'MainCurrency' стал равен "RUB"
-		И элемент формы с именем 'ReportFrequency' стал равен "Month"
-		И элемент формы с именем 'EndingPeriod' стал равен "March 2024"
-		И элемент формы с именем 'ReportPeriod' стал равен "January 2024"
-		И элемент формы с именем 'RegulationVersion' стал равен "VA - Main regulations"
-		И элемент формы с именем 'Scenario' стал равен "VA - Main scenario"
-		И элемент формы с именем 'PeriodManagement' стал равен "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>"
+	* Selecting period management document
+		Then "Document settings *" window is opened
+		And I click Choice button of the field named 'PeriodManagement'
+		And I find and select reporting period management document by scenario "VA - Main scenario" and start period "January 2024"
+		Then "Document settings *" window is opened
+		And the form attribute named 'AdditionalCurrencies' became equal to "USD; EUR"
+		And the form attribute named 'Organization' became equal to ""
+		And the form attribute named 'MainCurrency' became equal to "RUB"
+		And the form attribute named 'ReportFrequency' became equal to "Month"
+		And the form attribute named 'EndingPeriod' became equal to "March 2024"
+		And the form attribute named 'ReportPeriod' became equal to "January 2024"
+		And the form attribute named 'RegulationVersion' became equal to "VA - Main regulations"
+		And the form attribute named 'Scenario' became equal to "VA - Main scenario"
+		And the form attribute named 'PeriodManagement' became equal to "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>"
 
-	* Очищаем сценарий
-		Когда открылось окно "Document settings *"
-		И я нажимаю кнопку очистить у поля с именем 'Scenario'
-		Тогда элемент формы с именем 'PeriodManagement' стал равен ""		
-		Тогда элемент формы с именем 'ReportFrequency' стал равен "Month"
-		Тогда элемент формы с именем 'ReportPeriod' стал равен ""	
-		Тогда элемент формы с именем 'EndingPeriod' стал равен ""	
-		Тогда элемент формы с именем 'RegulationVersion' стал равен ""	
-		Тогда элемент формы с именем 'MainCurrency' стал равен ""	
+	* Clearing scenario
+		When "Document settings *" window is opened
+		And I click Clear button of the field named 'Scenario'
+		Then the form attribute named 'PeriodManagement' became equal to ""
+		Then the form attribute named 'ReportFrequency' became equal to "Month"
+		Then the form attribute named 'ReportPeriod' became equal to ""
+		Then the form attribute named 'EndingPeriod' became equal to ""
+		Then the form attribute named 'RegulationVersion' became equal to ""
+		Then the form attribute named 'MainCurrency' became equal to ""
 
-	* Выбираем сценарий
-		Когда открылось окно "Document settings *"
-		И из выпадающего списка с именем 'Scenario' я выбираю по строке "VA - Main scenario"
-		Тогда элемент формы с именем 'Dimension1' стал равен "Administration"
-		И элемент формы с именем 'AdditionalCurrencies' стал равен "USD; EUR"
-		И элемент формы с именем 'MainCurrency' стал равен "RUB"
-		И элемент формы с именем 'ReportFrequency' стал равен "Month"
-		И элемент формы с именем 'EndingPeriod' стал равен "March 2024"
-		И элемент формы с именем 'ReportPeriod' стал равен "January 2024"
-		И элемент формы с именем 'RegulationVersion' стал равен "VA - Main regulations"
-		И элемент формы с именем 'Scenario' стал равен "VA - Main scenario"
-		И элемент формы с именем 'PeriodManagement' стал равен "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>"
+	* Selecting scenario
+		When "Document settings *" window is opened
+		And I select from the drop-down list named 'Scenario'  by "VA - Main scenario" string
+		Then the form attribute named 'Dimension1' became equal to "Administration"
+		And the form attribute named 'AdditionalCurrencies' became equal to "USD; EUR"
+		And the form attribute named 'MainCurrency' became equal to "RUB"
+		And the form attribute named 'ReportFrequency' became equal to "Month"
+		And the form attribute named 'EndingPeriod' became equal to "March 2024"
+		And the form attribute named 'ReportPeriod' became equal to "January 2024"
+		And the form attribute named 'RegulationVersion' became equal to "VA - Main regulations"
+		And the form attribute named 'Scenario' became equal to "VA - Main scenario"
+		And the form attribute named 'PeriodManagement' became equal to "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>"
 
-	* Закрываем формы
-		Когда открылось окно "Document settings *"
-		И Я закрываю окно "Document settings *"
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
-		Тогда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
+	* Closing forms
+		When "Document settings *" window is opened
+		And I close "Document settings *" window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
+		Then '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
 		
-	И я закрываю сеанс текущего клиента тестирования
+	And I close current test client session
 
-Сценарий: 18.14 Проверка корректировок значений покзаталей для "Budgeting2"
+Scenario: 18.14 Checking indicator value adjustments for "Budgeting2"
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting2" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
 
-	* Открываем список с отборами
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Indicator value adjustment"
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'
-		И Я устанавливаю отбор в форме списка "Synthetic adjustment.Report type.Description" "Contains" "VA - Checking access settings"
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'
-		И Я добавляю отбор в форме списка "Deletion mark" "Equal to" "No"
+	* Opening list with filters
+		And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustment"
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I set filter in list form "Synthetic adjustment.Report type.Description" "Contains" "VA - Checking access settings"
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I add filter in list form "Deletion mark" "Equal to" "No"
 
-	* Проверяем состав списка
-		Тогда Таблица 'List' содержит '3' строк из списка:
+	* Checking list composition
+		Then I check table 'List' contains '3' rows from list:
 			| "Company"  | "Scenario"               | "Adjustment template"                       | "Adjustment input method" |
-			| "Mercury LLC" | "VA - Main scenario" | ""                                           | "Manual entry"                |
-			| "Venus LLC"   | "VA - Main scenario" | ""                                           | "Manual entry"                |
-			| "Mercury LLC" | "VA - Main scenario" | "VA - Checking access settings (some)" | "Manual entry"                |
+			| "Mercury LLC" | "VA - Main scenario" | ""                                           | "Manual entry"                  |
+			| "Venus LLC"   | "VA - Main scenario" | ""                                           | "Manual entry"                  |
+			| "Mercury LLC" | "VA - Main scenario" | "VA - Checking access settings (some)" | "Manual entry"                  |
 		
-	* Снимаем отборы
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'			
-		И Я снимаю все отборы в форме списка
+	* Removing filters
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I remove all filters in list form
 
-Сценарий: 18.15 Проверка экземпляров отчетов для "Budgeting2"
+Scenario: 18.15 Checking report instances for "Budgeting2"
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting2" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
 
-	* Ищем экземпляры отчетов	
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report instances"
-		И Я в списке "Report instances" по полю "Report type" ищу элемент "VA - Checking access settings" "At beginning of line"
-		И я нажимаю кнопку очистить у поля с именем 'SavedSetting'				
-		Тогда таблица 'List' содержит "2" строк из списка:
+	* Searching for report instances
+		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
+		And I search element "VA - Checking access settings" "At beginning of line" by field "Report type" in list "Report instances"
+		And I click Clear button of the field named 'SavedSetting'
+		Then I check table 'List' contains "2" rows from list:
 			| "Report type"                              | "Company"  | "Report period"  | "End period" | "Scenario"               | "State" | "Project"               | "Dimension 1"   | "Dimension 2" | "Dimension 3" | "Dimension 4" | "Dimension 5" | "Dimension 6" | "Primary currency" | "External infobase" |
 			| "VA - Checking access settings (reading)" | "Venus LLC"   | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
 			| "VA - Checking access settings (record)" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
 	
-	* Создаем отчет по организации, к которой нет доступа
-		И в таблице 'List' я перехожу к строке:
+	* Creating report for a company without access
+		And I go to line in 'List' table:
 			| "Report type"                              | "Company"  | "Report period"  | "End period" | "Scenario"               | "Project"               | "Dimension 1"   |
 			| "VA - Checking access settings (record)" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" | "VA - Main project" | "Administration" |
-		И я выбираю пункт контекстного меню с именем 'ListContextMenuCopy' на элементе формы с именем 'List'
-		Тогда открылось окно "Specify key document attributes"
-		И я нажимаю кнопку выбора у поля с именем 'Organization'
-		И Я выбираю организацию "System LLC"
-		И я нажимаю на кнопку с именем 'FormApplyAndClose'
-		Тогда открылось окно "Specify key document attributes *"
-		Тогда в логе сообщений TestClient есть строки:
+		And I select context menu item named 'ListContextMenuCopy' of the form attribute named 'List'
+		Then "Specify key document attributes" window is opened
+		And I click Choice button of the field named 'Organization'
+		And I select company "System LLC"
+		And I click the button named 'FormApplyAndClose'
+		Then "Specify key document attributes *" window is opened
+		Then there are lines in TestClient message log
 			|"The Budgeting2 user\nhas insufficient rights to view the VA - Checking access settings (no) template by the System LLC company.\nSelect another template."|
-		Когда открылось окно "Specify key document attributes *"
-		И Я закрываю окно "Specify key document attributes *"
-		Тогда открылось окно "Report instances"
+		When "Specify key document attributes *" window is opened
+		And I close "Specify key document attributes *" window
+		Then "Report instances" window is opened
 
-Сценарий: 18.16 Проверка СТ для пользователя "Budgeting2"
+Scenario: 18.16 Checking pivot table for user "Budgeting2"
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting2" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
 
-	* Проверяем сводную таблицу с правами на запись
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Pivot table"
-		Тогда открылось окно "Pivot table: *"			
-		И я нажимаю на гиперссылку с именем 'FilterHeading'
-		И в поле с именем 'Form' я ввожу текст ""				
-		И я нажимаю кнопку выбора у поля с именем 'Form'
-		Тогда открылось окно "Report types and templates"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListRefresh'
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
-		И я меняю значение переключателя с именем 'CompareType' на "At beginning of line"
-		И в поле с именем 'Pattern' я ввожу текст "VA - Checking access settings (record)"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Report types and templates"
-		И в таблице 'List' я перехожу к строке:
+	* Checking pivot table with write rights
+		And In the command interface I select "Budgeting, reporting, and analysis" "Pivot table"
+		Then "Pivot table: *" window is opened
+		And I click the hyperlink named 'FilterHeading'
+		And I input "" text in the field named 'Form'
+		And I click Choice button of the field named 'Form'
+		Then "Report types and templates" window is opened
+		And in the table 'ReportKindList' I click the button named 'ReportKindListRefresh'
+		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
+		Then "Find" window is opened
+		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "At beginning of line"
+		And I input "VA - Checking access settings (record)" text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then "Report types and templates" window is opened
+		And I go to line in 'List' table:
 			| "Description"                                           |
 			| "VA - Checking access settings (no) (pivot table)" |
-		И я нажимаю на кнопку с именем 'ListChoose'
-		Тогда открылось окно "Pivot table: *"
-		И я нажимаю кнопку выбора у поля с именем 'PivotTableVariant'
-		Тогда открылось окно "Pivol table options"
-		И в таблице 'List' я выбираю текущую строку
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Main"
-		И я нажимаю на кнопку с именем 'ChangePeriod'
-		Тогда открылось окно "Select period"
-		И в поле с именем 'DateBegin' я ввожу текст '1/1/2024'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'DateEnd' я ввожу текст '3/31/2024'
-		И я нажимаю на кнопку с именем 'select'
-		Тогда Открылась сводная таблица для вида отчета "VA - Checking access settings (no)"
-		Тогда открылось окно '$WindowTitle$'
-		И из выпадающего списка с именем 'DisplayCurrency' я выбираю точное значение 'RUB'
-		И из выпадающего списка с именем 'Item_Scenario' я выбираю по строке "VA - Main scenario"
-		И из выпадающего списка с именем 'Item_Organization' я выбираю по строке "Mercury LLC"
-		И из выпадающего списка с именем 'Item_Project' я выбираю по строке "VA - Main project"
-		И из выпадающего списка "Company business units" я выбираю по строке "Administration"
-		И я нажимаю на кнопку с именем 'UpdateTabData1'
-		И я жду открытия формы '$WindowTitle$' в течение 20 секунд
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_ST_100.mxl'
-		И я нажимаю на кнопку с именем 'VersionsManagement'
-		Тогда открылось окно "Indicator version management"
-		И я нажимаю на кнопку с именем 'ListDeleteVersions'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		Тогда открылось окно "Indicator version management *"
-		И Я закрываю окно "Indicator version management *"
-		Тогда открылось окно '$WindowTitle$'
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_ST_20.mxl'
-		И Я ввожу значение '100' в ячейку 'R4C2'
-		И я нажимаю на кнопку с именем 'Apply'
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'UpdateTabData'
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_ST_100.mxl'
+		And I click the button named 'ListChoose'
+		Then "Pivot table: *" window is opened
+		And I click Choice button of the field named 'PivotTableVariant'
+		Then "Pivol table options" window is opened
+		And I select current line in 'List' table
+		And I select "Main" exact value from the drop-down list named 'WorkMode'
+		And I click the button named 'ChangePeriod'
+		Then "Select period" window is opened
+		And I input '1/1/2024' text in the field named 'DateBegin'
+		And I move to the next attribute
+		And I input '3/31/2024' text in the field named 'DateEnd'
+		And I click the button named 'select'
+		Then I open pivot table for report type "VA - Checking access settings (no)"
+		Then '$WindowTitle$' window is opened
+		And I select 'RUB' exact value from the drop-down list named 'DisplayCurrency'
+		And I select from the drop-down list named 'Item_Scenario'  by "VA - Main scenario" string
+		And I select from the drop-down list named 'Item_Organization'  by "Mercury LLC" string
+		And I select from the drop-down list named 'Item_Project'  by "VA - Main project" string
+		And I select from "Company business units" drop-down list by "Administration" string
+		And I click the button named 'UpdateTabData1'
+		And I wait for '$WindowTitle$' form opening for 20 seconds
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_PivotTable_100.mxl'
+		And I click the button named 'VersionsManagement'
+		Then "Indicator version management" window is opened
+		And I click the button named 'ListDeleteVersions'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		Then "Indicator version management *" window is opened
+		And I close "Indicator version management *" window
+		Then '$WindowTitle$' window is opened
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_PivotTable_20.mxl'
+		And I enter value '100' in cell 'R4C2'
+		And I click the button named 'Apply'
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'UpdateTabData'
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_PivotTable_100.mxl'
 
-	* Проверяем сводную таблицу без прав
-		И Я устанавливаю отбор сводной таблицы 'Item_Organization' со значением "Venus LLC"
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Pivot table"
-		Когда открылось окно '$WindowTitle$'	
-		И я жду недоступности элемента с именем 'SpreadsheetFieldTemlate' в течение 20 секунд	
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_NoДоступа.mxl'	
+	* Checking pivot table without rights
+		And I set pivot table filter 'Item_Organization' with value "Venus LLC"
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		And In the command interface I select "Budgeting, reporting, and analysis" "Pivot table"
+		When '$WindowTitle$' window is opened
+		And I wait the attribute named 'SpreadsheetFieldTemlate' unavailability in 20 seconds
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_NoAccess.mxl'
 
-	* Проверяем сводную таблицу с правами на чтение
-		Когда открылось окно "Pivot table: *"
-		И я нажимаю на гиперссылку с именем 'FilterHeading'
-		И я нажимаю кнопку выбора у поля с именем 'Form'
-		Тогда открылось окно "Report types and templates"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
-		И я меняю значение переключателя с именем 'CompareType' на "At beginning of line"
-		И в поле с именем 'Pattern' я ввожу текст "VA - Checking access settings (reading)"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Report types and templates"
-		И в таблице 'List' я перехожу к строке:
+	* Checking pivot table with read rights
+		When "Pivot table: *" window is opened
+		And I click the hyperlink named 'FilterHeading'
+		And I click Choice button of the field named 'Form'
+		Then "Report types and templates" window is opened
+		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
+		Then "Find" window is opened
+		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "At beginning of line"
+		And I input "VA - Checking access settings (reading)" text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then "Report types and templates" window is opened
+		And I go to line in 'List' table:
 			| "Description"                                           |
 			| "VA - Checking access settings (no) (pivot table)" |
-		И я нажимаю на кнопку с именем 'ListChoose'
-		Тогда Открылась сводная таблица для вида отчета "VA - Checking access settings (no)"
-		И я нажимаю кнопку выбора у поля с именем 'PivotTableVariant'
-		Тогда открылось окно "Pivol table options"
-		И в таблице 'List' я выбираю текущую строку
-		И я нажимаю на кнопку с именем 'UpdateTabData1'
-		И я жду открытия формы '$WindowTitle$' в течение 20 секунд
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_ST_100.mxl'								
-		И Я ввожу значение '200' в ячейку 'R4C3'
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_ST_100.mxl'		
+		And I click the button named 'ListChoose'
+		Then I open pivot table for report type "VA - Checking access settings (no)"
+		And I click Choice button of the field named 'PivotTableVariant'
+		Then "Pivol table options" window is opened
+		And I select current line in 'List' table
+		And I click the button named 'UpdateTabData1'
+		And I wait for '$WindowTitle$' form opening for 20 seconds
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_PivotTable_100.mxl'
+		And I enter value '200' in cell 'R4C3'
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_PivotTable_100.mxl'
 
-	И я закрываю сеанс текущего клиента тестирования		
+	And I close current test client session
 								
-Сценарий: 18.17 Проверка корректировок значений покзаталей для "Budgeting3"
+Scenario: 18.17 Checking indicator value adjustments for "Budgeting3"
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting3" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
-	* Открываем список с отборами
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Indicator value adjustment"
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'
-		И Я устанавливаю отбор в форме списка "Synthetic adjustment.Report type.Description" "Contains" "VA - Checking access settings"
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'
-		И Я добавляю отбор в форме списка "Deletion mark" "Equal to" "No"
+	* Opening list with filters
+		And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustment"
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I set filter in list form "Synthetic adjustment.Report type.Description" "Contains" "VA - Checking access settings"
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I add filter in list form "Deletion mark" "Equal to" "No"
 
-	* Проверяем состав списка
-		Тогда Таблица 'List' содержит '2' строк из списка:
+	* Checking list composition
+		Then I check table 'List' contains '2' rows from list:
 			| "Company"  | "Scenario"               | "Adjustment template"                       | "Adjustment input method" |
-			| "Mercury LLC" | "VA - Main scenario" | ""                                           | "Manual entry"                |
-			| "Mercury LLC" | "VA - Main scenario" | "VA - Checking access settings (some)" | "Manual entry"                |
+			| "Mercury LLC" | "VA - Main scenario" | ""                                           | "Manual entry"                  |
+			| "Mercury LLC" | "VA - Main scenario" | "VA - Checking access settings (some)" | "Manual entry"                  |
 
-	* Открываем документ без доступа
-		И в таблице 'List' я перехожу к строке:
+	* Opening document without access
+		And I go to line in 'List' table:
 			| "Company"  | "Scenario"               | "Adjustment template"                       | "Adjustment input method" |
-			| "Mercury LLC" | "VA - Main scenario" | "VA - Checking access settings (some)" | "Manual entry"                |
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Indicator value adjustment"
-		Тогда в логе сообщений TestClient есть строки:
+			| "Mercury LLC" | "VA - Main scenario" | "VA - Checking access settings (some)" | "Manual entry"                  |
+		And I select current line in 'List' table
+		Then "Indicator value adjustment" window is opened
+		Then there are lines in TestClient message log
 			|"Insufficient access rights to view the document.\nCheck settings in Report type access matrix."|
-		И я очищаю окно сообщений пользователю
-		И элемент формы с именем 'ListContextMenuUndoPosting' отсутствует на форме
+		And I clear user message window
+		And the field named 'ListContextMenuUndoPosting' does not exist on the form
 
-	* Открываем документ с доступом на чтение
-		Когда открылось окно "Indicator value adjustment"
-		И в таблице 'List' я перехожу к строке:
+	* Opening document with read access
+		When "Indicator value adjustment" window is opened
+		And I go to line in 'List' table:
 			| "Company"  | "Scenario"               | "Adjustment template" | "Adjustment input method" |
-			| "Mercury LLC" | "VA - Main scenario" | ""                     | "Manual entry"                |
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Indicator value adjustment *"
-		И элемент формы с именем 'FormPostAndClose' отсутствует на форме
-		И я закрываю окно "Indicator value adjustment *"
+			| "Mercury LLC" | "VA - Main scenario" | ""                     | "Manual entry"                  |
+		And I select current line in 'List' table
+		Then "Indicator value adjustment *" window is opened
+		And the field named 'FormPostAndClose' does not exist on the form
+		And I close "Indicator value adjustment *" window
 		
-	* Снимаем отборы
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'			
-		И Я снимаю все отборы в форме списка	
+	* Removing filters
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I remove all filters in list form
 
-Сценарий: 18.18 Проверка экземпляров отчетов и формы настроек для "Budgeting3"
+Scenario: 18.18 Checking report instances and settings form for "Budgeting3"
 	
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting3" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
-	* Ищем экземпляры отчетов	
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report instances"
-		И Я в списке "Report instances" по полю "Report type" ищу элемент "VA - Checking access settings" "At beginning of line"
-		И я нажимаю кнопку очистить у поля с именем 'SavedSetting'
-		Если '$$IsERPCPM$$' Тогда
-			И Я запоминаю в переменную 'NameDepartments' значение "Administration"
-		Иначе
-			И Я запоминаю в переменную 'NameDepartments' значение "<Object not found> (*)"				
-		Тогда таблица 'List' стала равной по шаблону: 
+	* Searching for report instances
+		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
+		And I search element "VA - Checking access settings" "At beginning of line" by field "Report type" in list "Report instances"
+		And I click Clear button of the field named 'SavedSetting'
+		If '$$IsERPCPM$$' Then
+			And I save "Administration" value to 'NameDepartments' variable
+		Else
+			And I save "<Object not found> (*)" value to 'NameDepartments' variable
+		Then 'List' table became equal by template
 			| "Report type"                              | "Company"  | "Report period"  | "End period" | "Scenario"               | "State" | "Project"               | "Dimension 1"        | "Dimension 2" | "Dimension 3" | "Dimension 4" | "Dimension 5" | "Dimension 6" | "Primary currency" | "External infobase" |
-			| "VA - Checking access settings (record)" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | '$NameDepartments$' | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
+			| "VA - Checking access settings (record)" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | '$NameDepartment$' | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
 	
-	* Открываем документ с правами на чтение
-		Когда открылось окно "Report instances"
-		И в таблице 'List' я выбираю текущую строку
-		И Открылся экземпляр отчета для вида отчета "VA - Checking access settings (record)" валюта "RUB" организация "Mercury LLC" сценарий "VA - Main scenario" периодичность 'Month' проект "VA - Main project" аналитики '$NameDepartments$' '' '' '' '' '' 					
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_100.mxl'
-		И элемент формы с именем 'EnableEdit' отсутствует на форме
-		Когда открылось окно '$WindowTitle$'
-		Попытка
-			И из выпадающего списка с именем 'DisplayCurrency' я выбираю точное значение "USD"
-			И я нажимаю на кнопку с именем 'WriteAndClose'
-		Исключение	
-			И я нажимаю на кнопку с именем 'FormOpenSettings'
+	* Opening document with read rights
+		When "Report instances" window is opened
+		And I select current line in 'List' table
+		And I open report instance for report type "VA - Checking access settings (record)" currency "RUB" company "Mercury LLC" scenario "VA - Main scenario" frequency 'Month' project "VA - Main project" dimensions '$NameDepartment$' '' '' '' '' ''
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_100.mxl'
+		And the field named 'EnableEdit' does not exist on the form
+		When '$WindowTitle$' window is opened
+		Try
+			And I select "USD" exact value from the drop-down list named 'DisplayCurrency'
+			And I click the button named 'WriteAndClose'
+		Except
+			And I click the button named 'FormOpenSettings'
 	
-	* Проверяем форму настроек
-		Когда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'ReportKind'
-		Тогда открылось окно "VA - Checking access settings (record) (Report types)"
-		И Я закрываю окно "VA - Checking access settings (record) (Report types)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'TemplateForReport'
-		Тогда открылось окно "Template VA - Checking access settings (no) report type: VA - Checking access settings (record)"
-		И Я закрываю окно "Template VA - Checking access settings (no) report type: VA - Checking access settings (record)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'Project'
-		Тогда открылось окно "VA - Main project (Projects and phases)"
-		И Я закрываю окно "VA - Main project (Projects and phases)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'Dimension1'
-		Если '$$IsERPCPM$$' Тогда
-			Когда открылось окно "Administration (Department)"
-			И Я закрываю окно "Administration (Department)"
-		Иначе			
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'OK'
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'Scenario'
-		Тогда открылось окно "Scenarios: VA - Main scenario (Scenarios)"
-		И Я закрываю окно "Scenarios: VA - Main scenario (Scenarios)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'PeriodManagement'
-		Тогда открылось окно "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>"
-		И Я закрываю окно "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'Organization'
-		Тогда открылось окно "Mercury LLC (Business unit*)"
-		И Я закрываю окно "Mercury LLC (Business unit*)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'RegulationVersion'
-		Тогда открылось окно "VA - Main regulations from * (Regulation for preparing reports)"
-		И Я закрываю окно "VA - Main regulations from * (Regulation for preparing reports)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'MainCurrency'
-		Тогда открылось окно "RUB (Currency)"
-		И Я закрываю окно "RUB (Currency)"
-		Тогда открылось окно "Document settings"
-		И я перехожу к закладке с именем 'GroupPageReportSettings'
-		И я нажимаю на кнопку открытия поля с именем 'ProcessingRule'
-		Тогда открылось окно "VA - Checking access settings (no) (Calculation rules)"
-		И Я закрываю окно "VA - Checking access settings (no) (Calculation rules)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'ExternalInfobase'
-		Тогда открылось окно "Current infobase (External infobases)"
-		И Я закрываю окно "Current infobase (External infobases)"
-		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'CheckRule'
-		Тогда открылось окно "VA - Checking access settings (no) (Check rules)"
-		И Я закрываю окно "VA - Checking access settings (no) (Check rules)"
+	* Checking settings form
+		When "Document settings" window is opened
+		And I click Open button of the field named 'ReportKind'
+		Then "VA - Checking access settings (record) (Report types)" window is opened
+		And I close "VA - Checking access settings (record) (Report types)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'TemplateForReport'
+		Then "Template VA - Checking access settings (no) report type: VA - Checking access settings (record)" window is opened
+		And I close "Template VA - Checking access settings (no) report type: VA - Checking access settings (record)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'Project'
+		Then "VA - Main project (Projects and phases)" window is opened
+		And I close "VA - Main project (Projects and phases)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'Dimension1'
+		If '$$IsERPCPM$$' Then
+			When "Administration (Department)" window is opened
+			And I close "Administration (Department)" window
+		Else
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'OK'
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'Scenario'
+		Then "Scenarios: VA - Main scenario (Scenarios)" window is opened
+		And I close "Scenarios: VA - Main scenario (Scenarios)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'PeriodManagement'
+		Then "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>" window is opened
+		And I close "January 2024 - March 2024 (Frequency: Month) <VA - Main scenario>" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'Organization'
+		Then "Mercury LLC (Business unit*)" window is opened
+		And I close "Mercury LLC (Business unit*)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'RegulationVersion'
+		Then "VA - Main regulations from * (Regulation for preparing reports)" window is opened
+		And I close "VA - Main regulations from * (Regulation for preparing reports)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'MainCurrency'
+		Then "RUB (Currency)" window is opened
+		And I close "RUB (Currency)" window
+		Then "Document settings" window is opened
+		And I move to the tab named 'GroupPageReportSettings'
+		And I click Open button of the field named 'ProcessingRule'
+		Then "VA - Checking access settings (no) (Calculation rules)" window is opened
+		And I close "VA - Checking access settings (no) (Calculation rules)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'ExternalInfobase'
+		Then "Current infobase (External infobases)" window is opened
+		And I close "Current infobase (External infobases)" window
+		Then "Document settings" window is opened
+		And I click Open button of the field named 'CheckRule'
+		Then "VA - Checking access settings (no) (Check rules)" window is opened
+		And I close "VA - Checking access settings (no) (Check rules)" window
 
-	* Меняем период
-		Тогда открылось окно "Document settings"
-		Попытка
-			И я нажимаю на кнопку с именем 'ChangePeriod'
-		Исключение
-			И я закрываю форму "Document settings"
+	* Changing period
+		Then "Document settings" window is opened
+		Try
+			And I click the button named 'ChangePeriod'
+		Except
+			And I close "Document settings" form
 
-	Когда открылось окно '$WindowTitle$'
-	И я закрываю окно '$WindowTitle$'
+	When '$WindowTitle$' window is opened
+	And I close '$WindowTitle$' window
 		
-Сценарий: 18.19 Проверка СТ для пользователя "Budgeting3"
+Scenario: 18.19 Checking pivot table for user "Budgeting3"
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting3" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
-	* Проверяем сводную таблицу с правами на чтение
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Pivot table"
-		Тогда открылось окно "Pivot table: *"			
-		И я нажимаю на гиперссылку с именем 'FilterHeading'
-		И в поле с именем 'Form' я ввожу текст ""	
-		И я нажимаю кнопку выбора у поля с именем 'Form'
-		Тогда открылось окно "Report types and templates"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListRefresh'
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
-		И я меняю значение переключателя с именем 'CompareType' на "At beginning of line"
-		И в поле с именем 'Pattern' я ввожу текст "VA - Checking access settings (record)"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Report types and templates"
-		И в таблице 'List' я перехожу к строке:
+	* Checking pivot table with read rights
+		And In the command interface I select "Budgeting, reporting, and analysis" "Pivot table"
+		Then "Pivot table: *" window is opened
+		And I click the hyperlink named 'FilterHeading'
+		And I input "" text in the field named 'Form'
+		And I click Choice button of the field named 'Form'
+		Then "Report types and templates" window is opened
+		And in the table 'ReportKindList' I click the button named 'ReportKindListRefresh'
+		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
+		Then "Find" window is opened
+		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "At beginning of line"
+		And I input "VA - Checking access settings (record)" text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then "Report types and templates" window is opened
+		And I go to line in 'List' table:
 			| "Description"                                           |
 			| "VA - Checking access settings (no) (pivot table)" |
-		И я нажимаю на кнопку с именем 'ListChoose'
-		Тогда открылось окно "Pivot table: *"
-		И я нажимаю кнопку выбора у поля с именем 'PivotTableVariant'
-		Тогда открылось окно "Pivol table options"
-		И в таблице 'List' я выбираю текущую строку
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Main"
-		И я нажимаю на кнопку с именем 'ChangePeriod'
-		Тогда открылось окно "Select period"
-		И в поле с именем 'DateBegin' я ввожу текст '1/1/2024'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'DateEnd' я ввожу текст '3/31/2024'
-		И я нажимаю на кнопку с именем 'select'
-		Тогда Открылась сводная таблица для вида отчета "VA - Checking access settings (no)"
-		Тогда открылось окно '$WindowTitle$'
-		И из выпадающего списка с именем 'DisplayCurrency' я выбираю точное значение 'RUB'
-		И из выпадающего списка с именем 'Item_Scenario' я выбираю по строке "VA - Main scenario"
-		И из выпадающего списка с именем 'Item_Organization' я выбираю по строке "Mercury LLC"
-		И из выпадающего списка с именем 'Item_Project' я выбираю по строке "VA - Main project"
-		И я нажимаю на кнопку с именем 'UpdateTabData1'
-		И я жду открытия формы '$WindowTitle$' в течение 20 секунд
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_ST_Пустой.mxl'
-		И Я ввожу значение '100' в ячейку 'R4C2'
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_ST_Пустой.mxl'
+		And I click the button named 'ListChoose'
+		Then "Pivot table: *" window is opened
+		And I click Choice button of the field named 'PivotTableVariant'
+		Then "Pivol table options" window is opened
+		And I select current line in 'List' table
+		And I select "Main" exact value from the drop-down list named 'WorkMode'
+		And I click the button named 'ChangePeriod'
+		Then "Select period" window is opened
+		And I input '1/1/2024' text in the field named 'DateBegin'
+		And I move to the next attribute
+		And I input '3/31/2024' text in the field named 'DateEnd'
+		And I click the button named 'select'
+		Then I open pivot table for report type "VA - Checking access settings (no)"
+		Then '$WindowTitle$' window is opened
+		And I select 'RUB' exact value from the drop-down list named 'DisplayCurrency'
+		And I select from the drop-down list named 'Item_Scenario'  by "VA - Main scenario" string
+		And I select from the drop-down list named 'Item_Organization'  by "Mercury LLC" string
+		And I select from the drop-down list named 'Item_Project'  by "VA - Main project" string
+		And I click the button named 'UpdateTabData1'
+		And I wait for '$WindowTitle$' form opening for 20 seconds
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_PivotTable_Empty.mxl'
+		And I enter value '100' in cell 'R4C2'
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_PivotTable_Empty.mxl'
 
-	* Проверяем сводную таблицу без прав
-		И Я устанавливаю отбор сводной таблицы 'Item_Organization' со значением "Venus LLC"
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Pivot table"
-		Когда открылось окно '$WindowTitle$'	
-		И я жду недоступности элемента с именем 'SpreadsheetFieldTemlate' в течение 20 секунд	
-		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\18\DimenKind_ValidationНастроекДоступа_NoДоступа.mxl'	
+	* Checking pivot table without rights
+		And I set pivot table filter 'Item_Organization' with value "Venus LLC"
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		And In the command interface I select "Budgeting, reporting, and analysis" "Pivot table"
+		When '$WindowTitle$' window is opened
+		And I wait the attribute named 'SpreadsheetFieldTemlate' unavailability in 20 seconds
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_NoAccess.mxl'
 
-Сценарий: 18.20 Тест интерфейса для пользователя "Budgeting3" - Панель разделов и функций
+Scenario: 18.20 Interface test for user "Budgeting3" - Sections and functions panel
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting3" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
-	* Панель разделов
-		И панель разделов равна
+	* Sections panel
+		And section panel is equal to
 			| "Quick menu" |
 			| "Budgeting, reporting, and analysis" |
 
-	* Панель функций
-		Если '$$IsERPCPM$$' Тогда
-			И Я запоминаю в переменную 'CompanyName' значение "Companies"
-		Иначе
-			И Я запоминаю в переменную 'CompanyName' значение "Business units"
+	* Functions panel
+		If '$$IsERPCPM$$' Then
+			And I save "Companies" value to 'CompanyName' variable
+		Else
+			And I save "Business units" value to 'CompanyName' variable
 			
-		Когда В панели разделов я выбираю "Budgeting, reporting, and analysis"
-		И панель функций равна
-			| "Report types and templates" | // Важное
+		When in sections panel I select "Budgeting, reporting, and analysis"
+		And functions panel is equal to
+			| "Report types and templates" | // Important
 			| "Report instances" |
 			| "Pivot table" |
-			| "Reporting period management" | // Основное
+			| "Reporting period management" | // Main
 			| "Indicator version management" |
 			| "Periodic exchange rates" |
 			| "Indicator value adjustment" |
 			| "Indicator value adjustments templates" |
-			| "Budgeting classifiers" | // Подсистемы
+			| "Budgeting classifiers" | // Subsystems
 			| "Investment projects" |
 			| "Reports" |
 			| "Tools" |
-			| "Regulations for preparing reports" | // Классификаторы бюджетирования
+			| "Regulations for preparing reports" | // Budgeting classifiers
 			| "Scenarios" |
-			| '$CompanyName$' |
+			| '$NameCompany$' |
 			| "Periods" |
 			| "Dimension types (corporate)" |
 			| "Arbitrary classifier" |
-			| "Projects and phases" | // Инвестиционные проекты			
-			| "Organizational regulation structures" | // Отчеты
+			| "Projects and phases" | // Investment projects
+			| "Organizational regulation structures" | // Reports
 			| "Report on report indicator links" |
 			| "Graphic report link report" |
 			| "Network diagram of project group" |
-			| "Copy report indicator values" | // Сервис
+			| "Copy report indicator values" | // Service
 			| "Compare spreadsheet documents" |
 
-	И я закрываю сеанс текущего клиента тестирования					
+	And I close current test client session
 
-Сценарий: 18.21 Тест интерфейса для пользователя "Budgeting1" - Панель разделов и функций
+Scenario: 18.21 Interface test for user "Budgeting1" - Sections and functions panel
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Панель разделов
-		И панель разделов равна
+	* Sections panel
+		And section panel is equal to
 			| "Quick menu" |
 			| "Budgeting, reporting, and analysis" |
 
-	* Панель функций
-		Если '$$IsERPCPM$$' Тогда
-			И Я запоминаю в переменную 'CompanyName' значение "Companies"
-		Иначе
-			И Я запоминаю в переменную 'CompanyName' значение "Business units"
+	* Functions panel
+		If '$$IsERPCPM$$' Then
+			And I save "Companies" value to 'CompanyName' variable
+		Else
+			And I save "Business units" value to 'CompanyName' variable
 
-		Когда В панели разделов я выбираю "Budgeting, reporting, and analysis"
-		И панель функций равна
-			| "Report types and templates" | // Важное
+		When in sections panel I select "Budgeting, reporting, and analysis"
+		And functions panel is equal to
+			| "Report types and templates" | // Important
 			| "Report instances" |
 			| "Pivot table" |
-			| "Reporting period management" | // Основное
+			| "Reporting period management" | // Main
 			| "Indicator version management" |
 			| "Periodic exchange rates" |
 			| "Indicator value adjustment" |
 			| "Indicator value adjustments templates" |
-			| "Budgeting classifiers" | // Подсистемы
+			| "Budgeting classifiers" | // Subsystems
 			| "Investment projects" |
 			| "Reports" |
 			| "Tools" |
-			| "Regulations for preparing reports" | // Классификаторы бюджетирования
+			| "Regulations for preparing reports" | // Budgeting classifiers
 			| "Scenarios" |
-			| '$CompanyName$' |
+			| '$NameCompany$' |
 			| "Periods" |
 			| "Dimension types (corporate)" |
 			| "Arbitrary classifier" |
-			| "Projects and phases" | // Инвестиционные проекты	
-			| "Report instance matrix" | // Отчеты
-			| "Setting обработки документов" |
+			| "Projects and phases" | // Investment projects
+			| "Report instance matrix" | // Reports
+			| "Organizational regulation structures" |
 			| "Organizational regulation structures" | 		
 			| "Report on report indicator links" |
 			| "Graphic report link report" |
 			| "Network diagram of project group" |
-			| "Copy report indicator values" | // Сервис
+			| "Copy report indicator values" | // Service
 			| "Compare spreadsheet documents" |	
 
-Сценарий: 18.22 Тест интерфейса для пользователя "Budgeting1" - Персональные настройки
+Scenario: 18.22 Interface test for user "Budgeting1" - Personal settings
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	Если '$$IsERPCPM$$' Тогда
+	If '$$IsERPCPM$$' Then
 
-		* Пользователь
-			И В командном интерфейсе я выбираю "Quick menu" "Personal settings"
-			Тогда открылось окно "My settings"
-			И я нажимаю на кнопку с именем 'UserInfo'
-			Тогда открылось окно "Budgeting1 (User)"
-			И В текущем окне я нажимаю кнопку командного интерфейса "Setup options"
-			И В текущем окне я нажимаю кнопку командного интерфейса "Access rights"
-			И В текущем окне я нажимаю кнопку командного интерфейса "Settings"
-			И Я закрываю окно "Budgeting1 (User)"
+		* User
+			And In the command interface I select "Quick menu" "Personal settings"
+			Then "My settings" window is opened
+			And I click the button named 'UserInfo'
+			Then "Budgeting1 (User)" window is opened
+			And In this window I click command interface button "Setup options"
+			And In this window I click command interface button "Access rights"
+			And In this window I click command interface button "Settings"
+			And I close "Budgeting1 (User)" window
 
-		* Мои настройки
-			Когда открылось окно "My settings"
-			И я снимаю флаг с именем 'AskConfirmationOnExit'
-			И Я закрываю окно "My settings"
+		* My settings
+			When "My settings" window is opened
+			And I remove checkbox named 'AskConfirmationOnExit'
+			And I close "My settings" window
 
-		* Мои настройки еще раз	
-			И В командном интерфейсе я выбираю "Quick menu" "Personal settings"
-			Тогда элемент формы с именем 'AskConfirmationOnExit' стал равен "No"
+		* My settings again
+			And In the command interface I select "Quick menu" "Personal settings"
+			Then the form attribute named 'AskConfirmationOnExit' became equal to "No"
 
-		* Закрываем форму	
-			И Я закрываю окно "My settings"					
+		* Closing the form
+			And I close "My settings" window
 
-	Иначе
+	Else
 
-		* Персональные настройки
-			И В командном интерфейсе я выбираю "Quick menu" "Personal settings"
-			Когда открылось окно "Personal settings"
+		* Personal settings
+			And In the command interface I select "Quick menu" "Personal settings"
+			When "Personal settings" window is opened
 
-			И из выпадающего списка с именем 'MainProjectCPM' я выбираю по строке "VA - Main project"
-			И из выпадающего списка с именем 'MainCFRCPM' я выбираю по строке "Mercury LLC"
-			Если 'NOT $$ЭтоPerform$$' Тогда
-				И из выпадающего списка с именем 'MainCompany' я выбираю по строке "Mercury LLC"
-				И из выпадающего списка с именем 'MainVATRate' я выбираю точное значение "20%"
-				И я устанавливаю флаг с именем 'ShowGLAccountsInDocuments'
-			И я снимаю флаг с именем 'AskConfirmationOnExit'				
-			Когда открылось окно "Personal settings *"				
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И В командном интерфейсе я выбираю "Quick menu" "Personal settings"
-			Тогда элемент формы с именем 'AuthorizedUser' стал равен "Budgeting1"
-			И у элемента формы с именем 'CPMMainLanguage' текст редактирования стал равен "Main language"
-			И элемент формы с именем 'MainProjectCPM' стал равен "VA - Main project"
-			И элемент формы с именем 'MainCFRCPM' стал равен "Mercury LLC"						
-			Если 'NOT $$ЭтоPerform$$' Тогда
-				И элемент формы с именем 'MainCompany' стал равен "Mercury LLC"
-				// ДОДЕЛАТЬ: Ошибка БП
-				//И элемент формы с именем 'MainVATRate' стал равен "20%"
-				И элемент формы с именем 'ShowGLAccountsInDocuments' стал равен "Yes"
-			Тогда элемент формы с именем 'AskConfirmationOnExit' стал равен "No"
+			And I select from the drop-down list named 'MainProjectCPM'  by "VA - Main project" string
+			And I select from the drop-down list named 'MainCFRCPM'  by "Mercury LLC" string
+			If 'NOT $$IsPerform$$' Then
+				And I select from the drop-down list named 'MainCompany'  by "Mercury LLC" string
+				And I select "20%" exact value from the drop-down list named 'MainVATRate'
+				And I set checkbox named 'ShowGLAccountsInDocuments'
+			And I remove checkbox named 'AskConfirmationOnExit'
+			When "Personal settings *" window is opened
+			And I click the button named 'FormWriteAndClose'
+			And In the command interface I select "Quick menu" "Personal settings"
+			Then the form attribute named 'AuthorizedUser' became equal to "Budgeting1"
+			And the editing text of form attribute named 'CPMMainLanguage' became equal to "Main language"
+			And the form attribute named 'MainProjectCPM' became equal to "VA - Main project"
+			And the form attribute named 'MainCFRCPM' became equal to "Mercury LLC"
+			If 'NOT $$IsPerform$$' Then
+				And the form attribute named 'MainCompany' became equal to "Mercury LLC"
+				// TODO: BP error
+				//And the form element named 'MainVATRate' became equal to "20%"
+				And the form attribute named 'ShowGLAccountsInDocuments' became equal to "Yes"
+			Then the form attribute named 'AskConfirmationOnExit' became equal to "No"
 			
-		* Пользователь
-			Когда открылось окно "Personal settings"
-			И я нажимаю на гиперссылку с именем 'AuthorizedUser'				
-			Тогда открылось окно "Budgeting1 (User)"
-			И В текущем окне я нажимаю кнопку командного интерфейса "Setup options"
-			Если 'NOT $$ЭтоPerform$$' Тогда
-				И В текущем окне я нажимаю кнопку командного интерфейса "Contact persons"
-			И В текущем окне я нажимаю кнопку командного интерфейса "Access rights"
-			И В текущем окне я нажимаю кнопку командного интерфейса "Settings"
-			И Я закрываю окно "Budgeting1 (User)"
+		* User
+			When "Personal settings" window is opened
+			And I click the hyperlink named 'AuthorizedUser'
+			Then "Budgeting1 (User)" window is opened
+			And In this window I click command interface button "Setup options"
+			If 'NOT $$IsPerform$$' Then
+				And In this window I click command interface button "Contact persons"
+			And In this window I click command interface button "Access rights"
+			And In this window I click command interface button "Settings"
+			And I close "Budgeting1 (User)" window
 
-		* Прокси сервер	
-			Тогда открылось окно "Personal settings"
-			И я нажимаю на кнопку с именем 'ProxyServerParameters'
-			Тогда открылось окно "Proxy server parameters"
-			И я меняю значение переключателя с именем 'ProxyServerUseCases' на "Do not use proxy server"
-			И я нажимаю на кнопку с именем 'OK'
+		* Proxy server
+			Then "Personal settings" window is opened
+			And I click the button named 'ProxyServerParameters'
+			Then "Proxy server parameters" window is opened
+			And I change the radio button named 'ProxyServerUseCases' value to "Do not use proxy server"
+			And I click the button named 'OK'
 
-		* Настройки сканирования
-			Тогда открылось окно "Personal settings"
-			И я нажимаю на кнопку с именем 'ScanningSettings'
-			Тогда открылось окно "Install add-in"
-			И я нажимаю на кнопку с именем 'Close'
+		* Scanning settings
+			Then "Personal settings" window is opened
+			And I click the button named 'ScanningSettings'
+			Then "Install add-in" window is opened
+			And I click the button named 'Close'
 		
-		Тогда открылось окно "Personal settings"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Personal settings" в течение 20 секунд
+		Then "Personal settings" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Personal settings" window closing in 20 seconds
 
-Сценарий: 18.23 Тест интерфейса для пользователя "Budgeting1" - Виды отчетов, экземпляры отчетов, сводная таблица
+Scenario: 18.23 Interface test for user "Budgeting1" - Report types, report instances, pivot table
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report types and templates"
-	Тогда открылось окно "Report types and templates"
+	And In the command interface I select "Budgeting, reporting, and analysis" "Report types and templates"
+	Then "Report types and templates" window is opened
 
-	* Ищем отчет "VA - Checking access settings (record)"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
-		И я меняю значение переключателя с именем 'CompareType' на "Anywhere in the line"
-		И в поле с именем 'Pattern' я ввожу текст "VA - Checking access settings (record)"
-		И я нажимаю на кнопку с именем 'Find'				
-		Тогда в таблице 'ReportKindList' количество строк "равно" 1	
+	* Searching for report "VA - Checking access settings (record)"
+		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Anywhere in the line"
+		And I input "VA - Checking access settings (record)" text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then the number of 'ReportKindList' table lines is "equal" 1
 		
-	* Недоступность элементов, на которые нет прав
-		Когда открылось окно "Report types and templates"
-		И элемент формы с именем 'DoOpenDesigner' отсутствует на форме
-		И элемент формы с именем 'CreateReportInstanceTemplate' отсутствует на форме
-		И элемент формы с именем 'ListCreatePivotTabTemplate' отсутствует на форме
-		И элемент формы с именем 'ListSetDefaultReportTemplate' отсутствует на форме
+	* Unavailability of elements without rights
+		When "Report types and templates" window is opened
+		And the field named 'DoOpenDesigner' does not exist on the form
+		And the field named 'CreateReportInstanceTemplate' does not exist on the form
+		And the field named 'ListCreatePivotTabTemplate' does not exist on the form
+		And the field named 'ListSetDefaultReportTemplate' does not exist on the form
 		
-	* Список бланков
-		И в таблице 'List' я перехожу к строке:
+	* Template list
+		And I go to line in 'List' table:
 			| "Description"                         |
 			| "VA - Checking access settings (no)" |
-		И я нажимаю на кнопку с именем 'MagazineForm'
-		Тогда открылось окно "Report instances"
-		И Я закрываю окно "Report instances"
-		Тогда открылось окно "Report types and templates"
-		И я нажимаю на кнопку с именем 'SwitchToDataDisplayMode'
-		Тогда открылось окно "VA - Checking access settings (no) (View mode)"
-		И Я закрываю окно "VA - Checking access settings (no) (View mode)"
-		Тогда открылось окно "Report types and templates"
+		And I click the button named 'MagazineForm'
+		Then "Report instances" window is opened
+		And I close "Report instances" window
+		Then "Report types and templates" window is opened
+		And I click the button named 'SwitchToDataDisplayMode'
+		Then "VA - Checking access settings (no) (View mode)" window is opened
+		And I close "VA - Checking access settings (no) (View mode)" window
+		Then "Report types and templates" window is opened
 
-	* Список экземпляров отчетов
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListOpenInstancesList'
-		Тогда открылось окно "Report instances"
-		И я устанавливаю флаг с именем 'UseScenario'
-		И я нажимаю кнопку выбора у поля с именем 'FilteringByScenario'
-		Тогда открылось окно "Value list"
-		И в таблице 'ValueList' из выпадающего списка с именем 'value' я выбираю по строке "VA - Main scenario"
-		И я нажимаю на кнопку с именем 'OK'
-		Тогда открылось окно "Report instances"
-		И в таблице 'Companies' я перехожу к строке:
+	* Report instances list
+		And in the table 'ReportKindList' I click the button named 'ReportKindListOpenInstancesList'
+		Then "Report instances" window is opened
+		And I set checkbox named 'UseScenario'
+		And I click Choice button of the field named 'FilteringByScenario'
+		Then "Value list" window is opened
+		And I select "VA - Main scenario" by string from the drop-down list named 'value' in 'ValueList' table
+		And I click the button named 'OK'
+		Then "Report instances" window is opened
+		And I go to line in 'Companies' table:
 			| "Value"    | "Use" |
 			| "System LLC" | "No"          |
-		И в таблице 'Companies' я разворачиваю текущую строку
-		И в таблице 'Companies' я перехожу к строке:
+		And I expand current line in 'Companies' table
+		And I go to line in 'Companies' table:
 			| "Value"     | "Use" |
 			| "Mercury LLC" | "No"          |
-		И в таблице 'Companies' я устанавливаю флаг с именем 'CompaniesUse'
-		Тогда таблица 'List' стала равной:
+		And I set checkbox named 'CompaniesUse' in 'Companies' table
+		Then 'List' table became equal
 			| "Report type"                              | "Company"  | "Report period"  | "End period" | "Scenario"               | "State" | "Project"               | "Assignee" | "Approval" | "Dimension 1"   | "Dimension 2" | "Dimension 3" | "Dimension 4" | "Dimension 5" | "Dimension 6" | "Primary currency" | "External infobase" |
 			| "VA - Checking access settings (record)" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | ""            | ""             | "Administration" | ""            | ""            | ""            | ""            | ""            | "RUB"             | ""           |
 	
-	* Создание и копирование
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Specify key document attributes"
-		И Я закрываю окно "Specify key document attributes"
-		И я нажимаю на кнопку с именем 'FormCopy'
-		Тогда открылось окно "Specify key document attributes"
-		И Я закрываю окно "Specify key document attributes"
-		Тогда открылось окно "Report instances"
+	* Creating and copying
+		And I click the button named 'FormCreate'
+		Then "Specify key document attributes" window is opened
+		And I close "Specify key document attributes" window
+		And I click the button named 'FormCopy'
+		Then "Specify key document attributes" window is opened
+		And I close "Specify key document attributes" window
+		Then "Report instances" window is opened
 		
-	* Согласование
-		Тогда открылось окно "Report instances"
-		И я нажимаю на кнопку с именем 'FormCommonCommandUniversalApproval_ApprovalHistory'
-		Тогда открылось окно "Approval history"
-		И Я закрываю окно "Approval history"
-		Тогда открылось окно "Report instances"
-		И я нажимаю на кнопку с именем 'FormCommonCommandUniversalApproval_ApproveDocument'
-		И я нажимаю на кнопку с именем 'FormCommonCommandUniversalApproval_UndoApproval'
-		И я нажимаю на кнопку с именем 'FormCommonCommandUniversalApproval_AcceptForApproval'
-		И я нажимаю на кнопку с именем 'BatchEditAttributes'
-		Тогда в логе сообщений TestClient есть строки по шаблону:
+	* Approval
+		Then "Report instances" window is opened
+		And I click the button named 'FormCommonCommandUniversalApproval_ApprovalHistory'
+		Then "Approval history" window is opened
+		And I close "Approval history" window
+		Then "Report instances" window is opened
+		And I click the button named 'FormCommonCommandUniversalApproval_ApproveDocument'
+		And I click the button named 'FormCommonCommandUniversalApproval_UndoApproval'
+		And I click the button named 'FormCommonCommandUniversalApproval_AcceptForApproval'
+		And I click the button named 'BatchEditAttributes'
+		Then in the TestClient message log contains lines by template:
 			|"No person responsible for approval is specified in the responsibility assignment matrix for *. Enter proper approval status manually."|
 			|"Approval has not been initiated for object *."|
 			|"Person responsible for approval of the * object is not specified in the responsibility assignment matrix. The Status field is available for editing. Set the required approval status manually"|
 			|"Current user does not have the \"Superuser\" role for company \"Mercury LLC\""|
-		И я нажимаю на кнопку с именем 'FormCommonCommandUniversalApproval_ApprovalRoute'
-		Тогда открылось окно "Process management console"
-		И Я закрываю окно "Process management console"
+		And I click the button named 'FormCommonCommandUniversalApproval_ApprovalRoute'
+		Then "Process management console" window is opened
+		And I close "Process management console" window
 
-	* Заполнение
-		Тогда открылось окно "Report instances"
-		И я нажимаю на кнопку с именем 'ImportOfData'
-		И элемент формы с именем 'FormProcessingProtocol' отсутствует на форме
-		Тогда открылось окно "Report instances"
-		И в таблице 'List' я выбираю текущую строку
-		И Открылся экземпляр отчета для вида отчета "VA - Checking access settings (record)" валюта "RUB" организация "Mercury LLC" сценарий "VA - Main scenario" периодичность 'Month' проект "VA - Main project" аналитики "Administration" '' '' '' '' '' 
-		И я закрываю окно '$WindowTitle$'
+	* Filling
+		Then "Report instances" window is opened
+		And I click the button named 'ImportOfData'
+		And the field named 'FormProcessingProtocol' does not exist on the form
+		Then "Report instances" window is opened
+		And I select current line in 'List' table
+		And I open report instance for report type "VA - Checking access settings (record)" currency "RUB" company "Mercury LLC" scenario "VA - Main scenario" frequency 'Month' project "VA - Main project" dimensions "Administration" '' '' '' '' ''
+		And I close '$WindowTitle$' window
 
-	* Экземпляры отчетов
-		Тогда открылось окно "Report instances"
-		И Я закрываю окно "Report instances"
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report instances"
-		Тогда открылось окно "Report instances"
-		И Я закрываю окно "Report instances"	
+	* Report instances
+		Then "Report instances" window is opened
+		And I close "Report instances" window
+		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
+		Then "Report instances" window is opened
+		And I close "Report instances" window
 
-	* Сводная таблица
-		Когда В панели разделов я выбираю "Budgeting, reporting, and analysis"
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Pivot table"
-		Тогда открылось окно "Pivot table: *"
-		И Я закрываю окно "Pivot table: *"
+	* Pivot table
+		When in sections panel I select "Budgeting, reporting, and analysis"
+		And In the command interface I select "Budgeting, reporting, and analysis" "Pivot table"
+		Then "Pivot table: *" window is opened
+		And I close "Pivot table: *" window
 			
-Сценарий: 18.24 Тест интерфейса для пользователя "Budgeting1" - Управление отчетным периодом
+Scenario: 18.24 Interface test for user "Budgeting1" - Reporting period management
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Reporting period management"
+	And In the command interface I select "Budgeting, reporting, and analysis" "Reporting period management"
 
-	* Проверка формы списка
-		Тогда открылось окно "Reporting period management" 
-		И элемент формы с именем 'PeriodsManagementForm' отсутствует на форме	
-		И элемент формы с именем 'FormOpenNextPeriod' отсутствует на форме
-		И элемент формы с именем 'ProcessesManagementReportPreparation' отсутствует на форме
-		И элемент формы с именем 'ReportingPreparationProcessChart' отсутствует на форме
+	* Checking list form
+		Then "Reporting period management" window is opened
+		And the field named 'PeriodsManagementForm' does not exist on the form
+		And the field named 'FormOpenNextPeriod' does not exist on the form
+		And the field named 'ProcessesManagementReportPreparation' does not exist on the form
+		And the field named 'ReportingPreparationProcessChart' does not exist on the form
 		
-		И Я нахожу и выбираю документ управления отчетным периодом по сценарию "VA - Main scenario" и периоду начала "January 2024"
+		And I find and select reporting period management document by scenario "VA - Main scenario" and start period "January 2024"
 	
-	* Проверка формы элемента
-		Тогда Открылся документ управления периодом для сценария "VA - Main scenario" периодичность "Month"
-		И элемент формы с именем 'Label_MainPage' присутствует на форме
-		И таблица 'Contents' стала равной:
+	* Checking element form
+		Then I open period management document for scenario "VA - Main scenario" frequency "Month"
+		And the field named 'Label_MainPage' exists on the form
+		And 'Contents' table became equal
 			| "Description"            |
 			| "Main period data" |
 			| "Setting"               |
 			| "Currency exchange rates"             |
-		И элемент формы с именем 'ChangePeriod' отсутствует на форме
-		И я нажимаю на кнопку с именем 'ReportOrganizationStructure'
-		Тогда открылось окно "Organizational structure briefly"
-		И Я закрываю окно "Organizational structure briefly"
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'FormGoForward'
-		И элемент формы с именем 'Label_ExchangeRates' присутствует на форме
-		И элемент формы с именем 'RatesTable_ChangeModeWithoutSave' отсутствует на форме	
-		И элемент формы с именем 'FormGoForward' не доступен
-		И я нажимаю на кнопку с именем 'FormClose'
-		Тогда открылось окно "Reporting period management"
-		И Я закрываю окно "Reporting period management"
+		And the field named 'ChangePeriod' does not exist on the form
+		And I click the button named 'ReportOrganizationStructure'
+		Then "Organizational structure briefly" window is opened
+		And I close "Organizational structure briefly" window
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'FormGoForward'
+		And the field named 'Label_ExchangeRates' exists on the form
+		And the field named 'RatesTable_ChangeModeWithoutSave' does not exist on the form
+		And form attribute named 'FormGoForward' is unavailable
+		And I click the button named 'FormClose'
+		Then "Reporting period management" window is opened
+		And I close "Reporting period management" window
 				
-Сценарий: 18.25 Тест интерфейса для пользователя "Budgeting1" - Корректировка значений показателей
+Scenario: 18.25 Interface test for user "Budgeting1" - Indicator value adjustment
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Открываем список с отборами
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Indicator value adjustment"
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'
-		И Я устанавливаю отбор в форме списка "Synthetic adjustment.Report type.Description" "Contains" "VA - Checking access settings"
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'
-		И Я добавляю отбор в форме списка "Deletion mark" "Equal to" "No"
+	* Opening list with filters
+		And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustment"
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I set filter in list form "Synthetic adjustment.Report type.Description" "Contains" "VA - Checking access settings"
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I add filter in list form "Deletion mark" "Equal to" "No"
 
-	* Открываем документ
-		Когда открылось окно "Indicator value adjustment"
-		И в таблице 'List' я перехожу к строке:
+	* Opening the document
+		When "Indicator value adjustment" window is opened
+		And I go to line in 'List' table:
 			| "Company"  | "Adjustment input method" | "Scenario"               | "Adjustment template" |
-			| "Mercury LLC" | "Manual entry"                | "VA - Main scenario" | ""                     |
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Indicator value adjustment *"
-		И Я закрываю окно "Indicator value adjustment *"
+			| "Mercury LLC" | "Manual entry"                  | "VA - Main scenario" | ""                     |
+		And I select current line in 'List' table
+		Then "Indicator value adjustment *" window is opened
+		And I close "Indicator value adjustment *" window
 
-	* Проверяем кнопки согласования	
-		Тогда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormCommonCommandUniversalApproval_ApprovalHistory'
-		Тогда открылось окно "Approval history"
-		И Я закрываю окно "Approval history"
-		Тогда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormCommonCommandUniversalApproval_ApproveDocument'
-		И я нажимаю на кнопку с именем 'FormCommonCommandUniversalApproval_UndoApproval'
-		И я нажимаю на кнопку с именем 'FormCommonCommandUniversalApproval_AcceptForApproval'
-		Тогда в логе сообщений TestClient есть строки по шаблону:
+	* Checking approval buttons
+		Then "Indicator value adjustment" window is opened
+		And I click the button named 'FormCommonCommandUniversalApproval_ApprovalHistory'
+		Then "Approval history" window is opened
+		And I close "Approval history" window
+		Then "Indicator value adjustment" window is opened
+		And I click the button named 'FormCommonCommandUniversalApproval_ApproveDocument'
+		And I click the button named 'FormCommonCommandUniversalApproval_UndoApproval'
+		And I click the button named 'FormCommonCommandUniversalApproval_AcceptForApproval'
+		Then in the TestClient message log contains lines by template:
 			|"No person responsible for approval is specified in the responsibility assignment matrix for *. Enter proper approval status manually."|
 			|"Approval has not been initiated for object *."|
 			|"Person responsible for approval of the * object is not specified in the responsibility assignment matrix. The Status field is available for editing. Set the required approval status manually"|
-		И я нажимаю на кнопку с именем 'FormCommonCommandUniversalApproval_ApprovalRoute'
-		Тогда открылось окно "Process management console"
-		И Я закрываю окно "Process management console"
+		And I click the button named 'FormCommonCommandUniversalApproval_ApprovalRoute'
+		Then "Process management console" window is opened
+		And I close "Process management console" window
 
-	* Снимаем отборы
-		Когда открылось окно "Indicator value adjustment"
-		И я нажимаю на кнопку с именем 'FormListSettings'			
-		И Я снимаю все отборы в форме списка
+	* Removing filters
+		When "Indicator value adjustment" window is opened
+		And I click the button named 'FormListSettings'
+		And I remove all filters in list form
 
-Сценарий: 18.26 Тест интерфейса для пользователя "Budgeting1" - Шаблон корректировка значений показателей
+Scenario: 18.26 Interface test for user "Budgeting1" - Template for adjusting indicator values
 	
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Indicator value adjustments templates"
-	И Я в списке "Indicator value adjustments templates" по полю "Description" ищу элемент "VA - Checking access settings" "At beginning of line"
+	And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustments templates"
+	And I search element "VA - Checking access settings" "At beginning of line" by field "Description" in list "Indicator value adjustments templates"
 
-	Тогда таблица 'List' содержит '3' строк из списка:
+	Then I check table 'List' contains '3' rows from list:
 		| "Description"                               | "Comment" | "Balanced" | "Adjustment input method" | "Filter companies" |
-		| "VA - Checking access settings (record)"    | ""            | "No"              | "Manual entry"                | ""                  |
-		| "VA - Checking access settings (some)" | ""            | "No"              | "Manual entry"                | ""                  |
-		| "VA - Checking access settings (reading)"    | ""            | "No"              | "Manual entry"                | ""                  |
+		| "VA - Checking access settings (record)"    | ""            | "No"              | "Manual entry"                  | ""                  |
+		| "VA - Checking access settings (some)" | ""            | "No"              | "Manual entry"                  | ""                  |
+		| "VA - Checking access settings (reading)"    | ""            | "No"              | "Manual entry"                  | ""                  |
 
-	И в таблице 'List' я перехожу к строке:
+	And I go to line in 'List' table:
 		| "Description"                               | "Balanced" | "Adjustment input method" |
-		| "VA - Checking access settings (some)" | "No"              | "Manual entry"                |
-	И в таблице 'List' я выбираю текущую строку
+		| "VA - Checking access settings (some)" | "No"              | "Manual entry"                  |
+	And I select current line in 'List' table
 
-	Тогда открылось окно "VA - Checking access settings (some) (Indicator value adjustments templates)"	
-	Тогда таблица 'UsedReportTypes' стала равной по шаблону:
+	Then "VA - Checking access settings (some) (Indicator value adjustments templates)" window is opened
+	Then 'UsedReportTypes' table became equal by template
 		| "Report type"                              |
 		| "<Object not found> (*)"                  |
 		| "VA - Checking access settings (record)" |
 	
-	И я нажимаю на кнопку с именем 'FormDocumentIndicatorsValuesAdjustmentCreateBasedOn'
-	Тогда открылось окно "Indicator value adjustment (create)"
-	Тогда элемент формы с именем 'TemplateOfAdjustment' стал равен "VA - Checking access settings (some)"
-	И Я закрываю окно "Indicator value adjustment (create)"
+	And I click the button named 'FormDocumentIndicatorsValuesAdjustmentCreateBasedOn'
+	Then "Indicator value adjustment (create)" window is opened
+	Then the form attribute named 'TemplateOfAdjustment' became equal to "VA - Checking access settings (some)"
+	And I close "Indicator value adjustment (create)" window
 
-	Тогда открылось окно "VA - Checking access settings (some) (Indicator value adjustments templates)"
-	И Я закрываю окно "VA - Checking access settings (some) (Indicator value adjustments templates)"
+	Then "VA - Checking access settings (some) (Indicator value adjustments templates)" window is opened
+	And I close "VA - Checking access settings (some) (Indicator value adjustments templates)" window
 	
-	Тогда открылось окно "Indicator value adjustments templates"
-	И в таблице 'List' я перехожу к строке:
+	Then "Indicator value adjustments templates" window is opened
+	And I go to line in 'List' table:
 		| "Description"                            | "Balanced" | "Adjustment input method" |
-		| "VA - Checking access settings (reading)" | "No"              | "Manual entry"                |
-	И в таблице 'List' я выбираю текущую строку
+		| "VA - Checking access settings (reading)" | "No"              | "Manual entry"                  |
+	And I select current line in 'List' table
 
-	Тогда открылось окно "VA - Checking access settings (reading) (Indicator value adjustments templates)"	
-	Тогда таблица 'UsedReportTypes' стала равной:
+	Then "VA - Checking access settings (reading) (Indicator value adjustments templates)" window is opened
+	Then 'UsedReportTypes' table became equal
 		| "Report type"                              |
 		| "VA - Checking access settings (reading)" |
-	И таблица 'TableOfAdjustments' стала равной:
+	And 'TableOfAdjustments' table became equal
 		| "Report type"                              | "Indicator"           |
 		| "VA - Checking access settings (reading)" | "ReportLine amount"   |
 		| "VA - Checking access settings (reading)" | "ReportRowX2 amount" |
-	И Я закрываю окно "VA - Checking access settings (reading) (Indicator value adjustments templates)"
+	And I close "VA - Checking access settings (reading) (Indicator value adjustments templates)" window
 	
-	Тогда открылось окно "Indicator value adjustments templates"
-	И Я закрываю окно "Indicator value adjustments templates"
+	Then "Indicator value adjustments templates" window is opened
+	And I close "Indicator value adjustments templates" window
 		
-Сценарий: 18.27 Тест интерфейса для пользователя "Budgeting1" - Регламент подготовки отчетности
+Scenario: 18.27 Interface test for user "Budgeting1" - Reporting preparation regulation
 	
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Regulations for preparing reports"
-	И Я в списке "Regulations for preparing reports" по полю "Description" ищу элемент "VA - Main regulations" "At beginning of line"		
+	And In the command interface I select "Budgeting, reporting, and analysis" "Regulations for preparing reports"
+	And I search element "VA - Main regulations" "At beginning of line" by field "Description" in list "Regulations for preparing reports"
 
-	Тогда в таблице 'List' количество строк "равно" 1
+	Then the number of 'List' table lines is "equal" 1
 
-	Когда открылось окно "Regulations for preparing reports"
-	И я нажимаю на кнопку с именем 'FormReportOrganizationalRegulationStructuresBusinessUnitChart'
-	Тогда открылось окно "Organizational structure briefly"
-	Тогда табличный документ 'ReportSpreadsheetDocument' равен:
+	When "Regulations for preparing reports" window is opened
+	And I click the button named 'FormReportOrganizationalRegulationStructuresBusinessUnitChart'
+	Then "Organizational structure briefly" window is opened
+	Then 'ReportSpreadsheetDocument' spreadsheet document is equal
 		| "System LLC (No, VA - Package CFR, RUB)" | '' | ''                                        |
 		| ''                                       | '' | ''                                        |
 		| ''                                       | '' | ''                                        |
@@ -1330,13 +1330,13 @@
 		| ''                                       | '' | ''                                        |
 		| ''                                       | '' | ''                                        |
 		| ''                                       | '' | "Mercury LLC (No, VA - Package CFR, RUB)" |
-	И Я закрываю окно "Organizational structure briefly"
+	And I close "Organizational structure briefly" window
 
-	Тогда открылось окно "Regulations for preparing reports"
-	И я нажимаю на кнопку с именем 'FormReportOrganizationalRegulationStructuresBusinessUnitTable'
-	Когда открылось окно "Organizational structure briefly"
-	Тогда табличный документ 'ReportSpreadsheetDocument' равен:
-		| "Data parameters:"              | "Regulation version: VA - Main regulations" | ''                            | ''                                |
+	Then "Regulations for preparing reports" window is opened
+	And I click the button named 'FormReportOrganizationalRegulationStructuresBusinessUnitTable'
+	When "Organizational structure briefly" window is opened
+	Then 'ReportSpreadsheetDocument' spreadsheet document is equal
+		| "Data parameters:"         | "Regulation version: VA - Main regulations" | ''                            | ''                                |
 		| ''                        | "Display chart: No"                       | ''                            | ''                                |
 		| ''                        | ''                                           | ''                            | ''                                |
 		| "Business unit" | "Eliminating company"                  | "Business unit kind" | "Presentation currency" |
@@ -1345,87 +1345,87 @@
 		| "Venus LLC"              | "No"                                        | "VA - Package CFR"              | "RUB"                             |
 		| "Earth LLC"               | "No"                                        | "VA - Package CFR"              | "RUB"                             |
 		| "Mercury LLC"            | "No"                                        | "VA - Package CFR"              | "RUB"                             |
-	И Я закрываю окно "Organizational structure briefly"		
+	And I close "Organizational structure briefly" window
 		
-	И в таблице 'List' я выбираю текущую строку	
-	Тогда открылось окно "VA - Main regulations from * (Regulation for preparing reports)"
-	И я перехожу к закладке с именем 'GroupMainPage'
-	И я нажимаю на кнопку с именем 'FormConfirmedReports'
-	Тогда открылось окно "Report instances"
-	И Я закрываю окно "Report instances"
-	Тогда открылось окно "VA - Main regulations from * (Regulation for preparing reports)"
-	И я перехожу к закладке с именем 'PerimeterSetting'
-	Попытка
-		И я нажимаю на кнопку с именем 'FormWrite'
-	Исключение	
-		И Я закрываю окно "VA - Main regulations from * (Regulation for preparing reports)"
+	And I select current line in 'List' table
+	Then "VA - Main regulations from * (Regulation for preparing reports)" window is opened
+	And I move to the tab named 'GroupMainPage'
+	And I click the button named 'FormConfirmedReports'
+	Then "Report instances" window is opened
+	And I close "Report instances" window
+	Then "VA - Main regulations from * (Regulation for preparing reports)" window is opened
+	And I move to the tab named 'PerimeterSetting'
+	Try
+		And I click the button named 'FormWrite'
+	Except
+		And I close "VA - Main regulations from * (Regulation for preparing reports)" window
 	
-	Когда открылось окно "Regulations for preparing reports"
-	И я закрываю окно "Regulations for preparing reports"
+	When "Regulations for preparing reports" window is opened
+	And I close "Regulations for preparing reports" window
 			
-Сценарий: 18.28 Тест интерфейса для пользователя "Budgeting1" - Сценарии
+Scenario: 18.28 Interface test for user "Budgeting1" - Scenarios
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Scenarios"
-	И Я в списке "Scenarios" по полю "Description" ищу элемент "VA - Main scenario" "At beginning of line"	
+	And In the command interface I select "Budgeting, reporting, and analysis" "Scenarios"
+	And I search element "VA - Main scenario" "At beginning of line" by field "Description" in list "Scenarios"
 
-	Тогда в таблице 'List' количество строк "равно" 1
-	И в таблице 'List' я выбираю текущую строку
+	Then the number of 'List' table lines is "equal" 1
+	And I select current line in 'List' table
 
-	Тогда открылось окно "Scenarios: VA - Main scenario (Scenarios)"
-	И я перехожу к закладке с именем 'Budgeting'
-	И я перехожу к закладке с именем 'MainProperties'
-	Попытка
-		И я нажимаю на кнопку с именем 'FormWrite'
-	Исключение	
-		И Я закрываю окно "Scenarios: VA - Main scenario (Scenarios)"
+	Then "Scenarios: VA - Main scenario (Scenarios)" window is opened
+	And I move to the tab named 'Budgeting'
+	And I move to the tab named 'MainProperties'
+	Try
+		And I click the button named 'FormWrite'
+	Except
+		And I close "Scenarios: VA - Main scenario (Scenarios)" window
 
-	Когда открылось окно "Scenarios"
-	И я закрываю окно "Scenarios"	
+	When "Scenarios" window is opened
+	And I close "Scenarios" window
 
-Сценарий: 18.29 Тест интерфейса для пользователя "Budgeting1" - Организации
+Scenario: 18.29 Interface test for user "Budgeting1" - Companies
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	Если '$$ЭтоPerform$$' Тогда
+	If '$$IsPerform$$' Then
 
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Business units"
-		Тогда открылось окно "Business units"
+		And In the command interface I select "Budgeting, reporting, and analysis" "Business units"
+		Then "Business units" window is opened
 	
-		И в таблице 'List' я перехожу к строке:
+		And I go to line in 'List' table:
 			| "Description" | "Company type"    |
 			| "System LLC"  | "Tax resident" |
-		И в таблице 'List' я перехожу на один уровень вниз
+		And I move one level down in 'List' table
 		
-		Тогда таблица 'List' содержит '5' строк из списка:
+		Then I check table 'List' contains '5' rows from list:
 			| "Description" | "Company type"    |
 			| "System LLC"  | "Tax resident" |
 			| "Mars LLC"     | "Elimination"         |
 			| "Earth LLC"    | "Financial responsibility center"                |
 			| "Venus LLC"   | "Financial responsibility center"                |
-			| "Mercury LLC" | "Tax resident" |	
+			| "Mercury LLC" | "Tax resident" |
 
-		И в таблице 'List' я перехожу к строке:
+		And I go to line in 'List' table:
 			| "Description" | "Company type"    |
 			| "Mercury LLC" | "Tax resident" |
 
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Mercury LLC (Business unit)"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Bank accounts"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Departments"
-		// ДОДЕЛАТЬ: Сейчас не работает
-		//И В текущем окне я нажимаю кнопку командного интерфейса "Attachments"
-		//И В текущем окне я нажимаю кнопку командного интерфейса "Accounting policy settings"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Stored files of business units"
-		И Я закрываю окно "Mercury LLC (Business unit)"	
+		And I select current line in 'List' table
+		Then "Mercury LLC (Business unit)" window is opened
+		And In this window I click command interface button "Bank accounts"
+		And In this window I click command interface button "Departments"
+		// TO DO: Currently not working
+		//And In the current window I press the command interface button "Attachments"
+		//And In the current window I press the command interface button "Accounting policy settings"
+		And In this window I click command interface button "Stored files of business units"
+		And I close "Mercury LLC (Business unit)" window
 
-	ИначеЕсли '$$IsERPCPM$$' Тогда
+	ElseIf '$$IsERPCPM$$' Then
 
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Companies"
-		Тогда открылось окно "Companies"
+		And In the command interface I select "Budgeting, reporting, and analysis" "Companies"
+		Then "Companies" window is opened
 
-		Тогда таблица 'List' содержит '5' строк из списка:
+		Then I check table 'List' contains '5' rows from list:
 			| "Description" | "Company type"       |
 			| "Venus LLC"   | "Financial responsibility center"                   |
 			| "Earth LLC"    | "Financial responsibility center"                   |
@@ -1433,33 +1433,33 @@
 			| "Mercury LLC" | "Tax resident" |
 			| "System LLC"  | "Tax resident" |
 		
-		Когда открылось окно "Companies"
-		И я нажимаю на кнопку с именем 'FormCommonCommandAdditionalInfoCommandBar'
-		Тогда открылось окно "Additional information records"
-		И Я закрываю окно "Additional information records"
+		When "Companies" window is opened
+		And I click the button named 'FormCommonCommandAdditionalInfoCommandBar'
+		Then "Additional information records" window is opened
+		And I close "Additional information records" window
 
-		Когда открылось окно "Companies"
-		И в таблице 'List' я перехожу к строке:
+		When "Companies" window is opened
+		And I go to line in 'List' table:
 			| "Description" | "Company type"       |
-			| "Mercury LLC" | "Tax resident" |		
-		И в таблице 'List' я выбираю текущую строку
+			| "Mercury LLC" | "Tax resident" |
+		And I select current line in 'List' table
 
-		Тогда открылось окно "Mercury LLC (Company)"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Authorized signatories"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Bank accounts"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Company cash registers"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Tax authorities for profit tax by regions"
-		// ДОДЕЛАТЬ: Сейчас не работает
-		//И В текущем окне я нажимаю кнопку командного интерфейса "Accounting policy settings"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Stored files of business units"
-		И Я закрываю окно "Mercury LLC (Company)"				
+		Then "Mercury LLC (Company)" window is opened
+		And In this window I click command interface button "Authorized signatories"
+		And In this window I click command interface button "Bank accounts"
+		And In this window I click command interface button "Company cash registers"
+		And In this window I click command interface button "Tax authorities for profit tax by regions"
+		// TO DO: Currently not working
+		//And In the current window I press the command interface button "Accounting policy settings"
+		And In this window I click command interface button "Stored files of business units"
+		And I close "Mercury LLC (Company)" window
 
-	ИначеЕсли '$$IsCPM$$' Тогда
+	ElseIf '$$IsCPM$$' Then
 
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Business units"
-		Тогда открылось окно "Business units"
+		And In the command interface I select "Budgeting, reporting, and analysis" "Business units"
+		Then "Business units" window is opened
 
-		Тогда таблица 'List' содержит '5' строк из списка:
+		Then I check table 'List' contains '5' rows from list:
 			| "Name in the application" | "Company type"       |
 			| "System LLC"              | "Tax resident" |
 			| "Venus LLC"               | "Financial responsibility center"                   |
@@ -1467,65 +1467,65 @@
 			| "Mars LLC"                 | "Elimination"            |
 			| "Mercury LLC"             | "Tax resident" |
 
-		И в таблице 'List' я перехожу к строке:
+		And I go to line in 'List' table:
 			| "Name in the application" | "Company type"       |
-			| "Mercury LLC"             | "Tax resident" |	
+			| "Mercury LLC"             | "Tax resident" |
 	
-		И я нажимаю на кнопку с именем 'FormUseAsMain'
-		И я нажимаю на кнопку с именем 'FormUseAsMain'
+		And I click the button named 'FormUseAsMain'
+		And I click the button named 'FormUseAsMain'
 	
-		И я нажимаю на кнопку с именем 'SubmenuPrintNormal__Attributes'
-		Тогда открылось окно "Print details of Mercury LLC"
-		И Я закрываю окно "Print details Mercury LLC"
+		And I click the button named 'SubmenuPrintNormal__Attributes'
+		Then "Print details of Mercury LLC" window is opened
+		And I close "Print details Mercury LLC" window
 
-		Тогда открылось окно "Business units"
-		И я нажимаю на кнопку с именем 'CommonCommandAttachedFiles'
-		Тогда открылось окно "Attachments: Mercury LLC"
-		И Я закрываю окно "Attachments: Mercury LLC"
+		Then "Business units" window is opened
+		And I click the button named 'CommonCommandAttachedFiles'
+		Then "Attachments: Mercury LLC" window is opened
+		And I close "Attachments: Mercury LLC" window
 
-		Тогда открылось окно "Business units"
-		Когда открылось окно "Business units"
-		И я нажимаю на кнопку с именем 'CommonCommandAdditionalInfoCommandBar'
-		Тогда открылось окно "Additional information records"
-		И Я закрываю окно "Additional information records"
+		Then "Business units" window is opened
+		When "Business units" window is opened
+		And I click the button named 'CommonCommandAdditionalInfoCommandBar'
+		Then "Additional information records" window is opened
+		And I close "Additional information records" window
 
-		Тогда открылось окно "Business units"
-		И я нажимаю на кнопку с именем 'FormRegulatedManagementAccounting'
-		Тогда таблица 'List' содержит '2' строк из списка:
+		Then "Business units" window is opened
+		And I click the button named 'FormRegulatedManagementAccounting'
+		Then I check table 'List' contains '2' rows from list:
 			| "Name in the application" | "TIN" | "FNP" | "Company type"       |
 			| "Mercury LLC"             | ""    | ""    | "Tax resident" |
 			| "System LLC"              | ""    | ""    | "Tax resident" |
-		И я нажимаю на кнопку с именем 'FormRegulatedManagementAccounting'
+		And I click the button named 'FormRegulatedManagementAccounting'
 
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Mercury LLC (Business unit)"
-		// ДОДЕЛАТЬ: Сейчас не работает
-		//И В текущем окне я нажимаю кнопку командного интерфейса "Accounting policy settings"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Stored files of business units"
-		И Я закрываю окно "Mercury LLC (Business unit)"
+		And I select current line in 'List' table
+		Then "Mercury LLC (Business unit)" window is opened
+		// TO DO: Currently not working
+		//And In the current window I press the command interface button "Accounting policy settings"
+		And In this window I click command interface button "Stored files of business units"
+		And I close "Mercury LLC (Business unit)" window
 
-Сценарий: 18.30 Тест интерфейса для пользователя "Budgeting1" - Периоды
+Scenario: 18.30 Interface test for user "Budgeting1" - Periods
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Periods"
-	Тогда открылось окно "Periods"
+	And In the command interface I select "Budgeting, reporting, and analysis" "Periods"
+	Then "Periods" window is opened
 	
-	И в таблице 'List' я перехожу к строке:
+	And I go to line in 'List' table:
 		| "Start date" | "End date" | "Description" | "Frequency" | "Arbitrary" |
-		| "1/1/2024"  | "12/31/2024"     | "2024 year"      | "Year"           | "No"          |
-	И в таблице 'List' я выбираю текущую строку
-	Тогда открылось окно "2024 year (Periods)"
-	И Я закрываю окно "2024 year (Periods)"
+		| "1/1/2024"  | "12/31/2024"     | "2024 year"    | "Year"           | "No"          |
+	And I select current line in 'List' table
+	Then "2024 year (Periods)" window is opened
+	And I close "2024 year (Periods)" window
 
-Сценарий: 18.31 Тест интерфейса для пользователя "Budgeting1" - Виды аналитик (корпоративные)	
+Scenario: 18.31 Interface test for user "Budgeting1" - Dimension types (corporate)
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Dimension types (corporate)"
-	И Я в списке "Dimension types (corporate)" по полю "Code" ищу элемент "VA0" "At beginning of line"
-	Если '$$ЭтоPerform$$' Тогда
-		Тогда Таблица 'List' содержит '6' строк из списка:
+	And In the command interface I select "Budgeting, reporting, and analysis" "Dimension types (corporate)"
+	And I search element "VA0" "At beginning of line" by field "Code" in list "Dimension types (corporate)"
+	If '$$IsPerform$$' Then
+		Then I check table 'List' contains '6' rows from list:
 			| "Code"        | "Description"              | "Value type"                 | "Create if search failed during import" | "Update attributes during import" | "Divide by companies" |
 			| "VA0Contrac" | "Counterparty contracts"     | "Contract"                      | "No"                                        | "No"                             | "No"                       |
 			| "VA0Counter" | "Counterparties"               | "Counterparty"                   | "No"                                        | "No"                             | "No"                       |
@@ -1533,8 +1533,8 @@
 			| "VA0CFItems" | "Cash flow items"                | "Cash flow item" | "No"                                        | "No"                             | "No"                       |
 			| "VA0IEItems" | "Income and expense items" | "Income and expense item"    | "No"                                        | "No"                             | "No"                       |
 			| "VA0ProCate" | "Product categories"        | "Arbitrary classifier"   | "No"                                        | "No"                             | "No"                       |
-	ИначеЕсли '$$IsERPCPM$$' Тогда	
-		Тогда Таблица 'List' содержит '6' строк из списка:
+	ElseIf '$$IsERPCPM$$' Then
+		Then I check table 'List' contains '6' rows from list:
 			| "Code"        | "Description"              | "Value type"                     | "Create if search failed during import" | "Update attributes during import" | "Divide by companies" |
 			| "VA0Contrac" | "Counterparty contracts"     | "Contract with counterparty"           | "No"                                        | "No"                             | "No"                       |
 			| "VA0Counter" | "Counterparties"               | "Counterparty"                       | "No"                                        | "No"                             | "No"                       |
@@ -1542,8 +1542,8 @@
 			| "VA0CFItems" | "Cash flow items"                | "Cash flow item" | "No"                                        | "No"                             | "No"                       |
 			| "VA0IEItems" | "Income and expense items" | "Income and expense item"        | "No"                                        | "No"                             | "No"                       |
 			| "VA0ProCate" | "Product categories"        | "Product categories"               | "No"                                        | "No"                             | "No"                       |
-	ИначеЕсли '$$IsCPM$$' Тогда			
-		Тогда Таблица 'List' содержит '6' строк из списка:
+	ElseIf '$$IsCPM$$' Then
+		Then I check table 'List' contains '6' rows from list:
 			| "Code"        | "Description"              | "Value type"                 | "Create if search failed during import" | "Update attributes during import" | "Divide by companies" |
 			| "VA0Contrac" | "Counterparty contracts"     | "Contract"                      | "No"                                        | "No"                             | "No"                       |
 			| "VA0Counter" | "Counterparties"               | "Counterparty"                   | "No"                                        | "No"                             | "No"                       |
@@ -1552,200 +1552,200 @@
 			| "VA0IEItems" | "Income and expense items" | "Income and expense item"    | "No"                                        | "No"                             | "No"                       |
 			| "VA0ProCate" | "Product categories"        | "Product categories"           | "No"                                        | "No"                             | "No"                       |
 	
-	Когда открылось окно "Dimension types (corporate)"
-	И в таблице 'List' я перехожу к строке:
+	When "Dimension types (corporate)" window is opened
+	And I go to line in 'List' table:
 		| "Code"        | "Description" | "Update attributes during import" | "Divide by companies" | "Create if search failed during import" | "Value type" |
 		| "VA0Product" | "Product range" | "No"                             | "No"                       | "No"                                        | "Product range" |
-	И в таблице 'List' я выбираю текущую строку
-	Тогда открылось окно "Product range (Dimension types (corporate))"
-	И В текущем окне я нажимаю кнопку командного интерфейса "Default dimension values"
-	И В текущем окне я нажимаю кнопку командного интерфейса "Arbitrary classifier"
-	И Я закрываю окно "Product range (Dimension types (corporate))"
-	Тогда открылось окно "Dimension types (corporate)"
-	И Я закрываю окно "Dimension types (corporate)"
+	And I select current line in 'List' table
+	Then "Product range (Dimension types (corporate))" window is opened
+	And In this window I click command interface button "Default dimension values"
+	And In this window I click command interface button "Arbitrary classifier"
+	And I close "Product range (Dimension types (corporate))" window
+	Then "Dimension types (corporate)" window is opened
+	And I close "Dimension types (corporate)" window
 
-Сценарий: 18.32 Тест интерфейса для пользователя "Budgeting1" - Произвольный классификатор
+Scenario: 18.32 Interface test for user "Budgeting1" - Custom classifier
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Arbitrary classifier"
-	Тогда открылось окно "Arbitrary classifier"
+	And In the command interface I select "Budgeting, reporting, and analysis" "Arbitrary classifier"
+	Then "Arbitrary classifier" window is opened
 
-	Если '$$IsERPCPM$$' Тогда
-		И из выпадающего списка с именем 'Owner' я выбираю по строке "Units of measure"
-	Иначе	
-		И из выпадающего списка с именем 'Owner' я выбираю по строке "Staff kinds"
-	И я нажимаю кнопку очистить у поля с именем 'Owner'
+	If '$$IsERPCPM$$' Then
+		And I select from the drop-down list named 'Owner'  by "Units of measure" string
+	Else
+		And I select from the drop-down list named 'Owner'  by "Staff kinds" string
+	And I click Clear button of the field named 'Owner'
 
-	Если в таблице 'List' количество строк "больше" 0 Тогда	
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "* (Arbitrary classifier)"
-		И Я закрываю окно "* (Arbitrary classifier)"
+	If number of 'List' table lines is "more" 0 Then
+		And I select current line in 'List' table
+		Then "* (Arbitrary classifier)" window is opened
+		And I close "* (Arbitrary classifier)" window
 
-	Тогда открылось окно "Arbitrary classifier"
-	И Я закрываю окно "Arbitrary classifier"
+	Then "Arbitrary classifier" window is opened
+	And I close "Arbitrary classifier" window
 
-Сценарий: 18.33 Тест интерфейса для пользователя "Budgeting1" - Проекты и этапы		
+Scenario: 18.33 Interface test for user "Budgeting1" - Projects and stages
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Projects and phases"
-	И Я в списке "Projects and phases" по полю "Description" ищу элемент "VA - Main project" "Exact match"
-	Тогда в таблице 'List' количество строк "равно" 1
+	And In the command interface I select "Budgeting, reporting, and analysis" "Projects and phases"
+	And I search element "VA - Main project" "Exact match" by field "Description" in list "Projects and phases"
+	Then the number of 'List' table lines is "equal" 1
 	
-	И я нажимаю на кнопку с именем 'ButtonIncExpBudget'
-	Тогда открылось окно "Pivot table: No options selected"
-	И Я закрываю окно "Pivot table: No options selected"
+	And I click the button named 'ButtonIncExpBudget'
+	Then "Pivot table: No options selected" window is opened
+	And I close "Pivot table: No options selected" window
 
-	Тогда открылось окно "Projects and phases"
-	И я нажимаю на кнопку с именем 'ButtonCFBudget'
-	Тогда открылось окно "Pivot table: No options selected"
-	И Я закрываю окно "Pivot table: No options selected"
+	Then "Projects and phases" window is opened
+	And I click the button named 'ButtonCFBudget'
+	Then "Pivot table: No options selected" window is opened
+	And I close "Pivot table: No options selected" window
 
-	Тогда открылось окно "Projects and phases"
-	И я нажимаю на кнопку с именем 'ButtonIEBudget'
-	Тогда открылось окно "Pivot table: No options selected"
-	И Я закрываю окно "Pivot table: No options selected"
+	Then "Projects and phases" window is opened
+	And I click the button named 'ButtonIEBudget'
+	Then "Pivot table: No options selected" window is opened
+	And I close "Pivot table: No options selected" window
 
-	Тогда открылось окно "Projects and phases"
-	И в таблице 'List' я выбираю текущую строку
-	Когда открылось окно "VA - Main project (Projects and phases)"
-	И Я закрываю окно "VA - Main project (Projects and phases)"
+	Then "Projects and phases" window is opened
+	And I select current line in 'List' table
+	When "VA - Main project (Projects and phases)" window is opened
+	And I close "VA - Main project (Projects and phases)" window
 
-	Когда открылось окно "Projects and phases"
-	И Я закрываю окно "Projects and phases"
+	When "Projects and phases" window is opened
+	And I close "Projects and phases" window
 			
-Сценарий: 18.34 Тест интерфейса для пользователя "Budgeting1" - Матрица экземпляров отчетов
+Scenario: 18.34 Interface test for user "Budgeting1" - Report instances matrix
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Открываем отчет
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report instance matrix"
-		Тогда открылось окно "Report instance matrix"
-		И я нажимаю на кнопку с именем 'FormSettings'
-		И я нажимаю кнопку выбора у поля с именем 'PeriodManagement'
-		И Я нахожу и выбираю документ управления отчетным периодом по сценарию "VA - Main scenario" и периоду начала "January 2024"
+	* Opening a report
+		And In the command interface I select "Budgeting, reporting, and analysis" "Report instance matrix"
+		Then "Report instance matrix" window is opened
+		And I click the button named 'FormSettings'
+		And I click Choice button of the field named 'PeriodManagement'
+		And I find and select reporting period management document by scenario "VA - Main scenario" and start period "January 2024"
 		
-		Тогда открылось окно "Report instance matrix"
-		И в таблице 'SettingsComposerSettingsFilter' я перехожу к строке:
-			| "Field"       | "Application" | "Display mode" |
-			| "Report type" | "Обычное"    | "Quick access"    |
-		И в таблице 'SettingsComposerSettingsFilter' я устанавливаю флаг с именем 'SettingsComposerSettingsFilterUse'
-		И в таблице 'SettingsComposerSettingsFilter' я активизирую поле с именем 'SettingsComposerSettingsFilterComparisonType'
-		И в таблице 'SettingsComposerSettingsFilter' из выпадающего списка с именем 'SettingsComposerSettingsFilterComparisonType' я выбираю точное значение "In group"
-		И в таблице 'SettingsComposerSettingsFilter' я активизирую поле с именем 'SettingsComposerSettingsFilterRightValue'
-		И в таблице 'SettingsComposerSettingsFilter' из выпадающего списка с именем 'SettingsComposerSettingsFilterRightValue' я выбираю по строке "VA - Checking access settings (group)"
-		И в таблице 'SettingsComposerSettingsFilter' я завершаю редактирование строки
+		Then "Report instance matrix" window is opened
+		And I go to line in 'SettingsComposerSettingsFilter' table:
+			| "Field"  | "Application" | "Display mode" |
+			| "Report type" | "Обычное" | "Quick access"    |
+		And I set checkbox named 'SettingsComposerSettingsFilterUse' in 'SettingsComposerSettingsFilter' table
+		And I activate field named 'SettingsComposerSettingsFilterComparisonType' in 'SettingsComposerSettingsFilter' table
+		And I select "In group" exact value from the drop-down list named 'SettingsComposerSettingsFilterComparisonType' in 'SettingsComposerSettingsFilter' table
+		And I activate field named 'SettingsComposerSettingsFilterRightValue' in 'SettingsComposerSettingsFilter' table
+		And I select "VA - Checking access settings (group)" by string from the drop-down list named 'SettingsComposerSettingsFilterRightValue' in 'SettingsComposerSettingsFilter' table
+		And I finish line editing in 'SettingsComposerSettingsFilter' table
 		
-		И я нажимаю на кнопку с именем 'FormFormulate'
+		And I click the button named 'FormFormulate'
 
-	* Сверяем результат
-		Тогда табличный документ 'Result' равен:
-			| "Scenario: VA - Main scenario\nPeriod: January 2024 г. - March 2024 г.\nPeriodичность: Month" | "Project"               | "Dimension1"                                                   | "Venus LLC" | "Earth LLC" | "Mars LLC" | "Mercury LLC" | "System LLC" |
+	* Verifying the result
+		Then 'Result' spreadsheet document is equal
+			| "Scenario: VA - Main scenario\nPeriod: January 2024 - March 2024\nFrequency: Month" | "Project"               | "Dimension1"                                                   | "Venus LLC" | "Earth LLC" | "Mars LLC" | "Mercury LLC" | "System LLC" |
 			| ''                                                                                              | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
 			| "VA - Report group"                                                                           | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
 			| "VA - Checking access settings (group)"                                                       | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (record)"                                                       | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (record)"                                                       | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (record)"                                                       | "VA - Main project" | "Administration"                                                | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (reading)"                                                       | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (reading)"                                                       | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (reading)"                                                       | "VA - Main project" | "Administration"                                                | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (record)"                                                         | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (record)"                                                         | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (record)"                                                         | "VA - Main project" | "Administration"                                                | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (reading)"                                                     | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (reading)"                                                     | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (reading)"                                                     | "VA - Main project" | "Administration"                                                | ''           | ''          | ''         | ''             | ''            |
 			| ''                                                                                              | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
 			| ''                                                                                              | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in состоянии \"Not заполнен\""              | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in состоянии \"Черноinик\""                 | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in состоянии \"Проinерен, for утinерждении\"" | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in состоянии \"Отпраinлен for уточнение\""   | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in состоянии \"Утinержден\""                | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in FromоFromтоянии \"Filled From ошибками\""      | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Not filled in\""              | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Draft\""                 | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Checked, pending approval\"" | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Sent for revision\""   | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Confirmed\""                | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Filled in with errors\""      | ''           | ''          | ''         | ''             | ''            |
 			| ''                                                                                              | "X"                    | " - This dimension is not used for the report type"          | ''           | ''          | ''         | ''             | ''            |
 
-	* Закрываем отчет НЕ сохраняя вариант
-		Тогда открылось окно "Report instance matrix"
-		И Я закрываю окно "Report instance matrix"
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+	* Closing a report WITHOUT saving the variant
+		Then "Report instance matrix" window is opened
+		And I close "Report instance matrix" window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 
-Сценарий: 18.35 Тест интерфейса для пользователя "Budgeting1" - Настройка обработки документов
+Scenario: 18.35 Interface test for user "Budgeting1" - Document processing configuration
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Открываем отчет
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Document processing setting"
-		Тогда открылось окно "Document processing setting"
-		И я нажимаю на кнопку с именем 'FormSettings'
-		И из выпадающего списка с именем 'RegulationVersion' я выбираю по строке "VA - Main regulations"
-		Когда открылось окно "Document processing setting"		
-		И я нажимаю кнопку выбора у поля с именем 'PeriodManagement'
-		И Я нахожу и выбираю документ управления отчетным периодом по сценарию "VA - Main scenario" и периоду начала "January 2024"
+	* Opening a report
+		And In the command interface I select "Budgeting, reporting, and analysis" "Document processing setting"
+		Then "Document processing setting" window is opened
+		And I click the button named 'FormSettings'
+		And I select from the drop-down list named 'RegulationVersion'  by "VA - Main regulations" string
+		When "Document processing setting" window is opened
+		And I click Choice button of the field named 'PeriodManagement'
+		And I find and select reporting period management document by scenario "VA - Main scenario" and start period "January 2024"
 
-		Когда открылось окно "Document processing setting"
-		И в таблице 'SettingsComposerSettingsFilter' я перехожу к строке:
-			| "Field"       | "Application" | "Display mode" |
-			| "Report type" | "Обычное"    | "Quick access"    |
-		И в таблице 'SettingsComposerSettingsFilter' я устанавливаю флаг с именем 'SettingsComposerSettingsFilterUse'
-		И в таблице 'SettingsComposerSettingsFilter' я активизирую поле с именем 'SettingsComposerSettingsFilterComparisonType'
-		И в таблице 'SettingsComposerSettingsFilter' из выпадающего списка с именем 'SettingsComposerSettingsFilterComparisonType' я выбираю точное значение "In group"
-		И в таблице 'SettingsComposerSettingsFilter' я активизирую поле с именем 'SettingsComposerSettingsFilterRightValue'
-		И в таблице 'SettingsComposerSettingsFilter' из выпадающего списка с именем 'SettingsComposerSettingsFilterRightValue' я выбираю по строке "VA - Checking access settings (group)"
-		И в таблице 'SettingsComposerSettingsFilter' я завершаю редактирование строки
+		When "Document processing setting" window is opened
+		And I go to line in 'SettingsComposerSettingsFilter' table:
+			| "Field"  | "Application" | "Display mode" |
+			| "Report type" | "Обычное" | "Quick access"    |
+		And I set checkbox named 'SettingsComposerSettingsFilterUse' in 'SettingsComposerSettingsFilter' table
+		And I activate field named 'SettingsComposerSettingsFilterComparisonType' in 'SettingsComposerSettingsFilter' table
+		And I select "In group" exact value from the drop-down list named 'SettingsComposerSettingsFilterComparisonType' in 'SettingsComposerSettingsFilter' table
+		And I activate field named 'SettingsComposerSettingsFilterRightValue' in 'SettingsComposerSettingsFilter' table
+		And I select "VA - Checking access settings (group)" by string from the drop-down list named 'SettingsComposerSettingsFilterRightValue' in 'SettingsComposerSettingsFilter' table
+		And I finish line editing in 'SettingsComposerSettingsFilter' table
 
-		И в таблице 'SettingsComposerSettingsFilter' я перехожу к строке:
-			| "Field"                                      | "Application" | "Display mode" |
-			| "Indicator value adjustment template" | "Обычное"    | "Quick access"    |
-		И в таблице 'SettingsComposerSettingsFilter' я устанавливаю флаг с именем 'SettingsComposerSettingsFilterUse'
-		И в таблице 'SettingsComposerSettingsFilter' я завершаю редактирование строки
+		And I go to line in 'SettingsComposerSettingsFilter' table:
+			| "Field"                                 | "Application" | "Display mode" |
+			| "Indicator value adjustment template" | "Обычное" | "Quick access"    |
+		And I set checkbox named 'SettingsComposerSettingsFilterUse' in 'SettingsComposerSettingsFilter' table
+		And I finish line editing in 'SettingsComposerSettingsFilter' table
 
-		И в таблице 'SettingsComposerSettingsFilter' я перехожу к строке:
-			| "Field"              | "Application" | "Display mode" |
-			| "Translation template" | "Обычное"    | "Quick access"    |
-		И в таблице 'SettingsComposerSettingsFilter' я устанавливаю флаг с именем 'SettingsComposerSettingsFilterUse'
-		И в таблице 'SettingsComposerSettingsFilter' я завершаю редактирование строки
+		And I go to line in 'SettingsComposerSettingsFilter' table:
+			| "Field"         | "Application" | "Display mode" |
+			| "Translation template" | "Обычное" | "Quick access"    |
+		And I set checkbox named 'SettingsComposerSettingsFilterUse' in 'SettingsComposerSettingsFilter' table
+		And I finish line editing in 'SettingsComposerSettingsFilter' table
 
-		И в таблице 'SettingsComposerSettingsFilter' я перехожу к строке:
-			| "Field"                                   | "Application" | "Display mode" |
-			| "Transformational adjustment template" | "Обычное"    | "Quick access"    |
-		И в таблице 'SettingsComposerSettingsFilter' я устанавливаю флаг с именем 'SettingsComposerSettingsFilterUse'
-		И в таблице 'SettingsComposerSettingsFilter' я завершаю редактирование строки
+		And I go to line in 'SettingsComposerSettingsFilter' table:
+			| "Field"                              | "Application" | "Display mode" |
+			| "Transformational adjustment template" | "Обычное" | "Quick access"    |
+		And I set checkbox named 'SettingsComposerSettingsFilterUse' in 'SettingsComposerSettingsFilter' table
+		And I finish line editing in 'SettingsComposerSettingsFilter' table
 		
-		И я нажимаю на кнопку с именем 'FormFormulate'
+		And I click the button named 'FormFormulate'
 
-	* Сверяем результат
-		Тогда табличный документ 'Result' равен:
-			| "Document template / Company"          | ''            | ''            | ''                      | "Venus LLC"                                             | "Earth LLC"                                              | "Mars LLC"                                               | "Mercury LLC"                                           | "System LLC"                                            |
+	* Verifying the result
+		Then 'Result' spreadsheet document is equal
+			| "Document template / Company"          | ''            | ''            | ''                      | "Venus LLC"                                              | "Earth LLC"                                               | "Mars LLC"                                           | "Mercury LLC"                                            | "System LLC"                                             |
 			| ''                                        | "Project"      | "Dimension1"  | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
-			| "VA - Checking access settings (record)" | ''            | ''            | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
-			| ''                                        | "< По всем >" | "< По всем >" | "Template to show" | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
+			| "VA - Checking access settings (record)"   | ''            | ''            | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
+			| ''                                        | "< By all >" | "< By all >" | "Template to show" | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Pivot table template" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" |
 			| ''                                        | ''            | ''            | "Processing rule"     | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Check rule"      | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
-			| ''                                        | ''            | ''            | "Generation method"   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   |
+			| ''                                        | ''            | ''            | "Generation method"   | 'By processing rule'                                   | 'By processing rule'                                   | 'By processing rule'                                   | 'By processing rule'                                   | 'By processing rule'                                   |
 			| "VA - Checking access settings (reading)" | ''            | ''            | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
-			| ''                                        | "< По всем >" | "< По всем >" | "Template to show" | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
+			| ''                                        | "< By all >" | "< By all >" | "Template to show" | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Pivot table template" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" |
 			| ''                                        | ''            | ''            | "Processing rule"     | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Check rule"      | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
-			| ''                                        | ''            | ''            | "Generation method"   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   |
+			| ''                                        | ''            | ''            | "Generation method"   | 'By processing rule'                                   | 'By processing rule'                                   | 'By processing rule'                                   | 'By processing rule'                                   | 'By processing rule'                                   |
 		
-	* Закрываем отчет НЕ сохраняя вариант
-		Когда открылось окно "Document processing setting"
-		И Я закрываю окно "Document processing setting"
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+	* Closing a report WITHOUT saving the variant
+		When "Document processing setting" window is opened
+		And I close "Document processing setting" window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 
-Сценарий: 18.36 Тест интерфейса для пользователя "Budgeting1" - Организационные структуры регламента
+Scenario: 18.36 Interface test for user "Budgeting1" - Organizational structures of the regulation
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Открываем отчет 
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Organizational regulation structures"
-		Тогда открылось окно "Organizational structure briefly"
-		И из выпадающего списка с именем 'SettingsComposerUserSettingsItem0Value' я выбираю по строке "VA - Main regulations"
-		И я нажимаю на кнопку с именем 'GenerateReport'
+	* Opening a report
+		And In the command interface I select "Budgeting, reporting, and analysis" "Organizational regulation structures"
+		Then "Organizational structure briefly" window is opened
+		And I select from the drop-down list named 'SettingsComposerUserSettingsItem0Value'  by "VA - Main regulations" string
+		And I click the button named 'GenerateReport'
 
-	* Сверяем результат	
-		Тогда табличный документ 'ReportSpreadsheetDocument' равен:
+	* Verifying the result
+		Then 'ReportSpreadsheetDocument' spreadsheet document is equal
 			| "Data parameters:"              | "Regulation version: VA - Main regulations" | ''                            | ''                                |
 			| ''                        | "Display chart: No"                       | ''                            | ''                                |
 			| ''                        | ''                                           | ''                            | ''                                |
@@ -1756,66 +1756,66 @@
 			| "Earth LLC"               | "No"                                        | "VA - Package CFR"              | "RUB"                             |
 			| "Mercury LLC"            | "No"                                        | "VA - Package CFR"              | "RUB"                             |
 		
-	И Я закрываю окно "Organizational structure briefly"
+	And I close "Organizational structure briefly" window
 
-Сценарий: 18.37 Тест интерфейса для пользователя "Budgeting1" - Отчет о связях показателей отчетов
+Scenario: 18.37 Interface test for user "Budgeting1" - Report on report indicator links
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Открываем отчет 
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report on report indicator links"
-		Тогда открылось окно "Report on report indicator links"
-		И в таблице 'MainReports' я нажимаю на кнопку с именем 'MainReportsAdd'
-		И в таблице 'MainReports' я нажимаю кнопку выбора у реквизита с именем 'MainReportsReportKind'				
-		И Я в списке "Report types" по полю "Description" ищу и выбираю элемент "VA - Checking access settings (record)" "Exact match" 
-		И в таблице 'MainReports' я нажимаю на кнопку с именем 'FormFormulate'
+	* Opening a report
+		And In the command interface I select "Budgeting, reporting, and analysis" "Report on report indicator links"
+		Then "Report on report indicator links" window is opened
+		And in the table 'MainReports' I click the button named 'MainReportsAdd'
+		And I click choice button of the attribute named 'MainReportsReportKind' in 'MainReports' table
+		And I search and select element "VA - Checking access settings (record)" "Exact match" by field "Description" in list "Report types"
+		And in the table 'MainReports' I click the button named 'FormFormulate'
 		
-	И Я закрываю окно "Report on report indicator links"
+	And I close "Report on report indicator links" window
 
-Сценарий: 18.38 Тест интерфейса для пользователя "Budgeting1" - Отчет о связях между отчетами
+Scenario: 18.38 Interface test for user "Budgeting1" - Report on links between reports
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Открываем отчет
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Graphic report link report"
-		Тогда открылось окно "Report links report"
-		И в таблице 'ReportsTableBox' я нажимаю на кнопку с именем 'ReportsTableBoxAdd'
-		И в таблице 'ReportsTableBox' я нажимаю кнопку выбора у реквизита с именем 'ReportsTableBoxReport'
-		И Я в списке "Report types" по полю "Description" ищу и выбираю элемент "VA - Checking access settings (record)" "Exact match" 
-		И в таблице 'ReportsTableBox' я завершаю редактирование строки
-		И в таблице 'ReportsTableBox' я нажимаю на кнопку с именем 'Generate'
+	* Opening a report
+		And In the command interface I select "Budgeting, reporting, and analysis" "Graphic report link report"
+		Then "Report links report" window is opened
+		And in the table 'ReportsTableBox' I click the button named 'ReportsTableBoxAdd'
+		And I click choice button of the attribute named 'ReportsTableBoxReport' in 'ReportsTableBox' table
+		And I search and select element "VA - Checking access settings (record)" "Exact match" by field "Description" in list "Report types"
+		And I finish line editing in 'ReportsTableBox' table
+		And in the table 'ReportsTableBox' I click the button named 'Generate'
 		
-	И Я закрываю окно "Report links report"
+	And I close "Report links report" window
 
-Сценарий: 18.39 Тест интерфейса для пользователя "Budgeting1" - Сетевая диаграмма группы проектов	
+Scenario: 18.39 Interface test for user "Budgeting1" - Network diagram of a project group
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Открываем отчет 
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Network diagram of project group"
-		Тогда открылось окно "Network diagram of project group"
-		И в табличном документе 'SpreadsheetDocumentField' я перехожу к ячейке "R1C1"
-		И я нажимаю на кнопку с именем 'FormFormulate'
+	* Opening a report
+		And In the command interface I select "Budgeting, reporting, and analysis" "Network diagram of project group"
+		Then "Network diagram of project group" window is opened
+		And in 'SpreadsheetDocumentField' spreadsheet document I move to "R1C1" cell
+		And I click the button named 'FormFormulate'
 		
-	И Я закрываю окно "Network diagram of project group"
+	And I close "Network diagram of project group" window
 			
-Сценарий: 18.40 Тест интерфейса для пользователя "Budgeting1" - Копирование значений показателей отчетов
+Scenario: 18.40 Interface test for user "Budgeting1" - Copying report indicator values
 		
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Копирование данных показателей отчетов
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Copy report indicator values"
-		Тогда открылось окно "Copy report indicator values"
+	* Copying report indicator data
+		And In the command interface I select "Budgeting, reporting, and analysis" "Copy report indicator values"
+		Then "Copy report indicator values" window is opened
 	
-	И Я закрываю окно "Copy report indicator values"
+	And I close "Copy report indicator values" window
 
-Сценарий: 18.41 Тест интерфейса для пользователя "Budgeting1" - Сравнение табличных документов
+Scenario: 18.41 Interface test for user "Budgeting1" - Comparison of tabular documents
 
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-	* Сравнение табличных документов	
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Compare spreadsheet documents"
-		Тогда открылось окно "Compare spreadsheet documents"
+	* Comparison of tabular documents
+		And In the command interface I select "Budgeting, reporting, and analysis" "Compare spreadsheet documents"
+		Then "Compare spreadsheet documents" window is opened
 	
-	И Я закрываю окно "Compare spreadsheet documents"
+	And I close "Compare spreadsheet documents" window
 				

@@ -1,187 +1,187 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 02. Проверка работы сводной таблицы
+Feature: 02. Checking pivot table operation
 
-	Как Администратор я хочу
-	Проверить создание и работу сводных таблиц
+	As Administrator I want to
+	Check creation and operation of pivot tables
 
-Контекст: 
+Background:
 
-	И я закрыл все окна клиентского приложения	
+	And I close all client application windows
 
-Сценарий: 02.00 Определеняем тип приложения
+Scenario: 02.00 Determining application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 02.01 Создаем вид отчета
+Scenario: 02.01 Creating a report type
 
-	* Создаем вид отчета
-		И Я создаю вид отчета с именем "VA - Recalculation in context" и родителем "VA - Report group"
-		И Я открываю вид отчета с именем "VA - Recalculation in context"
+	* Creating a report type
+		And I create report type with name "VA - Recalculation in context" and parent "VA - Report group"
+		And I open report type with name "VA - Recalculation in context"
 
-	* Доработаем вид отчета
-		И я изменяю флаг с именем 'IsChangeTrackingEnabled'
-		И я перехожу к закладке с именем 'DimensionsOfReport'
-		И из выпадающего списка с именем 'DimensionKind1' я выбираю по строке "VA0CFItems"
-		И я перехожу к закладке с именем 'Main'
-		И я нажимаю на кнопку с именем 'RecordButtonForm'
-		Тогда открылось окно "Data restructuring"
-		И я нажимаю на кнопку с именем 'FormOK'
+	* Refining a report type
+		And I change checkbox named 'IsChangeTrackingEnabled'
+		And I move to the tab named 'DimensionsOfReport'
+		And I select from the drop-down list named 'DimensionKind1'  by "VA0CFItems" string
+		And I move to the tab named 'Main'
+		And I click the button named 'RecordButtonForm'
+		Then "Data restructuring" window is opened
+		And I click the button named 'FormOK'
 	
-	* Настраиваем структуру вида отчета
-		И я нажимаю на кнопку с именем 'EditTree'
-		И Я в конструкторе отчета добавляю строку с именем "Total"
-		И Я в конструкторе отчета добавляю строку с именем "Goods"
-		И Я в конструкторе отчета добавляю колонку с именем "Count"
-		И Я в конструкторе отчета добавляю колонку с именем "Coefficient"
-		И Я в конструкторе отчета добавляю колонку с именем "Total"
-		И Я в конструкторе отчета добавляю колонку с именем "Date"
-		И Я в конструкторе отчета добавляю колонку с именем "Line"
+	* Configuring report type structure
+		And I click the button named 'EditTree'
+		And I add row with name "Total" in report wizard
+		And I add row with name "Goods" in report wizard
+		And I add column with name "Count" in report wizard
+		And I add column with name "Coefficient" in report wizard
+		And I add column with name "Total" in report wizard
+		And I add column with name "Date" in report wizard
+		And I add column with name "Line" in report wizard
 
-	* Меняем тип показателей
-		И Я в конструкторе отчета в ячейке 'R2C3' меняю свойство показателя 'NonFinancial' на "False"
-		И Я в конструкторе отчета в ячейке 'R2C5' меняю свойство показателя 'ValueType' на "Date"
-		И Я в конструкторе отчета в ячейке 'R2C5' меняю свойство показателя 'TotalKind' на "Maximum"
-		И Я в конструкторе отчета в ячейке 'R3C5' меняю свойство показателя 'ValueType' на "Date"
-		И Я в конструкторе отчета в ячейке 'R3C5' меняю свойство показателя 'TotalKind' на "Minimum"
-		И Я в конструкторе отчета в ячейке 'R3C3' меняю свойство показателя 'NonFinancial' на "True"
-		И Я в конструкторе отчета в ячейке 'R2C6:R3C6' меняю свойства показателей 'ValueType' на "Line"
+	* Changing indicator types
+		And I change indicator property 'NonFinancial' to "False" in cell 'R2C3' in report wizard
+		And I change indicator property 'ValueType' to "Date" in cell 'R2C5' in report wizard
+		And I change indicator property 'TotalKind' to "Maximum" in cell 'R2C5' in report wizard
+		And I change indicator property 'ValueType' to "Date" in cell 'R3C5' in report wizard
+		And I change indicator property 'TotalKind' to "Minimum" in cell 'R3C5' in report wizard
+		And I change indicator property 'NonFinancial' to "True" in cell 'R3C3' in report wizard
+		And I change indicator properties 'ValueType' to "Line" in cell 'R2C6:R3C6' in report wizard
 
-	* Устанавливаем аналитики
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R3C3'
+	* Setting dimensions
+		And I add dimension with code "VA0Product" in cell 'R3C3' in report wizard
 
-	* Вводим формулы расчета
-		Когда открылось окно "Report wizard"
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		Тогда открылось окно "Report wizard"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C3'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C3'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		Тогда открылось окно "Report wizard"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C4'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'ButtonMultiply'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C3'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		Тогда открылось окно "Report wizard"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C4'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'ButtonMultiply'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C3'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		Когда открылось окно "Report wizard"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C5'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C5'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'		
-		И Я закрываю окно "Report wizard"
+	* Entering calculation formulas
+		When "Report wizard" window is opened
+		And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'WriteAndCollapse'
+		Then "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C3' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C3' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'WriteAndCollapse'
+		Then "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C4' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'ButtonMultiply'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C3' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'WriteAndCollapse'
+		Then "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C4' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'ButtonMultiply'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C3' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'WriteAndCollapse'
+		When "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C5' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C5' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'WriteAndCollapse'
+		And I close "Report wizard" window
 
-Сценарий: 02.02 Создаем бланки для вида отчета				
+Scenario: 02.02 Creating templates for a report type
 
-	И Я для вида отчета "VA - Recalculation in context" создаю бланк по умолчанию
+	And I create default template for report type "VA - Recalculation in context"
 	
-	И Я для вида отчета "VA - Recalculation in context" создаю бланк сводной таблицы по умолчанию с отборами "Cash flow items"
+	And I for report type "Cash flow items" create default pivot table template with filters "VA - Recalculation in context"
 
-	И Я Для вида отчета "VA - Recalculation in context" открываю бланк сводной таблицы по умолчанию
-	И я нажимаю на кнопку с именем 'ShowTableSettingsByAxes'
-	Тогда открылось окно "Set up field location"
-	И в таблице 'TableRows1' я перехожу к строке:
+	And I open default pivot table template for report type "VA - Recalculation in context"
+	And I click the button named 'ShowTableSettingsByAxes'
+	Then "Set up field location" window is opened
+	And I go to line in 'TableRows1' table:
 		| "Horizontally (in rows)" |
 		| "Product range"               |
-	И в таблице 'TableRows1' я выбираю текущую строку
-	Тогда открылось окно "Dimension display parameters (Product range)"
-	И я нажимаю кнопку выбора у поля с именем 'DCSettingsOrderSettings'
-	Тогда открылось окно "Edit order"
-	И в таблице 'Data' я перехожу к строке:
+	And I select current line in 'TableRows1' table
+	Then "Dimension display parameters (Product range)" window is opened
+	And I click Choice button of the field named 'DCSettingsOrderSettings'
+	Then "Edit order" window is opened
+	And I go to line in 'Data' table:
 		| "Use" | "Field"                      |
 		| "Yes"            | "Product range.Description" |
-	И в таблице 'Data' из выпадающего списка с именем 'DataField' я выбираю точное значение "Product range.Product ID"
-	И в таблице 'Data' я завершаю редактирование строки
-	И я нажимаю на кнопку с именем 'OK'
-	Тогда открылось окно "Dimension display parameters (Product range)"
-	И я нажимаю на кнопку с именем 'FormApply'
-	Тогда открылось окно "Set up field location"
-	И я нажимаю на кнопку с именем 'ButtonApply'
-	Когда открылось окно '$WindowTitle$'
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
-	И я жду закрытия окна '$WindowTitle$' в течение 20 секунд	
+	And I select "Product range.Product ID" exact value from the drop-down list named 'DataField' in 'Data' table
+	And I finish line editing in 'Data' table
+	And I click the button named 'OK'
+	Then "Dimension display parameters (Product range)" window is opened
+	And I click the button named 'FormApply'
+	Then "Set up field location" window is opened
+	And I click the button named 'ButtonApply'
+	When '$WindowTitle$' window is opened
+	And I click the button named 'FormWriteAndClose'
+	And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: 02.03 Создаем новый сценарий для индексации
+Scenario: 02.03 Creating a new scenario for indexing
 
-	И Я создаю сценарий с именем "VA - Script for indexing"
-	И Я для сценария "VA - Script for indexing" на закладке 'Budgeting' для реквизита 'AllocationScenario' устанавливаю значение "True"
+	And I create scenario with name "VA - Script for indexing"
+	And I set value "True" for attribute 'AllocationScenario' on tab 'Budgeting' for scenario "VA - Script for indexing"
 
-	* Документ управления перидом
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Reporting period management"
-		Тогда открылось окно "Reporting period management"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Reporting period management (create)"
-		И из выпадающего списка с именем 'Scenario' я выбираю по строке "VA - Script for indexing"
-		И из выпадающего списка с именем 'ScenarioFrequency' я выбираю точное значение "Month"
-		И я нажимаю на кнопку с именем 'ChangePeriod'
-		Тогда открылось окно "Select period"
-		И в поле с именем 'DateBegin' я ввожу текст '1/1/2024'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'DateEnd' я ввожу текст '3/31/2024'
-		И я нажимаю на кнопку с именем 'select'
-		Тогда открылось окно "Reporting period management (create) *"
-		И из выпадающего списка с именем 'OrganizationalStructureVersion' я выбираю по строке "VA - Main regulations"
-		И я нажимаю на кнопку с именем 'FormGoForward'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		И я запоминаю заголовок формы в переменную 'FormCaption'
-		Тогда открылось окно '$FormCaption$'
-		И Я заполняю таблицу курсов в управлении периодом сценария
-		И я нажимаю на кнопку с именем 'FormGoForward'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'		
-		Когда открылось окно '$FormCaption$'
-		И я нажимаю на кнопку с именем 'FormGoForward'
-		* Закрываем период
-			И я нажимаю на кнопку с именем 'PeriodsManagement1'
-			Тогда открылось окно "Manage period lock duration and indicator updates"
-			И в табличном документе 'SpreadsheetFieldPeriodsManagement' я перехожу к ячейке 'R6C2'
-			И я нажимаю на кнопку с именем 'ClosePeriod'
-			И Я закрываю окно "Manage period lock duration and indicator updates"
-		Тогда открылось окно '$FormCaption$'
-		И я нажимаю на кнопку с именем 'FormClose'	
+	* Period management document
+		And In the command interface I select "Budgeting, reporting, and analysis" "Reporting period management"
+		Then "Reporting period management" window is opened
+		And I click the button named 'FormCreate'
+		Then "Reporting period management (create)" window is opened
+		And I select from the drop-down list named 'Scenario'  by "VA - Script for indexing" string
+		And I select "Month" exact value from the drop-down list named 'ScenarioFrequency'
+		And I click the button named 'ChangePeriod'
+		Then "Select period" window is opened
+		And I input '1/1/2024' text in the field named 'DateBegin'
+		And I move to the next attribute
+		And I input '3/31/2024' text in the field named 'DateEnd'
+		And I click the button named 'select'
+		Then "Reporting period management (create) *" window is opened
+		And I select from the drop-down list named 'OrganizationalStructureVersion'  by "VA - Main regulations" string
+		And I click the button named 'FormGoForward'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		And I save form header as 'FormCaption' variable
+		Then '$FormCaption$' window is opened
+		And I fill exchange rates table in scenario period management
+		And I click the button named 'FormGoForward'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		When '$FormCaption$' window is opened
+		And I click the button named 'FormGoForward'
+		* Closing a period
+			And I click the button named 'PeriodsManagement1'
+			Then "Manage period lock duration and indicator updates" window is opened
+			And in 'SpreadsheetFieldPeriodsManagement' spreadsheet document I move to 'R6C2' cell
+			And I click the button named 'ClosePeriod'
+			And I close "Manage period lock duration and indicator updates" window
+		Then '$FormCaption$' window is opened
+		And I click the button named 'FormClose'
 
-Сценарий: 02.04 Настройка прав для пользователя "Budgeting1"
+Scenario: 02.04 Configuring rights for user "Budgeting1"
 
-	И Я добавляю право "Read, write" для вида отчета "VA - Recalculation in context" пользователя "Budgeting1" по всем организациям
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''			
+	And I add right "Read, write" for report type "VA - Recalculation in context" user "Budgeting1" for all companies
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-Сценарий: 02.05 Вводим данные в сводную таблицу	
+Scenario: 02.05 Entering data into a pivot table
 
-	* Открываем сводную таблицу
-		И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"
-		И Я устанавливаю отборы сводной таблицы: дата начала '1/1/2024', дата конца '3/31/2024', валюта 'RUB', сценарий "VA - Main scenario", организация "Mercury LLC"		
-		И Я устанавливаю отбор сводной таблицы "VA0CFItems" со значением "3Software sale"
+	* Opening a pivot table
+		And I open report pivot table with name "VA - Recalculation in context"
+		And I set pivot table filters: start date '1/1/2024', end date '3/31/2024', currency 'RUB', scenario "VA - Main scenario", company "Mercury LLC"
+		And I set pivot table filter "VA0CFItems" with value "3Software sale"
 		
-	* Вводим значения вручную
-		И Я добавляю значения с раскрытием показателей в ячейку 'R5C2'
+	* Entering values manually
+		And I add values with indicator expansion in cell 'R5C2'
 			| "VA0Product"                                                     | 'Value1' |
 			| "1C:ERP. Corporate performance management"                                   | '10.00000'  |
 			| "2C:Corporation"                                                  | '20.00000'  |
@@ -189,29 +189,29 @@
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '40.00000'  |
 			| "5C:Corporate performance management"                                      | '50.00000'  |		
 		
-		И Я ввожу значение '2.00000' в ячейку 'R6C3'
-		И Я ввожу значение '1/1/2024' в ячейку 'R6C5'
-		И Я ввожу значение "Line1" в ячейку 'R6C6'
+		And I enter value '2.00000' in cell 'R6C3'
+		And I enter value '1/1/2024' in cell 'R6C5'
+		And I enter value "Line1" in cell 'R6C6'
 	
-	* Копируем значения по колонке
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C3'
-		И я нажимаю на кнопку с именем 'CopyDataByColumn'
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C5'
-		И я нажимаю на кнопку с именем 'CopyDataByColumn'
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C6'
-		И я нажимаю на кнопку с именем 'CopyDataByColumn'
+	* Copying values by column
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C3' cell
+		And I click the button named 'CopyDataByColumn'
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C5' cell
+		And I click the button named 'CopyDataByColumn'
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C6' cell
+		And I click the button named 'CopyDataByColumn'
 	
-	* Копирование и вставка значений
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2:R10C6'
-		И я нажимаю на кнопку с именем 'CopyIntoClipboard'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C7:R10C11'
-		И я нажимаю на кнопку с именем 'PasteFromClipboard1'
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Copying and pasting values
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2:R10C6' cell
+		And I click the button named 'CopyIntoClipboard'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C7:R10C11' cell
+		And I click the button named 'PasteFromClipboard1'
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''      | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
 			| "Total"                                                           | '150'            | '10'          | '1,500' | '1/1/2024' | ''        | '150'             | '10'          | '1,500' | '1/1/2024' | ''        | '0'            | '0'           | '0'    | ''     | ''       | '300'        | '20'          | '3,000' | '1/1/2024' | ''       |
@@ -222,114 +222,114 @@
 			| "1C:ERP. Corporate performance management"                                   | '10'             | '2'           | '20'    | '1/1/2024' | "Line1" | '10'              | '2'           | '20'    | '1/1/2024' | "Line1" | '0'            | '0'           | '0'    | ''     | ''       | '20'         | '4'           | '40'    | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '30'             | '2'           | '60'    | '1/1/2024' | "Line1" | '30'              | '2'           | '60'    | '1/1/2024' | "Line1" | '0'            | '0'           | '0'    | ''     | ''       | '60'         | '4'           | '120'   | '1/1/2024' | ''       |
 
-	* Еще раз вводим значения 
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C10'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '1/1/2024'
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'CopyDataByColumn'
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'CopyDataByColumn'
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C11'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст "Line1"
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'CopyDataByColumn'
+	* Entering values again
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C10' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '1/1/2024'
+		When '$WindowTitle$' window is opened
+		And I click the button named 'CopyDataByColumn'
+		When '$WindowTitle$' window is opened
+		And I click the button named 'CopyDataByColumn'
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C11' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I input text "Line1"
+		When '$WindowTitle$' window is opened
+		And I click the button named 'CopyDataByColumn'
 	
-	* Копируем значения по строке
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C7:R10C7'
-		И я нажимаю на кнопку с именем 'CopyDataByRow'
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'CopyDataByRow'
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C8:R10C8'
-		И я нажимаю на кнопку с именем 'CopyDataByRow'
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C10:R10C10'
-		И я нажимаю на кнопку с именем 'CopyDataByRow'
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C11:R10C11'						
-		И я нажимаю на кнопку с именем 'CopyDataByRow'
+	* Copying values by row
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C7:R10C7' cell
+		And I click the button named 'CopyDataByRow'
+		When '$WindowTitle$' window is opened
+		And I click the button named 'CopyDataByRow'
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C8:R10C8' cell
+		And I click the button named 'CopyDataByRow'
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C10:R10C10' cell
+		And I click the button named 'CopyDataByRow'
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C11:R10C11' cell
+		And I click the button named 'CopyDataByRow'
 
-	* Изменяем показатели
-		* На процент
-			Когда открылось окно '$WindowTitle$'
-			И Я изменяю значение на '100.00000' процентов в ячейке 'R6C7:R10C8'
-			Тогда открылось окно '$WindowTitle$'
-			И Я изменяю значение на '200.00000' процентов в ячейке 'R6C12:R10C12'
-			* Нечисловые
-				Тогда открылось окно '$WindowTitle$'
-				И Я изменяю значение на '100.00000' процентов в ячейке 'R6C6:R10C6'
-		* На значение
-			Тогда открылось окно '$WindowTitle$'
-			И Я изменяю значение на '4.00000' в ячейке 'R6C13:R10C13'
-			* Нечисловые
-				Когда открылось окно '$WindowTitle$'
-				И Я изменяю значение на '200.00000' в ячейке 'R6C5:R10C5'
+	* Changing indicators
+		* To percentage
+			When '$WindowTitle$' window is opened
+			And I change value to '100.00000' percent in cell 'R6C7:R10C8'
+			Then '$WindowTitle$' window is opened
+			And I change value to '200.00000' percent in cell 'R6C12:R10C12'
+			* Non-numeric
+				Then '$WindowTitle$' window is opened
+				And I change value to '100.00000' percent in cell 'R6C6:R10C6'
+		* To value
+			Then '$WindowTitle$' window is opened
+			And I change value to '4.00000' in cell 'R6C13:R10C13'
+			* Non-numeric
+				When '$WindowTitle$' window is opened
+				And I change value to '200.00000' in cell 'R6C5:R10C5'
 
-	* Очистка показателей
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2:R10C16'
-		И я нажимаю на кнопку с именем 'ClearRange'
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Clearing indicators
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2:R10C16' cell
+		And I click the button named 'ClearRange'
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)" | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''     | ''     | ''       | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''     | ''     | ''       |
 			| "VA - Recalculation in context (pivot table)" | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total" | "Date" | "Line" | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total" | "Date" | "Line" |
 			| "Total"                                        | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 			| "Goods"                                      | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 
-	* Кнопка отмена 
-		Когда открылось окно '$WindowTitle$'
-		И я делаю 24 раз
-			И я нажимаю на кнопку с именем 'CancelAction'
-		Когда открылось окно '$WindowTitle$'	
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Cancel button
+		When '$WindowTitle$' window is opened
+		And I repeat 24 times
+			And I click the button named 'CancelAction'
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)" | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''     | ''     | ''       | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''     | ''     | ''       |
 			| "VA - Recalculation in context (pivot table)" | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total" | "Date" | "Line" | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total" | "Date" | "Line" |
 			| "Total"                                        | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 			| "Goods"                                      | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 
-	* Кнопка повторить действие	
-		И я делаю 23 раз
-			И я нажимаю на кнопку с именем 'RetryAction'
+	* Repeat action button
+		And I repeat 23 times
+			And I click the button named 'RetryAction'
 
-	* Отмена из списка
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'CancelApplyDetailed'
-		Тогда открылось окно "Action history"
-		И в таблице 'Transactions_' я выделяю все строки
-		И я нажимаю на кнопку с именем 'FormApply'
-		И я жду открытия формы '$WindowTitle$' в течение 20 секунд
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Undo from list
+		When '$WindowTitle$' window is opened
+		And I click the button named 'CancelApplyDetailed'
+		Then "Action history" window is opened
+		And I select all lines of 'Transactions_' table
+		And I click the button named 'FormApply'
+		And I wait for '$WindowTitle$' form opening for 20 seconds
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)" | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''     | ''     | ''       | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''     | ''     | ''       |
 			| "VA - Recalculation in context (pivot table)" | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total" | "Date" | "Line" | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total" | "Date" | "Line" |
 			| "Total"                                        | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 			| "Goods"                                      | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 
-	* Повторить действие
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'RetryAction'								
+	* Repeat action
+		When '$WindowTitle$' window is opened
+		And I click the button named 'RetryAction'
 
-	* Сложная последовательность отменить / повторить действие
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'CancelAction'
-		И я нажимаю на кнопку с именем 'RetryAction'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C5'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '2/2/2024'
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'CancelAction'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Тогда открылось окно "Drill down indicators: *"
-		Тогда Таблица 'IndicatorsDrilldown' содержит '5' строк из списка:
+	* Complex sequence of undo / repeat action
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+		When '$WindowTitle$' window is opened
+		And I click the button named 'CancelAction'
+		And I click the button named 'RetryAction'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C5' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '2/2/2024'
+		When '$WindowTitle$' window is opened
+		And I click the button named 'CancelAction'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		Then "Drill down indicators: *" window is opened
+		Then I check table 'IndicatorsDrilldown' contains '5' rows from list:
 			| "Product range"                                                   | 'Value1' |
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '40'        |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '30'        |
@@ -337,79 +337,79 @@
 			| "2C:Corporation"                                                  | '20'        |
 			| "1C:ERP. Corporate performance management"                                   | '10'        |
 					
-		И я нажимаю на кнопку с именем 'FormCancel'
-		Тогда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Тогда открылось окно "Drill down indicators: *"
-		И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+		And I click the button named 'FormCancel'
+		Then '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		Then "Drill down indicators: *" window is opened
+		And I go to line in 'IndicatorsDrilldown' table:
 			| "Product range"              | 'Value1' |
 			| "5C:Corporate performance management" | '100'       |
-		И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '10.00000'
-		И в таблице 'IndicatorsDrilldown' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormOKButton1'
+		And I input '10.00000' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		And I finish line editing in 'IndicatorsDrilldown' table
+		And I click the button named 'FormOKButton1'
 
-	* Установим комментарии
-		Когда открылось окно '$WindowTitle$'
-		И Я ввожу комментарий "First cell" в ячейку 'R6C2'
-		Тогда открылось окно '$WindowTitle$'
-		И Я ввожу комментарий "Last cell" в ячейку 'R10C5'
-		Тогда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C2'
-		И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuInsertNote' на элементе формы с именем 'SpreadsheetFieldTemlate'
-		Тогда открылось окно "Comments"
-		И в поле с именем 'NewComment' я ввожу текст "First cell 2"
-		И я нажимаю на кнопку с именем 'WriteComment'
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'LeaveCommentToIndicator'
-		Тогда элемент формы с именем 'CommentsHistory' стал равен по шаблону
+	* Setting comments
+		When '$WindowTitle$' window is opened
+		And I enter comment "First cell" in cell 'R6C2'
+		Then '$WindowTitle$' window is opened
+		And I enter comment "Last cell" in cell 'R10C5'
+		Then '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C2' cell
+		And I select context menu item named 'SpreadsheetFieldTemlateContextMenuInsertNote' of the form attribute named 'SpreadsheetFieldTemlate'
+		Then "Comments" window is opened
+		And I input "First cell 2" text in the field named 'NewComment'
+		And I click the button named 'WriteComment'
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'LeaveCommentToIndicator'
+		Then form element named "CommentsHistory" became equal to by template
 			|'* (*): '      |
 			|"First cell"|
 			|'* (*): '        |
 			|"First cell 2"|
-		И элемент формы с именем 'NewComment' стал равен ''
-		Когда открылось окно "Comments"
-		И я закрываю окно "Comments"
+		And the form attribute named 'NewComment' became equal to ''
+		When "Comments" window is opened
+		And I close "Comments" window
 
-	* Кнопки отмена / повторить действие с комментариями
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'CancelAction'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C2'
-		И я нажимаю на кнопку с именем 'LeaveCommentToIndicator'
-		Тогда открылось окно "Comments"
-		Тогда элемент формы с именем 'CommentsHistory' стал равен по шаблону 
+	* Undo / repeat action buttons with comments
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'CancelAction'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C2' cell
+		And I click the button named 'LeaveCommentToIndicator'
+		Then "Comments" window is opened
+		Then form element named "CommentsHistory" became equal to by template
 			|'* (*): '|
 			|"First cell"|				
-		И я закрываю окно "Comments"
-		И я нажимаю на кнопку с именем 'CancelAction'
-		И я нажимаю на кнопку с именем 'CancelAction'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C2'
-		И я нажимаю на кнопку с именем 'LeaveCommentToIndicator'
-		Тогда открылось окно "Comments"
-		Тогда элемент формы с именем 'CommentsHistory' стал равен ''								
-		И я закрываю окно "Comments"
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'RetryAction'
-		И я нажимаю на кнопку с именем 'RetryAction'
-		И я нажимаю на кнопку с именем 'RetryAction'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C2'
-		И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuInsertNote' на элементе формы с именем 'SpreadsheetFieldTemlate'
-		Тогда элемент формы с именем 'CommentsHistory' стал равен по шаблону
+		And I close "Comments" window
+		And I click the button named 'CancelAction'
+		And I click the button named 'CancelAction'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C2' cell
+		And I click the button named 'LeaveCommentToIndicator'
+		Then "Comments" window is opened
+		Then the form attribute named 'CommentsHistory' became equal to ''
+		And I close "Comments" window
+		When '$WindowTitle$' window is opened
+		And I click the button named 'RetryAction'
+		And I click the button named 'RetryAction'
+		And I click the button named 'RetryAction'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C2' cell
+		And I select context menu item named 'SpreadsheetFieldTemlateContextMenuInsertNote' of the form attribute named 'SpreadsheetFieldTemlate'
+		Then form element named "CommentsHistory" became equal to by template
 			|'* (*): '      |
 			|"First cell"|
 			|'* (*): '        |
 			|"First cell 2"|		
-		Когда открылось окно "Comments"
-		И в поле с именем 'NewComment' я ввожу текст "First cell 3"
-		И я нажимаю на кнопку с именем 'WriteComment'
+		When "Comments" window is opened
+		And I input "First cell 3" text in the field named 'NewComment'
+		And I click the button named 'WriteComment'
 
-	* Записываем значения покзателей
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'Apply'
-		И я жду открытия формы "Pivot table: *" в течение 20 секунд
+	* Saving indicator values
+		When '$WindowTitle$' window is opened
+		And I click the button named 'Apply'
+		And I wait for "Pivot table: *" form opening for 20 seconds
 
-	* Сравниваем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Comparing the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''       | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
 			| "Total"                                                           | '110'            | '10'          | '1,100' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '860'        | '60'          | '20,600' | '1/1/2024' | ''       |
@@ -420,21 +420,21 @@
 			| "1C:ERP. Corporate performance management"                                   | '10'             | '2'           | '20'    | '1/1/2024' | "Line1" | '20'              | '4'           | '80'    | '1/1/2024' | "Line1" | '30'           | '6'           | '180'    | '1/1/2024' | "Line1" | '60'         | '12'          | '280'    | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '30'             | '2'           | '60'    | '1/1/2024' | "Line1" | '60'              | '4'           | '240'   | '1/1/2024' | "Line1" | '90'           | '6'           | '540'    | '1/1/2024' | "Line1" | '180'        | '12'          | '840'    | '1/1/2024' | ''       |
 
-Сценарий: 02.06 Выгрузка и загрузка из Excel
+Scenario: 02.06 Export and import from Excel
 
-	* Открываем сводную таблицу
-		И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"
+	* Opening a pivot table
+		And I open report pivot table with name "VA - Recalculation in context"
 		
-	* Грузим эталонный файл
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'ImportFromMSExcel'
-		Тогда открылось окно "Import from Excel"
-		И в поле с именем 'ExistingFile' я ввожу текст "$DirectoryПроекта$\3_Budgeting\Templates\02\VA_КонтекстныйRecalculateЭталон.xlsx"
-		И я жду, что поле с именем 'SheetName' перестанет быть пустым в течение 30 секунд
-		Тогда элемент формы с именем 'SheetName' стал равен 'TDSheet'		
-		И я нажимаю на кнопку с именем 'Load'								
-		И я жду открытия формы '$WindowTitle$' в течение 30 секунд	
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Loading reference file
+		When '$WindowTitle$' window is opened
+		And I click the button named 'ImportFromMSExcel'
+		Then "Import from Excel" window is opened
+		And I input "$ProjectPath$\3_Budgeting\Layouts\02\VA_ContextBasedRecalculationReference_En.xlsx" text in the field named 'ExistingFile'
+		And I wait the field named 'SheetName' will be filled in 30 seconds
+		Then the form attribute named 'SheetName' became equal to 'TDSheet'
+		And I click the button named 'Load'
+		And I wait for '$WindowTitle$' form opening for 30 seconds
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''       | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
 			| "Total"                                                           | '150'            | '10'          | '1,500' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '900'        | '60'          | '21,000' | '1/1/2024' | ''       |
@@ -444,30 +444,30 @@
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '30'             | '2'           | '60'    | '1/1/2024' | "Line1" | '60'              | '4'           | '240'   | '1/1/2024' | "Line1" | '90'           | '6'           | '540'    | '1/1/2024' | "Line1" | '180'        | '12'          | '840'    | '1/1/2024' | ''       |
 			| "1C:ERP. Corporate performance management"                                   | '40'             | '2'           | '80'    | '1/1/2024' | "Line1" | '80'              | '4'           | '320'   | '1/1/2024' | "Line1" | '120'          | '6'           | '720'    | '1/1/2024' | "Line1" | '240'        | '12'          | '1,120'  | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '2'           | '100'   | '1/1/2024' | "Line1" | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'    | '1/1/2024' | "Line1" | '300'        | '12'          | '1,400'  | '1/1/2024' | ''       |
- 		И я нажимаю на кнопку с именем 'Apply'				
+ 		And I click the button named 'Apply'
 
-	* Выгражуем значения в файл
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'SaveAsExcel'
-		Тогда открылось окно "Save in Excel"
-		И я меняю значение переключателя с именем 'SavingOption' на "Create new file"				
-		И в поле с именем 'Directory' я ввожу текст "$DirectoryПроекта$\3_Budgeting\Templates\02"
-		И в поле с именем 'ExistingFile' я ввожу текст "VA_ContextRecalculateInitial"
-		И в поле с именем 'SheetName' я ввожу текст "Sheet_123"				
-		И я нажимаю на кнопку с именем 'Save'
+	* Exporting values to file
+		When '$WindowTitle$' window is opened
+		And I click the button named 'SaveAsExcel'
+		Then "Save in Excel" window is opened
+		And I change the radio button named 'SavingOption' value to "Create new file"
+		And I input "$ProjectPath$\3_Budgeting\Layouts\02" text in the field named 'Directory'
+		And I input "VA_ContextRecalculateInitial" text in the field named 'ExistingFile'
+		And I input "Sheet_123" text in the field named 'SheetName'
+		And I click the button named 'Save'
 		Затем я жду, что в сообщениях пользователю будет подстрока "saved successfully" в течение 60 секунд		
-		И я очищаю окно сообщений пользователю	
+		And I clear user message window
 
-	* Грузим подготовленный файл
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'ImportFromMSExcel'
-		Тогда открылось окно "Import from Excel"
-		И в поле с именем 'ExistingFile' я ввожу текст "$DirectoryПроекта$\3_Budgeting\Templates\02\VA_КонтекстныйRecalculateПодготовленный.xlsx"
-		И я жду, что поле с именем 'SheetName' перестанет быть пустым в течение 30 секунд
-		Тогда элемент формы с именем 'SheetName' стал равен 'TDSheet'
-		И я нажимаю на кнопку с именем 'Load'
-		И я жду открытия формы '$WindowTitle$' в течение 30 секунд
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Loading prepared file
+		When '$WindowTitle$' window is opened
+		And I click the button named 'ImportFromMSExcel'
+		Then "Import from Excel" window is opened
+		And I input "$ProjectPath$\3_Budgeting\Layouts\02\VA_ContextBasedRecalculationPrepared_En.xlsx" text in the field named 'ExistingFile'
+		And I wait the field named 'SheetName' will be filled in 30 seconds
+		Then the form attribute named 'SheetName' became equal to 'TDSheet'
+		And I click the button named 'Load'
+		And I wait for '$WindowTitle$' form opening for 30 seconds
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''       | ''           | ''         | "February 2024" | ''            | ''       | ''           | ''         | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''       | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"   | "Date"       | "Line"   | "Count"      | "Coefficient" | "Total"   | "Date"       | "Line"   | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
 			| "Total"                                                           | '800'            | '60'          | '48,000' | '1/3/2024' | ''         | '600'             | '80'          | '48,000' | '2/2/2024' | ''         | '0'            | '0'           | '0'    | ''     | ''       | '1,400'      | '140'         | '96,000' | '2/2/2024' | ''       |
@@ -478,16 +478,16 @@
 			| "1C:ERP. Corporate performance management"                                   | '0'              | '0'           | '0'      | ''           | ''         | '0'               | '0'           | '0'      | ''           | ''         | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'      | ''           | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '0'              | '0'           | '0'      | ''           | ''         | '0'               | '0'           | '0'      | ''           | ''         | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'      | ''           | ''       |
 
-	* Грузим исходный файл
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'ImportFromMSExcel'
-		Тогда открылось окно "Import from Excel"
-		И в поле с именем 'ExistingFile' я ввожу текст "$DirectoryПроекта$\3_Budgeting\Templates\02\VA_КонтекстныйRecalculateИсходный.xlsx"
-		И я жду, что поле с именем 'SheetName' перестанет быть пустым в течение 30 секунд
-		Тогда элемент формы с именем 'SheetName' стал равен "Sheet_123"
-		И я нажимаю на кнопку с именем 'Load'								
-		И я жду открытия формы '$WindowTitle$' в течение 30 секунд
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Loading source file
+		When '$WindowTitle$' window is opened
+		And I click the button named 'ImportFromMSExcel'
+		Then "Import from Excel" window is opened
+		And I input "$ProjectPath$\3_Budgeting\Layouts\02\VA_ContextRecalculateInitial.xlsx" text in the field named 'ExistingFile'
+		And I wait the field named 'SheetName' will be filled in 30 seconds
+		Then the form attribute named 'SheetName' became equal to "Sheet_123"
+		And I click the button named 'Load'
+		And I wait for '$WindowTitle$' form opening for 30 seconds
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''       | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
 			| "Total"                                                           | '150'            | '10'          | '1,500' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '900'        | '60'          | '21,000' | '1/1/2024' | ''       |
@@ -498,23 +498,23 @@
 			| "1C:ERP. Corporate performance management"                                   | '40'             | '2'           | '80'    | '1/1/2024' | "Line1" | '80'              | '4'           | '320'   | '1/1/2024' | "Line1" | '120'          | '6'           | '720'    | '1/1/2024' | "Line1" | '240'        | '12'          | '1,120'  | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '2'           | '100'   | '1/1/2024' | "Line1" | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'    | '1/1/2024' | "Line1" | '300'        | '12'          | '1,400'  | '1/1/2024' | ''       |
 
-Сценарий: 02.07 Тестирование формы ввода показателей
+Scenario: 02.07 Testing indicator input form
 
-	И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"
+	And I open report pivot table with name "VA - Recalculation in context"
 
-	* Открытие формы редактирование, настройки отображения
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C1'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Тогда открылось окно "Drill down indicators: *"
-		И Таблица 'IndicatorsDrilldown' содержит '5' строк из списка:
+	* Opening edit form, display settings
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C1' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		Then "Drill down indicators: *" window is opened
+		And I check table 'IndicatorsDrilldown' contains '5' rows from list:
 			| "Product range"                                                   | 'Period_1_Value1' | 'Period_1_Value2' | 'Period_1_Value3' | 'Period_1_Value4' | 'Period_1_Value5' | 'Period_2_Value1' | 'Period_2_Value2' | 'Period_2_Value3' | 'Period_2_Value4' | 'Period_2_Value5' | 'Period_3_Value3' | 'Period_3_Value1' | 'Period_3_Value2' | 'Period_3_Value4' | 'Period_3_Value5' |
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '30.00000'           | '2.00000'            | '60.00000'           | '1/1/2024'         | "Line1"            | '60.00000'           | '4.00000'            | '240.00000'          | '1/1/2024'         | "Line1"            | '540.00000'          | '90.00000'           | '6.00000'            | '1/1/2024'         | "Line1"            |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50.00000'           | '2.00000'            | '100.00000'          | '1/1/2024'         | "Line1"            | '100.00000'          | '4.00000'            | '400.00000'          | '1/1/2024'         | "Line1"            | '900.00000'          | '150.00000'          | '6.00000'            | '1/1/2024'         | "Line1"            |
 			| "5C:Corporate performance management"                                      | '10.00000'           | '2.00000'            | '20.00000'           | '1/1/2024'         | "Line1"            | '20.00000'           | '4.00000'            | '80.00000'           | '1/1/2024'         | "Line1"            | '180.00000'          | '30.00000'           | '6.00000'            | '1/1/2024'         | "Line1"            |
 			| "2C:Corporation"                                                  | '20.00000'           | '2.00000'            | '40.00000'           | '1/1/2024'         | "Line1"            | '40.00000'           | '4.00000'            | '160.00000'          | '1/1/2024'         | "Line1"            | '360.00000'          | '60.00000'           | '6.00000'            | '1/1/2024'         | "Line1"            |
 			| "1C:ERP. Corporate performance management"                                   | '40.00000'           | '2.00000'            | '80.00000'           | '1/1/2024'         | "Line1"            | '80.00000'           | '4.00000'            | '320.00000'          | '1/1/2024'         | "Line1"            | '720.00000'          | '120.00000'          | '6.00000'            | '1/1/2024'         | "Line1"            |
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownPeriodsInColumns'
-		И Таблица 'IndicatorsDrilldown' содержит '15' строк из списка:
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownPeriodsInColumns'
+		And I check table 'IndicatorsDrilldown' contains '15' rows from list:
 			| "Report period"   | "Product range"                                                   | 'Value1' | 'Value3' | 'Value2' | 'Value4'  | 'Value5' |
 			| "January 2024"  | "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '30.00000'  | '60.00000'  | '2.00000'   | '1/1/2024' | "Line1"   |
 			| "January 2024"  | "3C:Enterprise 8 CORP. Client license for 100 users" | '50.00000'  | '100.00000' | '2.00000'   | '1/1/2024' | "Line1"   |
@@ -531,11 +531,11 @@
 			| "March 2024"    | "5C:Corporate performance management"                                      | '30.00000'  | '180.00000' | '6.00000'   | '1/1/2024' | "Line1"   |
 			| "March 2024"    | "2C:Corporation"                                                  | '60.00000'  | '360.00000' | '6.00000'   | '1/1/2024' | "Line1"   |
 			| "March 2024"    | "1C:ERP. Corporate performance management"                                   | '120.00000' | '720.00000' | '6.00000'   | '1/1/2024' | "Line1"   |
-		И элемент формы с именем 'Accuracy' стал равен '0'
-		И у элемента формы с именем 'Divisor' текст редактирования стал равен "units"
-		И в поле с именем 'Accuracy' я ввожу текст '5'
-		И из выпадающего списка с именем 'Divisor' я выбираю точное значение "thousands"
-		И Таблица 'IndicatorsDrilldown' содержит '15' строк из списка:
+		And the form attribute named 'Accuracy' became equal to '0'
+		And the editing text of form attribute named 'Divisor' became equal to "units"
+		And I input '5' text in the field named 'Accuracy'
+		And I select "thousands" exact value from the drop-down list named 'Divisor'
+		And I check table 'IndicatorsDrilldown' contains '15' rows from list:
 			| "Report period"   | "Product range"                                                   | 'Value1' | 'Value3' | 'Value2' | 'Value4'  | 'Value5' |
 			| "January 2024"  | "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '0.03000'   | '0.06000'   | '0.00200'   | '1/1/2024' | "Line1"   |
 			| "January 2024"  | "3C:Enterprise 8 CORP. Client license for 100 users" | '0.05000'   | '0.10000'   | '0.00200'   | '1/1/2024' | "Line1"   |
@@ -552,16 +552,16 @@
 			| "March 2024"    | "5C:Corporate performance management"                                      | '0.03000'   | '0.18000'   | '0.00600'   | '1/1/2024' | "Line1"   |
 			| "March 2024"    | "2C:Corporation"                                                  | '0.06000'   | '0.36000'   | '0.00600'   | '1/1/2024' | "Line1"   |
 			| "March 2024"    | "1C:ERP. Corporate performance management"                                   | '0.12000'   | '0.72000'   | '0.00600'   | '1/1/2024' | "Line1"   |
-		И элемент формы с именем 'Accuracy' стал равен '5'
-		И у элемента формы с именем 'Divisor' текст редактирования стал равен "thousands"
-		И я нажимаю на кнопку с именем 'FormOKButton1'
+		And the form attribute named 'Accuracy' became equal to '5'
+		And the editing text of form attribute named 'Divisor' became equal to "thousands"
+		And I click the button named 'FormOKButton1'
 				
-	* Режим таблицы по периодам
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C1'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Когда открылось окно "Drill down indicators: *"
-		И Таблица 'IndicatorsDrilldown' содержит '5' строк из списка:
+	* Table mode by periods
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C1' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		When "Drill down indicators: *" window is opened
+		And I check table 'IndicatorsDrilldown' contains '5' rows from list:
 			| "Product range"                                                   | 'Period_1_Value1' | 'Period_1_Value2' | 'Period_1_Value3' | 'Period_1_Value4' | 'Period_1_Value5' | 'Period_2_Value1' | 'Period_2_Value2' | 'Period_2_Value3' | 'Period_2_Value4' | 'Period_2_Value5' | 'Period_3_Value1' | 'Period_3_Value2' | 'Period_3_Value3' | 'Period_3_Value4' | 'Period_3_Value5' |
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '30.00000'           | '2.00000'            | '60.00000'           | '1/1/2024'         | "Line1"            | '60.00000'           | '4.00000'            | '240.00000'          | '1/1/2024'         | "Line1"            | '90.00000'           | '6.00000'            | '540.00000'          | '1/1/2024'         | "Line1"            |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50.00000'           | '2.00000'            | '100.00000'          | '1/1/2024'         | "Line1"            | '100.00000'          | '4.00000'            | '400.00000'          | '1/1/2024'         | "Line1"            | '150.00000'          | '6.00000'            | '900.00000'          | '1/1/2024'         | "Line1"            |
@@ -569,20 +569,20 @@
 			| "2C:Corporation"                                                  | '20.00000'           | '2.00000'            | '40.00000'           | '1/1/2024'         | "Line1"            | '40.00000'           | '4.00000'            | '160.00000'          | '1/1/2024'         | "Line1"            | '60.00000'           | '6.00000'            | '360.00000'          | '1/1/2024'         | "Line1"            |
 			| "1C:ERP. Corporate performance management"                                   | '40.00000'           | '2.00000'            | '80.00000'           | '1/1/2024'         | "Line1"            | '80.00000'           | '4.00000'            | '320.00000'          | '1/1/2024'         | "Line1"            | '120.00000'          | '6.00000'            | '720.00000'          | '1/1/2024'         | "Line1"            |
 
-	* Удаление аналитики
-		И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+	* Deleting dimension
+		And I go to line in 'IndicatorsDrilldown' table:
 			| "Product range"  |
 			| "2C:Corporation" |
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And I go to line in 'IndicatorsDrilldown' table:
 			| "Product range"                 |
 			| "1C:ERP. Corporate performance management" |
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'		
-		И я нажимаю на кнопку с именем 'FormOKButton1'
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'FormRowsWithValues'
-		И я нажимаю на кнопку с именем 'FormColumnsWithValues'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And I click the button named 'FormOKButton1'
+		When '$WindowTitle$' window is opened
+		And I click the button named 'FormRowsWithValues'
+		And I click the button named 'FormColumnsWithValues'
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''     | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total" | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
 			| "Total"                                                           | '90'             | '6'           | '540'  | '1/1/2024' | ''        | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '540'        | '36'          | '7,560' | '1/1/2024' | ''       |
@@ -591,39 +591,39 @@
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '30'             | '2'           | '60'   | '1/1/2024' | "Line1" | '60'              | '4'           | '240'   | '1/1/2024' | "Line1" | '90'           | '6'           | '540'   | '1/1/2024' | "Line1" | '180'        | '12'          | '840'   | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '2'           | '100'  | '1/1/2024' | "Line1" | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'   | '1/1/2024' | "Line1" | '300'        | '12'          | '1,400' | '1/1/2024' | ''       |
 
-	* Добавляем аналитики
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C1'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Когда открылось окно "Drill down indicators: *"
-		* Очищаем поле "String"
-			И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+	* Adding dimensions
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C1' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		When "Drill down indicators: *" window is opened
+		* Clearing the "String" field
+			And I go to line in 'IndicatorsDrilldown' table:
 				| "Product range"                                         |
 				| "4C:Enterprise 8.3 CORP. Server License (x86-64)" |
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Period_1_Value5' я ввожу текст ''
-			И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+			And I input '' text in the field named 'Period_1_Value5' of 'IndicatorsDrilldown' table
+			And I go to line in 'IndicatorsDrilldown' table:
 				| "Product range"                                                   |
 				| "3C:Enterprise 8 CORP. Client license for 100 users" |
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Period_1_Value5' я ввожу текст ''
-			И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+			And I input '' text in the field named 'Period_1_Value5' of 'IndicatorsDrilldown' table
+			And I go to line in 'IndicatorsDrilldown' table:
 				| "Product range"              |
 				| "5C:Corporate performance management" |
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Period_1_Value5' я ввожу текст ''
-		* Добавляем строки
-			И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-			И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю точное значение "2C:Corporation"
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Period_1_Value1' я ввожу текст '50.00000'
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Period_1_Value2' я ввожу текст '2.00000'
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Period_1_Value4' я ввожу текст '1/1/2024'
-			И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-			И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю точное значение "5C:Corporate performance management"
-			И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-			И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю точное значение "5C:Corporate performance management"
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Period_1_Value1' я ввожу текст '20.00000'
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Period_1_Value4' я ввожу текст '1/31/2024'
-		* Сверяем результат
-			И я нажимаю на кнопку с именем 'FormOKButton1'
-			Когда открылось окно '$WindowTitle$'
-			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+			And I input '' text in the field named 'Period_1_Value5' of 'IndicatorsDrilldown' table
+		* Adding rows
+			And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+			And I select "2C:Corporation" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+			And I input '50.00000' text in the field named 'Period_1_Value1' of 'IndicatorsDrilldown' table
+			And I input '2.00000' text in the field named 'Period_1_Value2' of 'IndicatorsDrilldown' table
+			And I input '1/1/2024' text in the field named 'Period_1_Value4' of 'IndicatorsDrilldown' table
+			And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+			And I select "5C:Corporate performance management" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+			And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+			And I select "5C:Corporate performance management" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+			And I input '20.00000' text in the field named 'Period_1_Value1' of 'IndicatorsDrilldown' table
+			And I input '1/31/2024' text in the field named 'Period_1_Value4' of 'IndicatorsDrilldown' table
+		* Verifying the result
+			And I click the button named 'FormOKButton1'
+			When '$WindowTitle$' window is opened
+			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''       | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
 				| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line" | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
 				| "Total"                                                           | '160'            | '8'           | '1,280' | '1/31/2024' | ''       | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '610'        | '38'          | '8,300' | '1/31/2024' | ''       |
@@ -633,26 +633,26 @@
 				| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '30'             | '2'           | '60'    | '1/1/2024' | ''       | '60'              | '4'           | '240'   | '1/1/2024' | "Line1" | '90'           | '6'           | '540'   | '1/1/2024' | "Line1" | '180'        | '12'          | '840'   | '1/1/2024' | ''       |
 				| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '2'           | '100'   | '1/1/2024' | ''       | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'   | '1/1/2024' | "Line1" | '300'        | '12'          | '1,400' | '1/1/2024' | ''       |
 
-	* Октрываем форму для одного периода (Количество)
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Когда открылось окно "Drill down indicators: *"	
-		Тогда Таблица 'IndicatorsDrilldown' содержит '4' строк из списка:
+	* Opening form for a single period (Quantity)
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		When "Drill down indicators: *" window is opened
+		Then I check table 'IndicatorsDrilldown' contains '4' rows from list:
 			| "Product range"                                                   | 'Value1' |
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '30'        |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'        |
 			| "5C:Corporate performance management"                                      | '30'        |
 			| "2C:Corporation"                                                  | '50'        |
-		И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+		And I go to line in 'IndicatorsDrilldown' table:
 			| "Product range"  |
 			| "2C:Corporation" |
-		И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '70.00000'
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-		И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю точное значение "5C:Corporate performance management"
-		И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '20.00000'			
-		И я нажимаю на кнопку с именем 'FormButtonApply'
-		И я нажимаю на кнопку с именем 'FormCancel'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		And I input '70.00000' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+		And I select "5C:Corporate performance management" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+		And I input '20.00000' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		And I click the button named 'FormButtonApply'
+		And I click the button named 'FormCancel'
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''       | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line" | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
 			| "Total"                                                           | '200'            | '8'           | '1,600' | '1/31/2024' | ''       | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '650'        | '38'          | '8,620' | '1/31/2024' | ''       |
@@ -662,34 +662,34 @@
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '30'             | '2'           | '60'    | '1/1/2024' | ''       | '60'              | '4'           | '240'   | '1/1/2024' | "Line1" | '90'           | '6'           | '540'   | '1/1/2024' | "Line1" | '180'        | '12'          | '840'   | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '2'           | '100'   | '1/1/2024' | ''       | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'   | '1/1/2024' | "Line1" | '300'        | '12'          | '1,400' | '1/1/2024' | ''       |
 
-	* Октрываем форму для одного периода (Дата)
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R5C5"
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Когда открылось окно "Drill down indicators: *"	
-		Тогда Таблица 'IndicatorsDrilldown' содержит '4' строк из списка:
+	* Opening form for a single period (Date)
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R5C5" cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		When "Drill down indicators: *" window is opened
+		Then I check table 'IndicatorsDrilldown' contains '4' rows from list:
 			| "Product range"                                                   | 'Value1'  |
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '1/1/2024' |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '1/1/2024' |
 			| "5C:Corporate performance management"                                      | '1/31/2024' |
 			| "2C:Corporation"                                                  | '1/1/2024' |
-		* Меняем пустое значение
-			И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-			И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю точное значение "1C:ERP. Corporate performance management"	
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '2/5/2024'	
-		* Меняем существующее значение
-			И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+		* Changing empty value
+			And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+			And I select "1C:ERP. Corporate performance management" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+			And I input '2/5/2024' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		* Changing existing value
+			And I go to line in 'IndicatorsDrilldown' table:
 				| "Product range"  |
 				| "2C:Corporation" |
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '2/5/2024'
-		* Добавляем новое значение
-			И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-			И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю точное значение "5C:Corporate performance management"
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '2/5/2024'
-			И в таблице 'IndicatorsDrilldown' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormOKButton1'
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+			And I input '2/5/2024' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		* Adding new value
+			And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+			And I select "5C:Corporate performance management" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+			And I input '2/5/2024' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+			And I finish line editing in 'IndicatorsDrilldown' table
+		And I click the button named 'FormOKButton1'
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''       | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line" | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
 			| "Total"                                                           | '200'            | '8'           | '1,600' | '2/5/2024' | ''       | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '650'        | '38'          | '8,620' | '2/5/2024' | ''       |
@@ -700,24 +700,24 @@
 			| "1C:ERP. Corporate performance management"                                   | '0'              | '0'           | '0'     | '2/5/2024' | ''       | '0'               | '0'           | '0'     | ''           | ''        | '0'            | '0'           | '0'     | ''           | ''        | '0'          | '0'           | '0'     | '2/5/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '2'           | '100'   | '1/1/2024' | ''       | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'   | '1/1/2024' | "Line1" | '300'        | '12'          | '1,400' | '1/1/2024' | ''       |
 
-	* Открываем форму для одного периода (Строка)
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R5C6"
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Когда открылось окно "Drill down indicators: *"	
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-		И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю точное значение "5C:Corporate performance management"
-		И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст 'String2'
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-		И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю точное значение "5C:Corporate performance management"
-		И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст 'String3'
-		И я нажимаю на кнопку с именем 'FormOKButton1'
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Opening form for a single period (String)
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R5C6" cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		When "Drill down indicators: *" window is opened
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+		And I select "5C:Corporate performance management" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+		And I input 'String2' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+		And I select "5C:Corporate performance management" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+		And I input 'String3' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		And I click the button named 'FormOKButton1'
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
 			| "Total"                                                           | '200'            | '8'           | '1,600' | '2/5/2024' | ''        | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '650'        | '38'          | '8,620' | '2/5/2024' | ''       |
@@ -727,19 +727,19 @@
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '30'             | '2'           | '60'    | '1/1/2024' | ''        | '60'              | '4'           | '240'   | '1/1/2024' | "Line1" | '90'           | '6'           | '540'   | '1/1/2024' | "Line1" | '180'        | '12'          | '840'   | '1/1/2024' | ''       |
 			| "1C:ERP. Corporate performance management"                                   | '0'              | '0'           | '0'     | '2/5/2024' | ''        | '0'               | '0'           | '0'     | ''           | ''        | '0'            | '0'           | '0'     | ''           | ''        | '0'          | '0'           | '0'     | '2/5/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '2'           | '100'   | '1/1/2024' | ''        | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'   | '1/1/2024' | "Line1" | '300'        | '12'          | '1,400' | '1/1/2024' | ''       |
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R5C6"
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Когда открылось окно "Drill down indicators: *"	
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-		И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю точное значение "1C:ERP. Corporate performance management"
-		И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст 'String4'
-		И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R5C6" cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		When "Drill down indicators: *" window is opened
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+		And I select "1C:ERP. Corporate performance management" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+		And I input 'String4' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		And I go to line in 'IndicatorsDrilldown' table:
 			| "Product range"              | 'Value1' |
 			| "5C:Corporate performance management" | 'String3'   |
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		И я нажимаю на кнопку с именем 'FormOKButton1'
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And I click the button named 'FormOKButton1'
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
 			| "Total"                                                           | '200'            | '8'           | '1,600' | '2/5/2024' | ''        | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '650'        | '38'          | '8,620' | '2/5/2024' | ''       |
@@ -750,38 +750,38 @@
 			| "1C:ERP. Corporate performance management"                                   | '0'              | '0'           | '0'     | '2/5/2024' | 'String4' | '0'               | '0'           | '0'     | ''           | ''        | '0'            | '0'           | '0'     | ''           | ''        | '0'          | '0'           | '0'     | '2/5/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '2'           | '100'   | '1/1/2024' | ''        | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'   | '1/1/2024' | "Line1" | '300'        | '12'          | '1,400' | '1/1/2024' | ''       |
 
-	* Открываем форму для итога по периодам
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R4C17"
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Когда открылось окно "Drill down indicators (read-only): *"	
-		Тогда Таблица 'IndicatorsDrilldown' содержит '3' строк из списка:
+	* Opening form for period totals
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R4C17" cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		When "Drill down indicators (read-only): *" window is opened
+		Then I check table 'IndicatorsDrilldown' contains '3' rows from list:
 			| "Report period"   | 'Value1' |
 			| "February 2024" | '180'       |
 			| "March 2024"    | '270'       |
 			| "January 2024"  | '200'       |
-		И я нажимаю на кнопку с именем 'FormCancel'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R5C17"
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Когда открылось окно "Drill down indicators: *"
-		* Удаляем строку
-			И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+		And I click the button named 'FormCancel'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R5C17" cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		When "Drill down indicators: *" window is opened
+		* Deleting row
+			And I go to line in 'IndicatorsDrilldown' table:
 				| "Report period"  | "Product range"                                                   | 'Value1' |
 				| "January 2024" | "3C:Enterprise 8 CORP. Client license for 100 users" | '50'        |
-			И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		* Меняем значение
-			И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+			And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		* Changing value
+			And I go to line in 'IndicatorsDrilldown' table:
 				| "Report period"  | "Product range"              | 'Value1' |
 				| "January 2024" | "5C:Corporate performance management" | '50'        |
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '100'
-		* Добавляем значение		
-			И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-			И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем 'ReportPeriod' я выбираю по строке "January 2024"
-			И в таблице 'IndicatorsDrilldown' я активизирую поле с именем "VA0Product"
-			И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю по строке "2C:Corporation"
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '30'
-		И я нажимаю на кнопку с именем 'FormOKButton1'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+			And I input '100' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		* Adding value
+			And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+			And I select "January 2024" by string from the drop-down list named 'ReportPeriod' in 'IndicatorsDrilldown' table
+			And I activate field named "VA0Product" in 'IndicatorsDrilldown' table
+			And I select "2C:Corporation" by string from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+			And I input '30' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		And I click the button named 'FormOKButton1'
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
 			| "Total"                                                           | '230'            | '8'           | '1,840' | '2/5/2024' | ''        | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '680'        | '38'          | '8,860' | '2/5/2024' | ''       |
@@ -792,29 +792,29 @@
 			| "1C:ERP. Corporate performance management"                                   | '0'              | '0'           | '0'     | '2/5/2024' | 'String4' | '0'               | '0'           | '0'     | ''           | ''        | '0'            | '0'           | '0'     | ''           | ''        | '0'          | '0'           | '0'     | '2/5/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '0'              | '2'           | '0'     | '1/1/2024' | ''        | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'   | '1/1/2024' | "Line1" | '250'        | '12'          | '1,300' | '1/1/2024' | ''       |
 
-	* Открываем форму для итога по периодам (Дата)
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R5C20"
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Когда открылось окно "Drill down indicators: *"
-		* Удаляем строку
-			И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+	* Opening form for period totals (Date)
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R5C20" cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		When "Drill down indicators: *" window is opened
+		* Deleting row
+			And I go to line in 'IndicatorsDrilldown' table:
 				| "Report period"  | "Product range"                                                   | 'Value1'  |
 				| "January 2024" | "3C:Enterprise 8 CORP. Client license for 100 users" | '1/1/2024' |
-			И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		* Меняем значение			
-			И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+			And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		* Changing value
+			And I go to line in 'IndicatorsDrilldown' table:
 				| "Report period"  | "Product range"              | 'Value1'  |
 				| "January 2024" | "5C:Corporate performance management" | '2/5/2024' |
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '3/10/2024'	
-		* Добавляем значение
-			И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownAdd'
-			И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем 'ReportPeriod' я выбираю точное значение "January 2024"
-			И в таблице 'IndicatorsDrilldown' из выпадающего списка с именем "VA0Product" я выбираю точное значение "2C:Corporation"
-			И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '3/10/2024'
-		И я нажимаю на кнопку с именем 'FormOKButton1'
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+			And I input '3/10/2024' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		* Adding value
+			And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
+			And I select "January 2024" exact value from the drop-down list named 'ReportPeriod' in 'IndicatorsDrilldown' table
+			And I select "2C:Corporation" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
+			And I input '3/10/2024' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+		And I click the button named 'FormOKButton1'
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
 			| "Total"                                                           | '230'            | '8'           | '1,840' | '3/10/2024' | ''        | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '680'        | '38'          | '8,860' | '3/10/2024' | ''       |
@@ -825,62 +825,62 @@
 			| "1C:ERP. Corporate performance management"                                   | '0'              | '0'           | '0'     | '2/5/2024' | 'String4' | '0'               | '0'           | '0'     | ''           | ''        | '0'            | '0'           | '0'     | ''           | ''        | '0'          | '0'           | '0'     | '2/5/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '0'              | '2'           | '0'     | ''           | ''        | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'   | '1/1/2024' | "Line1" | '250'        | '12'          | '1,300' | '1/1/2024' | ''       |
 
-	* Закрываем сводную таблицу не сохраняя
-		Тогда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'		
+	* Closing pivot table without saving
+		Then '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 
-Сценарий: 02.08 Факторный анализ
+Scenario: 02.08 Factor analysis
 
-	И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"
+	And I open report pivot table with name "VA - Recalculation in context"
 
-	// ДОДЕЛАТЬ: Не работает, если есть аналитики вида отчета
+	// TO DO: Does not work if there are dimensions of the report type
 
-Сценарий: 02.09 Копируем все данные отчетного периода
+Scenario: 02.09 Copying all data of the reporting period
 
-	И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"
+	And I open report pivot table with name "VA - Recalculation in context"
 
-	* Копируем данные
-		И я нажимаю на кнопку с именем 'DataCopying'
-		Тогда открылось окно "Copy report indicator values"
-		И из выпадающего списка с именем 'DataProcessorRunMode' я выбираю точное значение "All data for reporting period"
-		И я нажимаю кнопку выбора у поля с именем 'MDESource'
-		И Я нахожу и выбираю документ управления отчетным периодом по сценарию "VA - Main scenario" и периоду начала "January 2024"
-		Тогда открылось окно "Copy report indicator values"
-		И в таблице 'AdvancedSettingFilter' я изменяю флаг с именем 'AdvancedSettingFilterIsBeingEdited'
-		И в таблице 'AdvancedSettingFilter' я завершаю редактирование строки
-		И в таблице 'AdvancedSettingFilter' я активизирую поле с именем 'FilterSource'
-		И в таблице 'AdvancedSettingFilter' я выбираю текущую строку
-		Тогда открылось окно "Dimension content filter"
-		И в таблице 'SKDSelection' я перехожу к строке:
+	* Copying data
+		And I click the button named 'DataCopying'
+		Then "Copy report indicator values" window is opened
+		And I select "All data for reporting period" exact value from the drop-down list named 'DataProcessorRunMode'
+		And I click Choice button of the field named 'MDESource'
+		And I find and select reporting period management document by scenario "VA - Main scenario" and start period "January 2024"
+		Then "Copy report indicator values" window is opened
+		And I change checkbox named 'AdvancedSettingFilterIsBeingEdited' in 'AdvancedSettingFilter' table
+		And I finish line editing in 'AdvancedSettingFilter' table
+		And I activate field named 'FilterSource' in 'AdvancedSettingFilter' table
+		And I select current line in 'AdvancedSettingFilter' table
+		Then "Dimension content filter" window is opened
+		And I go to line in 'SKDSelection' table:
 			| "Comparison type" | "Use" | "Left value"        | "Display mode" |
 			| "Equal to"         | "Yes"            | "Companies" | "Quick access"    |
-		И в таблице 'SKDSelection' я активизирую поле с именем 'SKDSelectionRightValue'
-		И в таблице 'SKDSelection' я выбираю текущую строку
-		И в таблице 'SKDSelection' из выпадающего списка с именем 'SKDSelectionRightValue' я выбираю по строке "Mercury LLC"
-		И в таблице 'SKDSelection' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'Apply'
-		Тогда открылось окно "Copy report indicator values"
-		И я нажимаю кнопку выбора у поля с именем 'MDEDestination'
-		И Я нахожу и выбираю документ управления отчетным периодом по сценарию "VA - Script for indexing" и периоду начала "January 2024"
-		Тогда открылось окно "Copy report indicator values"
-		И в таблице 'AdvancedSettingFilterDestination' я выбираю текущую строку
-		И в меню формы я выбираю "Fixed value"
-		И я выбираю организацию "Venus LLC"
-		И я устанавливаю флаг с именем 'TransferReportsInstances'
-		И я нажимаю на кнопку с именем 'Execute'
+		And I activate field named 'SKDSelectionRightValue' in 'SKDSelection' table
+		And I select current line in 'SKDSelection' table
+		And I select "Mercury LLC" by string from the drop-down list named 'SKDSelectionRightValue' in 'SKDSelection' table
+		And I finish line editing in 'SKDSelection' table
+		And I click the button named 'Apply'
+		Then "Copy report indicator values" window is opened
+		And I click Choice button of the field named 'MDEDestination'
+		And I find and select reporting period management document by scenario "VA - Script for indexing" and start period "January 2024"
+		Then "Copy report indicator values" window is opened
+		And I select current line in 'AdvancedSettingFilterDestination' table
+		And on the form menu I select "Fixed value"
+		And I select company "Venus LLC"
+		And I set checkbox named 'TransferReportsInstances'
+		And I click the button named 'Execute'
 		Затем я жду, что в сообщениях пользователю будет подстрока "Copy successful" в течение 60 секунд
-		И я очищаю окно сообщений пользователю
-		И я нажимаю на кнопку с именем 'Execute'
+		And I clear user message window
+		And I click the button named 'Execute'
 		Затем я жду, что в сообщениях пользователю будет подстрока "Copy successful" в течение 60 секунд		
-		И Я закрываю окно "Copy report indicator values"
+		And I close "Copy report indicator values" window
 
-	И Я устанавливаю отбор сводной таблицы 'Item_Scenario' со значением "VA - Script for indexing"
-	И Я устанавливаю отбор сводной таблицы 'Organization' со значением "Venus LLC"				
+	And I set pivot table filter 'Item_Scenario' with value "VA - Script for indexing"
+	And I set pivot table filter 'Organization' with value "Venus LLC"
 
-	* Сверяем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Verifying the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''       | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
 			| "Total"                                                           | '150'            | '10'          | '1,500' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '900'        | '60'          | '21,000' | '1/1/2024' | ''       |
@@ -891,117 +891,117 @@
 			| "1C:ERP. Corporate performance management"                                   | '40'             | '2'           | '80'    | '1/1/2024' | "Line1" | '80'              | '4'           | '320'   | '1/1/2024' | "Line1" | '120'          | '6'           | '720'    | '1/1/2024' | "Line1" | '240'        | '12'          | '1,120'  | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '2'           | '100'   | '1/1/2024' | "Line1" | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'    | '1/1/2024' | "Line1" | '300'        | '12'          | '1,400'  | '1/1/2024' | ''       |
 									
-Сценарий: 02.10 Копируем данные по показателям
+Scenario: 02.10 Copying data by indicators
 
-	И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"		
+	And I open report pivot table with name "VA - Recalculation in context"
 
-	* Копируем данные
-		И я нажимаю на кнопку с именем 'DataCopying'
+	* Copying data
+		And I click the button named 'DataCopying'
 
-		Тогда открылось окно "Copy report indicator values"
-		И из выпадающего списка с именем 'ScenarioDestination' я выбираю по строке "VA - Script for indexing"
-		И в таблице 'AdvancedSettingFilter' я перехожу к строке:
+		Then "Copy report indicator values" window is opened
+		And I select from the drop-down list named 'ScenarioDestination'  by "VA - Script for indexing" string
+		And I go to line in 'AdvancedSettingFilter' table:
 			| "Dimension"   | "Filter value" | "Being edited" |
 			| "Companies" | "<Without filter>"    | "No"           |
-		И в таблице 'AdvancedSettingFilter' я изменяю флаг с именем 'AdvancedSettingFilterIsBeingEdited'
-		И в таблице 'AdvancedSettingFilter' я завершаю редактирование строки
-		И в таблице 'AdvancedSettingFilter' я активизирую поле с именем 'FilterSource'
-		И в таблице 'AdvancedSettingFilter' я выбираю текущую строку
-		Тогда открылось окно "Dimension content filter"
-		И в таблице 'SKDSelection' я перехожу к строке:
+		And I change checkbox named 'AdvancedSettingFilterIsBeingEdited' in 'AdvancedSettingFilter' table
+		And I finish line editing in 'AdvancedSettingFilter' table
+		And I activate field named 'FilterSource' in 'AdvancedSettingFilter' table
+		And I select current line in 'AdvancedSettingFilter' table
+		Then "Dimension content filter" window is opened
+		And I go to line in 'SKDSelection' table:
 			| "Comparison type" | "Use" | "Left value"        | "Display mode" |
 			| "Equal to"         | "Yes"            | "Companies" | "Quick access"    |
-		И в таблице 'SKDSelection' я активизирую поле с именем 'SKDSelectionRightValue'
-		И в таблице 'SKDSelection' я выбираю текущую строку
-		И в таблице 'SKDSelection' из выпадающего списка с именем 'SKDSelectionRightValue' я выбираю по строке "Venus LLC"
-		И в таблице 'SKDSelection' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'Apply'
+		And I activate field named 'SKDSelectionRightValue' in 'SKDSelection' table
+		And I select current line in 'SKDSelection' table
+		And I select "Venus LLC" by string from the drop-down list named 'SKDSelectionRightValue' in 'SKDSelection' table
+		And I finish line editing in 'SKDSelection' table
+		And I click the button named 'Apply'
 		
-		Тогда открылось окно "Copy report indicator values"
-		И в таблице 'AdvancedSettingFilterDestination' я выбираю текущую строку
-		И в меню формы я выбираю "Fixed value"
-		И Я выбираю организацию "Mercury LLC"
-		Тогда открылось окно "Copy report indicator values"
+		Then "Copy report indicator values" window is opened
+		And I select current line in 'AdvancedSettingFilterDestination' table
+		And on the form menu I select "Fixed value"
+		And I select company "Mercury LLC"
+		Then "Copy report indicator values" window is opened
 
-		И в таблице 'AdvancedSettingFilter' я перехожу к строке:
+		And I go to line in 'AdvancedSettingFilter' table:
 			| "Dimension"  | "Filter value" | "Being edited" |
 			| "Cash flow items" | "<Without filter>"    | "No"           |
-		И в таблице 'AdvancedSettingFilter' я активизирую поле с именем 'AdvancedSettingFilterIsBeingEdited'
-		И в таблице 'AdvancedSettingFilter' я изменяю флаг с именем 'AdvancedSettingFilterIsBeingEdited'
-		И в таблице 'AdvancedSettingFilter' я завершаю редактирование строки
-		И в таблице 'AdvancedSettingFilter' я активизирую поле с именем 'FilterSource'
-		И в таблице 'AdvancedSettingFilter' я выбираю текущую строку
-		Тогда открылось окно "Dimension content filter"
-		И в таблице 'SKDSelection' я перехожу к строке:
+		And I activate field named 'AdvancedSettingFilterIsBeingEdited' in 'AdvancedSettingFilter' table
+		And I change checkbox named 'AdvancedSettingFilterIsBeingEdited' in 'AdvancedSettingFilter' table
+		And I finish line editing in 'AdvancedSettingFilter' table
+		And I activate field named 'FilterSource' in 'AdvancedSettingFilter' table
+		And I select current line in 'AdvancedSettingFilter' table
+		Then "Dimension content filter" window is opened
+		And I go to line in 'SKDSelection' table:
 			| "Comparison type" | "Use" | "Left value"       | "Display mode" |
 			| "Equal to"         | "Yes"            | "Cash flow items" | "Quick access"    |
-		И в таблице 'SKDSelection' я активизирую поле с именем 'SKDSelectionRightValue'
-		И в таблице 'SKDSelection' я выбираю текущую строку
-		И в таблице 'SKDSelection' из выпадающего списка с именем 'SKDSelectionRightValue' я выбираю по строке "3Software sale"
-		И в таблице 'SKDSelection' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'Apply'
+		And I activate field named 'SKDSelectionRightValue' in 'SKDSelection' table
+		And I select current line in 'SKDSelection' table
+		And I select "3Software sale" by string from the drop-down list named 'SKDSelectionRightValue' in 'SKDSelection' table
+		And I finish line editing in 'SKDSelection' table
+		And I click the button named 'Apply'
 		
-		Тогда открылось окно "Copy report indicator values"
-		И в таблице 'AdvancedSettingFilterDestination' я выбираю текущую строку
-		И в меню формы я выбираю "By source values"
+		Then "Copy report indicator values" window is opened
+		And I select current line in 'AdvancedSettingFilterDestination' table
+		And on the form menu I select "By source values"
 
-		Тогда открылось окно "Copy report indicator values"
-		И в таблице 'AdvancedSettingFilter' я перехожу к строке:
+		Then "Copy report indicator values" window is opened
+		And I go to line in 'AdvancedSettingFilter' table:
 			| "Dimension"    | "Filter value" | "Being edited" |
 			| "Product range" | "<Without filter>"    | "No"           |
-		И в таблице 'AdvancedSettingFilter' я активизирую поле с именем 'AdvancedSettingFilterIsBeingEdited'
-		И в таблице 'AdvancedSettingFilter' я изменяю флаг с именем 'AdvancedSettingFilterIsBeingEdited'
-		И в таблице 'AdvancedSettingFilter' я завершаю редактирование строки
-		И в таблице 'AdvancedSettingFilter' я активизирую поле с именем 'FilterSource'
-		И в таблице 'AdvancedSettingFilter' я выбираю текущую строку
-		Тогда открылось окно "Dimension content filter"
-		И в таблице 'SKDSelection' я перехожу к строке:
+		And I activate field named 'AdvancedSettingFilterIsBeingEdited' in 'AdvancedSettingFilter' table
+		And I change checkbox named 'AdvancedSettingFilterIsBeingEdited' in 'AdvancedSettingFilter' table
+		And I finish line editing in 'AdvancedSettingFilter' table
+		And I activate field named 'FilterSource' in 'AdvancedSettingFilter' table
+		And I select current line in 'AdvancedSettingFilter' table
+		Then "Dimension content filter" window is opened
+		And I go to line in 'SKDSelection' table:
 			| "Comparison type" | "Use" | "Left value"         | "Display mode" |
 			| "Equal to"         | "Yes"            | "Product range" | "Quick access"    |
-		И в таблице 'SKDSelection' я активизирую поле с именем 'SKDSelectionComparisonType'
-		И в таблице 'SKDSelection' я выбираю текущую строку
-		И в таблице 'SKDSelection' из выпадающего списка с именем 'SKDSelectionComparisonType' я выбираю точное значение "Not equal"
-		И в таблице 'SKDSelection' я активизирую поле с именем 'SKDSelectionRightValue'
-		И в таблице 'SKDSelection' из выпадающего списка с именем 'SKDSelectionRightValue' я выбираю по строке "5C:Corporate performance management"
-		И в таблице 'SKDSelection' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'Apply'
+		And I activate field named 'SKDSelectionComparisonType' in 'SKDSelection' table
+		And I select current line in 'SKDSelection' table
+		And I select "Not equal" exact value from the drop-down list named 'SKDSelectionComparisonType' in 'SKDSelection' table
+		And I activate field named 'SKDSelectionRightValue' in 'SKDSelection' table
+		And I select "5C:Corporate performance management" by string from the drop-down list named 'SKDSelectionRightValue' in 'SKDSelection' table
+		And I finish line editing in 'SKDSelection' table
+		And I click the button named 'Apply'
 		
-		Тогда открылось окно "Copy report indicator values"
-		И я нажимаю на кнопку с именем 'Execute'
+		Then "Copy report indicator values" window is opened
+		And I click the button named 'Execute'
 
-	* Должен появиться лог с ошибкой
-		И я жду открытия окна "Protocol" в течение 60 секунд
-		Тогда табличный документ 'SpreadsheetDocumentField' равен:
+	* An error log should appear
+		And I wait "Protocol" window opening in 60 seconds
+		Then 'SpreadsheetDocumentField' spreadsheet document is equal
 			| "Errors"                                                                                                                                                                                              |
 			| "Cannot save indicator values. Block to change by parameters is set:\n	Scenario: \"VA - Script for indexing\",\n	Company: \"Mercury LLC\",\n	Period: \"January 2024\"" |
-		И Я закрываю окно "Protocol"
+		And I close "Protocol" window
 
-	* Копируем со сдвигом периода
-		Когда открылось окно "Copy report indicator values"
-		И я нажимаю на кнопку с именем 'ButtonChangePeriodSource'
-		Тогда открылось окно "Select period"
-		И в поле с именем 'DateBegin' я ввожу текст '1/1/2024'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'DateEnd' я ввожу текст '1/31/2024'
-		И я нажимаю на кнопку с именем 'select'
-		Тогда открылось окно "Copy report indicator values"
-		И я нажимаю на кнопку с именем 'ButtonChangePeriodDestination'
-		Тогда открылось окно "Select period"
-		И в поле с именем 'DateBegin' я ввожу текст '2/1/2024'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'DateEnd' я ввожу текст '2/28/2024'
-		И я нажимаю на кнопку с именем 'select'
-		Тогда открылось окно "Copy report indicator values"
-		И я нажимаю на кнопку с именем 'Execute'
+	* Copying with period shift
+		When "Copy report indicator values" window is opened
+		And I click the button named 'ButtonChangePeriodSource'
+		Then "Select period" window is opened
+		And I input '1/1/2024' text in the field named 'DateBegin'
+		And I move to the next attribute
+		And I input '1/31/2024' text in the field named 'DateEnd'
+		And I click the button named 'select'
+		Then "Copy report indicator values" window is opened
+		And I click the button named 'ButtonChangePeriodDestination'
+		Then "Select period" window is opened
+		And I input '2/1/2024' text in the field named 'DateBegin'
+		And I move to the next attribute
+		And I input '2/28/2024' text in the field named 'DateEnd'
+		And I click the button named 'select'
+		Then "Copy report indicator values" window is opened
+		And I click the button named 'Execute'
 		Затем я жду, что в сообщениях пользователю будет подстрока "Copy successful" в течение 60 секунд
-		И я очищаю окно сообщений пользователю
-		И я нажимаю на кнопку с именем 'Execute'
+		And I clear user message window
+		And I click the button named 'Execute'
 		Затем я жду, что в сообщениях пользователю будет подстрока "Copy successful" в течение 60 секунд		
-		И Я закрываю окно "Copy report indicator values"
+		And I close "Copy report indicator values" window
 
-	* Проверяем результат
-		И Я устанавливаю отбор сводной таблицы 'Item_Organization' со значением "Mercury LLC"	
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Checking the result
+		And I set pivot table filter 'Item_Organization' with value "Mercury LLC"
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''       | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
 			| "Total"                                                           | '0'              | '0'           | '0'    | ''     | ''       | '150'             | '10'          | '1,500' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '600'        | '40'          | '15,000' | '1/1/2024' | ''       |
@@ -1011,91 +1011,91 @@
 			| "1C:ERP. Corporate performance management"                                   | '0'              | '0'           | '0'    | ''     | ''       | '40'              | '2'           | '80'    | '1/1/2024' | "Line1" | '120'          | '6'           | '720'    | '1/1/2024' | "Line1" | '160'        | '8'           | '800'    | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '0'              | '0'           | '0'    | ''     | ''       | '50'              | '2'           | '100'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'    | '1/1/2024' | "Line1" | '200'        | '8'           | '1,000'  | '1/1/2024' | ''       |
 				
-Сценарий: 02.11 Проверяем сводную таблицу
+Scenario: 02.11 Checking pivot table
 
-	И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"
+	And I open report pivot table with name "VA - Recalculation in context"
 
-	* Меняем вид таблицы
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на гиперссылку с именем 'FilterHeading'
-		И из выпадающего списка с именем 'DisplayCurrency' я выбираю точное значение "USD"
-		И из выпадающего списка с именем 'Divisor' я выбираю точное значение "thousands"
-		И я перехожу к следующему реквизиту	
-		И в поле с именем 'Accuracy' я ввожу текст '5'
-		И я перехожу к следующему реквизиту
-		И я нажимаю на кнопку с именем 'ShowPeriodsSettings'
-		И я изменяю флаг с именем 'ShouldShowTotalQuarter'
-		И я нажимаю на кнопку с именем 'FormApply'
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'ShowTableSettingsByAxes'
-		Тогда открылось окно "Set up field location"
-		И я нажимаю на кнопку с именем 'DimensionsLayoutOption'
-		И в меню формы я выбираю "Adjacent dimensions"
-		И я нажимаю на кнопку с именем 'ButtonApply'
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'ShowAdditionalFilters'
-		И в таблице 'FiltersSettings' я перехожу к строке:
+	* Changing table view
+		When '$WindowTitle$' window is opened
+		And I click the hyperlink named 'FilterHeading'
+		And I select "USD" exact value from the drop-down list named 'DisplayCurrency'
+		And I select "thousands" exact value from the drop-down list named 'Divisor'
+		And I move to the next attribute
+		And I input '5' text in the field named 'Accuracy'
+		And I move to the next attribute
+		And I click the button named 'ShowPeriodsSettings'
+		And I change checkbox named 'ShouldShowTotalQuarter'
+		And I click the button named 'FormApply'
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'ShowTableSettingsByAxes'
+		Then "Set up field location" window is opened
+		And I click the button named 'DimensionsLayoutOption'
+		And on the form menu I select "Adjacent dimensions"
+		And I click the button named 'ButtonApply'
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'ShowAdditionalFilters'
+		And I go to line in 'FiltersSettings' table:
 			| "Comparison type" | "Use" | "Field"         |
 			| "Equal to"         | "No"          | "Product range" |
-		И в таблице 'FiltersSettings' я устанавливаю флаг с именем 'FiltersSettingsUse'
-		И в таблице 'FiltersSettings' я активизирую поле с именем 'FiltersSettingsComparisonType'
-		И в таблице 'FiltersSettings' я выбираю текущую строку
-		И в таблице 'FiltersSettings' из выпадающего списка с именем 'FiltersSettingsComparisonType' я выбираю точное значение "In list"
-		И в таблице 'FiltersSettings' я активизирую поле с именем 'FiltersSettingsFilterValue'
-		И в таблице 'FiltersSettings' я нажимаю кнопку выбора у реквизита с именем 'FiltersSettingsFilterValue'
-		Тогда открылось окно "Value list"
-		И я нажимаю на кнопку с именем 'Add'
-		И в таблице 'ValueList' из выпадающего списка с именем 'value' я выбираю точное значение "1C:ERP. Corporate performance management"
-		И я нажимаю на кнопку с именем 'Add'
-		И в таблице 'ValueList' из выпадающего списка с именем 'value' я выбираю точное значение "5C:Corporate performance management"
-		И я нажимаю на кнопку с именем 'OK'
-		Тогда открылось окно '$WindowTitle$'
-		И в таблице 'FiltersSettings' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'UpdateTabData'
-		И я жду открытия формы "Pivot table: *" в течение 20 секунд
+		And I set checkbox named 'FiltersSettingsUse' in 'FiltersSettings' table
+		And I activate field named 'FiltersSettingsComparisonType' in 'FiltersSettings' table
+		And I select current line in 'FiltersSettings' table
+		And I select "In list" exact value from the drop-down list named 'FiltersSettingsComparisonType' in 'FiltersSettings' table
+		And I activate field named 'FiltersSettingsFilterValue' in 'FiltersSettings' table
+		And I click choice button of the attribute named 'FiltersSettingsFilterValue' in 'FiltersSettings' table
+		Then "Value list" window is opened
+		And I click the button named 'Add'
+		And I select "1C:ERP. Corporate performance management" exact value from the drop-down list named 'value' in 'ValueList' table
+		And I click the button named 'Add'
+		And I select "5C:Corporate performance management" exact value from the drop-down list named 'value' in 'ValueList' table
+		And I click the button named 'OK'
+		Then '$WindowTitle$' window is opened
+		And I finish line editing in 'FiltersSettings' table
+		And I click the button named 'UpdateTabData'
+		And I wait for "Pivot table: *" form opening for 20 seconds
 		
-	* Сравниваем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен по шаблону:
+	* Comparing the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal by template
 			| "VA - Recalculation in context (pivot table)" | "Product range"                 | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''        | ''           | ''        | "March 2024" | ''            | ''        | ''           | ''        | "1 quarter of 2024" | ''            | ''        | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)" | ''                             | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"        | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
 			| "Total"                                        | ''                             | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'       | ''           | ''        | '0'            | '0'           | '0'       | ''           | ''        | '0'                 | '0'           | '0'       | ''           | ''        | '0'          | '0'           | '0'       | ''           | ''       |
 			| "Goods"                                      | ''                             | '0'              | '0'           | '0'    | ''     | ''       | '0.0005*'         | '0.00200'     | '0.0010*' | '1/1/2024' | ''        | '0.0016*'      | '0.00600'     | '0.0096*' | '1/1/2024' | ''        | '0.0021*'           | '0.00800'     | '0.0107*' | '1/1/2024' | ''        | '0.0021*'    | '0.00800'     | '0.0107*' | '1/1/2024' | ''       |
 			| ''                                            | "1C:ERP. Corporate performance management" | '0'              | '0'           | '0'    | ''     | ''       | '0.0005*'         | '0.00200'     | '0.0010*' | '1/1/2024' | "Line1" | '0.0016*'      | '0.00600'     | '0.0096*' | '1/1/2024' | "Line1" | '0.0021*'           | '0.00800'     | '0.0107*' | '1/1/2024' | "Line1" | '0.0021*'    | '0.00800'     | '0.0107*' | '1/1/2024' | ''       |
 
-Сценарий: 02.12 Индексируем по сценарию
+Scenario: 02.12 Indexing by scenario
 
-	* Открываем сводную таблицу
-		И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"
-		И Я устанавливаю отбор сводной таблицы 'DisplayCurrency' со значением 'RUB'
-		И Я устанавливаю отбор сводной таблицы 'Item_Scenario' со значением "VA - Main scenario"
+	* Opening a pivot table
+		And I open report pivot table with name "VA - Recalculation in context"
+		And I set pivot table filter 'DisplayCurrency' with value 'RUB'
+		And I set pivot table filter 'Item_Scenario' with value "VA - Main scenario"
 
-	* Индексируем
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2:R10C11'
-		И я нажимаю на кнопку с именем 'ChangeIndicatorsIndexing'
-		Тогда открылось окно "Change values"
-		И из выпадающего списка с именем 'Deflator' я выбираю по строке "VA - Script for indexing"
-		И я нажимаю на кнопку с именем 'Apply'
-	* Отменяем действие
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'CancelAction'
-	* Индексируем
-		И я нажимаю на кнопку с именем 'ChangeIndicatorsIndexing'
-		Тогда открылось окно "Change values"
-		И из выпадающего списка с именем 'Deflator' я выбираю по строке "VA - Script for indexing"
-		И я нажимаю на кнопку с именем 'Apply'
+	* Indexing
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2:R10C11' cell
+		And I click the button named 'ChangeIndicatorsIndexing'
+		Then "Change values" window is opened
+		And I select from the drop-down list named 'Deflator'  by "VA - Script for indexing" string
+		And I click the button named 'Apply'
+	* Cancelling the action
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'CancelAction'
+	* Indexing
+		And I click the button named 'ChangeIndicatorsIndexing'
+		Then "Change values" window is opened
+		And I select from the drop-down list named 'Deflator'  by "VA - Script for indexing" string
+		And I click the button named 'Apply'
 
-	* Индексируем нечисловые
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C10:R9C11'
-		И я нажимаю на кнопку с именем 'ChangeIndicatorsIndexing'
-		Тогда открылось окно "Change values"
-		И из выпадающего списка с именем 'Deflator' я выбираю по строке "VA - Script for indexing"
-		И я нажимаю на кнопку с именем 'Apply'				
+	* Indexing non-numeric values
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R7C10:R9C11' cell
+		And I click the button named 'ChangeIndicatorsIndexing'
+		Then "Change values" window is opened
+		And I select from the drop-down list named 'Deflator'  by "VA - Script for indexing" string
+		And I click the button named 'Apply'
 
-	* Проверяем результат
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Checking the result
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''        | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
 			| "Total"                                                           | '150'            | '10'          | '1,500' | '1/1/2024' | ''        | '10,820'          | '36'          | '389,520' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '11,420'     | '76'          | '404,520' | '1/1/2024' | ''       |
@@ -1106,60 +1106,60 @@
 			| "1C:ERP. Corporate performance management"                                   | '40'             | '2'           | '80'    | '1/1/2024' | "Line1" | '3,200'           | '8'           | '25,600'  | '1/1/2024' | "Line1" | '120'          | '6'           | '720'    | '1/1/2024' | "Line1" | '3,360'      | '16'          | '26,400'  | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '2'           | '100'   | '1/1/2024' | "Line1" | '5,000'           | '8'           | '40,000'  | '1/1/2024' | "Line1" | '150'          | '6'           | '900'    | '1/1/2024' | "Line1" | '5,200'      | '16'          | '41,000'  | '1/1/2024' | ''       |
 		
-	* Закрываем не сохраняя
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+	* Closing without saving
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 
-Сценарий: 02.13 Обратное распределение (равномерное)
+Scenario: 02.13 Reverse allocation (uniform)
 	
-	* Открываем сводную таблицу
-		И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"
+	* Opening a pivot table
+		And I open report pivot table with name "VA - Recalculation in context"
 
-	* Переходим в режим обратного распределния
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на гиперссылку с именем 'FilterHeading'
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Reverse allocation (equally)"
-		Тогда элемент формы с именем 'WorkMode' стал равен "Reverse allocation (equally)"				
-		И я нажимаю на кнопку с именем 'UpdateTabData1'
-		И я жду открытия формы "Pivot table: *" в течение 30 секунд
+	* Switching to reverse allocation mode
+		When '$WindowTitle$' window is opened
+		And I click the hyperlink named 'FilterHeading'
+		And I select "Reverse allocation (equally)" exact value from the drop-down list named 'WorkMode'
+		Then the form attribute named 'WorkMode' became equal to "Reverse allocation (equally)"
+		And I click the button named 'UpdateTabData1'
+		And I wait for "Pivot table: *" form opening for 30 seconds
 
-	* Распределяем показатели по одному периоду
-		* Количество
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C2'
-			И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' на элементе формы с именем 'SpreadsheetFieldTemlate'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '1,000.00000'
-		* Коэффициент
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C3:R10C3'
-			И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' на элементе формы с именем 'SpreadsheetFieldTemlate'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C3'
-			И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuUnlockCellForDistribution' на элементе формы с именем 'SpreadsheetFieldTemlate'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-		* Итог
-			Когда открылось окно'$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C4'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-		* Дата
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C5'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
+	* Allocating indicators by a single period
+		* Quantity
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R7C2' cell
+			And I select context menu item named 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' of the form attribute named 'SpreadsheetFieldTemlate'
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '1,000.00000'
+		* Coefficient
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C3:R10C3' cell
+			And I select context menu item named 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' of the form attribute named 'SpreadsheetFieldTemlate'
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R7C3' cell
+			And I select context menu item named 'SpreadsheetFieldTemlateContextMenuUnlockCellForDistribution' of the form attribute named 'SpreadsheetFieldTemlate'
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+		* Total
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C4' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+		* Date
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C5' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
 
-	* Сравниваем результат
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Comparing the result
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''        | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
 			| "Total"                                                           | '1,000'          | '100'         | '100,000' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '1,750'      | '150'         | '119,500' | '1/1/2024' | ''       |
@@ -1170,23 +1170,23 @@
 			| "1C:ERP. Corporate performance management"                                   | '245'            | '2'           | '490'     | '1/1/2024' | "Line1" | '80'              | '4'           | '320'   | '1/1/2024' | "Line1" | '120'          | '6'           | '720'    | '1/1/2024' | "Line1" | '445'        | '12'          | '1,530'   | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '245'            | '2'           | '490'     | '1/1/2024' | "Line1" | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'    | '1/1/2024' | "Line1" | '495'        | '12'          | '1,790'   | '1/1/2024' | ''       |
 							
-	* Распределение по периодам
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C2'
-		И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuUnlockCellForDistribution' на элементе формы с именем 'SpreadsheetFieldTemlate'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C3'
-		И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' на элементе формы с именем 'SpreadsheetFieldTemlate'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C17'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '15,000.00000'
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C18'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '42.00000'
+	* Allocation by periods
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R7C2' cell
+		And I select context menu item named 'SpreadsheetFieldTemlateContextMenuUnlockCellForDistribution' of the form attribute named 'SpreadsheetFieldTemlate'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R7C3' cell
+		And I select context menu item named 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' of the form attribute named 'SpreadsheetFieldTemlate'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C17' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '15,000.00000'
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C18' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '42.00000'
 
-	* Сравниваем результат
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Comparing the result
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''        | ''           | ''        | "February 2024" | ''            | ''        | ''           | ''        | "March 2024" | ''            | ''        | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
 			| "Total"                                                           | '5,000'          | '100'         | '500,000' | '1/1/2024' | ''        | '5,000'           | '36'          | '180,000' | '1/1/2024' | ''        | '5,000'        | '44'          | '220,000' | '1/1/2024' | ''        | '15,000'     | '180'         | '900,000' | '1/1/2024' | ''       |
@@ -1197,38 +1197,38 @@
 			| "1C:ERP. Corporate performance management"                                   | '1,000'          | '2'           | '2,000'   | '1/1/2024' | "Line1" | '1,000'           | '4'           | '4,000'   | '1/1/2024' | "Line1" | '1,000'        | '6'           | '6,000'   | '1/1/2024' | "Line1" | '3,000'      | '12'          | '12,000'  | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '1,000'          | '2'           | '2,000'   | '1/1/2024' | "Line1" | '1,000'           | '4'           | '4,000'   | '1/1/2024' | "Line1" | '1,000'        | '6'           | '6,000'   | '1/1/2024' | "Line1" | '3,000'      | '12'          | '12,000'  | '1/1/2024' | ''       |
 				
-	* Снова распределяем по периодам
-		* Коэффициент
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C18'
-			И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' на элементе формы с именем 'SpreadsheetFieldTemlate'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C18'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '2,100.00000'
-		* Итог
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C19'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-		* Дата
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C20'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-		* Строка
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'C17'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-		* Столбец
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'	
+	* Allocating by periods again
+		* Coefficient
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R7C18' cell
+			And I select context menu item named 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' of the form attribute named 'SpreadsheetFieldTemlate'
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C18' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '2,100.00000'
+		* Total
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C19' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+		* Date
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C20' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+		* Row
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'C17' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+		* Column
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
 
-	* Сравниваем результат
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Comparing the result
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''        | ''           | ''        | "February 2024" | ''            | ''          | ''           | ''        | "March 2024" | ''            | ''          | ''           | ''        | "TOTAL"      | ''            | ''           | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"      | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"      | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"       | "Date"       | "Line" |
 			| "Total"                                                           | '5,000'          | '100'         | '500,000' | '1/1/2024' | ''        | '5,000'           | '1,000'       | '5,000,000' | '1/1/2024' | ''        | '5,000'        | '1,000'       | '5,000,000' | '1/1/2024' | ''        | '15,000'     | '2,100'       | '10,500,000' | '1/1/2024' | ''       |
@@ -1239,36 +1239,36 @@
 			| "1C:ERP. Corporate performance management"                                   | '1,000'          | '2'           | '2,000'   | '1/1/2024' | "Line1" | '1,000'           | '200'         | '200,000'   | '1/1/2024' | "Line1" | '1,000'        | '200'         | '200,000'   | '1/1/2024' | "Line1" | '3,000'      | '402'         | '402,000'    | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '1,000'          | '2'           | '2,000'   | '1/1/2024' | "Line1" | '1,000'           | '200'         | '200,000'   | '1/1/2024' | "Line1" | '1,000'        | '200'         | '200,000'   | '1/1/2024' | "Line1" | '3,000'      | '402'         | '402,000'    | '1/1/2024' | ''       |
 	
-Сценарий: 02.14 Обратное распределение (пропорциональное)
+Scenario: 02.14 Reverse allocation (proportional)
 
-	* Открываем сводную таблицу
-		И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"
+	* Opening a pivot table
+		And I open report pivot table with name "VA - Recalculation in context"
 
-	* Переходим в режим обратного распределния
-		И я нажимаю на гиперссылку с именем 'FilterHeading'
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Reverse allocation (proportionally)"
-		И я нажимаю на кнопку с именем 'UpdateTabData1'
-		И я жду открытия формы "Pivot table: *" в течение 30 секунд
+	* Switching to reverse allocation mode
+		And I click the hyperlink named 'FilterHeading'
+		And I select "Reverse allocation (proportionally)" exact value from the drop-down list named 'WorkMode'
+		And I click the button named 'UpdateTabData1'
+		And I wait for "Pivot table: *" form opening for 30 seconds
 
-	* Распределяем показатели по одному периоду
-		* Количество
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R10C2'
-			И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' на элементе формы с именем 'SpreadsheetFieldTemlate'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '1,050.00000'
-		* Блокируем группу ячеек
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C3:R10C6'
-			И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' на элементе формы с именем 'SpreadsheetFieldTemlate'						
-		* Коэффициент
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '200.00000'
-			Когда открылось окно '$WindowTitle$'
-			Тогда область 'R4C2:R10C6' табличного документа 'SpreadsheetFieldTemlate' равна:
+	* Allocating indicators by a single period
+		* Quantity
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R10C2' cell
+			And I select context menu item named 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' of the form attribute named 'SpreadsheetFieldTemlate'
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '1,050.00000'
+		* Blocking a group of cells
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C3:R10C6' cell
+			And I select context menu item named 'SpreadsheetFieldTemlateContextMenuLockCellForDistribution' of the form attribute named 'SpreadsheetFieldTemlate'
+		* Coefficient
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '200.00000'
+			When '$WindowTitle$' window is opened
+			Then 'R4C2:R10C6' area of 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| '1,050'          | '10'          | '10,500' | '1/1/2024' | ''        |
 				| '1,050'          | '10'          | '2,100'  | '1/1/2024' | ''        |
 				| '100'            | '2'           | '200'    | '1/1/2024' | "Line1" |
@@ -1276,25 +1276,25 @@
 				| '300'            | '2'           | '600'    | '1/1/2024' | "Line1" |
 				| '400'            | '2'           | '800'    | '1/1/2024' | "Line1" |
 				| '50'             | '2'           | '100'    | '1/1/2024' | "Line1" |
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C3:R10C3'
-			И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuUnlockCellForDistribution' на элементе формы с именем 'SpreadsheetFieldTemlate'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '200.00000'
-		* Итог
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C4'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-		* Строка
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C6'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C3:R10C3' cell
+			And I select context menu item named 'SpreadsheetFieldTemlateContextMenuUnlockCellForDistribution' of the form attribute named 'SpreadsheetFieldTemlate'
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '200.00000'
+		* Total
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C4' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+		* Row
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C6' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
 						
-		* Сравниваем результат
-			Когда открылось окно '$WindowTitle$'
-			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		* Comparing the result
+			When '$WindowTitle$' window is opened
+			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''        | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
 				| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
 				| "Total"                                                           | '1,050'          | '200'         | '210,000' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '1,800'      | '250'         | '229,500' | '1/1/2024' | ''       |
@@ -1305,41 +1305,41 @@
 				| "1C:ERP. Corporate performance management"                                   | '400'            | '40'          | '16,000'  | '1/1/2024' | "Line1" | '80'              | '4'           | '320'   | '1/1/2024' | "Line1" | '120'          | '6'           | '720'    | '1/1/2024' | "Line1" | '600'        | '50'          | '17,040'  | '1/1/2024' | ''       |
 				| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '40'          | '2,000'   | '1/1/2024' | "Line1" | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'    | '1/1/2024' | "Line1" | '300'        | '50'          | '3,300'   | '1/1/2024' | ''       |
 		
-		* Распределение по периодам
-			* Количество						
-				Когда открылось окно '$WindowTitle$'
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C17'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '3,550.00000'
-			* Коэффициент
-				Когда открылось окно '$WindowTitle$'
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C18'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '500.00000'
-			* Итог
-				Когда открылось окно '$WindowTitle$'
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C19'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-			* Дата
-				Когда открылось окно '$WindowTitle$'
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C20'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-			* Строка
-				Когда открылось окно '$WindowTitle$'
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'C17'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-			* Столбец
-				Когда открылось окно '$WindowTitle$'
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'						
+		* Allocation by periods
+			* Quantity
+				When '$WindowTitle$' window is opened
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C17' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '3,550.00000'
+			* Coefficient
+				When '$WindowTitle$' window is opened
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C18' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '500.00000'
+			* Total
+				When '$WindowTitle$' window is opened
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C19' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+			* Date
+				When '$WindowTitle$' window is opened
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C20' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+			* Row
+				When '$WindowTitle$' window is opened
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'C17' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+			* Column
+				When '$WindowTitle$' window is opened
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
 																
-		* Сравниваем результат
-			Когда открылось окно '$WindowTitle$'
-			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		* Comparing the result
+			When '$WindowTitle$' window is opened
+			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''        | ''           | ''        | "February 2024" | ''            | ''       | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
 				| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
 				| "Total"                                                           | '2,050'          | '400'         | '820,000' | '1/1/2024' | ''        | '600'             | '40'          | '24,000' | '1/1/2024' | ''        | '900'          | '60'          | '54,000' | '1/1/2024' | ''        | '3,550'      | '500'         | '898,000' | '1/1/2024' | ''       |
@@ -1350,20 +1350,20 @@
 				| "1C:ERP. Corporate performance management"                                   | '800'            | '80'          | '64,000'  | '1/1/2024' | "Line1" | '160'             | '8'           | '1,280'  | '1/1/2024' | "Line1" | '240'          | '12'          | '2,880'  | '1/1/2024' | "Line1" | '1,200'      | '100'         | '68,160'  | '1/1/2024' | ''       |
 				| "3C:Enterprise 8 CORP. Client license for 100 users" | '50'             | '80'          | '4,000'   | '1/1/2024' | "Line1" | '200'             | '8'           | '1,600'  | '1/1/2024' | "Line1" | '300'          | '12'          | '3,600'  | '1/1/2024' | "Line1" | '550'        | '100'         | '9,200'   | '1/1/2024' | ''       |
 							
-Сценарий: 02.15 Изменение показателей в дополнительной валюте
+Scenario: 02.15 Changing indicators in an additional currency
 
-	* Открываем сводную таблицу
-		И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"			
-		И Я устанавливаю отбор сводной таблицы 'DisplayCurrency' со значением 'USD'
+	* Opening a pivot table
+		And I open report pivot table with name "VA - Recalculation in context"
+		And I set pivot table filter 'DisplayCurrency' with value 'USD'
 
-	* Меняем точность отображения
-		Когда открылось окно '$WindowTitle$'
-		И в поле с именем 'Accuracy' я ввожу текст '5'
-		И я нажимаю на кнопку с именем 'UpdateTabData'				
-		И я жду открытия формы "Pivot table: *" в течение 20 секунд	
+	* Changing display precision
+		When '$WindowTitle$' window is opened
+		And I input '5' text in the field named 'Accuracy'
+		And I click the button named 'UpdateTabData'
+		And I wait for "Pivot table: *" form opening for 20 seconds
 
-	* Проверяем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Checking the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''         | ''           | ''        | "February 2024" | ''            | ''         | ''           | ''        | "March 2024" | ''            | ''          | ''           | ''        | "TOTAL"      | ''            | ''          | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"     | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"     | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"      | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"      | "Date"       | "Line" |
 			| "Total"                                                           | '2.02102'        | '0.13474'     | '20.21007' | '1/1/2024' | ''        | '4.03362'         | '0.26890'     | '80.67260' | '1/1/2024' | ''        | '6.04810'      | '0.40320'     | '181.44307' | '1/1/2024' | ''        | '12.10274'   | '0.80684'     | '282.32574' | '1/1/2024' | ''       |
@@ -1374,54 +1374,54 @@
 			| "1C:ERP. Corporate performance management"                                   | '0.53893'        | '2.00000'     | '1.07787'  | '1/1/2024' | "Line1" | '1.07563'         | '4.00000'     | '4.30254'  | '1/1/2024' | "Line1" | '1.61282'      | '6.00000'     | '9.67696'   | '1/1/2024' | "Line1" | '3.22738'    | '12.00000'    | '15.05737'  | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '0.67367'        | '2.00000'     | '1.34734'  | '1/1/2024' | "Line1" | '1.34454'         | '4.00000'     | '5.37818'  | '1/1/2024' | "Line1" | '2.01603'      | '6.00000'     | '12.09620'  | '1/1/2024' | "Line1" | '4.03424'    | '12.00000'    | '18.82172'  | '1/1/2024' | ''       |
 							
-	* Изменяем показатели
-		* Количество
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '1,000.00000'
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'CopyDataByRow'
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C4'
-			И я нажимаю на кнопку с именем 'CopyDataByRow'
-		* Количество (зануление)
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '0.00000'
-		* Дата
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C5'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '1/31/2024'
-		* Строка
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C6'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст "LineUSD"
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'CopyDataByRow'
-		* Коэффициент
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R8C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '1.00000'
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'CopyDataByColumn'
-		* Количество (отмена / возврат)
-			Когда открылось окно '$WindowTitle$'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R10C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '1.00000'
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'CancelAction'
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'RetryAction'
+	* Changing indicators
+		* Quantity
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '1,000.00000'
+			When '$WindowTitle$' window is opened
+			And I click the button named 'CopyDataByRow'
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C4' cell
+			And I click the button named 'CopyDataByRow'
+		* Quantity (zeroing)
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R7C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '0.00000'
+		* Date
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R7C5' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '1/31/2024'
+		* Row
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R7C6' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text "LineUSD"
+			When '$WindowTitle$' window is opened
+			And I click the button named 'CopyDataByRow'
+		* Coefficient
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R8C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '1.00000'
+			When '$WindowTitle$' window is opened
+			And I click the button named 'CopyDataByColumn'
+		* Quantity (cancellation / return)
+			When '$WindowTitle$' window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R10C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '1.00000'
+			When '$WindowTitle$' window is opened
+			And I click the button named 'CancelAction'
+			When '$WindowTitle$' window is opened
+			And I click the button named 'RetryAction'
 
-	* Сверяем результат
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Verifying the result
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''            | ''           | ''          | "February 2024" | ''            | ''            | ''           | ''          | "March 2024" | ''            | ''            | ''           | ''          | "TOTAL"       | ''            | ''             | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"      | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"   | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"  | "Coefficient" | "Total"         | "Date"       | "Line" |
 			| "Total"                                                           | '1,001.94314'    | '7.00000'     | '7,013.60198' | '1/31/2024' | ''          | '1,003.76472'     | '0.26890'     | '269.91233'   | '1/1/2024' | ''          | '1,005.64488'  | '0.40320'     | '405.47602'   | '1/1/2024' | ''          | '3,011.35274' | '7.67210'     | '7,688.99033'  | '1/31/2024' | ''       |
@@ -1432,11 +1432,11 @@
 			| "1C:ERP. Corporate performance management"                                   | '0.53893'        | '1.00000'     | '0.53893'     | '1/1/2024' | "Line1"   | '1.07563'         | '4.00000'     | '4.30252'     | '1/1/2024' | "Line1"   | '1.61282'      | '6.00000'     | '9.67692'     | '1/1/2024' | "Line1"   | '3.22738'     | '11.00000'    | '14.51837'     | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '1.00000'        | '1.00000'     | '1.00000'     | '1/1/2024' | "Line1"   | '1.34454'         | '4.00000'     | '5.37816'     | '1/1/2024' | "Line1"   | '2.01603'      | '6.00000'     | '12.09618'    | '1/1/2024' | "Line1"   | '4.36057'     | '11.00000'    | '18.47434'     | '1/1/2024' | ''       |
 					
-	* Меняем валюту на Евро
-		И Я устанавливаю отбор сводной таблицы 'DisplayCurrency' со значением 'EUR'				
+	* Changing currency to Euro
+		And I set pivot table filter 'DisplayCurrency' with value 'EUR'
 						
-	* Сверяем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Verifying the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''            | ''           | ''          | "February 2024" | ''            | ''            | ''           | ''          | "March 2024" | ''            | ''            | ''           | ''          | "TOTAL"       | ''            | ''             | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"      | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"   | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"  | "Coefficient" | "Total"         | "Date"       | "Line" |
 			| "Total"                                                           | '821.73483'      | '5.74098'     | '5,752.14393' | '1/31/2024' | ''          | '830.12297'       | '0.22240'     | '223.22005'   | '1/1/2024' | ''          | '843.72814'    | '0.33828'     | '340.19120'   | '1/1/2024' | ''          | '2,495.58594' | '6.30166'     | '6,315.55518'  | '1/31/2024' | ''       |
@@ -1447,15 +1447,15 @@
 			| "1C:ERP. Corporate performance management"                                   | '0.44200'        | '1.00000'     | '0.44199'     | '1/1/2024' | "Line1"   | '0.88957'         | '4.00000'     | '3.55822'     | '1/1/2024' | "Line1"   | '1.35314'      | '6.00000'     | '8.11886'     | '1/1/2024' | "Line1"   | '2.68471'     | '11.00000'    | '12.11907'     | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '0.82014'        | '1.00000'     | '0.82014'     | '1/1/2024' | "Line1"   | '1.11196'         | '4.00000'     | '4.44778'     | '1/1/2024' | "Line1"   | '1.69143'      | '6.00000'     | '10.14860'    | '1/1/2024' | "Line1"   | '3.62353'     | '11.00000'    | '15.41652'     | '1/1/2024' | ''       |
 	
-	* Записываем
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'Apply'
+	* Saving
+		When '$WindowTitle$' window is opened
+		And I click the button named 'Apply'
 
-	* Меняем валюту на Рубли
-		И Я устанавливаю отбор сводной таблицы 'DisplayCurrency' со значением 'RUB'
+	* Changing currency to Rubles
+		And I set pivot table filter 'DisplayCurrency' with value 'RUB'
 				
-	* Сверяем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Verifying the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''              | ''           | ''          | "February 2024" | ''            | ''              | ''           | ''          | "March 2024" | ''            | ''              | ''           | ''          | "TOTAL"         | ''            | ''              | ''           | ''       |
 			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"          | "Date"       | "Line"    | "Count"      | "Coefficient" | "Total"          | "Date"       | "Line"    | "Count"   | "Coefficient" | "Total"          | "Date"       | "Line"    | "Count"    | "Coefficient" | "Total"          | "Date"       | "Line" |
 			| "Total"                                                           | '74,364.61971'   | '519.54234'   | '520,552.34491' | '1/31/2024' | ''          | '74,654.70064'    | '20.00000'    | '20,074.64815'  | '1/1/2024' | ''          | '74,823.49902' | '30.00000'    | '30,168.83560'  | '1/1/2024' | ''          | '223,842.81937' | '569.54234'   | '570,795.82866' | '1/31/2024' | ''       |
@@ -1466,36 +1466,36 @@
 			| "1C:ERP. Corporate performance management"                                   | '40.00000'       | '1.00000'     | '39.99966'      | '1/1/2024' | "Line1"   | '80.00000'        | '4.00000'     | '319.99851'     | '1/1/2024' | "Line1"   | '120.00000'    | '6.00000'     | '719.99702'     | '1/1/2024' | "Line1"   | '240.00000'     | '11.00000'    | '1,079.99519'   | '1/1/2024' | ''       |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '74.22034'       | '1.00000'     | '74.22028'      | '1/1/2024' | "Line1"   | '100.00000'       | '4.00000'     | '399.99851'     | '1/1/2024' | "Line1"   | '150.00000'    | '6.00000'     | '899.99851'     | '1/1/2024' | "Line1"   | '324.22034'     | '11.00000'    | '1,374.21730'   | '1/1/2024' | ''       |
 									
-Сценарий: 02.16 Изменение показателей в валюте не из регламента
+Scenario: 02.16 Changing indicators in a currency not from the regulation
 
-	* Открываем сводную таблицу
-		И Я октрываю сводную таблицу отчета с именем "VA - Recalculation in context"	
-		И Я устанавливаю отбор сводной таблицы 'DisplayCurrency' со значением 'KZT'
+	* Opening a pivot table
+		And I open report pivot table with name "VA - Recalculation in context"
+		And I set pivot table filter 'DisplayCurrency' with value 'KZT'
 
-	* Проверяем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Checking the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)" | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''     | ''     | ''       | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''     | ''     | ''       |
 			| "VA - Recalculation in context (pivot table)" | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total" | "Date" | "Line" | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total" | "Date" | "Line" |
 			| "Total"                                        | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 			| "Goods"                                      | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 		
-	* Добавлеям значения
-		Когда открылось окно '$WindowTitle$'
-		И Я добавляю значения с раскрытием показателей в ячейку 'R5C2'
+	* Adding values
+		When '$WindowTitle$' window is opened
+		And I add values with indicator expansion in cell 'R5C2'
 			| "VA0Product"                | 'Value1' |
 			| "5C:Corporate performance management" | '100.00000' |
 
-	* Должен появиться протокол
-		Тогда открылось окно "Protocol"
-		Тогда табличный документ 'SpreadsheetDocumentField' равен:
+	* A protocol should appear
+		Then "Protocol" window is opened
+		Then 'SpreadsheetDocumentField' spreadsheet document is equal
 			| "Errors"                                                                                                                                                                                  |
 			| "The selected currency KZT does not correspond to the currencies set in parameter regulation:\n	Scenario: \"VA - Main scenario\",\n	Company: \"Mercury LLC\",\n	Period: \"January 2024\"" |
-		Когда открылось окно "Protocol"
-		И Я закрываю окно "Protocol"
+		When "Protocol" window is opened
+		And I close "Protocol" window
 
-	* Проверяем результат
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Checking the result
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)" | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''     | ''     | ''       | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''     | ''     | ''       |
 			| "VA - Recalculation in context (pivot table)" | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total" | "Date" | "Line" | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total" | "Date" | "Line" |
 			| "Total"                                        | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |

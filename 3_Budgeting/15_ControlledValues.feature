@@ -1,138 +1,138 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 15. Проверка контролируемых значений при записи
+Feature: 15. Checking controlled values on save
 
-	Как Администратор я хочу
-	чтобы нельзя было записать значение показателя большее, чем контрольное
+	As Administrator I want to
+	so that an indicator value greater than the control value cannot be saved
 
-Контекст: 
+Background:
 
-	И я закрыл все окна клиентского приложения
+	And I close all client application windows
 
-Сценарий: 15.00 Определение типа приложения
+Scenario: 15.00 Determining application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 15.01 Создание вида отчета "VA - Controlled indicators"
+Scenario: 15.01 Creating report type "VA - Controlled indicators"
 
-	* Создает вид отыета
-		И Я создаю вид отчета с именем "VA - Controlled indicators" и родителем "VA - Report group"
-		И Я открываю вид отчета с именем "VA - Controlled indicators"
+	* Creates report type
+		And I create report type with name "VA - Controlled indicators" and parent "VA - Report group"
+		And I open report type with name "VA - Controlled indicators"
 	
-	* Доработаем вид отчета	
-		И я изменяю флаг с именем 'IsChangeTrackingEnabled'
-		И я устанавливаю флаг с именем 'ProjectSeparation'		
-		И я нажимаю на кнопку с именем 'RecordButtonForm'
+	* Refining a report type
+		And I change checkbox named 'IsChangeTrackingEnabled'
+		And I set checkbox named 'ProjectSeparation'
+		And I click the button named 'RecordButtonForm'
 
-	* Настраиваем структуру вида отчета
-		И я нажимаю на кнопку с именем 'EditTree'
-		Когда открылось окно "Report wizard"
-		И Я в конструкторе отчета добавляю строку с именем "Synthetic"
-		И Я в конструкторе отчета добавляю строку с именем "Dimensions"
-		И Я в конструкторе отчета добавляю колонку с именем "Count"
-		И Я в конструкторе отчета добавляю колонку с именем "ControlYes"
-		И Я в конструкторе отчета добавляю колонку с именем "ControlNo"
-		И Я в конструкторе отчета добавляю колонку с именем "Date"
+	* Configuring report type structure
+		And I click the button named 'EditTree'
+		When "Report wizard" window is opened
+		And I add row with name "Synthetic" in report wizard
+		And I add row with name "Dimensions" in report wizard
+		And I add column with name "Count" in report wizard
+		And I add column with name "ControlYes" in report wizard
+		And I add column with name "ControlNo" in report wizard
+		And I add column with name "Date" in report wizard
 
-	* Настраиваем показатели
-		И Я в конструкторе отчета в ячейке 'R2C2:R3C5' меняю свойства показателей 'ControllableIndicator' на "True"	
-		И Я в конструкторе отчета в ячейке 'R2C2' меняю свойства показателей 'ControllableIndicator' на "False"
-		И я в конструкторе отчета в ячейке 'R3C2' меняю свойство показателя 'ControllableIndicator' на "False"
-		И я в конструкторе отчета в ячейке 'R2C5' меняю свойство показателя 'ValueType' на "Date"
-		И я в конструкторе отчета в ячейке 'R3C5' меняю свойство показателя 'ValueType' на "Date"
-		И я в конструкторе отчета в ячейке 'R2C5:R3C5' меняю свойства показателей 'TotalKind' на "Minimum"
+	* Configuring indicators
+		And I change indicator properties 'ControllableIndicator' to "True" in cell 'R2C2:R3C5' in report wizard
+		And I change indicator properties 'ControllableIndicator' to "False" in cell 'R2C2' in report wizard
+		And I change indicator property 'ControllableIndicator' to "False" in cell 'R3C2' in report wizard
+		And I change indicator property 'ValueType' to "Date" in cell 'R2C5' in report wizard
+		And I change indicator property 'ValueType' to "Date" in cell 'R3C5' in report wizard
+		And I change indicator properties 'TotalKind' to "Minimum" in cell 'R2C5:R3C5' in report wizard
 
-	* Настраиваем аналитики
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0CFItems" в ячейку 'R3C2'
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R3C3'
-		И Я в конструкторе отчета в ячейке 'R3C8' меняю аналитику валюта
-		И Я в конструкторе отчета в ячейке 'R3C2:R3C5' меняю свойства показателей 'ShouldRecalculateForeignCurrencyAmount' на "True"
+	* Configuring dimensions
+		And I add dimension with code "VA0CFItems" in cell 'R3C2' in report wizard
+		And I add dimension with code "VA0Product" in cell 'R3C3' in report wizard
+		And I change dimension currency in cell 'R3C8' in report wizard
+		And I change indicator properties 'ShouldRecalculateForeignCurrencyAmount' to "True" in cell 'R3C2:R3C5' in report wizard
 
-	* Бланк вида отчета
-		И Я Для вида отчета "VA - Controlled indicators" создаю бланк по умолчанию		
+	* Report type template
+		And I create default template for report type "VA - Controlled indicators"
 
-	* Создаем бланк сводной таблицы
-		И Я для вида отчета "VA - Controlled indicators" создаю бланк сводной таблицы по умолчанию с отборами "Project"
-		Когда открылось окно "VA - Controlled indicators (Report types)"
-		И я нажимаю на кнопку открытия поля с именем 'DefaultPivotTableTemplate'
-		Тогда Открылся бланк сводной таблицы для вида отчета "VA - Controlled indicators"
-		И я нажимаю на кнопку с именем 'ShowTableSettingsByAxes'
-		Тогда открылось окно "Set up field location"
-		И в таблице 'TableRows1' я перехожу к строке:
+	* Creating pivot table template
+		And I for report type "Project" create default pivot table template with filters "VA - Controlled indicators"
+		When "VA - Controlled indicators (Report types)" window is opened
+		And I click Open button of the field named 'DefaultPivotTableTemplate'
+		Then I open pivot table template for report type "VA - Controlled indicators"
+		And I click the button named 'ShowTableSettingsByAxes'
+		Then "Set up field location" window is opened
+		And I go to line in 'TableRows1' table:
 			| "Horizontally (in rows)" |
 			| "Product range"               |
-		И я нажимаю на кнопку с именем 'RowsMoveDown'
-		И я нажимаю на кнопку с именем 'RowsMoveDown'
-		И я нажимаю на кнопку с именем 'RowsMoveDown'
-		И в таблице 'TableRows1' я перехожу к строке:
+		And I click the button named 'RowsMoveDown'
+		And I click the button named 'RowsMoveDown'
+		And I click the button named 'RowsMoveDown'
+		And I go to line in 'TableRows1' table:
 			| "Horizontally (in rows)" |
 			| "Additional currencies"      |
-		И я нажимаю на кнопку с именем 'RowsMoveDown'
-		И я нажимаю на кнопку с именем 'RowsMoveDown'
-		И я нажимаю на кнопку с именем 'RowsMoveDown'
-		И я изменяю флаг с именем 'TotalByColumns'
-		И я нажимаю на кнопку с именем 'ButtonApply'
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'FormWrite'
+		And I click the button named 'RowsMoveDown'
+		And I click the button named 'RowsMoveDown'
+		And I click the button named 'RowsMoveDown'
+		And I change checkbox named 'TotalByColumns'
+		And I click the button named 'ButtonApply'
+		When '$WindowTitle$' window is opened
+		And I click the button named 'FormWrite'
 
-Сценарий: 15.02 Создание нового сценария для контролируемых значений
+Scenario: 15.02 Creating a new scenario for controlled values
 
-	И Я создаю сценарий с именем "VA - Scenario with control"
-	И Я для сценария "VA - Scenario with control" на закладке 'Budgeting' для реквизита 'ControllingScenario' устанавливаю значение "VA - Main scenario"
+	And I create scenario with name "VA - Scenario with control"
+	And I set value "VA - Main scenario" for attribute 'ControllingScenario' on tab 'Budgeting' for scenario "VA - Scenario with control"
 
-	И Я создаю документ управления периодом со сценарием "VA - Scenario with control" регламентом "VA - Main regulations" периодичностью "Month" датой начала '1/1/2024' датой окончания '3/31/2024'
+	And I create period management document with scenario "VA - Scenario with control" regulation "VA - Main regulations" frequency "Month" start date '1/1/2024' end date '3/31/2024'
 
-Сценарий: 15.03 Настройка прав для пользователя "Budgeting1"
+Scenario: 15.03 Configuring rights for user "Budgeting1"
 
-	И Я добавляю право "Read, write" для вида отчета "VA - Controlled indicators" пользователя "Budgeting1" по всем организациям
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I add right "Read, write" for report type "VA - Controlled indicators" user "Budgeting1" for all companies
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-Сценарий: 15.04 Создание экземпляра отчета "VA - Controlled indicators"
+Scenario: 15.04 Creating report instance "VA - Controlled indicators"
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Controlled indicators" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект "VA - Main project" аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Controlled indicators" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project "VA - Main project" dimensions '' '' '' '' '' ''
 
-	* Вводим значения показателей
-		* Синтетика
-			И Я ввожу значение '100' в ячейку 'R6C2'
-			И Я ввожу значение '100' в ячейку 'R6C3'
-			И Я ввожу значение '100' в ячейку 'R6C4'
-			И Я ввожу значение '1/1/2024' в ячейку 'R6C5'
-			И Я ввожу значение '200' в ячейку 'R6C6'
-			И Я ввожу значение '200' в ячейку 'R6C7'
-			И Я ввожу значение '200' в ячейку 'R6C8'
-			И Я ввожу значение '1/1/2024' в ячейку 'R6C9'
-		* Аналитики
-			И Я добавляю значения с раскрытием показателей в ячейку 'R7C14'
+	* Filling indicator values
+		* Synthetic
+			And I enter value '100' in cell 'R6C2'
+			And I enter value '100' in cell 'R6C3'
+			And I enter value '100' in cell 'R6C4'
+			And I enter value '1/1/2024' in cell 'R6C5'
+			And I enter value '200' in cell 'R6C6'
+			And I enter value '200' in cell 'R6C7'
+			And I enter value '200' in cell 'R6C8'
+			And I enter value '1/1/2024' in cell 'R6C9'
+		* Dimensions
+			And I add values with indicator expansion in cell 'R7C14'
 				| "Cash flow items"                       | "Product range"                 | "Currencies" | 'Period_1_Value1' | 'Period_2_Value1' |
 				| "3Software sale" | "5C:Corporate performance management"    | 'RUB'    | '100'                | '200'                |
 				| "3Software sale" | "2C:Corporation"                | 'RUB'    | '100'                | '200'                |
 				| "3Software sale" | "1C:ERP. Corporate performance management" | 'RUB'    | '100'                | '200'                |
-			И Я добавляю значения с раскрытием показателей в ячейку 'R7C15'
+			And I add values with indicator expansion in cell 'R7C15'
 				| "Cash flow items"                       | "Product range"                 | "Currencies" | 'Period_1_Value1' | 'Period_2_Value1' |
 				| "3Software sale" | "5C:Corporate performance management"    | 'RUB'    | '100'                | '200'                |
 				| "3Software sale" | "2C:Corporation"                | 'RUB'    | '100'                | '200'                |
-			И Я добавляю значения с раскрытием показателей в ячейку 'R7C16'
+			And I add values with indicator expansion in cell 'R7C16'
 				| "Cash flow items"                       | "Product range"                 | "Currencies" | 'Period_1_Value1' | 'Period_2_Value1' |
 				| "3Software sale" | "5C:Corporate performance management"    | 'RUB'    | '100'                | '200'                |
 				| "3Software sale" | "2C:Corporation"                | 'RUB'    | '100'                | '200'                |
-			И Я добавляю значения с раскрытием показателей в ячейку 'R7C17'
+			And I add values with indicator expansion in cell 'R7C17'
 				| "Cash flow items"                       | "Product range"                 | "Currencies" | 'Period_1_Value1' | 'Period_2_Value1' |
 				| "3Software sale" | "5C:Corporate performance management"    | 'RUB'    | '1/1/2024'         | '2/1/2024'         |
 				| "3Software sale" | "2C:Corporation"                | 'RUB'    | '1/1/2024'         | '2/1/2024'         |
 				| "3Software sale" | "1C:ERP. Corporate performance management" | 'RUB'    | '1/1/2024'         | '2/1/2024'         |
 
-	* Записываем, проверяем форму
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'Write'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Saving, checking form
+		When '$WindowTitle$' window is opened
+		And I click the button named 'Write'
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Controlled indicators"    | ''               | ''           | ''            | ''           | ''                | ''           | ''            | ''           | ''             | ''           | ''            | ''     | ''           | ''           | ''            | ''           |
 			| ''                                  | ''               | ''           | ''            | ''           | ''                | ''           | ''            | ''           | ''             | ''           | ''            | ''     | ''           | ''           | ''            | ''           |
 			| ''                                  | "January 2024" | ''           | ''            | ''           | "February 2024" | ''           | ''            | ''           | "March 2024" | ''           | ''            | ''     | "TOTAL"      | ''           | ''            | ''           |
@@ -147,148 +147,148 @@
 			| "5C:Corporate performance management "        | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | ''           |
 			| 'RUB '                              | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | ''           |
 
-	* Удаляем одну строку
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R7C14"
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Тогда открылось окно "Drill down indicators: *"
-		И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+	* Deleting one row
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R7C14" cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		Then "Drill down indicators: *" window is opened
+		And I go to line in 'IndicatorsDrilldown' table:
 			| "Currencies" | 'Value1' | 'ValueCurrency1' | "Product range"                 | "Report period"   | "Cash flow items"                       |
 			| 'RUB'    | '200'       | '200'             | "1C:ERP. Corporate performance management" | "February 2024" | "3Software sale" |
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And I go to line in 'IndicatorsDrilldown' table:
 			| "Currencies" | 'Value1' | 'ValueCurrency1' | "Product range"                 | "Report period"  | "Cash flow items"                       |
 			| 'RUB'    | '100'       | '100'             | "1C:ERP. Corporate performance management" | "January 2024" | "3Software sale" |
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		И я нажимаю на кнопку с именем 'FormOKButton1'
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R7C17"
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		Тогда открылось окно "Drill down indicators: *"
-		И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And I click the button named 'FormOKButton1'
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R7C17" cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		Then "Drill down indicators: *" window is opened
+		And I go to line in 'IndicatorsDrilldown' table:
 			| "Currencies" | 'Value1'  | "Product range"                 | "Report period"   | "Cash flow items"                       |
 			| 'RUB'    | '2/1/2024' | "1C:ERP. Corporate performance management" | "February 2024" | "3Software sale" |
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		И в таблице 'IndicatorsDrilldown' я перехожу к строке:
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And I go to line in 'IndicatorsDrilldown' table:
 			| "Currencies" | 'Value1'  | "Product range"                 | "Report period"  | "Cash flow items"                       |
 			| 'RUB'    | '1/1/2024' | "1C:ERP. Corporate performance management" | "January 2024" | "3Software sale" |
-		И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownDelete'
-		И я нажимаю на кнопку с именем 'FormOKButton1'
+		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
+		And I click the button named 'FormOKButton1'
 
-	* Проверяем движение документа	
-		Когда открылось окно '$WindowTitle$'		
-		И я нажимаю на кнопку с именем 'FormOpenDocumentRegisterRecordsFlatTab'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		Тогда открылось окно "Flat table of indicator values"
-		И я жду когда в табличном документе 'ReportSpreadsheetDocument' заполнится ячейка 'R2C1' в течение 30 секунд
-		Когда Я задаю параметры чтения области макета 'R1C1:R200C20'
-		Дано Табличный документ 'ReportSpreadsheetDocument' равен макету "3_Budgeting\Templates\15\VA_КонтролируемыеFunctions_Движения.mxl" по шаблону	
-		И Я закрываю окно "Flat table of indicator values"
+	* Checking document movement
+		When '$WindowTitle$' window is opened
+		And I click the button named 'FormOpenDocumentRegisterRecordsFlatTab'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		Then "Flat table of indicator values" window is opened
+		And I wait for filling of 'R2C1' cell in 'ReportSpreadsheetDocument' spreadsheet document for 30 seconds
+		When I set 'R1C1:R200C20' template area reading parameters
+		Given 'ReportSpreadsheetDocument' spreadsheet document is equal to "3_Budgeting\Layouts\15\VA_ControlledIndicators_Movements.mxl" by template
+		And I close "Flat table of indicator values" window
 
-	* Обновляем и проверяем форму
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'FormUpdateConsideringVersions'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Refreshing and checking the form
+		When '$WindowTitle$' window is opened
+		And I click the button named 'FormUpdateConsideringVersions'
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Controlled indicators"    | ''               | ''           | ''            | ''           | ''                | ''           | ''            | ''           | ''             | ''           | ''            | ''     | ''           | ''           | ''            | ''           |
 			| ''                                  | ''               | ''           | ''            | ''           | ''                | ''           | ''            | ''           | ''             | ''           | ''            | ''     | ''           | ''           | ''            | ''           |
 			| ''                                  | "January 2024" | ''           | ''            | ''           | "February 2024" | ''           | ''            | ''           | "March 2024" | ''           | ''            | ''     | "TOTAL"      | ''           | ''            | ''           |
 			| ''                                  | "Count"     | "ControlYes" | "ControlNo" | "Date"       | "Count"      | "ControlYes" | "ControlNo" | "Date"       | "Count"   | "ControlYes" | "ControlNo" | "Date" | "Count" | "ControlYes" | "ControlNo" | "Date"       |
 			| "Synthetic"                         | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '1/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
-			| "Dimensions"                         | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
+			| "Dimensions"                           | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
 			| "3Software sale " | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
 			| "2C:Corporation "                    | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
 			| 'RUB '                              | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
 			| "5C:Corporate performance management "        | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
 			| 'RUB '                              | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
 
-Сценарий: 15.05 Создаем экземпляра отчета для контролируемых значений
+Scenario: 15.05 Creating a report instance for controlled values
 
-	* Копируем существующий документ
-		И Я нахожу в списке вид отчета с именем "VA - Controlled indicators"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListOpenInstancesList'
-		Тогда открылось окно "Report instances"
-		И я нажимаю на кнопку с именем 'FormCopy'
-		Когда открылось окно "Specify key document attributes"
-		И из выпадающего списка с именем 'Scenario' я выбираю по строке "VA - Scenario with control"
-		И я нажимаю кнопку выбора у поля с именем 'Organization'
-		И Я выбираю организацию "Mercury LLC"
-		Когда открылось окно "Specify key document attributes *"
-		И я нажимаю на кнопку с именем 'FormApplyAndClose'
-		Тогда Открылся экземпляр отчета для вида отчета "VA - Controlled indicators" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Scenario with control" периодичность "Month" проект "VA - Main project" аналитики '' '' '' '' '' '' 
+	* Copying an existing document
+		And I find report type with name "VA - Controlled indicators" in list
+		And in the table 'ReportKindList' I click the button named 'ReportKindListOpenInstancesList'
+		Then "Report instances" window is opened
+		And I click the button named 'FormCopy'
+		When "Specify key document attributes" window is opened
+		And I select from the drop-down list named 'Scenario'  by "VA - Scenario with control" string
+		And I click Choice button of the field named 'Organization'
+		And I select company "Mercury LLC"
+		When "Specify key document attributes *" window is opened
+		And I click the button named 'FormApplyAndClose'
+		Then I open report instance for report type "VA - Controlled indicators" currency 'RUB' company "Mercury LLC" scenario "VA - Scenario with control" frequency "Month" project "VA - Main project" dimensions '' '' '' '' '' ''
 		
-	* Меняем значения
-		И Я ввожу значение '250' в ячейку 'R6C6'
-		И Я ввожу значение '250' в ячейку 'R6C7'
-		И Я ввожу значение '150' в ячейку 'R6C8'
-		И Я ввожу значение '250' в ячейку 'R10C6'
-		И Я ввожу значение '250' в ячейку 'R10C7'
-		И Я ввожу значение '150' в ячейку 'R10C8'
-		И Я ввожу значение '250' в ячейку 'R6C10'
-		И Я ввожу значение '250' в ячейку 'R6C11'
-		И Я ввожу значение '150' в ячейку 'R6C12'
-		И Я ввожу значение '250' в ячейку 'R10C10'
-		И Я ввожу значение '250' в ячейку 'R10C11'
-		И Я ввожу значение '150' в ячейку 'R10C12'					
+	* Changing values
+		And I enter value '250' in cell 'R6C6'
+		And I enter value '250' in cell 'R6C7'
+		And I enter value '150' in cell 'R6C8'
+		And I enter value '250' in cell 'R10C6'
+		And I enter value '250' in cell 'R10C7'
+		And I enter value '150' in cell 'R10C8'
+		And I enter value '250' in cell 'R6C10'
+		And I enter value '250' in cell 'R6C11'
+		And I enter value '150' in cell 'R6C12'
+		And I enter value '250' in cell 'R10C10'
+		And I enter value '250' in cell 'R10C11'
+		And I enter value '150' in cell 'R10C12'
 
-	* Пробуем записать документ
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'Write'
-		Когда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'OK'			
-		Когда открылось окно '$WindowTitle$'
-		Тогда в логе сообщений TestClient есть строки:
+	* Trying to save the document
+		When '$WindowTitle$' window is opened
+		And I click the button named 'Write'
+		When "1C:Enterprise" window is opened
+		And I click the button named 'OK'
+		When '$WindowTitle$' window is opened
+		Then there are lines in TestClient message log
 			|"You have exceeded the controlled value for the indicator:\n	Indicator: \"Synthetic controlyes\"\n	Calculated value: \"250\"\n	Control value: \"200\"\n	Controlling scenario: \"VA - Main scenario\"\n	Company: \"Mercury LLC\"\n	Period: \"February 2024\"\n	Project: \"VA - Main project\""|
-			|"You have exceeded the controlled value for the indicator:\n	Indicator: \"Dimensions controlyes\"\n	Calculated value: \"250\"\n	Control value: \"200\"\n	Controlling scenario: \"VA - Main scenario\"\n	Company: \"Mercury LLC\"\n	Period: \"February 2024\"\n	Project: \"VA - Main project\"\n	Dimension1: \"3Software sale\"\n	Dimension2: \"2C:Corporation\"\n	DimensionCurrency: \"RUB\""|
+			|"You have exceeded the controlled value for the indicator:\n	Indicator: \"Analysts controlyes\"\n	Calculated value: \"250\"\n	Control value: \"200\"\n	Controlling scenario: \"VA - Main scenario\"\n	Company: \"Mercury LLC\"\n	Period: \"February 2024\"\n	Project: \"VA - Main project\"\n	Dimension1: \"3Software sale\"\n	Dimension2: \"2C:Corporation\"\n	DimensionCurrency: \"RUB\""|
 
-	* Отменяем изменения
-		Когда открылось окно '$WindowTitle$'
-		И я делаю 12 раз		
-			И я нажимаю на кнопку с именем 'CancelAction'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Reverting changes
+		When '$WindowTitle$' window is opened
+		And I repeat 12 times
+			And I click the button named 'CancelAction'
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Controlled indicators"    | ''               | ''           | ''            | ''           | ''                | ''           | ''            | ''           | ''             | ''           | ''            | ''     | ''           | ''           | ''            | ''           |
 			| ''                                  | ''               | ''           | ''            | ''           | ''                | ''           | ''            | ''           | ''             | ''           | ''            | ''     | ''           | ''           | ''            | ''           |
 			| ''                                  | "January 2024" | ''           | ''            | ''           | "February 2024" | ''           | ''            | ''           | "March 2024" | ''           | ''            | ''     | "TOTAL"      | ''           | ''            | ''           |
 			| ''                                  | "Count"     | "ControlYes" | "ControlNo" | "Date"       | "Count"      | "ControlYes" | "ControlNo" | "Date"       | "Count"   | "ControlYes" | "ControlNo" | "Date" | "Count" | "ControlYes" | "ControlNo" | "Date"       |
 			| "Synthetic"                         | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '1/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
-			| "Dimensions"                         | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
+			| "Dimensions"                           | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
 			| "3Software sale " | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
 			| "2C:Corporation "                    | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
 			| 'RUB '                              | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
 			| "5C:Corporate performance management "        | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
 			| 'RUB '                              | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
 
-	* Записываем документ
-		И я нажимаю на кнопку с именем 'WriteAndClose'
-		И я жду закрытия окна '$WindowTitle$' в течение 20 секунд				
+	* Saving a document
+		And I click the button named 'WriteAndClose'
+		And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: 15.06 Создаем сводную таблицу для контролируемых значений 						
+Scenario: 15.06 Creating a pivot table for controlled values
 
-	* Открываем сводную таблицу
-		И Я октрываю сводную таблицу отчета с именем "VA - Controlled indicators"
-		И Я устанавливаю отборы сводной таблицы: дата начала '1/1/2024', дата конца '3/31/2024', валюта 'RUB', сценарий "VA - Scenario with control", организация "Mercury LLC"		
-		И Я устанавливаю отбор сводной таблицы 'Project' со значением "VA - Main project"	
+	* Opening a pivot table
+		And I open report pivot table with name "VA - Controlled indicators"
+		And I set pivot table filters: start date '1/1/2024', end date '3/31/2024', currency 'RUB', scenario "VA - Scenario with control", company "Mercury LLC"
+		And I set pivot table filter 'Project' with value "VA - Main project"
 
-	* Вводим значения
-		И Я ввожу значение '250' в ячейку 'R4C6'
-		И Я ввожу значение '250' в ячейку 'R4C7'
-		И Я ввожу значение '150' в ячейку 'R4C8'
-		И Я ввожу значение '250' в ячейку 'R8C6'
-		И Я ввожу значение '250' в ячейку 'R8C7'
-		И Я ввожу значение '150' в ячейку 'R8C8'
-		И Я ввожу значение '250' в ячейку 'R4C10'
-		И Я ввожу значение '250' в ячейку 'R4C11'
-		И Я ввожу значение '150' в ячейку 'R4C12'
-		И Я ввожу значение '250' в ячейку 'R8C10'
-		И Я ввожу значение '250' в ячейку 'R8C11'
-		И Я ввожу значение '150' в ячейку 'R8C12'			
+	* Entering values
+		And I enter value '250' in cell 'R4C6'
+		And I enter value '250' in cell 'R4C7'
+		And I enter value '150' in cell 'R4C8'
+		And I enter value '250' in cell 'R8C6'
+		And I enter value '250' in cell 'R8C7'
+		And I enter value '150' in cell 'R8C8'
+		And I enter value '250' in cell 'R4C10'
+		And I enter value '250' in cell 'R4C11'
+		And I enter value '150' in cell 'R4C12'
+		And I enter value '250' in cell 'R8C10'
+		And I enter value '250' in cell 'R8C11'
+		And I enter value '150' in cell 'R8C12'
 
-	* Записываем показатели
-		И я нажимаю на кнопку с именем 'Apply'
-		Тогда открылось окно "Protocol"
-		Тогда табличный документ 'SpreadsheetDocumentField' равен:
+	* Saving indicators
+		And I click the button named 'Apply'
+		Then "Protocol" window is opened
+		Then 'SpreadsheetDocumentField' spreadsheet document is equal
 			| "Errors"                                                                                                                                                                                                                                                                                                                                                                                                                      |
 			| "You have exceeded the controlled value for the indicator:\n	Indicator: \"Synthetic controlyes\"\n	Calculated value: \"250\"\n	Control value: \"200\"\n	Controlling scenario: \"VA - Main scenario\"\n	Company: \"Mercury LLC\"\n	Period: \"February 2024\"\n	Project: \"VA - Main project\""                                                                                                               |
-			| "You have exceeded the controlled value for the indicator:\n	Indicator: \"Dimensions controlyes\"\n	Calculated value: \"250\"\n	Control value: \"200\"\n	Controlling scenario: \"VA - Main scenario\"\n	Company: \"Mercury LLC\"\n	Period: \"February 2024\"\n	Project: \"VA - Main project\"\n	Dimension1: \"3Software sale\"\n	Dimension2: \"2C:Corporation\"\n	DimensionCurrency: \"RUB\"" |
+			| "You have exceeded the controlled value for the indicator:\n	Indicator: \"Analysts controlyes\"\n	Calculated value: \"250\"\n	Control value: \"200\"\n	Controlling scenario: \"VA - Main scenario\"\n	Company: \"Mercury LLC\"\n	Period: \"February 2024\"\n	Project: \"VA - Main project\"\n	Dimension1: \"3Software sale\"\n	Dimension2: \"2C:Corporation\"\n	DimensionCurrency: \"RUB\"" |
 				
 		

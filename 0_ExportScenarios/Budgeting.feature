@@ -1,339 +1,339 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для работы с подсистемой "Budgeting"
+Feature: Export scenarios for working with the "Budgeting" subsystem
 
-Сценарий: Я вставляю из буфера обмена в макете
+Scenario: I paste from clipboard in the layout
 
-	И я очищаю окно сообщений пользователю		
-	И я делаю 3 раз
-		И я нажимаю на кнопку с именем 'InsertTemplateFromClipboard'
-		Если в текущем окне есть сообщения пользователю Тогда
-			И Пауза 3
-		Иначе
-			И я прерываю цикл
+	And I clear user message window
+	And I repeat 3 times
+		And I click the button named 'InsertTemplateFromClipboard'
+		If current window contains user messages Then
+			And Delay 3
+		Else
+			And I interrupt the loop
 
-Сценарий: Я ввожу значение 'TheValue' в ячейку 'TheCell'
+Scenario: I enter value 'TheValue' in cell 'TheCell'
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-	И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '[TheValue]'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '[TheValue]'
 
-Сценарий: Я ввожу значение 'TheValue' с раскрытием показателей в ячейку 'TheCell'
+Scenario: I enter value 'TheValue' with indicator expansion in cell 'TheCell'
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И я нажимаю на кнопку с именем 'DisplayADrilldown'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And I click the button named 'DisplayADrilldown'
 
-	Тогда открылось окно "Drill down indicators: *"
-	И в таблице 'IndicatorsDrilldown' я выбираю текущую строку
-	И в таблице 'IndicatorsDrilldown' в поле с именем 'Value1' я ввожу текст '[TheValue]'
-	И я нажимаю на кнопку с именем 'FormOKButton'
+	Then "Drill down indicators: *" window is opened
+	And I select current line in 'IndicatorsDrilldown' table
+	And I input '[TheValue]' text in the field named 'Value1' of 'IndicatorsDrilldown' table
+	And I click the button named 'FormOKButton'
 
-	И я жду закрытия окна "Drill down indicators: *" в течение 20 секунд	
+	And I wait "Drill down indicators: *" window closing in 20 seconds
 
-Сценарий: Я добавляю значения с раскрытием показателей в ячейку 'TheCell'
+Scenario: I add values with indicator expansion in cell 'TheCell'
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И я нажимаю на кнопку с именем 'DisplayADrilldown'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And I click the button named 'DisplayADrilldown'
 	
-	Тогда открылось окно "Drill down indicators: *"
-	Если элемент 'IndicatorsDrilldownPeriodsInColumns' доступен для редактирования Тогда
-		Если у элемента формы с именем 'IndicatorsDrilldownPeriodsInColumns' не установлена пометка Тогда
-			И в таблице 'IndicatorsDrilldown' я нажимаю на кнопку с именем 'IndicatorsDrilldownPeriodsInColumns'
+	Then "Drill down indicators: *" window is opened
+	If 'IndicatorsDrilldownPeriodsInColumns' attribute is editable Then
+		If form attribute named 'IndicatorsDrilldownPeriodsInColumns' is not marked Then
+			And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownPeriodsInColumns'
 
-	И я заполняю таблицу 'IndicatorsDrilldown' данными
+	And I fill 'IndicatorsDrilldown' table with data
 		| 'Table' |
 
-	И я нажимаю на кнопку с именем 'FormOKButton'
-	И я жду закрытия окна "Drill down indicators: *" в течение 20 секунд
+	And I click the button named 'FormOKButton'
+	And I wait "Drill down indicators: *" window closing in 20 seconds
 
-Сценарий: Я ввожу комментарий 'TheComment' в ячейку 'TheCell'
+Scenario: I enter comment 'TheComment' in cell 'TheCell'
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И я нажимаю на кнопку с именем 'LeaveCommentToIndicator'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And I click the button named 'LeaveCommentToIndicator'
 
-	Тогда открылось окно "Комментарии"
-	И в поле с именем 'NewComment' я ввожу текст '[TheComment]'
+	Then "Comments" window is opened
+	And I input '[TheComment]' text in the field named 'NewComment'
 
-	И я нажимаю на кнопку с именем 'WriteComment'
+	And I click the button named 'WriteComment'
 
-Сценарий: Я изменяю значение на 'TheValue' процентов в ячейке 'TheCell'
+Scenario: I change value to 'TheValue' percent in cell 'TheCell'
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И я нажимаю на кнопку с именем 'ChangeIndicators'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And I click the button named 'ChangeIndicators'
 
-	Тогда открылось окно "Change values"
-	И я меняю значение переключателя с именем 'AdjustmentKind' на "Percentage"
-	И в поле с именем 'ValueAdjustments' я ввожу текст '[TheValue]'
-	И я нажимаю на кнопку с именем 'Apply'
+	Then "Change values" window is opened
+	And I change the radio button named 'AdjustmentKind' value to "Percentage"
+	And I input '[TheValue]' text in the field named 'ValueAdjustments'
+	And I click the button named 'Apply'
 
-Сценарий: Я изменяю значение на 'TheValue' в ячейке 'TheCell'
+Scenario: I change value to 'TheValue' in cell 'TheCell'
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И я нажимаю на кнопку с именем 'ChangeIndicators'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And I click the button named 'ChangeIndicators'
 	
-	Тогда открылось окно "Change values"
-	И я меняю значение переключателя с именем 'AdjustmentKind' на "Value"
-	И в поле с именем 'ValueAdjustments' я ввожу текст '[TheValue]'
-	И я нажимаю на кнопку с именем 'Apply'
+	Then "Change values" window is opened
+	And I change the radio button named 'AdjustmentKind' value to "Value"
+	And I input '[TheValue]' text in the field named 'ValueAdjustments'
+	And I click the button named 'Apply'
 
-Сценарий: Я выбираю показатель с кодом 'TheIndicatorCode' вида отчета 'TheReportKindName'
+Scenario: I select indicator with code 'TheIndicatorCode' of report type 'TheReportKindName'
 
-	Когда открылось окно "Report indicators"
-	И я нажимаю кнопку выбора у поля с именем 'ReportKind'
-	Тогда открылось окно "Report types"
-	И я нажимаю на кнопку с именем 'FormFind'
-	Тогда открылось окно "Find"
-	И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-	И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-	И в поле с именем 'Pattern' я ввожу текст '[TheReportKindName]'
-	И я нажимаю на кнопку с именем 'Find'
-	Тогда открылось окно "Report types"
-	И в таблице 'List' я выбираю текущую строку
+	When "Report indicators" window is opened
+	And I click Choice button of the field named 'ReportKind'
+	Then "Report types" window is opened
+	And I click the button named 'FormFind'
+	Then "Find" window is opened
+	And I select "Description" exact value from the drop-down list named 'FieldSelector'
+	And I change the radio button named 'CompareType' value to "Exact match"
+	And I input '[TheReportKindName]' text in the field named 'Pattern'
+	And I click the button named 'Find'
+	Then "Report types" window is opened
+	And I select current line in 'List' table
 
-	И Я выбираю показатель с кодом '[TheIndicatorCode]'
+	And I select indicator with code '[TheIndicatorCode]'
 	
-Сценарий: Я открываю управление процессом подготовки отчетности для сценария 'TheScenario'
+Scenario: I open reporting preparation process management for scenario 'TheScenario'
 
-	И В командном интерфейсе я выбираю "Processes and approval" "Reporting preparation management"
-	Тогда открылось окно "Reporting preparation management"
-	И я нажимаю кнопку выбора у поля с именем 'PeriodManagement'
-	И Я в списке "Reporting period management" по полю "Scenario" ищу и выбираю элемент '[TheScenario]' "Exact match" 
-	Тогда открылось окно "Reporting preparation management"
-	И в таблице 'StepsTree' я нажимаю на кнопку с именем 'StepsTreeExpandAll'
+	And In the command interface I select "Processes and approval" "Reporting preparation management"
+	Then "Reporting preparation management" window is opened
+	And I click Choice button of the field named 'PeriodManagement'
+	And I search and select element '[TheScenario]' "Exact match" by field "Scenario" in list "Reporting period management"
+	Then "Reporting preparation management" window is opened
+	And in the table 'StepsTree' I click the button named 'StepsTreeExpandAll'
 
-Сценарий: Я добавляю право 'TheRule' для вида отчета 'TheReportKind' пользователя 'TheUser' организации 'TheBusinessUnit' 
+Scenario: I add right 'TheRule' for report type 'TheReportKind' user 'TheUser' company 'TheBusinessUnit'
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report type access matrix"
-	Тогда открылось окно "Customizable reporting user access rights"
-	И из выпадающего списка с именем 'ОтборВидыОтчетов' я выбираю по строке '[TheReportKind]'	
-	И из выпадающего списка с именем 'ОтборПользователи' я выбираю по строке '[TheUser]'
-	И из выпадающего списка с именем 'FilterCompanies' я выбираю по строке '[TheBusinessUnit]'
-	И я меняю значение переключателя с именем 'ShowInColumnsNumber' на 'companies'
-	И я устанавливаю флаг с именем 'ShouldShowReportTemplates'
+	And In the command interface I select "Budgeting, reporting, and analysis" "Report type access matrix"
+	Then "Customizable reporting user access rights" window is opened
+	And I select from the drop-down list named 'FilterReportsTypes'  by '[TheReportKind]' string
+	And I select from the drop-down list named 'FilterUsers'  by '[TheUser]' string
+	And I select from the drop-down list named 'FilterCompanies'  by '[TheBusinessUnit]' string
+	And I change the radio button named 'ShowInColumnsNumber' value to 'companies'
+	And I set checkbox named 'ShouldShowReportTemplates'
 	
-	И я нажимаю на кнопку с именем 'FormUpdateTable'
-	И в табличном документе 'CustomField' я перехожу к ячейке 'DetailsReportKind'
-	И в табличном документе 'CustomField' я делаю двойной клик на текущей ячейке
-	Тогда открылось окно "Select access kind"
-	И Я запоминаю значение выражения '[TheRule]' в переменную 'ТекущеПравило'
-	И в таблице 'List' я перехожу к строке:
+	And I click the button named 'FormUpdateTable'
+	And in 'CustomField' spreadsheet document I move to 'DetailsReportKind' cell
+	And in 'CustomField' spreadsheet document I double-click the current cell
+	Then "Select access kind" window is opened
+	And I save '[TheRule]' in 'CurrentRule' variable
+	And I go to line in 'List' table:
 		| "Reference"          |
-		| '$ТекущеПравило$' |
-	И в таблице 'List' я выбираю текущую строку
+		| '$CurrentRule$' |
+	And I select current line in 'List' table
 
-	Тогда открылось окно "Customizable reporting user access rights *"
-	И я нажимаю на кнопку с именем 'FormApplySettings'
-	Тогда открылось окно "Customizable reporting user access rights"
-	И я нажимаю на кнопку с именем 'RereadData'
+	Then "Customizable reporting user access rights *" window is opened
+	And I click the button named 'FormApplySettings'
+	Then "Customizable reporting user access rights" window is opened
+	And I click the button named 'RereadData'
 
-	Когда открылось окно "Customizable reporting user access rights"
-	И Я закрываю окно "Customizable reporting user access rights"
+	When "Customizable reporting user access rights" window is opened
+	And I close "Customizable reporting user access rights" window
 
-Сценарий: Я добавляю право 'TheRule' для вида отчета 'TheReportKind' пользователя 'TheUser' по всем организациям
+Scenario: I add right 'TheRule' for report type 'TheReportKind' user 'TheUser' for all companies
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report type access matrix"
-	Тогда открылось окно "Customizable reporting user access rights"
-	И из выпадающего списка с именем 'ОтборВидыОтчетов' я выбираю по строке '[TheReportKind]'
-	И из выпадающего списка с именем 'ОтборПользователи' я выбираю по строке '[TheUser]'
-	И я нажимаю кнопку очистить у поля с именем 'FilterCompanies'		
-	И я меняю значение переключателя с именем 'ShowInColumnsNumber' на 'companies'
-	И я устанавливаю флаг с именем 'ShouldShowReportTemplates'
+	And In the command interface I select "Budgeting, reporting, and analysis" "Report type access matrix"
+	Then "Customizable reporting user access rights" window is opened
+	And I select from the drop-down list named 'FilterReportsTypes'  by '[TheReportKind]' string
+	And I select from the drop-down list named 'FilterUsers'  by '[TheUser]' string
+	And I click Clear button of the field named 'FilterCompanies'
+	And I change the radio button named 'ShowInColumnsNumber' value to 'companies'
+	And I set checkbox named 'ShouldShowReportTemplates'
 
-	И я нажимаю на кнопку с именем 'FormUpdateTable'
-	И в табличном документе 'CustomField' я перехожу к ячейке 'ReportKind'
-	И в табличном документе 'CustomField' я делаю двойной клик на текущей ячейке
-	Тогда открылось окно "Set up access rights to report type"
-	И в таблице 'ТаблицаНастроекПрав' я нажимаю на кнопку с именем 'ТаблицаНастроекПравЗаполнитьПраваДоступа'
-	Тогда открылось окно "Select access kind"
-	И Я запоминаю значение выражения '[TheRule]' в переменную 'ТекущеПравило'
-	И в таблице 'List' я перехожу к строке:
+	And I click the button named 'FormUpdateTable'
+	And in 'CustomField' spreadsheet document I move to 'ReportKind' cell
+	And in 'CustomField' spreadsheet document I double-click the current cell
+	Then "Set up access rights to report type" window is opened
+	And in the table 'RightsSettingsTable' I click the button named 'RightsSettingsTableFillAccessRights'
+	Then "Select access kind" window is opened
+	And I save '[TheRule]' in 'CurrentRule' variable
+	And I go to line in 'List' table:
 		| "Reference"          |
-		| '$ТекущеПравило$' |
-	И в таблице 'List' я выбираю текущую строку
-	Тогда открылось окно "Set up access rights to report type"
-	И я нажимаю на кнопку с именем 'FormOK'
+		| '$CurrentRule$' |
+	And I select current line in 'List' table
+	Then "Set up access rights to report type" window is opened
+	And I click the button named 'FormOK'
 
-	Тогда открылось окно "Customizable reporting user access rights *"
-	И я нажимаю на кнопку с именем 'FormApplySettings'
-	Тогда открылось окно "Customizable reporting user access rights"
-	И я нажимаю на кнопку с именем 'RereadData'
+	Then "Customizable reporting user access rights *" window is opened
+	And I click the button named 'FormApplySettings'
+	Then "Customizable reporting user access rights" window is opened
+	And I click the button named 'RereadData'
 
-	Когда открылось окно "Customizable reporting user access rights"
-	И Я закрываю окно "Customizable reporting user access rights"
+	When "Customizable reporting user access rights" window is opened
+	And I close "Customizable reporting user access rights" window
 
-Сценарий: Я создаю группу аналитических отчетов с кодом 'TheCode' именем 'TheName' родителем 'TheParent'
+Scenario: I create analytical report group with code 'TheCode' name 'TheName' parent 'TheParent'
 
-	* Открываем форму справочника
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Analytical reports"
+	* Opening a reference form
+		And In the command interface I select "Budgeting, reporting, and analysis" "Analytical reports"
 
-	* Удаляем элемент
-		И Я в списке "Analytical reports" по полю "Description" ищу элемент '[TheName]' "Exact match" 
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление	
-				И Я удаляю текущую строку в списке 'List'
-			* Переименовываем
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "* (Analytical reports)"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю кнопку очистить у поля с именем 'Code'
-				Тогда открылось окно "1C:Enterprise"
-				И я нажимаю на кнопку с именем 'Button0'				
-				И в поле с именем 'Code' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Analytical reports) *" в течение 20 секунд
-		И я выбираю пункт контекстного меню с именем 'ListContextMenuCancelSearch' на элементе формы с именем "List"
+	* Deleting an element
+		And I search element '[TheName]' "Exact match" by field "Description" in list "Analytical reports"
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "* (Analytical reports)" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I click Clear button of the field named 'Code'
+				Then "1C:Enterprise" window is opened
+				And I click the button named 'Button0'
+				And I input 'UID' variable value in the field named 'Code'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Analytical reports) *" window closing in 20 seconds
+		And I select context menu item named 'ListContextMenuCancelSearch' of the form attribute named "List"
 
-	* Создаем элемент
-		Когда открылось окно "Analytical reports"
-		И я нажимаю на кнопку с именем 'FormCreateFolder'
-		Тогда открылось окно 'Analytical reports (create group)'
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И я нажимаю кнопку очистить у поля с именем 'Code'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'				
-		И в поле с именем 'Code' я ввожу текст '[TheCode]'
-		Если 'IsBlankString("[TheParent]")' Тогда
-			И я нажимаю кнопку очистить у поля с именем 'Parent'
-		Иначе
-			И из выпадающего списка с именем 'Parent' я выбираю по строке '[TheParent]'									
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна 'Analytical reports (create group) *' в течение 20 секунд
+	* Creating an element
+		When "Analytical reports" window is opened
+		And I click the button named 'FormCreateFolder'
+		Then 'Analytical reports (create group)' window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		And I click Clear button of the field named 'Code'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		And I input '[TheCode]' text in the field named 'Code'
+		If 'IsBlankString("[TheParent]")' Then
+			And I click Clear button of the field named 'Parent'
+		Else
+			And I select from the drop-down list named 'Parent'  by '[TheParent]' string
+		And I click the button named 'FormWriteAndClose'
+		And I wait 'Analytical reports (create group) *' window closing in 20 seconds
 
-Сценарий: Я создаю аналитический отчет с кодом 'TheCode' вид отчета 'TheReportKind' период 'ThePeriod' организация 'TheBusinessUnit' родитель 'TheParent'
+Scenario: I create analytical report with code 'TheCode' report type 'TheReportKind' period 'ThePeriod' company 'TheBusinessUnit' parent 'TheParent'
 
-	* Открываем форму справочника
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Analytical reports"
+	* Opening a reference form
+		And In the command interface I select "Budgeting, reporting, and analysis" "Analytical reports"
 
-	* Удаляем элемент
-		И Я в списке "Analytical reports" по полю "Description" ищу элемент '[TheReportKind] ([TheBusinessUnit])' "Exact match" 
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление	
-				И Я удаляю текущую строку в списке 'List'
-			* Переименовываем
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "* (Analytical report)"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю кнопку очистить у поля с именем 'Code'
-				Тогда открылось окно "1C:Enterprise"
-				И я нажимаю на кнопку с именем 'Button0'				
-				И в поле с именем 'Code' я ввожу значение переменной 'UID'							
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Analytical report) *" в течение 20 секунд
+	* Deleting an element
+		And I search element '[TheReportKind] ([TheBusinessUnit])' "Exact match" by field "Description" in list "Analytical reports"
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "* (Analytical report)" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I click Clear button of the field named 'Code'
+				Then "1C:Enterprise" window is opened
+				And I click the button named 'Button0'
+				And I input 'UID' variable value in the field named 'Code'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Analytical report) *" window closing in 20 seconds
 
-	* Создаем элемент
-		Когда открылось окно "Analytical reports"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Analytical report (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheReportKind] ([TheBusinessUnit])'
-		И я нажимаю кнопку очистить у поля с именем 'Code'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'				
-		И в поле с именем 'Code' я ввожу текст '[TheCode]'	
-		Если 'IsBlankString("[TheParent]")' Тогда
-			И я нажимаю кнопку очистить у поля с именем 'Parent'
-		Иначе
-			И из выпадающего списка с именем 'Parent' я выбираю по строке '[TheParent]'
-		И я нажимаю на кнопку с именем 'FormWrite'
+	* Creating an element
+		When "Analytical reports" window is opened
+		And I click the button named 'FormCreate'
+		Then "Analytical report (create)" window is opened
+		And I input '[TheReportKind] ([TheBusinessUnit])' text in the field named 'Description'
+		And I click Clear button of the field named 'Code'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		And I input '[TheCode]' text in the field named 'Code'
+		If 'IsBlankString("[TheParent]")' Then
+			And I click Clear button of the field named 'Parent'
+		Else
+			And I select from the drop-down list named 'Parent'  by '[TheParent]' string
+		And I click the button named 'FormWrite'
 
-	* Настраиваем элемент	
-		Когда открылось окно "[TheReportKind] ([TheBusinessUnit]) (Analytical report)"
-		* Источник данных
-			И я нажимаю кнопку выбора у поля с именем 'ReportDataSource'
-			Тогда открылось окно "Select data type"
-			И в таблице "" я выбираю текущую строку		
-			Тогда открылось окно "Queries to infobase"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Query to infobase (create)"
-			И в поле с именем 'Description' я ввожу текст '[TheReportKind] ([TheBusinessUnit])'
-			И я нажимаю на кнопку с именем 'Write'
-			Тогда открылось окно "[TheReportKind] ([TheBusinessUnit]) (Query to infobase)"
-			И я перехожу к закладке с именем 'CaclSetup'
-			И я нажимаю на кнопку с именем 'FormGetIndicatorsValues'
-			И я нажимаю на кнопку с именем 'WriteAndClose'
-			И я жду закрытия окна "[TheReportKind] ([TheBusinessUnit]) (Query to infobase)" в течение 20 секунд
-			Тогда открылось окно "Queries to infobase"
-			И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "[TheReportKind] ([TheBusinessUnit]) (Analytical report) *"
-		И я нажимаю на кнопку с именем 'FormWrite'
+	* Configuring an element
+		When "[TheReportKind] ([TheBusinessUnit]) (Analytical report)" window is opened
+		* Data source
+			And I click Choice button of the field named 'ReportDataSource'
+			Then "Select data type" window is opened
+			And I select current line in "" table
+			Then "Queries to infobase" window is opened
+			And I click the button named 'FormCreate'
+			Then "Query to infobase (create)" window is opened
+			And I input '[TheReportKind] ([TheBusinessUnit])' text in the field named 'Description'
+			And I click the button named 'Write'
+			Then "[TheReportKind] ([TheBusinessUnit]) (Query to infobase)" window is opened
+			And I move to the tab named 'CaclSetup'
+			And I click the button named 'FormGetIndicatorsValues'
+			And I click the button named 'WriteAndClose'
+			And I wait "[TheReportKind] ([TheBusinessUnit]) (Query to infobase)" window closing in 20 seconds
+			Then "Queries to infobase" window is opened
+			And I select current line in 'List' table
+		Then "[TheReportKind] ([TheBusinessUnit]) (Analytical report) *" window is opened
+		And I click the button named 'FormWrite'
 
-	* Редактирование схемы	
-		И я нажимаю на кнопку с именем 'EditSchemaOption'
-		Тогда открылось окно "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))"
+	* Editing a scheme
+		And I click the button named 'EditSchemaOption'
+		Then "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))" window is opened
 		
-		И в таблице 'RowsGroupingTableBoxPageTable' я нажимаю на кнопку с именем 'RowsGroupingTableBoxPageTableAddGroupingField'
-		И в таблице 'RowsGroupingTableBoxPageTable' из выпадающего списка с именем 'ТабличноеПолеГруппировкиСтрокСтраницаТаблицаПоле' я выбираю точное значение "Организация"
-		И в таблице 'RowsGroupingTableBoxPageTable' из выпадающего списка с именем 'ТабличноеПолеГруппировкиСтрокСтраницаТаблицаТипГруппировки' я выбираю точное значение "Без иерархии"
-		И в таблице 'RowsGroupingTableBoxPageTable' я нажимаю на кнопку с именем 'RowsGroupingTableBoxPageTableAddGroupingField'
-		И в таблице 'RowsGroupingTableBoxPageTable' из выпадающего списка с именем 'RowsGroupingTableBoxPageTableField' я выбираю точное значение "Report period"
-		И в таблице 'RowsGroupingTableBoxPageTable' из выпадающего списка с именем 'ТабличноеПолеГруппировкиСтрокСтраницаТаблицаТипГруппировки' я выбираю точное значение "Без иерархии"
+		And in the table 'RowsGroupingTableBoxPageTable' I click the button named 'RowsGroupingTableBoxPageTableAddGroupingField'
+		And I select "Организация" exact value from the drop-down list named 'RowsGroupingTableBoxPageTableField' in 'RowsGroupingTableBoxPageTable' table
+		And I select "Without hierarchy" exact value from the drop-down list named 'RowsGroupingTableBoxPageTableGroupingType' in 'RowsGroupingTableBoxPageTable' table
+		And in the table 'RowsGroupingTableBoxPageTable' I click the button named 'RowsGroupingTableBoxPageTableAddGroupingField'
+		And I select "Report period" exact value from the drop-down list named 'RowsGroupingTableBoxPageTableField' in 'RowsGroupingTableBoxPageTable' table
+		And I select "Without hierarchy" exact value from the drop-down list named 'RowsGroupingTableBoxPageTableGroupingType' in 'RowsGroupingTableBoxPageTable' table
 		
-		И в таблице 'SelectedFieldsPageTable' я нажимаю на кнопку с именем 'SelectedFieldsPageTableAddSelectedField'
-		И в таблице 'SelectedFieldsPageTable' из выпадающего списка с именем 'SelectedFieldsPageTableField' я выбираю точное значение "Indicator"
-		И в таблице 'SelectedFieldsPageTable' я завершаю редактирование строки
-		И в таблице 'SelectedFieldsPageTable' я нажимаю на кнопку с именем 'SelectedFieldsPageTableAddSelectedField'
-		И в таблице 'SelectedFieldsPageTable' из выпадающего списка с именем 'SelectedFieldsPageTableField' я выбираю точное значение "Value"
+		And in the table 'SelectedFieldsPageTable' I click the button named 'SelectedFieldsPageTableAddSelectedField'
+		And I select "Indicator" exact value from the drop-down list named 'SelectedFieldsPageTableField' in 'SelectedFieldsPageTable' table
+		And I finish line editing in 'SelectedFieldsPageTable' table
+		And in the table 'SelectedFieldsPageTable' I click the button named 'SelectedFieldsPageTableAddSelectedField'
+		And I select "Value" exact value from the drop-down list named 'SelectedFieldsPageTableField' in 'SelectedFieldsPageTable' table
 
-		И я перехожу к закладке с именем 'FilterAndOrder'
-		И в таблице 'TableBoxFilterPageWithoutParameters' я нажимаю на кнопку с именем 'TableBoxFilterPageWithoutParametersAddFilterItem'
-		И в таблице 'TableBoxFilterPageWithoutParameters' из выпадающего списка с именем 'ТабличноеПолеОтборСтраницаБезПараметровЛевоеЗначение' я выбираю точное значение "Организация"
-		И в таблице 'TableBoxFilterPageWithoutParameters' из выпадающего списка с именем 'ТабличноеПолеОтборСтраницаБезПараметровВидСравнения' я выбираю точное значение "Равно"
-		И в таблице 'TableBoxFilterPageWithoutParameters' я нажимаю кнопку выбора у реквизита с именем 'TableBoxFilterPageWithoutParametersRightValue'
-		И Я выбираю организацию '[TheBusinessUnit]'
-		Тогда открылось окно "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))"
-		И в таблице 'TableBoxFilterPageWithoutParameters' я нажимаю на кнопку с именем 'TableBoxFilterPageWithoutParametersAddFilterItem'
-		И в таблице 'TableBoxFilterPageWithoutParameters' из выпадающего списка с именем 'TableBoxFilterPageWithoutParametersLeftValue' я выбираю точное значение "Report period"
-		И в таблице 'TableBoxFilterPageWithoutParameters' из выпадающего списка с именем 'ТабличноеПолеОтборСтраницаБезПараметровВидСравнения' я выбираю точное значение "Равно"
-		И в таблице 'TableBoxFilterPageWithoutParameters' я нажимаю кнопку выбора у реквизита с именем 'TableBoxFilterPageWithoutParametersRightValue'
-		И Я в списке "Periods" по полю "Description" ищу и выбираю элемент '[ThePeriod]' "At the beginning of the line"
-		Когда открылось окно "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))"
-		И в таблице 'TableBoxFilterPageWithoutParameters' я нажимаю на кнопку с именем 'TableBoxFilterPageWithoutParametersAddFilterItem'
-		И в таблице 'TableBoxFilterPageWithoutParameters' из выпадающего списка с именем 'TableBoxFilterPageWithoutParametersLeftValue' я выбираю точное значение "Currency"
-		И в таблице 'TableBoxFilterPageWithoutParameters' из выпадающего списка с именем 'ТабличноеПолеОтборСтраницаБезПараметровВидСравнения' я выбираю точное значение "Равно"
-		И в таблице 'TableBoxFilterPageWithoutParameters' из выпадающего списка с именем 'TableBoxFilterPageWithoutParametersRightValue' я выбираю точное значение "RUB"
-		И в таблице 'TableBoxFilterPageWithoutParameters' я завершаю редактирование строки
-		Когда открылось окно "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))"
-		И в таблице "Filter" я нажимаю на кнопку с именем 'FilterAddFilterItem'
-		И в таблице "Filter" из выпадающего списка с именем "FilterLeftValue" я выбираю по строке "Factor.Report type"
-		И в таблице "Filter" я активизирую поле с именем "FilterRightValue"
-		И в таблице "Filter" я нажимаю кнопку выбора у реквизита с именем "FilterRightValue"
-		Тогда открылось окно "Select data type"
-		И в таблице "" я выбираю текущую строку
-		И Я в списке "Report types" по полю "Description" ищу и выбираю элемент '[TheReportKind]' "At the beginning of the line"
+		And I move to the tab named 'FilterAndOrder'
+		And in the table 'TableBoxFilterPageWithoutParameters' I click the button named 'TableBoxFilterPageWithoutParametersAddFilterItem'
+		And I select "Организация" exact value from the drop-down list named 'TableBoxFilterPageWithoutParametersLeftValue' in 'TableBoxFilterPageWithoutParameters' table
+		And I select "Equal to" exact value from the drop-down list named 'TableBoxFilterPageWithoutParametersComparisonType' in 'TableBoxFilterPageWithoutParameters' table
+		And I click choice button of the attribute named 'TableBoxFilterPageWithoutParametersRightValue' in 'TableBoxFilterPageWithoutParameters' table
+		And I select company '[TheBusinessUnit]'
+		Then "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))" window is opened
+		And in the table 'TableBoxFilterPageWithoutParameters' I click the button named 'TableBoxFilterPageWithoutParametersAddFilterItem'
+		And I select "Report period" exact value from the drop-down list named 'TableBoxFilterPageWithoutParametersLeftValue' in 'TableBoxFilterPageWithoutParameters' table
+		And I select "Equal to" exact value from the drop-down list named 'TableBoxFilterPageWithoutParametersComparisonType' in 'TableBoxFilterPageWithoutParameters' table
+		And I click choice button of the attribute named 'TableBoxFilterPageWithoutParametersRightValue' in 'TableBoxFilterPageWithoutParameters' table
+		And I search and select element '[ThePeriod]' "At the beginning of the line" by field "Description" in list "Periods"
+		When "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))" window is opened
+		And in the table 'TableBoxFilterPageWithoutParameters' I click the button named 'TableBoxFilterPageWithoutParametersAddFilterItem'
+		And I select "Currency" exact value from the drop-down list named 'TableBoxFilterPageWithoutParametersLeftValue' in 'TableBoxFilterPageWithoutParameters' table
+		And I select "Equal to" exact value from the drop-down list named 'TableBoxFilterPageWithoutParametersComparisonType' in 'TableBoxFilterPageWithoutParameters' table
+		And I select "RUB" exact value from the drop-down list named 'TableBoxFilterPageWithoutParametersRightValue' in 'TableBoxFilterPageWithoutParameters' table
+		And I finish line editing in 'TableBoxFilterPageWithoutParameters' table
+		When "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))" window is opened
+		And in the table "Filter" I click the button named 'FilterAddFilterItem'
+		And I select "Factor.Report type" by string from the drop-down list named "FilterLeftValue" in "Filter" table
+		And I activate field named "FilterRightValue" in "Filter" table
+		And I click choice button of the attribute named "FilterRightValue" in "Filter" table
+		Then "Select data type" window is opened
+		And I select current line in "" table
+		And I search and select element '[TheReportKind]' "At the beginning of the line" by field "Description" in list "Report types"
 		
-		Когда открылось окно "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))"
-		И я перехожу к закладке с именем 'OrderPage'
-		И в таблице 'Table_SortFields' я нажимаю на кнопку с именем 'Table_SortFieldsAddOrderItem'
-		И в таблице 'Table_SortFields' из выпадающего списка с именем 'Таблица_ПоляСортировкиПоле' я выбираю по строке "Показатель.Строка.Порядковый номер"
-		И в таблице 'Table_SortFields' я завершаю редактирование строки
-		И в таблице 'Table_SortFields' я нажимаю на кнопку с именем 'Table_SortFieldsAddOrderItem'
-		И в таблице 'Table_SortFields' из выпадающего списка с именем 'Таблица_ПоляСортировкиПоле' я выбираю по строке "Показатель.Колонка.Порядковый номер"
-		И в таблице 'Table_SortFields' я завершаю редактирование строки				
+		When "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))" window is opened
+		And I move to the tab named 'OrderPage'
+		And in the table 'Table_SortFields' I click the button named 'Table_SortFieldsAddOrderItem'
+		And I select "Factor.Line.Sequence number" by string from the drop-down list named 'Table_SortFieldsField' in 'Table_SortFields' table
+		And I finish line editing in 'Table_SortFields' table
+		And in the table 'Table_SortFields' I click the button named 'Table_SortFieldsAddOrderItem'
+		And I select "Factor.Column.Sequence number" by string from the drop-down list named 'Table_SortFieldsField' in 'Table_SortFields' table
+		And I finish line editing in 'Table_SortFields' table
 		
-		И я нажимаю на кнопку с именем 'FormOK'
+		And I click the button named 'FormOK'
 
-	Тогда открылось окно "[TheReportKind] ([TheBusinessUnit]) (Analytical report)"
-	И я нажимаю на кнопку с именем 'FormWrite'
-	И я устанавливаю флаг с именем 'CustomSettings'
-	И я нажимаю на кнопку с именем 'FormWrite'
+	Then "[TheReportKind] ([TheBusinessUnit]) (Analytical report)" window is opened
+	And I click the button named 'FormWrite'
+	And I set checkbox named 'CustomSettings'
+	And I click the button named 'FormWrite'
 
-	Тогда открылось окно "[TheReportKind] ([TheBusinessUnit]) (Analytical report)"
-	И я нажимаю на кнопку с именем 'EditSchemaOption'
-	Тогда открылось окно "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))"
-	И я перехожу к закладке с именем 'OutputParametersPage'
-	И в таблице "Table_OutputParameters" я перехожу к строке:
+	Then "[TheReportKind] ([TheBusinessUnit]) (Analytical report)" window is opened
+	And I click the button named 'EditSchemaOption'
+	Then "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))" window is opened
+	And I move to the tab named 'OutputParametersPage'
+	And I go to line in "Table_OutputParameters" table:
 		| "Value" | "Use" | "Parameter"                               |
-		| "Auto"     | "Нет"           | "Расположение общих итогов по вертикали" |
-	И в таблице 'Table_OutputParameters' я активизирую поле с именем 'Table_OutputParametersValue'
-	И в таблице 'Table_OutputParameters' я выбираю текущую строку
-	И в таблице 'Table_OutputParameters' из выпадающего списка с именем 'Таблица_ПараметрыВыводаЗначение' я выбираю точное значение "Нет"
-	И в таблице 'Table_OutputParameters' я завершаю редактирование строки
-	И я нажимаю на кнопку с именем 'FormOK'
+		| "Auto"     | "No"           | "Placement of grand totals vertically" |
+	And I activate field named 'Table_OutputParametersValue' in 'Table_OutputParameters' table
+	And I select current line in 'Table_OutputParameters' table
+	And I select "No" exact value from the drop-down list named 'Table_OutputParametersValue' in 'Table_OutputParameters' table
+	And I finish line editing in 'Table_OutputParameters' table
+	And I click the button named 'FormOK'
 
-	Тогда открылось окно "[TheReportKind] ([TheBusinessUnit]) (Analytical report)"
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
-	И я жду закрытия окна "[TheReportKind] ([TheBusinessUnit]) (Analytical report)" в течении 20 секунд
+	Then "[TheReportKind] ([TheBusinessUnit]) (Analytical report)" window is opened
+	And I click the button named 'FormWriteAndClose'
+	And I wait "[TheReportKind] ([TheBusinessUnit]) (Analytical report)" window closing in 20 seconds

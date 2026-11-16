@@ -1,61 +1,61 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии общие
+Feature: General export scenarios
 
-Сценарий: Инициализация переменных
+Scenario: I initialize variables
 
-	И Я запоминаю значение выражения 'ОбщегоНазначенияКлиентСерверУХ.ИмяКонфигурации() = "Perform"' в переменную '$$ЭтоPerform$$'
+	And I save 'ОбщегоНазначенияКлиентСерверУХ.ИмяКонфигурации() = "Perform"' in '$$IsPerform$$' variable
 
-	И Я запоминаю значение выражения 'ОбщегоНазначенияКлиентСерверУХ.ИмяКонфигурации() = "УправлениеХолдингом" ИЛИ $$ЭтоPerform$$' в переменную '$$ЭтоУХ$$'
+	And I save '?(CommonClientServerCPM.ConfigurationName() = "HoldingManagement" OR $$IsPerform$$, "True", "False")' in '$$IsCPM$$' variable
 			
-	И Я запоминаю значение выражения 'ОбщегоНазначенияКлиентСерверУХ.ИмяКонфигурации() = "УправлениеХолдингомERP"' в переменную '$$ЭтоЕРПУХ$$'
+	And I save 'ОбщегоНазначенияКлиентСерверУХ.ИмяКонфигурации() = "УправлениеХолдингомERP"' in '$$IsERPCPM$$' variable
 
 	Если в панели разделов есть команда 'Бюджетирование, отчетность и анализ' Тогда
 		И Я запоминаю значение выражения 'Ru' в переменную '$$ЯзыкИнтерфейса$$'
 	ИначеЕсли в панели разделов есть команда 'Budgeting, reporting, and analysis' Тогда
 		И Я запоминаю значение выражения 'En' в переменную '$$ЯзыкИнтерфейса$$'
 		
-Сценарий: Таблица 'TheTable' содержит 'TheNumberOfLines' строк из списка:
+Scenario: I check table 'TheTable' contains 'TheNumberOfLines' rows from list:
 
-	Тогда в таблице '[TheTable]' количество строк 'равно' '[TheNumberOfLines]'
+	Then the number of '[TheTable]' table lines is 'equal' '[TheNumberOfLines]'
 
-	Тогда таблица '[TheTable]' содержит строки:
+	Then '[TheTable]' table contains lines
 		| 'Table' |	
 
-Сценарий: Я для реквизита 'TheProperty' устанавливаю значение 'TheValue'
+Scenario: I set value 'TheValue' for attribute 'TheProperty'
 
-	Если 'ВРег("[TheValue]") = "ИСТИНА" ИЛИ ВРег("[TheValue]") = "TRUE"' Тогда
-		И я устанавливаю флаг с именем '[TheProperty]'
-	ИначеЕсли 'ВРег("[TheValue]") = "ЛОЖЬ" ИЛИ ВРег("[TheValue]") = "FALSE"' Тогда
-		И я снимаю флаг с именем '[TheProperty]'
-	Иначе
-		И из выпадающего списка с именем '[TheProperty]' я выбираю точное значение "[TheValue]"
+	If 'Upper("[TheValue]") = "TRUE" OR Upper("[TheValue]") = "TRUE"' Then
+		And I set checkbox named '[TheProperty]'
+	ElseIf 'Upper("[TheValue]") = "FALSE" OR Upper("[TheValue]") = "FALSE"' Then
+		And I remove checkbox named '[TheProperty]'
+	Else
+		And I select "[TheValue]" exact value from the drop-down list named '[TheProperty]'
 
-Сценарий: Я удаляю текущий элемент в окне 'TheWindowName' очищая 'TheFieldName1' 'TheFieldName2' 'TheFieldName3'
+Scenario: I delete current element in window 'TheWindowName' clearing 'TheFieldName1' 'TheFieldName2' 'TheFieldName3'
 
-	Когда открылось окно "[TheWindowName]"	
+	When "[TheWindowName]" window is opened
 
-	И я нажимаю на кнопку с именем 'FormSetDeletionMark'
-	Когда открылось окно "1C:Enterprise"
-	Если элемент формы с именем 'Message' стал равен "Mark * for deletion?" по шаблону Тогда
-		И я нажимаю на кнопку с именем 'Button0'
-	Иначе
-		И я нажимаю на кнопку с именем 'Button1'
+	And I click the button named 'FormSetDeletionMark'
+	When "1C:Enterprise" window is opened
+	If form element named 'Message' became equal to "Mark * for deletion?" by template Then
+		And I click the button named 'Button0'
+	Else
+		And I click the button named 'Button1'
 
-	И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'	
-	Тогда в поле с именем 'Description' я ввожу значение переменной 'UID'
+	And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+	Then I input 'UID' variable value in the field named 'Description'
 	
-	Если 'НЕ СтрНачинаетсяС("[TheFieldName1]", "[") И НЕ ПустаяСтрока("[TheFieldName1]")' Тогда
-		Тогда в поле с именем '[TheFieldName1]' я ввожу текст ' '			
-	Если 'НЕ СтрНачинаетсяС("[TheFieldName2]", "[") И НЕ ПустаяСтрока("[TheFieldName2]")' Тогда
-		Тогда в поле с именем '[TheFieldName2]' я ввожу текст ' '
-	Если 'НЕ СтрНачинаетсяС("[TheFieldName3]", "[") И НЕ ПустаяСтрока("[TheFieldName3]")' Тогда
-		Тогда в поле с именем '[TheFieldName3]' я ввожу текст ' '
+	If 'NOT StrStartsWith("[TheFieldName1]", "[") AND NOT IsBlankString("[TheFieldName1]")' Then
+		Then I input ' ' text in the field named '[TheFieldName1]'
+	If 'NOT StrStartsWith("[TheFieldName2]", "[") AND NOT IsBlankString("[TheFieldName2]")' Then
+		Then I input ' ' text in the field named '[TheFieldName2]'
+	If 'NOT StrStartsWith("[TheFieldName3]", "[") AND NOT IsBlankString("[TheFieldName3]")' Then
+		Then I input ' ' text in the field named '[TheFieldName3]'
 
-	Тогда открылось окно "[TheWindowName]*"		
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
-	И я жду закрытия окна "[TheWindowName]*" в течение 20 секунд
+	Then "[TheWindowName]*" window is opened
+	And I click the button named 'FormWriteAndClose'
+	And I wait "[TheWindowName]*" window closing in 20 seconds
 			

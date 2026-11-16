@@ -1,613 +1,613 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 19. Процесс подготовки отчетности
+Feature: 19. Reporting preparation process
 
-	Как Администратор я хочу
-	чтобы процесс подготовки отчетности работал без ошибок
+	As Administrator I want to
+	so that the reporting preparation process works without errors
 
-Контекст:
+Background:
 
-	И я закрыл все окна клиентского приложения
+	And I close all client application windows
 
-Сценарий: 19.00 Определение типа приложения
+Scenario: 19.00 Determining the application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 19.01 Создание группы видов отчетов "VA - Report preparation process (group)"
+Scenario: 19.01 Creating a report type group "VA - Report preparation process (group)"
 
-	И Я создаю группу видов отчетов с именем "VA - Report preparation process (group)" и родителем "VA - Report group"
+	And I create report type group with name "VA - Report preparation process (group)" and parent "VA - Report group"
 
-Сценарий: 19.02 Создание вида отчета "VA - ProcessCount"
+Scenario: 19.02 Creating a report type "VA - ProcessCount"
 
-	* Создаем вид отчета
-		И Я создаю вид отчета с именем "VA - ProcessCount" и родителем "VA - Report preparation process (group)"
+	* Creating a report type
+		And I create report type with name "VA - ProcessCount" and parent "VA - Report preparation process (group)"
 
-	* Настраиваем структуру
-		И я открываю контруктор отчета с именем "VA - ProcessCount"
-		И Я в конструкторе отчета добавляю строку с именем "Goods"
-		И Я в конструкторе отчета добавляю колонку с именем "Count"
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R2C2'
+	* Configuring structure
+		And I open report wizard with name "VA - ProcessCount"
+		And I add row with name "Goods" in report wizard
+		And I add column with name "Count" in report wizard
+		And I add dimension with code "VA0Product" in cell 'R2C2' in report wizard
 	
-	* Создаем бланк
-		И Я Для вида отчета "VA - ProcessCount" создаю бланк по умолчанию
+	* Creating a template
+		And I create default template for report type "VA - ProcessCount"
 
-Сценарий: 19.03 Создание вида отчета "VA - ProcessPrice"
+Scenario: 19.03 Creating a report type "VA - ProcessPrice"
 
-	* Создаем вид отчета
-		И Я создаю вид отчета с именем "VA - ProcessPrice" и родителем "VA - Report preparation process (group)"
+	* Creating a report type
+		And I create report type with name "VA - ProcessPrice" and parent "VA - Report preparation process (group)"
 
-	* Настраиваем структуру
-		И я открываю контруктор отчета с именем "VA - ProcessPrice"
-		И Я в конструкторе отчета добавляю строку с именем "Goods"
-		И Я в конструкторе отчета добавляю колонку с именем "Price"
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R2C2'
+	* Configuring structure
+		And I open report wizard with name "VA - ProcessPrice"
+		And I add row with name "Goods" in report wizard
+		And I add column with name "Price" in report wizard
+		And I add dimension with code "VA0Product" in cell 'R2C2' in report wizard
 	
-	* Создаем бланк
-		И Я Для вида отчета "VA - ProcessPrice" создаю бланк для импорта по умолчанию
+	* Creating a template
+		And I create default import template for report type "VA - ProcessPrice"
 
-Сценарий: 19.04 Создание внешней информационной базы "VA - ProcessImportPrice"
+Scenario: 19.04 Creating external information base "VA - ProcessImportPrice"
 
-	И Я создаю внешнюю информационную базу "VA - ProcessImportPrice" тип "Microsoft Excel files" каталог "$DirectoryПроекта$\3_Budgeting\Templates\19" тип хранилища ''
+	And I create external information base "VA - ProcessImportPrice" type "Microsoft Excel files" catalog "$ProjectPath$\3_Budgeting\Layouts\19" storage type ''
 
-	* Тестируем механизм маски имени
-		И я нажимаю на кнопку с именем 'NameStructureAdd'
-		И в таблице 'NameStructure' из выпадающего списка с именем 'NameStructureItem' я выбираю точное значение "Report type"
-		И в таблице 'NameStructure' из выпадающего списка с именем 'NameStructureStartElement' я выбираю точное значение "+"
-		И в таблице 'NameStructure' из выпадающего списка с именем 'NameStructureItem' я выбираю точное значение "Company"
-		И в таблице 'NameStructure' я отменяю редактирование строки
-		Тогда элемент формы с именем 'FullNameMask' стал равен "$DirectoryПроекта$\3_Budgeting\Templates\19\<Report type>+<Company>.xls?"
+	* Testing the name mask mechanism
+		And I click the button named 'NameStructureAdd'
+		And I select "Report type" exact value from the drop-down list named 'NameStructureItem' in 'NameStructure' table
+		And I select "+" exact value from the drop-down list named 'NameStructureStartElement' in 'NameStructure' table
+		And I select "Company" exact value from the drop-down list named 'NameStructureItem' in 'NameStructure' table
+		And I cancel line editing in 'NameStructure' table
+		Then the form attribute named 'FullNameMask' became equal to "$ProjectPath$\3_Budgeting\Layouts\19\<Report type>+<Company>.xls?"
 
-	* Наставиваем элементы пути	
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'OpenCompaniesFilesExchangeSettings'
-		И Я добавляю элемент пути к файлам организаций для типа 'Organization' объект "Mercury LLC" значение "Mercury"
-		И Я добавляю элемент пути к файлам организаций для типа 'Organization' объект "Venus LLC" значение "Venus"
-		И Я добавляю элемент пути к файлам организаций для типа 'ReportKind' объект "VA - ProcessPrice" значение "VA_ProcessPrice"
-		Тогда открылось окно "Company file path items: List form"
-		И я нажимаю на кнопку с именем 'FormClose'
+	* Configuring path elements
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'OpenCompaniesFilesExchangeSettings'
+		And I add company files path element for type 'Organization' object "Mercury LLC" value "Mercury"
+		And I add company files path element for type 'Organization' object "Venus LLC" value "Venus"
+		And I add company files path element for type 'ReportKind' object "VA - ProcessPrice" value "VA_ProcessPrice"
+		Then "Company file path items: List form" window is opened
+		And I click the button named 'FormClose'
 
-	* Записываем и закрываем элемент
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	* Saving and closing the element
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: 19.05 Создание вида отчета "VA - ProcessAmount"
+Scenario: 19.05 Creating report type "VA - ProcessAmount"
 
-	* Создаем вид отчета
-		И Я создаю вид отчета с именем "VA - ProcessAmount" и родителем "VA - Report preparation process (group)"
+	* Creating a report type
+		And I create report type with name "VA - ProcessAmount" and parent "VA - Report preparation process (group)"
 
-	* Настраиваем структуру
-		И я открываю контруктор отчета с именем "VA - ProcessAmount"
-		И Я в конструкторе отчета добавляю строку с именем "Goods"
-		И Я в конструкторе отчета добавляю колонки
+	* Configuring structure
+		And I open report wizard with name "VA - ProcessAmount"
+		And I add row with name "Goods" in report wizard
+		And I add columns in report wizard
 			| 'Description' |
 			| "Count"   |
 			| "Price"         |
 			| "Amount"        |
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R2C2'
+		And I add dimension with code "VA0Product" in cell 'R2C2' in report wizard
 		
-	* Настраиваем формулы
-		И Я в конструкторе отчета для ячейки 'R2C2' настраиваю связь с показателем с кодом "Goods_Count" вида отчета "VA - ProcessCount"
-		И Я в конструкторе отчета для ячейки 'R2C3' настраиваю связь с показателем с кодом "Goods_Price" вида отчета "VA - ProcessPrice"
-		И Я в конструкторе отчета для ячейки 'R2C4' задаю формулу произведение ячеек 'R2C2' 'R2C3'
+	* Configuring formulas
+		And I set link to indicator with code "Goods_Count" of report type "VA - ProcessCount" for cell 'R2C2' in report wizard
+		And I set link to indicator with code "Goods_Price" of report type "VA - ProcessPrice" for cell 'R2C3' in report wizard
+		And I set product formula for cell 'R2C2' of cells 'R2C3' 'R2C4' in report wizard
 
-	* Закрываем конструктор
-		Когда открылось окно "Report wizard"
-		И Я закрываю окно "Report wizard"
+	* Closing report wizard
+		When "Report wizard" window is opened
+		And I close "Report wizard" window
 		
-	* Создаем бланк
-		И Я Для вида отчета "VA - ProcessAmount" создаю бланк по умолчанию
+	* Creating a template
+		And I create default template for report type "VA - ProcessAmount"
 
-Сценарий: 19.06 Создание процесса подготовки отчетности "VA - Report preparation process"
+Scenario: 19.06 Creating reporting preparation process "VA - Report preparation process"
 
-	И Я создаю шаблон универсального процесса с именем "VA - Report preparation process" режимом "Report preparation process"
+	And I create universal process template with name "VA - Report preparation process" mode "Report preparation process"
 
-Сценарий: 19.07 Создание копированием регламента "VA - Report preparation process"
+Scenario: 19.07 Creating by copying regulation "VA - Report preparation process"
 
-	* Открываем регламент
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Regulations for preparing reports"
+	* Opening a regulation
+		And In the command interface I select "Budgeting, reporting, and analysis" "Regulations for preparing reports"
 
-	* Удаляем текущий элемент	
-		Тогда открылось окно "Regulations for preparing reports"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И в поле с именем 'Pattern' я ввожу текст "VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'Find'
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И Я запоминаю значение выражения 'StrReplace(New UUID, "-", "")' в переменную 'UID'
-			И в таблице 'List' я выбираю текущую строку
-			Тогда Открылся регламент подготовки отчетности "VA - Report preparation process"
-			И я перехожу к закладке с именем 'GroupMainPage'			
-			И в поле с именем 'Description' я ввожу значение переменной 'UID'
-			И я нажимаю на кнопку с именем 'FormSetDeletionMark'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	* Deleting the current element
+		Then "Regulations for preparing reports" window is opened
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I input "VA - Report preparation process" text in the field named 'Pattern'
+		And I click the button named 'Find'
+		And While the number of 'List' table lines 'more' 0 Then
+			And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+			And I select current line in 'List' table
+			Then I open reporting preparation regulation "VA - Report preparation process"
+			And I move to the tab named 'GroupMainPage'
+			And I input 'UID' variable value in the field named 'Description'
+			And I click the button named 'FormSetDeletionMark'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
+			And I click the button named 'FormWriteAndClose'
+			And I wait '$WindowTitle$' window closing in 20 seconds
 
-	* Находим элемент копирования
-		Тогда открылось окно "Regulations for preparing reports"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И в поле с именем 'Pattern' я ввожу текст "VA - Main regulations"
-		И я нажимаю на кнопку с именем 'Find'
-		И в таблице 'List' количество строк 'равно' 1
-		И я нажимаю на кнопку с именем 'FormCopy'
+	* Finding copying element
+		Then "Regulations for preparing reports" window is opened
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I input "VA - Main regulations" text in the field named 'Pattern'
+		And I click the button named 'Find'
+		And the number of 'List' table lines is 'equal' 1
+		And I click the button named 'FormCopy'
 
-	* Заполняем новый элемент	
-		Тогда открылось окно "VA - Main regulations from *"
-		И в поле с именем 'Description' я ввожу текст "VA - Report preparation process"
-		И из выпадающего списка с именем 'ReportKind' я выбираю по строке "VA - Report preparation process (group)"
-		И я устанавливаю флаг с именем 'UseProcess'
-		И я нажимаю кнопку выбора у поля с именем 'ProcessTemplate'
-		И Я в списке "Universal process templates" по полю "Description" ищу и выбираю элемент "VA - Report preparation process" "Exact match" 
-		И я устанавливаю флаг с именем 'ProhibitNonProcessDocuments'
-		И я перехожу к закладке с именем 'PerimeterSetting'
-		Тогда таблица 'GroupStructure' стала равной:
+	* Filling new element
+		Then "VA - Main regulations from *" window is opened
+		And I input "VA - Report preparation process" text in the field named 'Description'
+		And I select from the drop-down list named 'ReportKind'  by "VA - Report preparation process (group)" string
+		And I set checkbox named 'UseProcess'
+		And I click Choice button of the field named 'ProcessTemplate'
+		And I search and select element "VA - Report preparation process" "Exact match" by field "Description" in list "Universal process templates"
+		And I set checkbox named 'ProhibitNonProcessDocuments'
+		And I move to the tab named 'PerimeterSetting'
+		Then 'GroupStructure' table became equal
 			| "Consolidating company\n/ Business unit" | "Primary currency" | "Additional currencies" | "Effective share, %" | "Company status for consolidation"        | "Company kind" | "Intercompany transactions exclusion method" |
 			| "System LLC"                                            | "RUB"             | ""                      | "- "                  | "Group"                    | "VA - Package CFR"  | "- "                   |
 			| "Mars LLC"                                               | "RUB"             | "EUR; USD"              | "100"                 | "Eliminating"             | "VA - Package CFR"  | "Eliminating"        |
 			| "Venus LLC"                                             | "RUB"             | "EUR; USD"              | "100"                 | "Financial responsibility center"                       | "VA - Package CFR"  | "Financial responsibility center"                  |
 			| "Earth LLC"                                              | "RUB"             | "USD"                   | "100"                 | "Financial responsibility center"                       | "VA - Package CFR"  | "Financial responsibility center"                  |
 			| "Mercury LLC"                                           | "RUB"             | "EUR; USD"              | "50.000"              | "VA - Subsidiary" | "VA - Package CFR"  | "Balance and turnovers"    |
-		Тогда открылось окно "VA - Main regulations from *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "VA - Main regulations from *" в течение 20 секунд
+		Then "VA - Main regulations from *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "VA - Main regulations from *" window closing in 20 seconds
 
-Сценарий: 19.08 Тестируем кнопки создания процесса подготовки отчетности
+Scenario: 19.08 Testing creation buttons of reporting preparation process
 
-	* Ищем элемент
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Templates of report preparation process"
-		И Я в списке "Universal process templates" по полю "Description" ищу и выбираю элемент "VA - Report preparation process" "Exact match" 
+	* Searching for an element
+		And In the command interface I select "Budgeting, reporting, and analysis" "Templates of report preparation process"
+		And I search and select element "VA - Report preparation process" "Exact match" by field "Description" in list "Universal process templates"
 
-	* Проверяем, что документ пустой
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'Edit'
-		Тогда открылось окно "Select step"
-		И в таблице 'List' количество строк 'равно' 0
-		И элемент формы с именем 'ProcessTemplate' стал равен "VA - Report preparation process"
-		И я закрываю окно "Select step"
+	* Checking that the document is empty
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'Edit'
+		Then "Select step" window is opened
+		And the number of 'List' table lines is 'equal' 0
+		And the form attribute named 'ProcessTemplate' became equal to "VA - Report preparation process"
+		And I close "Select step" window
 
-	* Добавляем этап для удаления
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'AddStage_ReportPreparationProcessStep'
-		Тогда открылось окно "Step of report preparation process (Universal process step)"
-		И в поле с именем 'Description' я ввожу текст "For deletion"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Step of report preparation process (Universal process step) *" в течение 20 секунд
+	* Adding stage for deletion
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'AddStage_ReportPreparationProcessStep'
+		Then "Step of report preparation process (Universal process step)" window is opened
+		And I input "For deletion" text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Step of report preparation process (Universal process step) *" window closing in 20 seconds
 
-	* Копируем этап
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'Copy'
-		И Я в списке "Select step" по полю "Description" ищу и выбираю элемент "Для удаления" "Exact match"		
-		Тогда открылось окно "Universal process step (Create)"
-		И в поле с именем 'Description' я ввожу текст "Копия для удаления"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Universal process step (Create) *" в течение 20 секунд	
+	* Copying stage
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'Copy'
+		And I search and select element "For deletion" "Exact match" by field "Description" in list "Select step"
+		Then "Universal process step (Create)" window is opened
+		And I input "Copy for deletion" text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Universal process step (Create) *" window closing in 20 seconds
 
-	* Изменяем процесс
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'Edit'
-		И Я в списке "Select step" по полю "Description" ищу и выбираю элемент "Копия для удаления" "Exact match"		
-		Когда открылось окно "Копия для удаления (Universal process step)"
-		И в поле с именем 'Description' я ввожу текст "Edited copy for deletion"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Copy for deletion (Universal process step) *" в течение 20 секунд	
+	* Modifying process
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'Edit'
+		And I search and select element "Copy for deletion" "Exact match" by field "Description" in list "Select step"
+		When "Copy for deletion (Universal process step)" window is opened
+		And I input "Edited copy for deletion" text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Copy for deletion (Universal process step) *" window closing in 20 seconds
 
-	* Настраиваем связь
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'AddLink'
-		И Я в списке "Select initial link step" по полю "Description" ищу и выбираю элемент "Для удаления" "Exact match"
-		И Я в списке "Select end link step" по полю "Description" ищу и выбираю элемент "Отредактированная copy для удаления" "Exact match"		
+	* Configuring link
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'AddLink'
+		And I search and select element "For deletion" "Exact match" by field "Description" in list "Select initial link step"
+		And I search and select element "Edited copy for deletion" "Exact match" by field "Description" in list "Select end link step"
 
-	* Удаляем связь
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'DeleteLink'
-		И Я в списке "Select initial link step" по полю "Description" ищу и выбираю элемент "Для удаления" "Exact match"
-		И Я в списке "Select end link step" по полю "Description" ищу и выбираю элемент "Отредактированная copy для удаления" "Exact match"
+	* Deleting link
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'DeleteLink'
+		And I search and select element "For deletion" "Exact match" by field "Description" in list "Select initial link step"
+		And I search and select element "Edited copy for deletion" "Exact match" by field "Description" in list "Select end link step"
 
-	* Удаляем процесс
-		Тогда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'MarkToDelete'
-		И Я в списке "Select step" по полю "Description" ищу и выбираю элемент "Отредактированная copy для удаления" "Exact match"					
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
+	* Deleting process
+		Then "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'MarkToDelete'
+		And I search and select element "Edited copy for deletion" "Exact match" by field "Description" in list "Select step"
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
 
-	* Удаляем процесс
-		Тогда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'MarkToDelete'
-		И Я в списке "Select step" по полю "Description" ищу и выбираю элемент "Для удаления" "Exact match"
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
+	* Deleting process
+		Then "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'MarkToDelete'
+		And I search and select element "For deletion" "Exact match" by field "Description" in list "Select step"
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
 
-	* Проверяем, что документ пустой
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'MarkToDelete'
-		Тогда открылось окно "Select step"
-		И в таблице 'List' количество строк 'равно' 0
-		И элемент формы с именем 'ProcessTemplate' стал равен "VA - Report preparation process"
-		И я закрываю окно "Select step"		
+	* Checking that the document is empty
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'MarkToDelete'
+		Then "Select step" window is opened
+		And the number of 'List' table lines is 'equal' 0
+		And the form attribute named 'ProcessTemplate' became equal to "VA - Report preparation process"
+		And I close "Select step" window
 
-Сценарий: 19.09 Настройка процесса подготовки отчетности
+Scenario: 19.09 Configuring reporting preparation process
 
-	* Ищем элемент
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Templates of report preparation process"
-		И Я в списке "Universal process templates" по полю "Description" ищу и выбираю элемент "VA - Report preparation process" "Exact match" 
+	* Searching for an element
+		And In the command interface I select "Budgeting, reporting, and analysis" "Templates of report preparation process"
+		And I search and select element "VA - Report preparation process" "Exact match" by field "Description" in list "Universal process templates"
 
-	* Этап для "VA - ProcessCount"
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'AddStage_ReportPreparationProcessStep'
-		Тогда открылось окно "Step of report preparation process (Universal process step)"
-		И в поле с именем 'Description' я ввожу текст "Manual filling - \"VA - ProcessCount\""
-		* Документы
-			И в таблице 'GeneratedDocuments_' я нажимаю на кнопку с именем 'GeneratedDocuments_Add'
-			И в таблице 'GeneratedDocuments_' я нажимаю кнопку выбора у реквизита с именем 'DocumentsToGenerateDBDocument'
-			И Я в списке "Infobase documents" по полю "Document" ищу и выбираю элемент "Report instance" "At beginning of line"
-			И в таблице 'GeneratedDocuments_' из выпадающего списка с именем 'GeneratedDocumentsDocumentTemplate' я выбираю по строке "VA - ProcessCount"
-		* Организации
-			И я перехожу к закладке с именем 'Page_BusinessUnitsFilter'
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю на кнопку с именем 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' из выпадающего списка с именем 'BusinessUnitsFilterDCSSettingsFilterLeftValue' я выбираю точное значение "Business unit"
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' из выпадающего списка с именем 'BusinessUnitsFilterDCSSettingsFilterComparisonType' я выбираю точное значение "In list"
+	* Stage for "VA - ProcessCount"
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'AddStage_ReportPreparationProcessStep'
+		Then "Step of report preparation process (Universal process step)" window is opened
+		And I input "Manual filling - \"VA - ProcessCount\"" text in the field named 'Description'
+		* Documents
+			And in the table 'GeneratedDocuments_' I click the button named 'GeneratedDocuments_Add'
+			And I click choice button of the attribute named 'DocumentsToGenerateDBDocument' in 'GeneratedDocuments_' table
+			And I search and select element "Report instance" "At beginning of line" by field "Document" in list "Infobase documents"
+			And I select "VA - ProcessCount" by string from the drop-down list named 'GeneratedDocumentsDocumentTemplate' in 'GeneratedDocuments_' table
+		* Companies
+			And I move to the tab named 'Page_BusinessUnitsFilter'
+			And in the table 'BusinessUnitsFilterDCSSettingsFilter' I click the button named 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
+			And I select "Business unit" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterLeftValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
+			And I select "In list" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterComparisonType' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю кнопку выбора у реквизита с именем 'BusinessUnitsFilterDCSSettingsFilterRightValue'
 			Тогда открылось окно "Value list"
 			И я нажимаю на кнопку с именем 'Add'
-			И в таблице 'ValueList' из выпадающего списка с именем 'value' я выбираю по строке "Mercury LLC"
+			And I select 'Mercury LLC' by string from the drop-down list named 'value' in 'ValueList' table
 			И я нажимаю на кнопку с именем 'Add'
-			И в таблице 'ValueList' из выпадающего списка с именем 'value' я выбираю по строке "Venus LLC"
+			And I select 'Venus LLC' by string from the drop-down list named 'value' in 'ValueList' table
 			И я нажимаю на кнопку с именем 'OK'
-			Тогда открылось окно "Step of report preparation process (Universal process step) *"
-		* Настройки регламента
-			И я перехожу к закладке с именем 'Page_RegulationSettings'
-			И я нажимаю на кнопку с именем 'DocumentProcessingSettings'
-			Когда открылось окно "Document processing setting"
-			Тогда табличный документ 'Result' равен:
-				| 'Document template / Company' | ''                      | 'Венера LLC'                               | 'Земля LLC'                                | 'Марс LLC'                                 | 'Mercury LLC'                             | 'Система LLC'                              |
+			Then "Step of report preparation process (Universal process step) *" window is opened
+		* Regulation settings
+			And I move to the tab named 'Page_RegulationSettings'
+			And I click the button named 'DocumentProcessingSettings'
+			When "Document processing setting" window is opened
+			Then 'Result' spreadsheet document is equal
+				| 'Document template / Company' | ''                      | 'Венера LLC'                               | 'Земля LLC'                                 | 'Марс LLC'                              | 'Mercury LLC'                              | 'Система LLC'                               |
 				| ''                               | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
 				| 'VA - ProcessCount'         | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
-				| ''                               | 'Form для отображения' | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
-				| ''                               | 'Form сводной таблицы' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' |
+				| ''                               | 'Template to show' | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
+				| ''                               | 'Pivot table template' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' |
 				| ''                               | 'Processing rule'     | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
 				| ''                               | 'Check rule'      | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
-				| ''                               | 'Method Formations'   | 'On правилу обработки'                     | 'On правилу обработки'                     | 'On правилу обработки'                     | 'On правилу обработки'                     | 'On правилу обработки'                     |
-			* Меркурий
-				Когда открылось окно "Document processing setting"
-				И в табличном документе 'Result' я перехожу к ячейке "R6C6"
-				И в табличном документе 'Result' я делаю двойной клик на текущей ячейке
-				Тогда открылось окно "Settings of document template processing"
-				И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Manual filling"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Settings of document template processing *" в течение 20 секунд
-			* Венера
-				Тогда открылось окно "Document processing setting"
-				И в табличном документе 'Result' я перехожу к ячейке "R6C3"
-				И в табличном документе 'Result' я делаю двойной клик на текущей ячейке
-				Тогда открылось окно "Settings of document template processing"
-				И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Manual filling"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Settings of document template processing *" в течение 20 секунд
-			* Сверяем результат и закрываем
-				Когда открылось окно "Document processing setting"
-				Тогда табличный документ 'Result' равен:
-					| 'Document template / Company' | ''                      | 'Venus LLC'                               | 'Земля LLC'                                | 'Марс LLC'                                 | 'Mercury LLC'                             | 'Система LLC'                              |
+				| ''                               | 'Method Formations'   | 'By processing rule'                     | 'By processing rule'                     | 'By processing rule'                     | 'By processing rule'                     | 'By processing rule'                     |
+			* Mercury
+				When "Document processing setting" window is opened
+				And in 'Result' spreadsheet document I move to "R6C6" cell
+				And in 'Result' spreadsheet document I double-click the current cell
+				Then "Settings of document template processing" window is opened
+				And I select "Manual filling" exact value from the drop-down list named 'ReportGenerationMethod'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Settings of document template processing *" window closing in 20 seconds
+			* Venus
+				Then "Document processing setting" window is opened
+				And in 'Result' spreadsheet document I move to "R6C3" cell
+				And in 'Result' spreadsheet document I double-click the current cell
+				Then "Settings of document template processing" window is opened
+				And I select "Manual filling" exact value from the drop-down list named 'ReportGenerationMethod'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Settings of document template processing *" window closing in 20 seconds
+			* Verifying result and closing
+				When "Document processing setting" window is opened
+				Then 'Result' spreadsheet document is equal
+					| 'Document template / Company' | ''                      | 'Venus LLC'                               | 'Земля LLC'                                 | 'Марс LLC'                              | 'Mercury LLC'                              | 'Система LLC'                               |
 					| ''                               | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
 					| 'VA - ProcessCount'         | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
-					| ''                               | 'Form для отображения' | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
-					| ''                               | 'Form сводной таблицы' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' |
+					| ''                               | 'Template to show' | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
+					| ''                               | 'Pivot table template' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' |
 					| ''                               | 'Processing rule'     | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
 					| ''                               | 'Check rule'      | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
-					| ''                               | 'Method Formations'   | 'Manual filling'                        | 'On правилу обработки'                     | 'On правилу обработки'                     | 'Manual filling'                        | 'On правилу обработки'                     |
-				И Я закрываю окно "Document processing setting"
-		* Сохранение
-			Тогда открылось окно "* (Universal process step)"
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "* (Universal process step)" в течение 20 секунд
+					| ''                               | 'Method Formations'   | 'Manual filling'                    | 'By processing rule'                     | 'On правилу обработки'                         | 'Manual filling'                    | 'On правилу обработки'                         |
+				And I close "Document processing setting" window
+		* Saving
+			Then "* (Universal process step)" window is opened
+			And I click the button named 'FormWriteAndClose'
+			And I wait "* (Universal process step)" window closing in 20 seconds
 				
-	* Этап для "VA - ProcessPrice"
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'AddStage_ReportPreparationProcessStep'
-		Тогда открылось окно "Step of report preparation process (Universal process step)"
-		И в поле с именем 'Description' я ввожу текст "Import - \"VA - ProcessPrice\""				
-		* Документы
-			И в таблице 'GeneratedDocuments_' я нажимаю на кнопку с именем 'GeneratedDocuments_Add'
-			И в таблице 'GeneratedDocuments_' я нажимаю кнопку выбора у реквизита с именем 'DocumentsToGenerateDBDocument'
-			И Я в списке "Infobase documents" по полю "Document" ищу и выбираю элемент "Report instance" "At beginning of line"
-			И в таблице 'GeneratedDocuments_' из выпадающего списка с именем 'GeneratedDocumentsDocumentTemplate' я выбираю по строке "VA - ProcessPrice"
-		* Организации
-			И я перехожу к закладке с именем 'Page_BusinessUnitsFilter'
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю на кнопку с именем 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' из выпадающего списка с именем 'BusinessUnitsFilterDCSSettingsFilterLeftValue' я выбираю точное значение "Business unit"
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' из выпадающего списка с именем 'BusinessUnitsFilterDCSSettingsFilterComparisonType' я выбираю точное значение "In list"
+	* Stage for "VA - ProcessPrice"
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'AddStage_ReportPreparationProcessStep'
+		Then "Step of report preparation process (Universal process step)" window is opened
+		And I input "Import - \"VA - ProcessPrice\"" text in the field named 'Description'
+		* Documents
+			And in the table 'GeneratedDocuments_' I click the button named 'GeneratedDocuments_Add'
+			And I click choice button of the attribute named 'DocumentsToGenerateDBDocument' in 'GeneratedDocuments_' table
+			And I search and select element "Report instance" "At beginning of line" by field "Document" in list "Infobase documents"
+			And I select "VA - ProcessPrice" by string from the drop-down list named 'GeneratedDocumentsDocumentTemplate' in 'GeneratedDocuments_' table
+		* Companies
+			And I move to the tab named 'Page_BusinessUnitsFilter'
+			And in the table 'BusinessUnitsFilterDCSSettingsFilter' I click the button named 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
+			And I select "Business unit" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterLeftValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
+			And I select "In list" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterComparisonType' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю кнопку выбора у реквизита с именем 'BusinessUnitsFilterDCSSettingsFilterRightValue'
 			Тогда открылось окно "Value list"
 			И я нажимаю на кнопку с именем 'Add'
-			И в таблице 'ValueList' из выпадающего списка с именем 'value' я выбираю по строке "Mercury LLC"
+			And I select 'Mercury LLC' by string from the drop-down list named 'value' in 'ValueList' table
 			И я нажимаю на кнопку с именем 'Add'
-			И в таблице 'ValueList' из выпадающего списка с именем 'value' я выбираю по строке "Venus LLC"
+			And I select 'Venus LLC' by string from the drop-down list named 'value' in 'ValueList' table
 			И я нажимаю на кнопку с именем 'OK'
-			Тогда открылось окно "Step of report preparation process (Universal process step) *"
-		* Настройки регламента
-			И я перехожу к закладке с именем 'Page_RegulationSettings'
-			И я нажимаю на кнопку с именем 'DocumentProcessingSettings'
-			Когда открылось окно "Document processing setting"
-			Тогда табличный документ 'Result' равен:
-				| 'Document template / Company' | ''                      | 'Венера LLC'                         | 'Земля LLC'                          | 'Марс LLC'                           | 'Mercury LLC'                       | 'Система LLC'                        |
+			Then "Step of report preparation process (Universal process step) *" window is opened
+		* Regulation settings
+			And I move to the tab named 'Page_RegulationSettings'
+			And I click the button named 'DocumentProcessingSettings'
+			When "Document processing setting" window is opened
+			Then 'Result' spreadsheet document is equal
+				| 'Document template / Company' | ''                      | 'Венера LLC'                         | 'Земля LLC'                           | 'Марс LLC'                        | 'Mercury LLC'                        | 'Система LLC'                         |
 				| ''                               | ''                      | ''                                   | ''                                   | ''                                   | ''                                   | ''                                   |
 				| 'VA - ProcessPrice'               | ''                      | ''                                   | ''                                   | ''                                   | ''                                   | ''                                   |
-				| ''                               | 'Form для отображения' | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   |
-				| ''                               | 'Form сводной таблицы' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' |
+				| ''                               | 'Template to show' | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   |
+				| ''                               | 'Pivot table template' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' |
 				| ''                               | 'Processing rule'     | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   |
 				| ''                               | 'Check rule'      | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   |
-				| ''                               | 'Method Formations'   | 'On правилу обработки'               | 'On правилу обработки'               | 'On правилу обработки'               | 'On правилу обработки'               | 'On правилу обработки'               |
-			* Меркурий
-				Когда открылось окно "Document processing setting"
-				И в табличном документе 'Result' я перехожу к ячейке "R5C6"
-				И в табличном документе 'Result' я делаю двойной клик на текущей ячейке
-				Тогда открылось окно "Settings of document template processing"
-				* Настраиваем тип информационной базы
-					И я нажимаю на кнопку открытия поля с именем 'ProcessingRule'
-					Тогда открылось окно "VA - ProcessPrice (Calculation rules)"
-					И из выпадающего списка с именем 'DBType' я выбираю по строке "Microsoft Excel files"
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					И я жду закрытия окна "VA - ProcessPrice (Calculation rules) *" в течение 20 секунд
-				* Проверяем тип информационной базы	
-					Тогда открылось окно "Settings of document template processing"
-					И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Import"
-					Тогда элемент формы с именем 'FormForИмпорта' стал равен "VA - ProcessPrice"
-					И из выпадающего списка с именем 'ExternalInfobase' я выбираю по строке "VA - ProcessImportPrice"
-				Когда открылось окно "Settings of document template processing *"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Settings of document template processing *" в течение 20 секунд
-			* Венера
-				Когда открылось окно "Document processing setting"
-				И в табличном документе 'Result' я перехожу к ячейке "R5C3"
-				И в табличном документе 'Result' я делаю двойной клик на текущей ячейке
-				Тогда открылось окно "Settings of document template processing"
-				И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Import"
-				И из выпадающего списка с именем 'ExternalInfobase' я выбираю по строке "VA - ProcessImportPrice"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Settings of document template processing *" в течение 20 секунд
-			Тогда открылось окно "Document processing setting"
-			И Я закрываю окно "Document processing setting"
-	* Сохранение
-			Тогда открылось окно "* (Universal process step)"
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "* (Universal process step)" в течение 20 секунд
+				| ''                               | 'Method Formations'   | 'By processing rule'               | 'By processing rule'               | 'By processing rule'               | 'By processing rule'               | 'By processing rule'               |
+			* Mercury
+				When "Document processing setting" window is opened
+				And in 'Result' spreadsheet document I move to "R5C6" cell
+				And in 'Result' spreadsheet document I double-click the current cell
+				Then "Settings of document template processing" window is opened
+				* Configuring the information base type
+					And I click Open button of the field named 'ProcessingRule'
+					Then "VA - ProcessPrice (Calculation rules)" window is opened
+					And I select from the drop-down list named 'DBType'  by "Microsoft Excel files" string
+					And I click the button named 'FormWriteAndClose'
+					And I wait "VA - ProcessPrice (Calculation rules) *" window closing in 20 seconds
+				* Checking information base type
+					Then "Settings of document template processing" window is opened
+					And I select "Import" exact value from the drop-down list named 'ReportGenerationMethod'
+					Then the form attribute named 'TemplateForImport' became equal to "VA - ProcessPrice"
+					And I select from the drop-down list named 'ExternalInfobase'  by "VA - ProcessImportPrice" string
+				When "Settings of document template processing *" window is opened
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Settings of document template processing *" window closing in 20 seconds
+			* Venus
+				When "Document processing setting" window is opened
+				And in 'Result' spreadsheet document I move to "R5C3" cell
+				And in 'Result' spreadsheet document I double-click the current cell
+				Then "Settings of document template processing" window is opened
+				And I select "Import" exact value from the drop-down list named 'ReportGenerationMethod'
+				And I select from the drop-down list named 'ExternalInfobase'  by "VA - ProcessImportPrice" string
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Settings of document template processing *" window closing in 20 seconds
+			Then "Document processing setting" window is opened
+			And I close "Document processing setting" window
+	* Saving
+			Then "* (Universal process step)" window is opened
+			And I click the button named 'FormWriteAndClose'
+			And I wait "* (Universal process step)" window closing in 20 seconds
 
-	* Этап для "VA - ProcessAmount"
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'AddStage_ReportPreparationProcessStep'
-		Тогда открылось окно "Step of report preparation process (Universal process step)"
-		И в поле с именем 'Description' я ввожу текст "Calculation by rule - \"VA - ProcessAmount\""
-		* Документы
-			И в таблице 'GeneratedDocuments_' я нажимаю на кнопку с именем 'GeneratedDocuments_Add'
-			И в таблице 'GeneratedDocuments_' я нажимаю кнопку выбора у реквизита с именем 'DocumentsToGenerateDBDocument'
-			И Я в списке "Infobase documents" по полю "Document" ищу и выбираю элемент "Report instance" "At beginning of line"
-			И в таблице 'GeneratedDocuments_' из выпадающего списка с именем 'GeneratedDocumentsDocumentTemplate' я выбираю по строке "VA - ProcessAmount"
-		* Организации
-			И я перехожу к закладке с именем 'Page_BusinessUnitsFilter'
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю на кнопку с именем 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' из выпадающего списка с именем 'BusinessUnitsFilterDCSSettingsFilterLeftValue' я выбираю точное значение "Business unit"
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' из выпадающего списка с именем 'BusinessUnitsFilterDCSSettingsFilterComparisonType' я выбираю точное значение "In list"
+	* Stage for "VA - ProcessAmount"
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'AddStage_ReportPreparationProcessStep'
+		Then "Step of report preparation process (Universal process step)" window is opened
+		And I input "Calculation by rule - \"VA - ProcessAmount\"" text in the field named 'Description'
+		* Documents
+			And in the table 'GeneratedDocuments_' I click the button named 'GeneratedDocuments_Add'
+			And I click choice button of the attribute named 'DocumentsToGenerateDBDocument' in 'GeneratedDocuments_' table
+			And I search and select element "Report instance" "At beginning of line" by field "Document" in list "Infobase documents"
+			And I select "VA - ProcessAmount" by string from the drop-down list named 'GeneratedDocumentsDocumentTemplate' in 'GeneratedDocuments_' table
+		* Companies
+			And I move to the tab named 'Page_BusinessUnitsFilter'
+			And in the table 'BusinessUnitsFilterDCSSettingsFilter' I click the button named 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
+			And I select "Business unit" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterLeftValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
+			And I select "In list" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterComparisonType' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю кнопку выбора у реквизита с именем 'BusinessUnitsFilterDCSSettingsFilterRightValue'
 			Тогда открылось окно "Value list"
 			И я нажимаю на кнопку с именем 'Add'
-			И в таблице 'ValueList' из выпадающего списка с именем 'value' я выбираю по строке "Mercury LLC"
+			And I select 'Mercury LLC' by string from the drop-down list named 'value' in 'ValueList' table
 			И я нажимаю на кнопку с именем 'Add'
-			И в таблице 'ValueList' из выпадающего списка с именем 'value' я выбираю по строке "Venus LLC"
+			And I select 'Venus LLC' by string from the drop-down list named 'value' in 'ValueList' table
 			И я нажимаю на кнопку с именем 'OK'
-			Тогда открылось окно "Step of report preparation process (Universal process step) *"
-		* Сохранение
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "* (Universal process step) *" в течение 20 секунд
+			Then "Step of report preparation process (Universal process step) *" window is opened
+		* Saving
+			And I click the button named 'FormWriteAndClose'
+			And I wait "* (Universal process step) *" window closing in 20 seconds
 
-	* Этап консолидации для "VA - ProcessAmount"
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'AddStage_ReportPreparationProcessStep'
-		Тогда открылось окно "Step of report preparation process (Universal process step)"
-		И в поле с именем 'Description' я ввожу текст "Consolidation - \"VA - ProcessAmount\""
-		И из выпадающего списка с именем 'BusinessUnitType' я выбираю точное значение "Consolidating"
-		* Документы
-			И в таблице 'GeneratedDocuments_' я нажимаю на кнопку с именем 'GeneratedDocuments_Add'
-			И в таблице 'GeneratedDocuments_' я нажимаю кнопку выбора у реквизита с именем 'DocumentsToGenerateDBDocument'
-			И Я в списке "Infobase documents" по полю "Document" ищу и выбираю элемент "Report instance" "At beginning of line"
-			И в таблице 'GeneratedDocuments_' из выпадающего списка с именем 'GeneratedDocumentsDocumentTemplate' я выбираю по строке "VA - ProcessAmount"
-		* Организации
-			И я перехожу к закладке с именем 'Page_BusinessUnitsFilter'
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю на кнопку с именем 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' из выпадающего списка с именем 'BusinessUnitsFilterDCSSettingsFilterLeftValue' я выбираю точное значение "Business unit"
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' из выпадающего списка с именем 'BusinessUnitsFilterDCSSettingsFilterComparisonType' я выбираю точное значение "Equal to"
-			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' из выпадающего списка с именем 'BusinessUnitsFilterDCSSettingsFilterRightValue' я выбираю по строке "System LLC"
-		* Настройки регламента
-			Когда открылось окно "Step of report preparation process (Universal process step) *"
-			И я перехожу к закладке с именем 'Page_RegulationSettings'
-			И я нажимаю на кнопку с именем 'DocumentProcessingSettings'
-			Тогда открылось окно "Document processing setting"
-			* Система
-				И в табличном документе 'Result' я перехожу к ячейке "R5C7"
-				И в табличном документе 'Result' я делаю двойной клик на текущей ячейке
-				Тогда открылось окно "Settings of document template processing"
-				И выпадающий список с именем 'ReportGenerationMethod' стал равен:
+	* Consolidation stage for "VA - ProcessAmount"
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'AddStage_ReportPreparationProcessStep'
+		Then "Step of report preparation process (Universal process step)" window is opened
+		And I input "Consolidation - \"VA - ProcessAmount\"" text in the field named 'Description'
+		And I select "Consolidating" exact value from the drop-down list named 'BusinessUnitType'
+		* Documents
+			And in the table 'GeneratedDocuments_' I click the button named 'GeneratedDocuments_Add'
+			And I click choice button of the attribute named 'DocumentsToGenerateDBDocument' in 'GeneratedDocuments_' table
+			And I search and select element "Report instance" "At beginning of line" by field "Document" in list "Infobase documents"
+			And I select "VA - ProcessAmount" by string from the drop-down list named 'GeneratedDocumentsDocumentTemplate' in 'GeneratedDocuments_' table
+		* Companies
+			And I move to the tab named 'Page_BusinessUnitsFilter'
+			And in the table 'BusinessUnitsFilterDCSSettingsFilter' I click the button named 'BusinessUnitsFilterDCSSettingsFilterAddFilterItem'
+			And I select "Business unit" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterLeftValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
+			And I select "Equal to" exact value from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterComparisonType' in 'BusinessUnitsFilterDCSSettingsFilter' table
+			And I select "System LLC" by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
+		* Regulation settings
+			When "Step of report preparation process (Universal process step) *" window is opened
+			And I move to the tab named 'Page_RegulationSettings'
+			And I click the button named 'DocumentProcessingSettings'
+			Then "Document processing setting" window is opened
+			* System
+				And in 'Result' spreadsheet document I move to "R5C7" cell
+				And in 'Result' spreadsheet document I double-click the current cell
+				Then "Settings of document template processing" window is opened
+				And drop-down list named 'ReportGenerationMethod' is equal to:
 					| "Manual filling"                          |
 					| "By processing rule"                       |
 					| "Import"                                     |
 					| "Consolidate perimeter (IFRS)"            |
 					| "Consolidate perimeter (Proportionally)" |
 					| "Collapse by period"                        |						
-				И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Consolidate perimeter (Proportionally)"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Settings of document template processing *" в течение 20 секунд
-			Тогда открылось окно "Document processing setting"
-			И Я закрываю окно "Document processing setting"
-		* Сохранение
-			Тогда открылось окно "* (Universal process step)"
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "* (Universal process step)" в течение 20 секунд
+				And I select "Consolidate perimeter (Proportionally)" exact value from the drop-down list named 'ReportGenerationMethod'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Settings of document template processing *" window closing in 20 seconds
+			Then "Document processing setting" window is opened
+			And I close "Document processing setting" window
+		* Saving
+			Then "* (Universal process step)" window is opened
+			And I click the button named 'FormWriteAndClose'
+			And I wait "* (Universal process step)" window closing in 20 seconds
 
-	* Настраиваем связи
-		Когда открылось окно "Editing process stages: VA - Report preparation process"
-		И я нажимаю на кнопку с именем 'AddLink'
-		И Я в списке "Select initial link step" по полю "Description" ищу и выбираю элемент "Manual filling - \"VA - ProcessCount\"" "Exact match"
-		И Я в списке "Select end link step" по полю "Description" ищу и выбираю элемент "Calculation by rule - \"VA - ProcessAmount\"" "Exact match"
-		И я нажимаю на кнопку с именем 'AddLink'
-		И Я в списке "Select initial link step" по полю "Description" ищу и выбираю элемент "Import - \"VA - ProcessPrice\"" "Exact match"
-		И Я в списке "Select end link step" по полю "Description" ищу и выбираю элемент "Calculation by rule - \"VA - ProcessAmount\"" "Exact match"
-		И я нажимаю на кнопку с именем 'AddLink'
-		И Я в списке "Select initial link step" по полю "Description" ищу и выбираю элемент "Calculation by rule - \"VA - ProcessAmount\"" "Exact match"
-		И Я в списке "Select end link step" по полю "Description" ищу и выбираю элемент "Consolidation - \"VA - ProcessAmount\"" "Exact match"		
+	* Configuring links
+		When "Editing process stages: VA - Report preparation process" window is opened
+		And I click the button named 'AddLink'
+		And I search and select element "Manual filling - \"VA - ProcessCount\"" "Exact match" by field "Description" in list "Select initial link step"
+		And I search and select element "Calculation by rule - \"VA - ProcessAmount\"" "Exact match" by field "Description" in list "Select end link step"
+		And I click the button named 'AddLink'
+		And I search and select element "Import - \"VA - ProcessPrice\"" "Exact match" by field "Description" in list "Select initial link step"
+		And I search and select element "Calculation by rule - \"VA - ProcessAmount\"" "Exact match" by field "Description" in list "Select end link step"
+		And I click the button named 'AddLink'
+		And I search and select element "Calculation by rule - \"VA - ProcessAmount\"" "Exact match" by field "Description" in list "Select initial link step"
+		And I search and select element "Consolidation - \"VA - ProcessAmount\"" "Exact match" by field "Description" in list "Select end link step"
 
-Сценарий: 19.10 Создание сценария
+Scenario: 19.10 Creating scenario
 
-	И Я создаю сценарий с именем "VA - Report preparation process"
+	And I create scenario with name "VA - Report preparation process"
 
-Сценарий: 19.11 Создание документа управления отчетным периодом		
+Scenario: 19.11 Creating reporting period management document
 
-	* Создаем новый документ управления отчетным периодом
-		* Основная вкладка
-			И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Reporting period management"
-			Тогда открылось окно "Reporting period management"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Reporting period management (create)"
-			И из выпадающего списка с именем 'Scenario' я выбираю по строке "VA - Report preparation process"
-			И из выпадающего списка с именем 'ScenarioFrequency' я выбираю точное значение "Month"
-			И я нажимаю на кнопку с именем 'ChangePeriod'
-			Тогда открылось окно "Select period"
-			И в поле с именем 'DateBegin' я ввожу текст '1/1/2024'
-			И я перехожу к следующему реквизиту
-			И в поле с именем 'DateEnd' я ввожу текст '3/31/2024'
-			И я нажимаю на кнопку с именем 'select'
-			Тогда открылось окно "Reporting period management (create) *"
-			И из выпадающего списка с именем 'OrganizationalStructureVersion' я выбираю по строке "VA - Report preparation process"
-			И я нажимаю на кнопку с именем 'FormGoForward'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
-		* Валюты
-			И я жду открытия окна "January * (Frequency: Month) <VA - Report preparation process>" в течении 30 секунд
-			И я запоминаю заголовок текущего окна как 'WindowTitle'			
-			И в таблице 'RatesEditTable' я нажимаю на кнопку с именем 'RatesEditTableRatesTable_Update'
-			И в таблице 'RatesEditTable' я нажимаю на кнопку с именем 'RatesEditTableRatesTable_Write'
-			И я нажимаю на кнопку с именем 'FormGoForward'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
-		* Управление лимитами
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'FormGoForward'
-		* Настройка отчетов
-			Тогда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'TemplatesProcessingSettingsByRegulation'
-			Когда открылось окно "Document processing setting"
-			// ДОДЕЛАТЬ: Сделать проверку
-			И Я закрываю окно "Document processing setting"
-			Тогда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'SettingОбработкиШаблоновOnPeriodManagement'
-			Тогда открылось окно "Document processing setting"
-			// ДОДЕЛАТЬ: Сделать проверку
-			И Я закрываю окно "Document processing setting"
-		* Процесс
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'FormGoForward'
-			И элемент формы с именем 'StartProcess' доступен
-			И элемент формы с именем 'TerminateProcess' не доступен
-			И элемент формы с именем 'Group_ProcessProgressManagementTable' не доступен
-			И я нажимаю на кнопку с именем 'StartProcess'
-			Когда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
-			Если '$$InterfaceLanguage$$ = "En"' Тогда
-				И Я запоминаю значение выражения 'Format(CurrentDate() - 864000, "DF=MM/dd/yy")' в переменную 'ProcessStartDate'
-			Иначе
-				И Я запоминаю значение выражения 'CurrentDate() - 864000' в переменную 'ProcessStartDate'
-			И в поле с именем 'ProcessStartDate' я ввожу значение переменной '$ProcessStartDate$'
-			И я нажимаю на кнопку с именем 'StartProcess'
-			Когда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
-			И элемент формы с именем 'StartProcess' не доступен
-			И элемент формы с именем 'TerminateProcess' доступен
-			И элемент формы с именем 'Group_ProcessProgressManagementTable' доступен
-			И я жду открытия окна '$WindowTitle$' в течение 20 секунд	
-		* Кнопки открытия обработок управления процессом
-			* Управление процессом подготовки отчетности
-				Тогда открылось окно '$WindowTitle$'
-				И я нажимаю на кнопку с именем 'ProcessesManagementReportPreparation'
-				Тогда открылось окно "Reporting preparation management"
-				Тогда элемент формы с именем 'PeriodManagement' стал равен '$WindowTitle$'
-				И я перехожу к закладке с именем 'PageTransactionTree'
-				Тогда таблица 'StepsTree' стала равной:
+	* Creating new reporting period management document
+		* Main tab
+			And In the command interface I select "Budgeting, reporting, and analysis" "Reporting period management"
+			Then "Reporting period management" window is opened
+			And I click the button named 'FormCreate'
+			Then "Reporting period management (create)" window is opened
+			And I select from the drop-down list named 'Scenario'  by "VA - Report preparation process" string
+			And I select "Month" exact value from the drop-down list named 'ScenarioFrequency'
+			And I click the button named 'ChangePeriod'
+			Then "Select period" window is opened
+			And I input '1/1/2024' text in the field named 'DateBegin'
+			And I move to the next attribute
+			And I input '3/31/2024' text in the field named 'DateEnd'
+			And I click the button named 'select'
+			Then "Reporting period management (create) *" window is opened
+			And I select from the drop-down list named 'OrganizationalStructureVersion'  by "VA - Report preparation process" string
+			And I click the button named 'FormGoForward'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
+		* Currencies
+			And I wait "January * (Frequency: Month) <VA - Report preparation process>" window opening in 30 seconds
+			And I save the current window title as 'WindowTitle'
+			And in the table 'RatesEditTable' I click the button named 'RatesEditTableRatesTable_Update'
+			And in the table 'RatesEditTable' I click the button named 'RatesEditTableRatesTable_Write'
+			And I click the button named 'FormGoForward'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
+		* Limit management
+			When '$WindowTitle$' window is opened
+			And I click the button named 'FormGoForward'
+		* Configuring reports
+			Then '$WindowTitle$' window is opened
+			And I click the button named 'TemplatesProcessingSettingsByRegulation'
+			When "Document processing setting" window is opened
+			// TODO: Perform a check
+			And I close "Document processing setting" window
+			Then '$WindowTitle$' window is opened
+			And I click the button named 'DocumentProcessingSettingsByPeriodManagement'
+			Then "Document processing setting" window is opened
+			// TODO: Perform a check
+			And I close "Document processing setting" window
+		* Process
+			When '$WindowTitle$' window is opened
+			And I click the button named 'FormGoForward'
+			And form attribute named 'StartProcess' is available
+			And form attribute named 'TerminateProcess' is unavailable
+			And form attribute named 'Group_ProcessProgressManagementTable' is unavailable
+			And I click the button named 'StartProcess'
+			When "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
+			If '$$LanguageInterface$$ = "En"' Then
+				And I save 'Format(CurrentDate() - 864000, "DF=MM/dd/yy")' in 'ProcessStartDate' variable
+			Else
+				And I save 'CurrentDate() - 864000' in 'ProcessStartDate' variable
+			And I input '$ProcessStartDate$' variable value in the field named 'ProcessStartDate'
+			And I click the button named 'StartProcess'
+			When "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
+			And form attribute named 'StartProcess' is unavailable
+			And form attribute named 'TerminateProcess' is available
+			And form attribute named 'Group_ProcessProgressManagementTable' is available
+			And I wait '$WindowTitle$' window opening in 20 seconds
+		* Buttons for opening process management handlers
+			* Managing the reporting preparation process
+				Then '$WindowTitle$' window is opened
+				And I click the button named 'ProcessesManagementReportPreparation'
+				Then "Reporting preparation management" window is opened
+				Then the form attribute named 'PeriodManagement' became equal to '$WindowTitle$'
+				And I move to the tab named 'PageTransactionTree'
+				Then 'StepsTree' table became equal
 					| "Step / Company"                             | "Step state" |
 					| "Manual filling - \"VA - ProcessCount\"" | "Not active"      |
 					| "Import - \"VA - ProcessPrice\""                  | "Not active"      |
 					| "Calculation by rule - \"VA - ProcessAmount\""      | "Not active"      |
 					| "Consolidation - \"VA - ProcessAmount\""           | "Not active"      |
-				И Я закрываю окно "Reporting preparation management"
-			* Матрица отчетов
-				Тогда открылось окно '$WindowTitle$'
-				И я нажимаю на кнопку с именем 'ReportsMatrix'
-				Тогда открылось окно "Report instance matrix"
-				И я нажимаю на кнопку с именем 'FormSettings'
-				И из выпадающего списка с именем 'SettingsComposerUserSettingsItem1Value' я выбираю точное значение "Yes"
-				И из выпадающего списка с именем 'SettingsComposerUserSettingsItem2Value' я выбираю точное значение "Yes"
-				И я нажимаю на кнопку с именем 'FormFormulate'
-				Тогда табличный документ 'Result' равен макету "3_Budgeting\Templates\19\VA_ProcessПодготовкиОтчетности_МатрицаОтчетов1.mxl"	
-				И Я закрываю окно "Report instance matrix"	
-		* Сохраняем документ						
-			И я нажимаю на кнопку с именем 'FormGoForward'
-			И я нажимаю на кнопку с именем 'FormClose'
+				And I close "Reporting preparation management" window
+			* Report matrix
+				Then '$WindowTitle$' window is opened
+				And I click the button named 'ReportsMatrix'
+				Then "Report instance matrix" window is opened
+				And I click the button named 'FormSettings'
+				And I select "Yes" exact value from the drop-down list named 'SettingsComposerUserSettingsItem1Value'
+				And I select "Yes" exact value from the drop-down list named 'SettingsComposerUserSettingsItem2Value'
+				And I click the button named 'FormFormulate'
+				Then 'Result' spreadsheet document is equal to "3_Budgeting\Layouts\19\VA_ReportingPreparationProcess_ReportMatrix1_En.mxl"
+				And I close "Report instance matrix" window
+		* Saving a document
+			And I click the button named 'FormGoForward'
+			And I click the button named 'FormClose'
 
-	* Кнопки открытия обработок управления процессом		
-		* Управление процессом подготовки отчетности
-			Когда открылось окно "Reporting period management"
-			И я нажимаю на кнопку с именем 'FormProcessesManagementReportPreparation'
-			Тогда открылось окно "Reporting preparation management"
-			Тогда элемент формы с именем 'PeriodManagement' стал равен '$WindowTitle$'
-			Тогда таблица 'StepsTree' стала равной:
+	* Buttons for opening process management handlers
+		* Managing the reporting preparation process
+			When "Reporting period management" window is opened
+			And I click the button named 'FormProcessesManagementReportPreparation'
+			Then "Reporting preparation management" window is opened
+			Then the form attribute named 'PeriodManagement' became equal to '$WindowTitle$'
+			Then 'StepsTree' table became equal
 				| "Step / Company"                             | "Step state" |
 				| "Manual filling - \"VA - ProcessCount\"" | "Not active"      |
 				| "Import - \"VA - ProcessPrice\""                  | "Not active"      |
 				| "Calculation by rule - \"VA - ProcessAmount\""      | "Not active"      |
 				| "Consolidation - \"VA - ProcessAmount\""           | "Not active"      |
-			И Я закрываю окно "Reporting preparation management"
-		* Матрица отчетов
-			Когда открылось окно "Reporting period management"
-			И я нажимаю на кнопку с именем 'FormReportInstancesMatrix'
-			Когда открылось окно "Report instance matrix"
-			Тогда табличный документ 'Result' равен макету "3_Budgeting\Templates\19\VA_ProcessПодготовкиОтчетности_МатрицаОтчетов1.mxl"
-			И Я закрываю окно "Report instance matrix"
+			And I close "Reporting preparation management" window
+		* Report matrix
+			When "Reporting period management" window is opened
+			And I click the button named 'FormReportInstancesMatrix'
+			When "Report instance matrix" window is opened
+			Then 'Result' spreadsheet document is equal to "3_Budgeting\Layouts\19\VA_ReportingPreparationProcess_ReportMatrix1_En.mxl"
+			And I close "Report instance matrix" window
 
-	* Закрытие формы
-		Когда открылось окно "Reporting period management"
-		И Я закрываю окно "Reporting period management"	
+	* Closing a form
+		When "Reporting period management" window is opened
+		And I close "Reporting period management" window
 
-Сценарий: 19.12 Ручное заполнение - "VA - ProcessCount"
+Scenario: 19.12 Manual filling - "VA - ProcessCount"
 
-	И Я открываю управление процессом подготовки отчетности для сценария "VA - Report preparation process"
+	And I open reporting preparation process management for scenario "VA - Report preparation process"
 
-	* Останавливаем и запускаем процесс
-		Когда открылось окно "Reporting preparation management"
-		Если у элемента формы с именем 'StepsTreeOutputMessages' не установлена пометка Тогда
-			И я нажимаю на кнопку с именем 'StepsTreeOutputMessages'
-		Если у элемента формы с именем 'ShowTransactionTree' не установлена пометка Тогда
-			И я нажимаю на кнопку с именем 'ShowTransactionTree'
-		И элемент формы с именем 'LabelProcessState' стал равен "The report preparation process is started on *" по шаблону
-		И я нажимаю на кнопку с именем 'StopProcess'
-		Когда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		И элемент формы с именем 'LabelProcessState' стал равен "The report preparation process is not started"
-		И я нажимаю на кнопку с именем 'StartProcess'
-		Когда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		И элемент формы с именем 'LabelProcessState' стал равен "The report preparation process is started on *" по шаблону
-		И я перехожу к закладке с именем 'PageTransactionTree'
-		Тогда таблица 'StepsTree' содержит "11" строк из списка:
+	* Stopping and starting a process
+		When "Reporting preparation management" window is opened
+		If form attribute named 'StepsTreeOutputMessages' is not marked Then
+			And I click the button named 'StepsTreeOutputMessages'
+		If form attribute named 'ShowTransactionTree' is not marked Then
+			And I click the button named 'ShowTransactionTree'
+		And form element named 'LabelProcessState' became equal to "The report preparation process is started on *" by template
+		And I click the button named 'StopProcess'
+		When "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		And the form attribute named 'LabelProcessState' became equal to "The report preparation process is not started"
+		And I click the button named 'StartProcess'
+		When "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		And form element named 'LabelProcessState' became equal to "The report preparation process is started on *" by template
+		And I move to the tab named 'PageTransactionTree'
+		Then I check table 'StepsTree' contains "11" rows from list:
 			| "Step / Company"                             | "Relevant step"                                | "Step state" | "End date (planned)" | "End date (actual)" | "Remaining / Variance" |
 			| "Manual filling - \"VA - ProcessCount\"" | ""                                               | "Not active"      | ""                      | ""                      | ""                      |
 			| "Mercury LLC"                                   | "Manual filling - \"VA - ProcessCount\"" | "Not active"      | ""                      | ""                      | ""                      |
@@ -621,201 +621,201 @@
 			| "Consolidation - \"VA - ProcessAmount\""           | ""                                               | "Not active"      | ""                      | ""                      | ""                      |
 			| "System LLC"                                    | "Manual filling - \"VA - ProcessCount\"" | "Not active"      | ""                      | ""                      | ""                      |
 
-	* Заполняем по оганизации Меркурий
-		И в таблице 'StepsTree' я перехожу к строке:
+	* Filling by company Mercury
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"                             |
 			| "Manual filling - \"VA - ProcessCount\"" |
-		И я выбираю пункт контекстного меню с именем 'StepsTreeContextMenuCreateStepDocuments' на элементе формы с именем 'StepsTree'
-		И в таблице 'TransactionsTree' я перехожу к строке:
+		And I select context menu item named 'StepsTreeContextMenuCreateStepDocuments' of the form attribute named 'StepsTree'
+		And I go to line in 'TransactionsTree' table:
 			| "Document template / Company" |
 			| "Mercury LLC"                   |
-		И в таблице 'TransactionsTree' я активизирую поле с именем 'TransactionsTreeCompanyDocumentTemplate'
-		И в таблице 'TransactionsTree' я выбираю текущую строку
+		And I activate field named 'TransactionsTreeCompanyDocumentTemplate' in 'TransactionsTree' table
+		And I select current line in 'TransactionsTree' table
 		
-		И Открылся экземпляр отчета для вида отчета "VA - ProcessCount" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Report preparation process" периодичность "Month" проект '' аналитики '' '' '' '' '' '' 
-		И В экземпляре отчета я удаляю все существующие версии
-		И я нажимаю на кнопку с именем 'EnableEdit'		
-		И Я добавляю значения с раскрытием показателей в ячейку 'R6C1'
+		And I open report instance for report type "VA - ProcessCount" currency 'RUB' company "Mercury LLC" scenario "VA - Report preparation process" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		And I delete all existing versions in report instance
+		And I click the button named 'EnableEdit'
+		And I add values with indicator expansion in cell 'R6C1'
 			| "Product range"                 | 'Period_1_Value1' | 'Period_2_Value1' | 'Period_3_Value1' |
 			| "1C:ERP. Corporate performance management" | '10.00000'           | '20.00000'           | '30.00000'           |
 			| "5C:Corporate performance management"    | '20.00000'           | '40.00000'           | '60.00000'           |			
 			| "2C:Corporation"                | '30.00000'           | '60.00000'           | '90.00000'           |
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'WriteAndClose'
-		И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+		When '$WindowTitle$' window is opened
+		And I click the button named 'WriteAndClose'
+		And I wait '$WindowTitle$' window closing in 20 seconds
 
-		* Утверждаем из формы управления процессом
-			Тогда открылось окно "Reporting preparation management"
-			И в таблице 'TransactionsTree' я активизирую поле с именем 'OperationTreeState'
-			И в таблице 'TransactionsTree' я выбираю текущую строку
-			Тогда открылось окно "Report states"
-			И в таблице 'List' я перехожу к строке:
+		* Approving from the process management form
+			Then "Reporting preparation management" window is opened
+			And I activate field named 'OperationTreeState' in 'TransactionsTree' table
+			And I select current line in 'TransactionsTree' table
+			Then "Report states" window is opened
+			And I go to line in 'List' table:
 				| "Reference"    |
 				| "Confirmed" |
-			И в таблице 'List' я выбираю текущую строку
+			And I select current line in 'List' table
 	
-	* Заполняем по оганизации Венера
-		Тогда открылось окно "Reporting preparation management"	
-		И в таблице 'TransactionsTree' я перехожу к строке:
+	* Filling by company Venus
+		Then "Reporting preparation management" window is opened
+		And I go to line in 'TransactionsTree' table:
 			| "Document template / Company" |
 			| "Venus LLC"             |
-		И в таблице 'TransactionsTree' я активизирую поле с именем 'TransactionsTreeCompanyDocumentTemplate'	
-		И в таблице 'TransactionsTree' я выбираю текущую строку
+		And I activate field named 'TransactionsTreeCompanyDocumentTemplate' in 'TransactionsTree' table
+		And I select current line in 'TransactionsTree' table
 			
-		И Открылся экземпляр отчета для вида отчета "VA - ProcessCount" валюта 'RUB' организация "Venus LLC" сценарий "VA - Report preparation process" периодичность "Month" проект '' аналитики '' '' '' '' '' '' 
-		И В экземпляре отчета я удаляю все существующие версии
-		И я нажимаю на кнопку с именем 'EnableEdit'	
-		И Я добавляю значения с раскрытием показателей в ячейку 'R6C1'
+		And I open report instance for report type "VA - ProcessCount" currency 'RUB' company "Venus LLC" scenario "VA - Report preparation process" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		And I delete all existing versions in report instance
+		And I click the button named 'EnableEdit'
+		And I add values with indicator expansion in cell 'R6C1'
 			| "Product range"                                                   | 'Period_1_Value1' | 'Period_2_Value1' | 'Period_3_Value1' |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '10.00000'           | '20.00000'           | '30.00000'           |
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '20.00000'           | '40.00000'           | '60.00000'           |			
 
-		* Утверждаем из формы документа	
-			Когда открылось окно '$WindowTitle$'
-			И из выпадающего списка с именем 'StatusOfObject' я выбираю точное значение "Confirmed"
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
-			И я жду открытия окна '$WindowTitle$' в течение 20 секунд
-			И я нажимаю на кнопку с именем 'WriteAndClose'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'OK'
-			Тогда в логе сообщений TestClient есть строки по шаблону:
-				|"The \"Report instance *\" document is used in the \"Manual filling - \"VA - ProcessCount\"\" report preparation step with the \"Completed\" state.\nTo edit the document, open the specified step of the report preparation process."|
-			И Я закрываю окно '$WindowTitle$'
+		* Approving from the document form
+			When '$WindowTitle$' window is opened
+			And I select "Confirmed" exact value from the drop-down list named 'StatusOfObject'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
+			And I wait '$WindowTitle$' window opening in 20 seconds
+			And I click the button named 'WriteAndClose'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'OK'
+			Then in the TestClient message log contains lines by template:
+				|"The \"*\" document is used in the \"Manual filling - \"VA - ProcessCount\"\" report preparation step with the \"Completed\" state.\nTo edit the document, open the specified step of the report preparation process."|
+			And I close '$WindowTitle$' window
 
-	* Проверяем результат
-		Когда открылось окно "Reporting preparation management"
-		И я нажимаю на кнопку с именем 'GenerateReport'				
-		И в таблице 'StepsTree' я перехожу к строке:
+	* Checking the result
+		When "Reporting preparation management" window is opened
+		And I click the button named 'GenerateReport'
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"                             | "Step state" |
 			| "Manual filling - \"VA - ProcessCount\"" | "Completed"        |
-		Тогда таблица 'TransactionsTree' содержит '3' строк из списка:
+		Then I check table 'TransactionsTree' contains '3' rows from list:
 			| "Document template / Company" | "State" |
 			| "VA - ProcessCount"   | "Confirmed" |
 			| "Venus LLC"               | "Confirmed" |
 			| "Mercury LLC"             | "Confirmed" |
 		
-	* Отменяем утверждение
-		Когда открылось окно "Reporting preparation management"
-		И в таблице 'StepsTree' я перехожу к строке:
+	* Revoking approval
+		When "Reporting preparation management" window is opened
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"                             | "Step state" |
 			| "Manual filling - \"VA - ProcessCount\"" | "Completed"        |
-		И я выбираю пункт контекстного меню с именем 'StepsTreeContextMenuCancelStepProcessing' на элементе формы с именем 'StepsTree'
-		Тогда открылось окно "Cancel the step processing for the companies:"
-		И в таблице 'ScenariosPeriodsTable' я нажимаю на кнопку с именем 'ScenariosPeriodsTableCheckAll'				
-		И я нажимаю на кнопку с именем 'Execute'
-		Тогда таблица 'TransactionsTree' содержит '3' строк из списка:
+		And I select context menu item named 'StepsTreeContextMenuCancelStepProcessing' of the form attribute named 'StepsTree'
+		Then "Cancel the step processing for the companies:" window is opened
+		And in the table 'ScenariosPeriodsTable' I click the button named 'ScenariosPeriodsTableCheckAll'
+		And I click the button named 'Execute'
+		Then I check table 'TransactionsTree' contains '3' rows from list:
 			| "Document template / Company" | "State" |
 			| "VA - ProcessCount"   | "Draft"  |
 			| "Venus LLC"               | "Draft"  |
 			| "Mercury LLC"             | "Draft"  |
 
-	* Утверждаем снова
-		Когда открылось окно "Reporting preparation management"
-		И в таблице 'StepsTree' я перехожу к строке:
+	* Approving again
+		When "Reporting preparation management" window is opened
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"                             | "Step state" |
 			| "Manual filling - \"VA - ProcessCount\"" | "Not active"      |
-		И я выбираю пункт контекстного меню с именем 'StepsTreeContextMenuFinishStageProcessing' на элементе формы с именем 'StepsTree'
-		Тогда открылось окно "Complete the step processing for the companies:"
-		И в таблице 'ScenariosPeriodsTable' я нажимаю на кнопку с именем 'ScenariosPeriodsTableCheckAll'
-		И я изменяю флаг с именем 'ShouldFillDocuments'
-		И я нажимаю на кнопку с именем 'Execute'
-		Тогда в логе сообщений TestClient есть строка по шаблону "For the \"Report instance *\" document, the \"Manual filling\" generation method is set. Cannot set the document to the \"Confirmed\" state."
-		И я очищаю окно сообщений пользователю		
+		And I select context menu item named 'StepsTreeContextMenuFinishStageProcessing' of the form attribute named 'StepsTree'
+		Then "Complete the step processing for the companies:" window is opened
+		And in the table 'ScenariosPeriodsTable' I click the button named 'ScenariosPeriodsTableCheckAll'
+		And I change checkbox named 'ShouldFillDocuments'
+		And I click the button named 'Execute'
+		Then TestClient log message contains "For the \"Report instance *\" document, the \"Manual filling\" generation method is set. Cannot set the document to the \"Confirmed\" state." string by template
+		And I clear user message window
 		
-	* Утверждаем вручную
-		Когда открылось окно "Reporting preparation management"
-		И в таблице 'TransactionsTree' я перехожу к строке:
+	* Approving manually
+		When "Reporting preparation management" window is opened
+		And I go to line in 'TransactionsTree' table:
 			| "Document template / Company"  | "State" |
 			| "Mercury LLC"            | "Draft"  |
-		И в таблице 'TransactionsTree' я активизирую поле с именем 'OperationTreeState'
-		И в таблице 'TransactionsTree' я выбираю текущую строку	
-		Тогда открылось окно "Report states"
-		И в таблице 'List' я перехожу к строке:
+		And I activate field named 'OperationTreeState' in 'TransactionsTree' table
+		And I select current line in 'TransactionsTree' table
+		Then "Report states" window is opened
+		And I go to line in 'List' table:
 			| "Reference"    |
 			| "Confirmed" |
-		И в таблице "List" я выбираю текущую строку
-		И в таблице 'TransactionsTree' я перехожу к строке:
+		And I select current line in "List" table
+		And I go to line in 'TransactionsTree' table:
 			| "Document template / Company" | "State" |
 			| "Venus LLC"             | "Draft"  |
-		И в таблице 'TransactionsTree' я активизирую поле с именем 'OperationTreeState'
-		И в таблице 'TransactionsTree' я выбираю текущую строку	
-		Тогда открылось окно "Report states"
-		И в таблице 'List' я перехожу к строке:
+		And I activate field named 'OperationTreeState' in 'TransactionsTree' table
+		And I select current line in 'TransactionsTree' table
+		Then "Report states" window is opened
+		And I go to line in 'List' table:
 			| "Reference"    |
 			| "Confirmed" |
-		И в таблице "List" я выбираю текущую строку
-		И в таблице 'StepsTree' я перехожу к строке:
+		And I select current line in "List" table
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"                             | "Step state" |
 			| "Manual filling - \"VA - ProcessCount\"" | "Completed"        |
-		Тогда таблица 'TransactionsTree' содержит '3' строк из списка:
+		Then I check table 'TransactionsTree' contains '3' rows from list:
 			| "Document template / Company" | "State" |
 			| "VA - ProcessCount"   | "Confirmed" |
 			| "Venus LLC"               | "Confirmed" |
 			| "Mercury LLC"             | "Confirmed" |
 
-Сценарий: 19.13 Расчет по правилу - "VA - ProcessAmount"
+Scenario: 19.13 Calculation by rule - "VA - ProcessAmount"
 
-	И Я открываю управление процессом подготовки отчетности для сценария "VA - Report preparation process"
+	And I open reporting preparation process management for scenario "VA - Report preparation process"
 
-	* Попытаем начать обработку этапа
-		Когда открылось окно "Reporting preparation management"
-		И в таблице 'StepsTree' я перехожу к строке:
+	* Attempting to start stage processing
+		When "Reporting preparation management" window is opened
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"                        | "Step state" |
 			| "Calculation by rule - \"VA - ProcessAmount\"" | "Not active"      |
-		И я нажимаю на кнопку с именем 'StartStageProcessing'
-		Тогда открылось окно "Start the step processing for the companies:"
-		И я нажимаю на кнопку с именем 'Execute'
-		Тогда в логе сообщений TestClient есть строки:
+		And I click the button named 'StartStageProcessing'
+		Then "Start the step processing for the companies:" window is opened
+		And I click the button named 'Execute'
+		Then there are lines in TestClient message log
 			|"Cannot start processing the \"Calculation by rule - \"VA - ProcessAmount\"\" step as there is an uncompleted subordinate step: \"Import - \"VA - ProcessPrice\"\""|
 			
-	* Попытаемся завершить этап
-		И я выбираю пункт контекстного меню с именем 'StepsTreeContextMenuFinishStageProcessing' на элементе формы с именем 'StepsTree'
-		Тогда открылось окно "Complete the step processing for the companies:"
-		И я изменяю флаг с именем 'ShouldFillDocuments'
-		И я нажимаю на кнопку с именем 'Execute'
-		Тогда в логе сообщений TestClient есть строки:
+	* Attempting to complete a stage
+		And I select context menu item named 'StepsTreeContextMenuFinishStageProcessing' of the form attribute named 'StepsTree'
+		Then "Complete the step processing for the companies:" window is opened
+		And I change checkbox named 'ShouldFillDocuments'
+		And I click the button named 'Execute'
+		Then there are lines in TestClient message log
 			|"Cannot complete the \"Calculation by rule - \"VA - ProcessAmount\"\" step as there is an uncompleted subordinate step: \"Import - \"VA - ProcessPrice\"\""|
 
-	* Проверим, что таблица не поменялась
-		И в таблице 'StepsTree' я нажимаю на кнопку с именем 'StepsTreeCollapseAll'
-		Тогда таблица 'StepsTree' стала равной:
+	* Checking that the table has not changed
+		And in the table 'StepsTree' I click the button named 'StepsTreeCollapseAll'
+		Then 'StepsTree' table became equal
 			| "Step / Company"                             | "Step state" |
 			| "Manual filling - \"VA - ProcessCount\"" | "Completed"        |
 			| "Import - \"VA - ProcessPrice\""                  | "Not active"      |
 			| "Calculation by rule - \"VA - ProcessAmount\""      | "Not active"      |
 			| "Consolidation - \"VA - ProcessAmount\""           | "Not active"      |
 					
-Сценарий: 19.14 Импорт - "VA - ProcessPrice"	
+Scenario: 19.14 Import - "VA - ProcessPrice"
 
-	И Я открываю управление процессом подготовки отчетности для сценария "VA - Report preparation process"
+	And I open reporting preparation process management for scenario "VA - Report preparation process"
 
-	* Начинаем обработку этапа
-		И в таблице 'StepsTree' я перехожу к строке:
+	* Starting stage processing
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"            | "Step state" |
 			| "Import - \"VA - ProcessPrice\"" | "Not active"      |
-		Тогда таблица 'TransactionsTree' содержит "3" строк из списка:
+		Then I check table 'TransactionsTree' contains "3" rows from list:
 			| "Document template / Company" | "State" |
 			| "VA - ProcessPrice"         | "Draft"  |
 			| "Venus LLC"               | "Draft"  |
 			| "Mercury LLC"             | "Draft"  |
-		Когда открылось окно "Reporting preparation management"
-		И я нажимаю на кнопку с именем 'StartStageProcessing'
-		Тогда открылось окно "Start the step processing for the companies:"
-		И я нажимаю на кнопку с именем 'Execute'
-		И я жду открытия окна "Reporting preparation management" в течение 20 секунд
+		When "Reporting preparation management" window is opened
+		And I click the button named 'StartStageProcessing'
+		Then "Start the step processing for the companies:" window is opened
+		And I click the button named 'Execute'
+		And I wait "Reporting preparation management" window opening in 20 seconds
 
-	* Проверяем, по организации Меркурий отчет должен быть заполнен
-		И в таблице 'StepsTree' я перехожу к строке:
+	* Checking that the report for company Mercury should be filled
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"            | "Step state" |
 			| "Import - \"VA - ProcessPrice\"" | "Processing"     |
-		И в таблице 'TransactionsTree' я перехожу к строке:
+		And I go to line in 'TransactionsTree' table:
 			| "Document template / Company" |
 			| "Mercury LLC"           |
-		И в таблице 'TransactionsTree' я активизирую поле с именем 'TransactionsTreeCompanyDocumentTemplate'
-		И в таблице 'TransactionsTree' я выбираю текущую строку
-		И Открылся экземпляр отчета для вида отчета "VA - ProcessPrice" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Report preparation process" периодичность "Month" проект '' аналитики '' '' '' '' '' '' 
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:			
+		And I activate field named 'TransactionsTreeCompanyDocumentTemplate' in 'TransactionsTree' table
+		And I select current line in 'TransactionsTree' table
+		And I open report instance for report type "VA - ProcessPrice" currency 'RUB' company "Mercury LLC" scenario "VA - Report preparation process" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - ProcessPrice" | ''                             | ''                     | ''               | ''                | ''             |
 			| ''                 | ''                             | ''                     | ''               | ''                | ''             |
 			| ''                 | "Product range_Description"    | "Product range_SKU" | "January 2024" | "February 2024" | "March 2024" |
@@ -824,39 +824,39 @@
 			| ''                 | "1C:ERP. Corporate performance management" | '2900001970198'        | '1,950,000'      | '2,000,000'       | '2,050,000'    |
 			| ''                 | "2C:Corporation"                | '2900001871419'        | '2,050,000'      | '2,100,000'       | '2,150,000'    |
 			| ''                 | "5C:Corporate performance management"    | '2900001871389'        | '1,250,000'      | '1,300,000'       | '1,350,000'    |
-		Когда открылось окно '$WindowTitle$'
-		И из выпадающего списка с именем 'StatusOfObject' я выбираю точное значение "Confirmed"
-		И Я закрываю окно '$WindowTitle$'
+		When '$WindowTitle$' window is opened
+		And I select "Confirmed" exact value from the drop-down list named 'StatusOfObject'
+		And I close '$WindowTitle$' window
 								
-	* Заполняем из формы управления процессом по организации Венера
-		Когда открылось окно "Reporting preparation management"
-		И я выбираю пункт контекстного меню с именем 'StepsTreeContextMenuStartStageProcessing' на элементе формы с именем 'StepsTree'
-		Тогда открылось окно "Start the step processing for the companies:"
-		И я нажимаю на кнопку с именем 'FormCancel'
-		Тогда открылось окно "Reporting preparation management"
-		И я выбираю пункт контекстного меню с именем 'StepsTreeContextMenuFinishStageProcessing' на элементе формы с именем 'StepsTree'
-		Тогда открылось окно "Complete the step processing for the companies:"
-		И в таблице 'ScenariosPeriodsTable' я нажимаю на кнопку с именем 'ScenariosPeriodsTableUncheckAll'
-		И в таблице 'ScenariosPeriodsTable' я перехожу к строке:
+	* Filling from the process management form by company Venus
+		When "Reporting preparation management" window is opened
+		And I select context menu item named 'StepsTreeContextMenuStartStageProcessing' of the form attribute named 'StepsTree'
+		Then "Start the step processing for the companies:" window is opened
+		And I click the button named 'FormCancel'
+		Then "Reporting preparation management" window is opened
+		And I select context menu item named 'StepsTreeContextMenuFinishStageProcessing' of the form attribute named 'StepsTree'
+		Then "Complete the step processing for the companies:" window is opened
+		And in the table 'ScenariosPeriodsTable' I click the button named 'ScenariosPeriodsTableUncheckAll'
+		And I go to line in 'ScenariosPeriodsTable' table:
 			| "Selected" | "Company" |
 			| "No"    | "Venus LLC"  |
-		И в таблице 'ScenariosPeriodsTable' я устанавливаю флаг с именем 'ScenariosPeriodsTableSelected'
-		И в таблице 'ScenariosPeriodsTable' я завершаю редактирование строки				
-		И я нажимаю на кнопку с именем 'Execute'
-		Тогда таблица 'TransactionsTree' содержит '3' строк из списка:
+		And I set checkbox named 'ScenariosPeriodsTableSelected' in 'ScenariosPeriodsTable' table
+		And I finish line editing in 'ScenariosPeriodsTable' table
+		And I click the button named 'Execute'
+		Then I check table 'TransactionsTree' contains '3' rows from list:
 			| "Document template / Company" | "State" |
 			| "VA - ProcessPrice"         | "Confirmed" |
 			| "Venus LLC"               | "Confirmed" |
 			| "Mercury LLC"             | "Confirmed" |
 
-	* Сравниваем результат по организации Венера
-		И в таблице 'TransactionsTree' я перехожу к строке:
+	* Comparing the result for company Venus
+		And I go to line in 'TransactionsTree' table:
 			| "Document template / Company" |
 			| "Venus LLC"             |
-		И в таблице 'TransactionsTree' я активизирую поле с именем 'TransactionsTreeCompanyDocumentTemplate'
-		И в таблице 'TransactionsTree' я выбираю текущую строку	
-		И Открылся экземпляр отчета для вида отчета "VA - ProcessPrice" валюта 'RUB' организация "Venus LLC" сценарий "VA - Report preparation process" периодичность "Month" проект '' аналитики '' '' '' '' '' ''
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		And I activate field named 'TransactionsTreeCompanyDocumentTemplate' in 'TransactionsTree' table
+		And I select current line in 'TransactionsTree' table
+		And I open report instance for report type "VA - ProcessPrice" currency 'RUB' company "Venus LLC" scenario "VA - Report preparation process" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - ProcessPrice" | ''                                                               | ''                     | ''               | ''                | ''             |
 			| ''                 | ''                                                               | ''                     | ''               | ''                | ''             |
 			| ''                 | "Product range_Description"                                      | "Product range_SKU" | "January 2024" | "February 2024" | "March 2024" |
@@ -864,86 +864,86 @@
 			| "Goods"           | ''                                                               | ''                     | '780,000'        | '835,000'         | '890,000'      |
 			| ''                 | "3C:Enterprise 8 CORP. Client license for 100 users" | '4601546106674'        | '600,000'        | '650,000'         | '700,000'      |
 			| ''                 | "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '2900001916059'        | '180,000'        | '185,000'         | '190,000'      |
-		И я нажимаю на кнопку с именем 'Write'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'OK'
-		Тогда в логе сообщений TestClient есть строки по шаблону:
-			|"The \"Report instance *\" document is used in the \"Import - \"VA - ProcessPrice\"\" report preparation step with the \"Completed\" state.\nTo edit the document, open the specified step of the report preparation process."|
-		И Я закрываю окно '$WindowTitle$'	
+		And I click the button named 'Write'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'OK'
+		Then in the TestClient message log contains lines by template:
+			|"The \"*\" document is used in the \"Import - \"VA - ProcessPrice\"\" report preparation step with the \"Completed\" state.\nTo edit the document, open the specified step of the report preparation process."|
+		And I close '$WindowTitle$' window
 
-	* Проверяем состояние дерева этапов
-		И в таблице 'StepsTree' я нажимаю на кнопку с именем 'StepsTreeCollapseAll'
-		Тогда таблица 'StepsTree' стала равной:
+	* Checking the state of the stage tree
+		And in the table 'StepsTree' I click the button named 'StepsTreeCollapseAll'
+		Then 'StepsTree' table became equal
 			| "Step / Company"                             | "Step state" |
 			| "Manual filling - \"VA - ProcessCount\"" | "Completed"        |
 			| "Import - \"VA - ProcessPrice\""                  | "Completed"        |
 			| "Calculation by rule - \"VA - ProcessAmount\""      | "Not active"      |
 			| "Consolidation - \"VA - ProcessAmount\""           | "Not active"      |
 			
-Сценарий: 19.15 Консолидация - "VA - ProcessAmount"
+Scenario: 19.15 Consolidation - "VA - ProcessAmount"
 
-	И Я открываю управление процессом подготовки отчетности для сценария "VA - Report preparation process"	
+	And I open reporting preparation process management for scenario "VA - Report preparation process"
 
-	* Отменяем обработку этапов
-		И в таблице 'StepsTree' я перехожу к строке:
+	* Canceling stage processing
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"                        |
 			| "Calculation by rule - \"VA - ProcessAmount\"" |
-		И я выбираю пункт контекстного меню с именем 'StepsTreeContextMenuCancelStepProcessing' на элементе формы с именем 'StepsTree'
-		Тогда открылось окно "Cancel the step processing for the companies:"
-		И я нажимаю на кнопку с именем 'Execute'
-		И в таблице 'StepsTree' я перехожу к строке:
+		And I select context menu item named 'StepsTreeContextMenuCancelStepProcessing' of the form attribute named 'StepsTree'
+		Then "Cancel the step processing for the companies:" window is opened
+		And I click the button named 'Execute'
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"                   |
 			| "Consolidation - \"VA - ProcessAmount\"" |
-		И я выбираю пункт контекстного меню с именем 'StepsTreeContextMenuCancelStepProcessing' на элементе формы с именем 'StepsTree'
-		Тогда открылось окно "Cancel the step processing for the companies:"
-		И я нажимаю на кнопку с именем 'Execute'
+		And I select context menu item named 'StepsTreeContextMenuCancelStepProcessing' of the form attribute named 'StepsTree'
+		Then "Cancel the step processing for the companies:" window is opened
+		And I click the button named 'Execute'
 
-	* Заполняем без утверждения		
-		Когда открылось окно "Reporting preparation management"
-		И я выбираю пункт контекстного меню с именем 'StepsTreeContextMenuProcessStagesUpToCurrent' на элементе формы с именем 'StepsTree'
-		Тогда таблица 'TransactionsTree' стала равной:
+	* Filling without approval
+		When "Reporting preparation management" window is opened
+		And I select context menu item named 'StepsTreeContextMenuProcessStagesUpToCurrent' of the form attribute named 'StepsTree'
+		Then 'TransactionsTree' table became equal
 			| "Document template / Company" | "State" |
 			| "VA - ProcessAmount"        | "Draft"  |
 			| "System LLC"              | "Draft"  |
 
-	* Заполняем с утрверждением
-		Когда открылось окно "Reporting preparation management"
-		И я выбираю пункт контекстного меню с именем 'StepsTreeContextMenuProcessAndCompleteStagesUpToCurrent' на элементе формы с именем 'StepsTree'
-		И в таблице 'StepsTree' я нажимаю на кнопку с именем 'StepsTreeCollapseAll'
-		Тогда таблица 'StepsTree' стала равной:
+	* Filling with approval
+		When "Reporting preparation management" window is opened
+		And I select context menu item named 'StepsTreeContextMenuProcessAndCompleteStagesUpToCurrent' of the form attribute named 'StepsTree'
+		And in the table 'StepsTree' I click the button named 'StepsTreeCollapseAll'
+		Then 'StepsTree' table became equal
 			| "Step / Company"                             | "Step state" |
 			| "Manual filling - \"VA - ProcessCount\"" | "Completed"        |
 			| "Import - \"VA - ProcessPrice\""                  | "Completed"        |
 			| "Calculation by rule - \"VA - ProcessAmount\""      | "Completed"        |
 			| "Consolidation - \"VA - ProcessAmount\""           | "Completed"        |
 
-	* Проверяем статусы "VA - ProcessAmount"
-		И в таблице 'StepsTree' я перехожу к строке:
+	* Checking statuses "VA - ProcessAmount"
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"                        | "Step state" |
 			| "Calculation by rule - \"VA - ProcessAmount\"" | "Completed"        |
-		Тогда таблица 'TransactionsTree' содержит '3' строк из списка:
+		Then I check table 'TransactionsTree' contains '3' rows from list:
 			| "Document template / Company" | "State" |
 			| "VA - ProcessAmount"        | "Confirmed" |
 			| "Venus LLC"               | "Confirmed" |
 			| "Mercury LLC"             | "Confirmed" |
 
-	* Проверяем статусы "VA - ProcessAmount"
-		И в таблице 'StepsTree' я перехожу к строке:
+	* Checking statuses "VA - ProcessAmount"
+		And I go to line in 'StepsTree' table:
 			| "Step / Company"                   | "Step state" |
 			| "Consolidation - \"VA - ProcessAmount\"" | "Completed"        |
-		Тогда таблица 'TransactionsTree' стала равной:
+		Then 'TransactionsTree' table became equal
 			| "Document template / Company" | "State" |
 			| "VA - ProcessAmount"        | "Confirmed" |
 			| "System LLC"              | "Confirmed" |
-		И в таблице 'TransactionsTree' я перехожу к строке:
+		And I go to line in 'TransactionsTree' table:
 			| "Document template / Company" | "State" |
 			| "System LLC"              | "Confirmed" |
-		И в таблице 'TransactionsTree' я активизирую поле с именем 'TransactionsTreeCompanyDocumentTemplate'
-		И в таблице 'TransactionsTree' я выбираю текущую строку
+		And I activate field named 'TransactionsTreeCompanyDocumentTemplate' in 'TransactionsTree' table
+		And I select current line in 'TransactionsTree' table
 		
-	* Сверяем итоговый отчет
-		И Открылся экземпляр отчета для вида отчета "VA - ProcessAmount" валюта 'RUB' организация "System LLC" сценарий "VA - Report preparation process" периодичность "Month" проект '' аналитики '' '' '' '' '' ''									
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Verifying the final report
+		And I open report instance for report type "VA - ProcessAmount" currency 'RUB' company "System LLC" scenario "VA - Report preparation process" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - ProcessAmount"                                               | ''               | ''          | ''           | ''                | ''          | ''           | ''             | ''          | ''            | ''           | ''           | ''            |
 			| ''                                                                | ''               | ''          | ''           | ''                | ''          | ''           | ''             | ''          | ''            | ''           | ''           | ''            |
 			| ''                                                                | "January 2024" | ''          | ''           | "February 2024" | ''          | ''           | "March 2024" | ''          | ''            | "TOTAL"      | ''           | ''            |
@@ -955,45 +955,45 @@
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64) "           | '20'             | '180,000'   | '3,600,000'  | '40'              | '185,000'   | '7,400,000'  | '60'           | '190,000'   | '11,400,000'  | '120'        | '555,000'    | '22,400,000'  |
 			| "5C:Corporate performance management "                                      | '10'             | '625,000'   | '6,250,000'  | '20'              | '650,000'   | '13,000,000' | '30'           | '675,000'   | '20,250,000'  | '60'         | '1,950,000'  | '39,500,000'  |
 		
-Сценарий: 19.16 Проверяем, что процесс завершен
+Scenario: 19.16 Checking that the process is completed
 
-	* Ищем нужный документ
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Reporting period management"
-		Тогда открылось окно "Reporting period management"
-		И Я в списке "Reporting period management" по полю "Scenario" ищу элемент "VA - Report preparation process" "Exact match" 
+	* Searching for the required document
+		And In the command interface I select "Budgeting, reporting, and analysis" "Reporting period management"
+		Then "Reporting period management" window is opened
+		And I search element "VA - Report preparation process" "Exact match" by field "Scenario" in list "Reporting period management"
 
-	* Открываем управление процессом из списка
-		Тогда открылось окно "Reporting period management"
-		И я нажимаю на кнопку с именем 'FormProcessesManagementReportPreparation'
-		Тогда открылось окно "Reporting preparation management"
-		И таблица 'StepsTree' стала равной:
+	* Opening process management from the list
+		Then "Reporting period management" window is opened
+		And I click the button named 'FormProcessesManagementReportPreparation'
+		Then "Reporting preparation management" window is opened
+		And 'StepsTree' table became equal
 			| "Step / Company"                             | "Step state" |
 			| "Manual filling - \"VA - ProcessCount\"" | "Completed"        |
 			| "Import - \"VA - ProcessPrice\""                  | "Completed"        |
 			| "Calculation by rule - \"VA - ProcessAmount\""      | "Completed"        |
 			| "Consolidation - \"VA - ProcessAmount\""           | "Completed"        |
-		Тогда таблица 'TransactionsTree' стала равной:
+		Then 'TransactionsTree' table became equal
 			| "Document template / Company" | "State" |
 			| "VA - ProcessCount"   | "Confirmed" |
 			| "Mercury LLC"             | "Confirmed" |
 			| "Venus LLC"               | "Confirmed" |
-		И элемент формы с именем 'LabelProcessState' стал равен "The report preparation process is completed on *" по шаблону
-		И Я закрываю окно "Reporting preparation management"
+		And form element named 'LabelProcessState' became equal to "The report preparation process is completed on *" by template
+		And I close "Reporting preparation management" window
 
-	* Открываем документ
-		Тогда открылось окно "Reporting period management"
-		И в таблице 'List' я выбираю текущую строку
-		Тогда Открылся документ управления периодом для сценария "VA - Report preparation process" периодичность "Month"
+	* Opening the document
+		Then "Reporting period management" window is opened
+		And I select current line in 'List' table
+		Then I open period management document for scenario "VA - Report preparation process" frequency "Month"
 		
-	* Проверяем состояние процесса
-		И в таблице 'Contents' я перехожу к строке:
+	* Checking the process state
+		And I go to line in 'Contents' table:
 			| 'Description'                  |
 			| "Report preparation process" |
-		И я перехожу к закладке с именем 'ProcessSetup'
-		И элемент формы с именем 'StartProcess' доступен
-		И элемент формы с именем 'TerminateProcess' не доступен
-		И элемент формы с именем 'Group_ProcessProgressManagementTable' не доступен
+		And I move to the tab named 'ProcessSetup'
+		And form attribute named 'StartProcess' is available
+		And form attribute named 'TerminateProcess' is unavailable
+		And form attribute named 'Group_ProcessProgressManagementTable' is unavailable
 
-	* Запускаем и останавливаем процесс
-		И я нажимаю на кнопку с именем 'StartProcess'
-		И я нажимаю на кнопку с именем 'TerminateProcess'
+	* Starting and stopping the process
+		And I click the button named 'StartProcess'
+		And I click the button named 'TerminateProcess'

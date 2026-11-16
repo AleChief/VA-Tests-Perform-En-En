@@ -1,436 +1,436 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для работы с подсистемой "Budgeting" - "Master data"
+Feature: Export scenarios for working with the "Budgeting" subsystem - "Master data"
 
-Сценарий: Я создаю сценарий с именем 'TheName'
+Scenario: I create scenario with name 'TheName'
 
-	* Открываем список
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Scenarios"
+	* Opening a list
+		And In the command interface I select "Budgeting, reporting, and analysis" "Scenarios"
 
-	* Удаляем элемент	
-		И Я в списке "Scenarios" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			* Удаляем документы управления периодом сценария
-				Когда открылось окно "BudgetingScenarios: [TheName] (BudgetingScenarios)"
-				И я нажимаю на кнопку с именем 'FormDocumentScenarioPeriodManagementDocumentsManagementReportingPeriod'
-				Тогда открылось окно "Reporting period management"
-				Если в таблице 'List' количество строк 'больше' 0 Тогда				
-					Тогда в таблице 'List' я выделяю все строки
-					И я выбираю пункт контекстного меню с именем 'ListContextMenuSetDeletionMark' на элементе формы с именем 'List'
-					Тогда открылось окно "1C:Enterprise"
-					И я нажимаю на кнопку с именем 'Button0'
-				И я закрываю окно "Reporting period management"
-			И Я удаляю текущий элемент в окне "BudgetingScenarios: [TheName] (BudgetingScenarios)" очищая	
+	* Deleting an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Scenarios"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			* Deleting scenario period management documents
+				When "BudgetingScenarios: [TheName] (BudgetingScenarios)" window is opened
+				And I click the button named 'FormDocumentScenarioPeriodManagementDocumentsManagementReportingPeriod'
+				Then "Reporting period management" window is opened
+				If number of 'List' table lines is 'more' 0 Then
+					Then I select all lines of 'List' table
+					And I select context menu item named 'ListContextMenuSetDeletionMark' of the form attribute named 'List'
+					Then "1C:Enterprise" window is opened
+					And I click the button named 'Button0'
+				And I close "Reporting period management" window
+			And I delete current element in window "BudgetingScenarios: [TheName] (BudgetingScenarios)" clearing
 			
-	* Создаем новый элемент
-		Тогда открылось окно "Scenarios"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Scenarios: Scenarios (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Scenarios: Scenarios (create) *" в течение 5 секунд
+	* Creating a new element
+		Then "Scenarios" window is opened
+		And I click the button named 'FormCreate'
+		Then "Scenarios: Scenarios (create)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Scenarios: Scenarios (create) *" window closing in 5 seconds
 
-	* Закрываем список
-		Когда открылось окно "Scenarios"
-		И Я закрываю окно "Scenarios"
+	* Closing a list
+		When "Scenarios" window is opened
+		And I close "Scenarios" window
 
-Сценарий: Я для сценария 'TheName' на закладке 'ThePage' для реквизита 'TheProperty' устанавливаю значение 'TheValue' 
+Scenario: I set value 'TheValue' for attribute 'TheProperty' on tab 'ThePage' for scenario 'TheName'
 
-	* Ищем элемент	
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Scenarios"
-		И Я в списке "Scenarios" по полю "Description" ищу и выбираю элемент '[TheName]' "Exact match"
+	* Searching for an element
+		And In the command interface I select "Budgeting, reporting, and analysis" "Scenarios"
+		And I search and select element '[TheName]' "Exact match" by field "Description" in list "Scenarios"
 		
-	* Меняем реквизит
-		И я запоминаю заголовок формы в переменную 'FormCaption'		
-		Тогда открылось окно '$ЗаголовокФормы$'
-		И я перехожу к закладке с именем '[ThePage]'
-		И Я для реквизита '[TheProperty]' устанавливаю значение '[TheValue]'		
+	* Changing an attribute
+		And I save form header as 'FormCaption' variable
+		Then '$FormCaption$' window is opened
+		And I move to the tab named '[ThePage]'
+		And I set value '[TheValue]' for attribute '[TheProperty]'
 
-	* Сохраняем элемент
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна '$ЗаголовокФормы$ *' в течение 20 секунд
+	* Saving an element
+		And I click the button named 'FormWriteAndClose'
+		And I wait '$FormCaption$ *' window closing in 20 seconds
 
-Сценарий: Я создаю проект с именем 'TheProjectName'
+Scenario: I create project with name 'TheProjectName'
 
-	* Открываем список
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Projects*"
+	* Opening a list
+		And In the command interface I select "Budgeting, reporting, and analysis" "Projects*"
 	
-	* Удаляем текущий элемент
-		Тогда открылось окно "Projects*"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И в поле с именем 'Pattern' я ввожу текст '[TheProjectName]'
-		И я нажимаю на кнопку с именем 'Find'
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление
-				И Я удаляю текущую строку в списке 'List'
-			* Переименовываем
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "*(Project*"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "*(Project*" в течение 20 секунд
+	* Deleting the current element
+		Then "Projects*" window is opened
+		And I click the button named 'FormFind'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I input '[TheProjectName]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "*(Project*" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "*(Project*" window closing in 20 seconds
 			
-	* Создаем новый элемент
-		Тогда открылось окно "Projects*"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Projects and phases (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheProjectName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Проект* (создание) *" в течение 20 секунд
+	* Creating a new element
+		Then "Projects*" window is opened
+		And I click the button named 'FormCreate'
+		Then "Projects and phases (create)" window is opened
+		And I input '[TheProjectName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Projects and phases (create) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Projects*"
-		И Я закрываю окно "Projects*"
+	* Closing a list
+		When "Projects*" window is opened
+		And I close "Projects*" window
 
-Сценарий: Я создаю вид аналитики с кодом 'TheAnalyticsCode' именем 'TheAnalyticsName' типом 'TheAnalyticsType'
+Scenario: I create dimension type with code 'TheAnalyticsCode' name 'TheAnalyticsName' type 'TheAnalyticsType'
 
-	* Открываем список
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Dimension types (corporate)"
+	* Opening a list
+		And In the command interface I select "Budgeting, reporting, and analysis" "Dimension types (corporate)"
 		
-	* Удаляем элемент
-		И Я в списке "Dimension types (corporate)" по полю "Code" ищу элемент '[TheAnalyticsCode]' "Exact match"	
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Произвольный классификтор
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "* (Dimension types (corporate))"
-				И В текущем окне я нажимаю кнопку командного интерфейса "Arbitrary classifier"
-				Если в таблице 'List' количество строк 'больше' 0 Тогда
-					И я нажимаю на кнопку с именем 'FormListSettings'
-					И Я устанавливаю отбор в форме списка "Description" "Does not begin with" 'Delete_'
-					И Пока в таблице 'List' количество строк 'больше' 0 Тогда	
-						* Ставим пометку на удаление
-							И Я удаляю текущую строку в списке 'List'
-						* Переименовываем
-							И Я запоминаю значение выражения '"Удалить_" + СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'	
-							И в таблице 'List' я выбираю текущую строку
-							Когда открылось окно "* (Arbitrary classifier)"		
-							Тогда в поле с именем 'Description' я ввожу значение переменной 'UID'
-							И я нажимаю на кнопку с именем 'FormWriteAndClose'
-							И я жду закрытия окна "* (Arbitrary classifier)" в течение 20 секунд
-					И я нажимаю на кнопку с именем 'FormListSettings'
-					И Я снимаю все отборы в форме списка		
-				Когда открылось окно "* (Dimension types (corporate))"
-				И я закрываю окно "* (Dimension types (corporate))"																													
-			* Ставим пометку на удаление
-				И Я удаляю текущую строку в списке 'List'
-			* Переименовываем	
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'		
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "* (Dimension types (corporate))"
-				И в поле с именем 'Code' я ввожу текст 'Delete'
-				Тогда открылось окно "1C:Enterprise"
-				И я нажимаю на кнопку с именем 'Button0'
-				Тогда открылось окно "* (Dimension types (corporate))"
-				И в поле с именем 'Code' я ввожу текст ''
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Dimension types (corporate)) *" в течение 20 секунд
-		И Я закрываю окно "Dimension types (corporate)"
+	* Deleting an element
+		And I search element '[TheAnalyticsCode]' "Exact match" by field "Code" in list "Dimension types (corporate)"
+		And While the number of 'List' table lines 'more' 0 Then
+			* Arbitrary classifier
+				And I select current line in 'List' table
+				Then "* (Dimension types (corporate))" window is opened
+				And In this window I click command interface button "Arbitrary classifier"
+				If number of 'List' table lines is 'more' 0 Then
+					And I click the button named 'FormListSettings'
+					And I set filter in list form "Description" "Does not begin with" 'Delete_'
+					And While the number of 'List' table lines 'more' 0 Then
+						* Marking for deletion
+							And I delete current row in list 'List'
+						* Renaming
+							And I save '"Delete_" + StrReplace(New UUID, "-", "")' in 'UID' variable
+							And I select current line in 'List' table
+							When "* (Arbitrary classifier)" window is opened
+							Then I input 'UID' variable value in the field named 'Description'
+							And I click the button named 'FormWriteAndClose'
+							And I wait "* (Arbitrary classifier)" window closing in 20 seconds
+					And I click the button named 'FormListSettings'
+					And I remove all filters in list form
+				When "* (Dimension types (corporate))" window is opened
+				And I close "* (Dimension types (corporate))" window
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "* (Dimension types (corporate))" window is opened
+				And I input 'Delete' text in the field named 'Code'
+				Then "1C:Enterprise" window is opened
+				And I click the button named 'Button0'
+				Then "* (Dimension types (corporate))" window is opened
+				And I input '' text in the field named 'Code'
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Dimension types (corporate)) *" window closing in 20 seconds
+		And I close "Dimension types (corporate)" window
 
-	* Создаем элемент кодом
-		И я выполняю код встроенного языка на сервере без контекста	
-			| 'ВидАналитик = ПланыВидовХарактеристик.ВидыСубконтоКорпоративные.CreateItem();' |
-			| 'Массив = Новый Массив;' |
-			| 'Массив.Добавить(Тип("[TheAnalyticsType]"));' |
-			| 'ВидАналитик.ТипЗначения = Новый ОписаниеТипов(Массив);' |
-			| 'ВидАналитик.Код = "[TheAnalyticsCode]";' |
-			| 'ВидАналитик.Наименование = "[TheAnalyticsName]";' |
-			| 'ВидАналитик.Записать();' |
+	* Creating an element by code
+		And I execute 1C:Enterprise script at server no context
+			| 'TypeOfAnalytics = ChartsOfCharacteristicTypes.CorporateExtDimensionTypes.CreateItem();' |
+			| 'Array = New Array;' |
+			| 'Array.Add(Type("[TheAnalyticsType]"));' |
+			| 'TypeOfAnalytics.ValueType = New TypeDescription(Array);' |
+			| 'TypeOfAnalytics.Code = "[TheAnalyticsCode]";' |
+			| 'TypeOfAnalytics.Description = "[TheAnalyticsName]";' |
+			| 'TypeOfAnalytics.Write();' |
 
-Сценарий: Я для вида аналитики с кодом "TheAnalyticsCode" делаю ключом реквизит "ThePropertyName"
+Scenario: I set attribute "ThePropertyName" as key for dimension type with code "TheAnalyticsCode"
 
-	* Открываем список и элемент
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Dimension types (corporate)"
-		И Я в списке "Dimension types (corporate)" по полю "Code" ищу и выбираю элемент '[TheAnalyticsCode]' "Exact match"	
-		Когда открылось окно "* (Dimension types (corporate))"
-		И в таблице 'TableBoxAttributes' я перехожу к строке:
+	* Opening a list and an element
+		And In the command interface I select "Budgeting, reporting, and analysis" "Dimension types (corporate)"
+		And I search and select element '[TheAnalyticsCode]' "Exact match" by field "Code" in list "Dimension types (corporate)"
+		When "* (Dimension types (corporate))" window is opened
+		And I go to line in 'TableBoxAttributes' table:
 			| "Attribute"          |
 			| '[ThePropertyName]' |
-		И в таблице 'TableBoxAttributes' я устанавливаю флаг с именем 'AttributesTableKey'
-		И в таблице 'TableBoxAttributes' я устанавливаю флаг с именем 'AttributesTableTemplate'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "* (Dimension types (corporate)) *" в течение 20 секунд
-		Когда открылось окно "Dimension types (corporate)"
-		И я выбираю пункт контекстного меню с именем 'ListContextMenuCancelSearch' на элементе формы с именем 'List'
+		And I set checkbox named 'AttributesTableKey' in 'TableBoxAttributes' table
+		And I set checkbox named 'AttributesTableTemplate' in 'TableBoxAttributes' table
+		And I click the button named 'FormWriteAndClose'
+		And I wait "* (Dimension types (corporate)) *" window closing in 20 seconds
+		When "Dimension types (corporate)" window is opened
+		And I select context menu item named 'ListContextMenuCancelSearch' of the form attribute named 'List'
 
-Сценарий: Я создаю субконто УХ с именем 'TheExtDimensionCPMName' и видом аналитики с кодом 'TheExtDimensionCPMKind'
+Scenario: I create CPM subaccount with name 'TheExtDimensionCPMName' and dimension type with code 'TheExtDimensionCPMKind'
 
-	* Открываем список
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Arbitrary classifier"
-		Когда открылось окно "Arbitrary classifier"
+	* Opening a list
+		And In the command interface I select "Budgeting, reporting, and analysis" "Arbitrary classifier"
+		When "Arbitrary classifier" window is opened
 
-	* Устанавливаем вид
-		И из выпадающего списка с именем 'Owner' я выбираю по строке '[TheExtDimensionCPMKind]'
+	* Setting a type
+		And I select from the drop-down list named 'Owner'  by '[TheExtDimensionCPMKind]' string
 
-	* Удаляем текущий элемент
-		И я выбираю пункт контекстного меню с именем 'ListContextMenuFind' на элементе формы с именем 'List'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-		И в поле с именем 'Pattern' я ввожу текст '[TheExtDimensionCPMName]'
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Arbitrary classifier"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда	
-			* Ставим пометку на удаление
-				И Я удаляю текущую строку в списке 'List'
-			* Перименовываем
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'	
-				И в таблице 'List' я выбираю текущую строку
-				Когда открылось окно "* (Arbitrary classifier)"		
-				Тогда в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Arbitrary classifier)" в течение 20 секунд 
+	* Deleting the current element
+		And I select context menu item named 'ListContextMenuFind' of the form attribute named 'List'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Description" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TheExtDimensionCPMName]' text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I click the button named 'Find'
+		Then "Arbitrary classifier" window is opened
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				When "* (Arbitrary classifier)" window is opened
+				Then I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Arbitrary classifier)" window closing in 20 seconds
 
-	* Создаем новый элемент
-		Когда открылось окно "Arbitrary classifier"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Arbitrary classifier (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheExtDimensionCPMName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Arbitrary classifier (create) *" в течение 20 секунд				
+	* Creating a new element
+		When "Arbitrary classifier" window is opened
+		And I click the button named 'FormCreate'
+		Then "Arbitrary classifier (create)" window is opened
+		And I input '[TheExtDimensionCPMName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Arbitrary classifier (create) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Arbitrary classifier"
-		И Я закрываю окно "Arbitrary classifier"
+	* Closing a list
+		When "Arbitrary classifier" window is opened
+		And I close "Arbitrary classifier" window
 
-Сценарий: Я заполняю виды аналитики 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6'
+Scenario: I fill dimension types 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6'
 
-		И в таблице "ВидыАналитик" я активизирую поле с именем "ВидыАналитикВидАналитики"
-		И в таблице "KindsOfDimensions" я выбираю текущую строку
-		Если 'НЕ ПустаяСтрока("[TheAnalytics1]")' Тогда
-			И в таблице "ВидыАналитик" из выпадающего списка с именем "ВидыАналитикВидАналитики" я выбираю по строке '[TheAnalytics1]'
-			И в таблице "DimensionKinds" я завершаю редактирование строки
-		Если 'НЕ ПустаяСтрока("[TheAnalytics2]")' Тогда
-			И в таблице "DimensionKinds" я перехожу к строке:
+		And I activate field named "DimensionKindsDimensionKind" in "DimensionKinds" table
+		And I select current line in "KindsOfDimensions" table
+		If 'NOT IsBlankString("[TheAnalytics1]")' Then
+			And I select '[TheAnalytics1]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
+			And I finish line editing in "DimensionKinds" table
+		If 'NOT IsBlankString("[TheAnalytics2]")' Then
+			And I go to line in "DimensionKinds" table:
 				| '№' |
 				| '2' |
-			И в таблице "KindsOfDimensions" я выбираю текущую строку
-			И в таблице "ВидыАналитик" из выпадающего списка с именем "ВидыАналитикВидАналитики" я выбираю по строке '[TheAnalytics2]'
-			И в таблице "DimensionKinds" я завершаю редактирование строки
-		Если 'НЕ ПустаяСтрока("[TheAnalytics3]")' Тогда
-			И в таблице "DimensionKinds" я перехожу к строке:
+			And I select current line in "KindsOfDimensions" table
+			And I select '[TheAnalytics2]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
+			And I finish line editing in "DimensionKinds" table
+		If 'NOT IsBlankString("[TheAnalytics3]")' Then
+			And I go to line in "DimensionKinds" table:
 				| '№' |
 				| '3' |
-			И в таблице "KindsOfDimensions" я выбираю текущую строку
-			И в таблице "ВидыАналитик" из выпадающего списка с именем "ВидыАналитикВидАналитики" я выбираю по строке '[TheAnalytics3]'
-			И в таблице "DimensionKinds" я завершаю редактирование строки
-		Если 'НЕ ПустаяСтрока("[TheAnalytics4]")' Тогда
-			И в таблице "DimensionKinds" я перехожу к строке:
+			And I select current line in "KindsOfDimensions" table
+			And I select '[TheAnalytics3]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
+			And I finish line editing in "DimensionKinds" table
+		If 'NOT IsBlankString("[TheAnalytics4]")' Then
+			And I go to line in "DimensionKinds" table:
 				| '№' |
 				| '4' |
-			И в таблице "KindsOfDimensions" я выбираю текущую строку
-			И в таблице "ВидыАналитик" из выпадающего списка с именем "ВидыАналитикВидАналитики" я выбираю по строке '[TheAnalytics4]'
-			И в таблице "DimensionKinds" я завершаю редактирование строки
-		Если 'НЕ ПустаяСтрока("[TheAnalytics5]")' Тогда
-			И в таблице "DimensionKinds" я перехожу к строке:
+			And I select current line in "KindsOfDimensions" table
+			And I select '[TheAnalytics4]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
+			And I finish line editing in "DimensionKinds" table
+		If 'NOT IsBlankString("[TheAnalytics5]")' Then
+			And I go to line in "DimensionKinds" table:
 				| '№' |
 				| '5' |
-			И в таблице "KindsOfDimensions" я выбираю текущую строку
-			И в таблице "ВидыАналитик" из выпадающего списка с именем "ВидыАналитикВидАналитики" я выбираю по строке '[TheAnalytics5]'
-			И в таблице "DimensionKinds" я завершаю редактирование строки
-		Если 'НЕ ПустаяСтрока("[TheAnalytics6]")' Тогда
-			И в таблице "DimensionKinds" я перехожу к строке:
+			And I select current line in "KindsOfDimensions" table
+			And I select '[TheAnalytics5]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
+			And I finish line editing in "DimensionKinds" table
+		If 'NOT IsBlankString("[TheAnalytics6]")' Then
+			And I go to line in "DimensionKinds" table:
 				| '№' |
 				| '6' |
-			И в таблице "KindsOfDimensions" я выбираю текущую строку
-			И в таблице "ВидыАналитик" из выпадающего списка с именем "ВидыАналитикВидАналитики" я выбираю по строке '[TheAnalytics6]'
-			И в таблице "DimensionKinds" я завершаю редактирование строки
+			And I select current line in "KindsOfDimensions" table
+			And I select '[TheAnalytics6]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
+			And I finish line editing in "DimensionKinds" table
 
-Сценарий: Я создаю группу аналитики статей 'TheAnalyticsGroup' с видами аналитик 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6'
+Scenario: I create article dimension group 'TheAnalyticsGroup' with dimension types 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6'
 
-	* Открываем форму спика
-		И Я открываю основную форму списка справочника "ItemDimensionGroups"
+	* Opening a list form
+		And I open "ItemDimensionGroups" catalog default form
 	
-	* Удаляем элемент	
-		И Я в списке "Item dimension groups" по полю "Description" ищу элемент '[TheAnalyticsGroup]' "Exact match"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "[TheAnalyticsGroup] (Item dimension group)" очищая
+	* Deleting an element
+		And I search element '[TheAnalyticsGroup]' "Exact match" by field "Description" in list "Item dimension groups"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "[TheAnalyticsGroup] (Item dimension group)" clearing
 	
-	* Создаем элемент
-		И я нажимаю на кнопку с именем 'FormCreate'
-		И в поле с именем 'Description' я ввожу текст '[TheAnalyticsGroup]'
-		И Я заполняю виды аналитики 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна 'Item dimension group (create) *' в течение 20 секунд
+	* Creating an element
+		And I click the button named 'FormCreate'
+		And I input '[TheAnalyticsGroup]' text in the field named 'Description'
+		And I fill dimension types 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6'
+		And I click the button named 'FormWriteAndClose'
+		And I wait 'Item dimension group (create) *' window closing in 20 seconds
 		
-	* Закрываем форму списка
-		Когда открылось окно 'Item dimension groups'
-		И Я закрываю окно 'Item dimension groups'			
+	* Closing a list form
+		When 'Item dimension groups' window is opened
+		And I close 'Item dimension groups' window
 
-Сценарий: Я проверяю у группы аналитик 'TheAnalyticsGroup' в таблице количество заполненных аналитик 'N'
-	* Проверяем количество аналитик		
-		И Я открываю основную форму списка справочника "ItemDimensionGroups"
-		И Я в списке "Item dimension groups" по полю "Description" ищу элемент '[TheAnalyticsGroup]' "Exact match"
-		И в таблице "List" я выбираю текущую строку
-		И элемент формы с именем "МаксимальныйНомерЗаполненнойАналитики" стал равен '[N]'
-		И Я закрываю окно '[TheAnalyticsGroup] (Item dimension group)'
-		И Я закрываю окно 'Item dimension groups'
+Scenario: I check filled dimensions count 'N' in table for dimension group 'TheAnalyticsGroup'
+	* Checking the number of dimensions
+		And I open "ItemDimensionGroups" catalog default form
+		And I search element '[TheAnalyticsGroup]' "Exact match" by field "Description" in list "Item dimension groups"
+		And I select current line in "List" table
+		And the form attribute named "МаксимальныйНомерЗаполненнойАналитики" became equal to '[N]'
+		And I close '[TheAnalyticsGroup] (Item dimension group)' window
+		And I close 'Item dimension groups' window
 
-Сценарий: Я создаю группу регламентов с именем 'TheName'
+Scenario: I create regulation group with name 'TheName'
 
-	* Открываем регламент
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Regulations for preparing reports"
+	* Opening a regulation
+		And In the command interface I select "Budgeting, reporting, and analysis" "Regulations for preparing reports"
 
-	* Удаляем группу
-		И Я в списке "Regulations for preparing reports" по полю "Description" ищу элемент '[TheName]' "Exact match"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление	
-				И Я удаляю текущую строку в списке 'List'
-			* Перименовываем
-				И Я запоминаю значение выражения '"Удалить_" + СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "[TheName] (Regulations for preparing reports)"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "[TheName] (Regulations for preparing reports) *" в течение 20 секунд
+	* Deleting a group
+		And I search element '[TheName]' "Exact match" by field "Description" in list "Regulations for preparing reports"
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save '"Delete_" + StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "[TheName] (Regulations for preparing reports)" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "[TheName] (Regulations for preparing reports) *" window closing in 20 seconds
 
-	* Создаем группу
-		Когда открылось окно "Regulations for preparing reports"
-		И я нажимаю на кнопку с именем 'FormCreateFolder'
-		Тогда открылось окно "Regulations for preparing reports (create group)"
-		И в поле с именем 'Description' я ввожу текст "VA - Group regulations"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Regulations for preparing reports (create group) *" в течение 20 секунд
+	* Creating a group
+		When "Regulations for preparing reports" window is opened
+		And I click the button named 'FormCreateFolder'
+		Then "Regulations for preparing reports (create group)" window is opened
+		And I input "VA - Group regulations" text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Regulations for preparing reports (create group) *" window closing in 20 seconds
 				
-Сценарий: Я для регламента 'TheRegulationName' изменяю флаг 'TheFlagName'
+Scenario: I change flag 'TheFlagName' for regulation 'TheRegulationName'
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Regulations for preparing reports"
-	Тогда открылось окно "Regulations for preparing reports"
-	И я нажимаю на кнопку с именем 'FormFind'
-	Тогда открылось окно "Find"
-	И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-	И в поле с именем 'Pattern' я ввожу текст '[TheRegulationName]'
-	И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-	И я нажимаю на кнопку с именем 'Find'
-	Тогда открылось окно "Regulations for preparing reports"
-	И в таблице 'List' я выбираю текущую строку
-	Тогда Открылся регламент подготовки отчетности 'TheRegulationName'
-	И я перехожу к закладке с именем 'GroupMainPage'
-	И я изменяю флаг с именем '[TheFlagName]'
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
-	И я жду закрытия окна '$ЗаголовокОкна$' в течение 20 секунд
+	And In the command interface I select "Budgeting, reporting, and analysis" "Regulations for preparing reports"
+	Then "Regulations for preparing reports" window is opened
+	And I click the button named 'FormFind'
+	Then "Find" window is opened
+	And I select "Description" exact value from the drop-down list named 'FieldSelector'
+	And I input '[TheRegulationName]' text in the field named 'Pattern'
+	And I change the radio button named 'CompareType' value to "Exact match"
+	And I click the button named 'Find'
+	Then "Regulations for preparing reports" window is opened
+	And I select current line in 'List' table
+	Then I open reporting preparation regulation 'TheRegulationName'
+	And I move to the tab named 'GroupMainPage'
+	And I change checkbox named '[TheFlagName]'
+	And I click the button named 'FormWriteAndClose'
+	And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: Я создаю тип информационной базы с именем 'TheName' с версией 'ThePlatformVersion'
+Scenario: I create information base type with name 'TheName' version 'ThePlatformVersion'
 
-	* Открываем список
-		И В командном интерфейсе я выбираю "Integration and master data management" "Infobase types"
+	* Opening a list
+		And In the command interface I select "Integration and master data management" "Infobase types"
 
-	* Удаляем элемент	
-		И Я в списке "Infobase types" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "[TheName] (Infobase type)" очищая
+	* Deleting an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Infobase types"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "[TheName] (Infobase type)" clearing
 	
-	* Создаем новый элемент
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Infobase type (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И из выпадающего списка с именем 'PlatformVersion' я выбираю точное значение '[ThePlatformVersion]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Infobase type (create) *" в течение 20 секунд		
+	* Creating a new element
+		And I click the button named 'FormCreate'
+		Then "Infobase type (create)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		And I select '[ThePlatformVersion]' exact value from the drop-down list named 'PlatformVersion'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Infobase type (create) *" window closing in 20 seconds
 		
-	* Закрываем список
-		Когда открылось окно "Infobase types"
-		И Я закрываю окно "Infobase types"	
+	* Closing a list
+		When "Infobase types" window is opened
+		And I close "Infobase types" window
 
-Сценарий: Я создаю внешнюю информационную базу 'TheName' тип 'TheType' каталог 'TheCatalog' тип хранилища 'TheTypeOfStorage'
+Scenario: I create external information base 'TheName' type 'TheType' catalog 'TheCatalog' storage type 'TheTypeOfStorage'
 
-	* Открываем список
-		И В командном интерфейсе я выбираю "Integration and master data management" "External infobases"
+	* Opening a list
+		And In the command interface I select "Integration and master data management" "External infobases"
 
-	* Удаляем элемент	
-		И Я в списке "External infobases" по полю "External infobase" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "[TheName] (External infobases)" очищая
+	* Deleting an element
+		And I search element '[TheName]' "At the beginning of the line" by field "External infobase" in list "External infobases"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "[TheName] (External infobases)" clearing
 
-	* Создаем новый элемент			
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "External infobases (create)"
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И я нажимаю кнопку выбора у поля с именем 'ExternalSourceType'
-		И Я в списке "Infobase types" по полю "Description" ищу и выбираю элемент '[TheType]' "At the beginning of the line"
-		И в поле с именем 'NameBeginning' я ввожу текст '[TheCatalog]'
-		Если '"[TheTypeOfStorage]" = "Excel"' Тогда 
-			И я меняю значение переключателя с именем 'ADOStorageType' на "MS Excel (.xls) files"
-			И в поле с именем 'ReferenceDirectory' я ввожу текст '[TheCatalog]'
-			И я нажимаю на кнопку с именем 'TestConnection'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
-		Если '"[TheTypeOfStorage]" = "FoxPro"' Тогда
-			И я меняю значение переключателя с именем 'ADOStorageType' на "FoxPro (.dbf) files"
-			И в поле с именем 'ReferenceDirectory' я ввожу текст '[TheCatalog]'
-		Если '"[TheTypeOfStorage]" = "Access"' Тогда
-			И я меняю значение переключателя с именем 'ADOStorageType' на "MS Access databases (.mdb)"
-			И в поле с именем 'ReferenceDirectory' я ввожу текст '[TheCatalog]'
-		И я запоминаю строку "[TheName] (External infobases)*" в переменную 'WindowTitle'
-		И я нажимаю на кнопку с именем 'FormWrite'
-		И я жду открытия окна '$ЗаголовокОкна$' в течение 20 секунд
+	* Creating a new element
+		And I click the button named 'FormCreate'
+		Then "External infobases (create)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		And I click Choice button of the field named 'ExternalSourceType'
+		And I search and select element '[TheType]' "At the beginning of the line" by field "Description" in list "Infobase types"
+		And I input '[TheCatalog]' text in the field named 'NameBeginning'
+		If '"[TheTypeOfStorage]" = "Excel"' Then
+			And I change the radio button named 'ADOStorageType' value to "MS Excel (.xls) files"
+			And I input '[TheCatalog]' text in the field named 'ReferenceDirectory'
+			And I click the button named 'TestConnection'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
+		If '"[TheTypeOfStorage]" = "FoxPro"' Then
+			And I change the radio button named 'ADOStorageType' value to "FoxPro (.dbf) files"
+			And I input '[TheCatalog]' text in the field named 'ReferenceDirectory'
+		If '"[TheTypeOfStorage]" = "Access"' Then
+			And I change the radio button named 'ADOStorageType' value to "MS Access databases (.mdb)"
+			And I input '[TheCatalog]' text in the field named 'ReferenceDirectory'
+		And I save "[TheName] (External infobases)*" line to the variable 'WindowTitle'
+		And I click the button named 'FormWrite'
+		And I wait '$WindowTitle$' window opening in 20 seconds
 	
-Сценарий: Я добавляю элемент пути к файлам организаций для типа 'TheType' объект 'TheObject' значение 'TheValue'	
+Scenario: I add company files path element for type 'TheType' object 'TheObject' value 'TheValue'
 
-	Тогда открылось окно "Company file path items: List form"	
-	И я перехожу к закладке с именем 'Page_[TheType]'	
+	Then "Company file path items: List form" window is opened
+	And I move to the tab named 'Page_[TheType]'
 
-	* Удаляем старый элемент
-		И в таблице 'List_[TheType]' я нажимаю на кнопку с именем 'List_[TheType]Find'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Object"
-		И я меняю значение переключателя с именем 'CompareType' на "Anywhere in the line"
-		И в поле с именем 'Pattern' я ввожу текст '[TheObject]'
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Company file path items: List form"
-		И Пока в таблице 'List_[TheType]' количество строк 'больше' 0 Тогда 
-			И я выбираю пункт контекстного меню с именем 'List_[TheType]ContextMenuDelete' на элементе формы с именем 'List_[TheType]'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
+	* Deleting an old element
+		And in the table 'List_[TheType]' I click the button named 'List_[TheType]Find'
+		Then "Find" window is opened
+		And I select "Object" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "Anywhere in the line"
+		And I input '[TheObject]' text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then "Company file path items: List form" window is opened
+		And While the number of 'List_[TheType]' table lines 'more' 0 Then
+			And I select context menu item named 'List_[TheType]ContextMenuDelete' of the form attribute named 'List_[TheType]'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
 				
-	* Добавляем новый элемент
-		И в таблице 'List_[TheType]' я нажимаю на кнопку с именем 'List_[TheType]Create'
-		Тогда открылось окно "Company file path items (create)"
-		И из выпадающего списка с именем 'Object' я выбираю по строке '[TheObject]'
-		И в поле с именем 'Name' я ввожу текст '[TheValue]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Company file path items (create) *" в течение 20 секунд
+	* Adding a new element
+		And in the table 'List_[TheType]' I click the button named 'List_[TheType]Create'
+		Then "Company file path items (create)" window is opened
+		And I select from the drop-down list named 'Object'  by '[TheObject]' string
+		And I input '[TheValue]' text in the field named 'Name'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Company file path items (create) *" window closing in 20 seconds
 
-Сценарий: Я создаю шаблон универсального процесса с именем "TheName" режимом "TheMode"
+Scenario: I create universal process template with name "TheName" mode "TheMode"
 
-	* Открываем форму справочника
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Templates of report preparation process"
+	* Opening a reference form
+		And In the command interface I select "Budgeting, reporting, and analysis" "Templates of report preparation process"
 
-	* Удаляем элемент
-		И Я в списке "Universal process templates" по полю "Description" ищу элемент '[TheName]' "Exact match" 
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Переименовываем
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Editing process stages: [TheName]"
-				И я нажимаю на кнопку с именем 'FormOpenProcessProperties'
-				Когда открылось окно "[TheName] (Universal process template)"
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "[TheName] (Universal process template) *" в течение 20 секунд
-				Тогда открылось окно "Editing process stages: *"
-				И Я закрываю окно "Editing process stages: *"
+	* Deleting an element
+		And I search element '[TheName]' "Exact match" by field "Description" in list "Universal process templates"
+		And While the number of 'List' table lines 'more' 0 Then
+			* Renaming
+				And I select current line in 'List' table
+				Then "Editing process stages: [TheName]" window is opened
+				And I click the button named 'FormOpenProcessProperties'
+				When "[TheName] (Universal process template)" window is opened
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "[TheName] (Universal process template) *" window closing in 20 seconds
+				Then "Editing process stages: *" window is opened
+				And I close "Editing process stages: *" window
 
-	* Создаем элемент
-		Когда открылось окно "Universal process templates"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Universal process template (create)"		
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		Когда открылось окно "Universal process template (create)"
-		И из выпадающего списка с именем 'ProcessPurpose' я выбираю точное значение '[TheMode]'
-		Когда открылось окно "Universal process template (create) *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Universal process template (create) *" в течение 20 секунд
-		Тогда открылось окно "Editing process stages: *"
-		И Я закрываю окно "Editing process stages: *"
+	* Creating an element
+		When "Universal process templates" window is opened
+		And I click the button named 'FormCreate'
+		Then "Universal process template (create)" window is opened
+		And I input '[TheName]' text in the field named 'Description'
+		When "Universal process template (create)" window is opened
+		And I select '[TheMode]' exact value from the drop-down list named 'ProcessPurpose'
+		When "Universal process template (create) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Universal process template (create) *" window closing in 20 seconds
+		Then "Editing process stages: *" window is opened
+		And I close "Editing process stages: *" window
