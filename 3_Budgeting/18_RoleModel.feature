@@ -43,7 +43,7 @@ Scenario: 18.02 Creating report type "VA - Checking access settings (no)"
 		And I click the button named 'EditTree'
 
 	* Editing the report structure
-		And I add row with name "ReportLine" in report wizard
+		And I add row with name "ReportRow" in report wizard
 		And I add row with name "ReportRowX2" in report wizard
 		And I add column with name "Amount" in report wizard
 		And I add dimension with code "VA0IEItems" in cell 'R3C3' in report wizard
@@ -63,7 +63,7 @@ Scenario: 18.02 Creating report type "VA - Checking access settings (no)"
 		When "Report indicators" window is opened
 		And I go to line in 'List' table by template:
 			| "Code"               | "Description"       |
-			| "ReportLine_Amount*" | "ReportLine amount" |
+			| "ReportRow_Amount*" | "ReportRow amount" |
 		And I select current line in 'List' table
 		Then "Data source (create) *" window is opened
 		And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
@@ -76,13 +76,13 @@ Scenario: 18.02 Creating report type "VA - Checking access settings (no)"
 		And I click the button named 'FormWriteAndClose'
 		And I wait "Data source (create) *" window closing in 20 seconds
 		Then "Report wizard *" window is opened
-		And I input "[VACheckingAccessSettingsNo_ReportLine_Amount] * 2" text in the field named 'TextDocumentFieldProcedure'
+		And I input "[VACheckingAccessSettingsNo_ReportRow_Amount] * 2" text in the field named 'TextDocumentFieldProcedure'
 		And I click the button named 'WriteAndCollapse'
 		When "Report wizard" window is opened
 		And I close "Report wizard" window
 
 	And I create default template for report type "VA - Checking access settings (no)"
-	And I for report type "Company business units" create default pivot table template with filters "Project" "VA - Checking access settings (no)"
+	And I for report type "VA - Checking access settings (no)" create default pivot table template with filters "Company business units" "Project"
 
 Scenario Outline: 18.03 Copying report type "VA - Checking access settings (no)"
 
@@ -157,7 +157,7 @@ Scenario Outline: 18.03 Copying report type "VA - Checking access settings (no)"
 		Then "Set up line list" window is opened
 		And I go to line in 'TreeOfSelectedLines' table by template:
 			| "Code"         | "Report line" |
-			| "ReportLine*" | "ReportLine"  |
+			| "ReportRow*" | "ReportRow"  |
 		And I click the button named 'Delete'
 		And I click the button named 'Delete'
 		And I click the button named 'MoveLeftAll'
@@ -175,7 +175,7 @@ Scenario Outline: 18.03 Copying report type "VA - Checking access settings (no)"
 Examples:
 	| TextReportKind                              |
 	| "VA - Checking access settings (record)" |
-	| "VA - Checking access settings (reading)" |
+	| "VA - Checking access settings (read)" |
 
 Scenario Outline: 18.04 Creating indicator value adjustment templates
 
@@ -185,27 +185,27 @@ Scenario Outline: 18.04 Creating indicator value adjustment templates
 
 	And I fill adjustment table with values for indicator values adjustment template with name <TextReportKind>
 		| "Report type"   | "Indicator"           |
-		| <TextReportKind> | "ReportLine amount"   |
+		| <TextReportKind> | "ReportRow amount"   |
 		| <TextReportKind> | "ReportRowX2 amount" |
 
 Examples:
 	| TextReportKind                              |
 	| "VA - Checking access settings (no)"    |
 	| "VA - Checking access settings (record)" |
-	| "VA - Checking access settings (reading)" |
+	| "VA - Checking access settings (read)" |
 
 Scenario Outline: 18.05 Creating indicator value adjustments
 
 	And I create indicator values adjustment scenario "VA - Main scenario" period "January 2024" frequency "Month" company <TextOrganization> values
 		| "Report type"   | "Indicator"         | "Company"    | "Report period"  | "Dimension 1"   | "Project"               | "Adjustment" |
-		| <TextReportKind> | "ReportLine amount" | <TextOrganization> | "January 2024" | "Administration" | "VA - Main project" | "20.00000"      |
+		| <TextReportKind> | "ReportRow amount" | <TextOrganization> | "January 2024" | "Administration" | "VA - Main project" | "20.00000"      |
 
 Examples:
 	| TextReportKind                              | TextOrganization |
 	| "VA - Checking access settings (no)"    | "Mercury LLC" |
 	| "VA - Checking access settings (record)" | "Mercury LLC" |
-	| "VA - Checking access settings (reading)" | "Venus LLC"   |
-	| "VA - Checking access settings (reading)" | "System LLC"  |
+	| "VA - Checking access settings (read)" | "Venus LLC"   |
+	| "VA - Checking access settings (read)" | "System LLC"  |
 
 Scenario: 18.06 Creating double indicator value adjustment template
 
@@ -216,8 +216,8 @@ Scenario: 18.06 Creating double indicator value adjustment template
 
 	And I fill adjustment table with values for indicator values adjustment template with name "VA - Checking access settings (some)"
 		| "Report type"                              | "Indicator"         |
-		| "VA - Checking access settings (no)"    | "ReportLine amount" |
-		| "VA - Checking access settings (record)" | "ReportLine amount" |
+		| "VA - Checking access settings (no)"    | "ReportRow amount" |
+		| "VA - Checking access settings (record)" | "ReportRow amount" |
 
 Scenario: 18.07 Creating double indicator value adjustment
 
@@ -249,18 +249,18 @@ Examples:
 	| TextReportKind                              | TextOrganization |
 	| "VA - Checking access settings (no)"    | "Mercury LLC" |
 	| "VA - Checking access settings (record)" | "Mercury LLC" |
-	| "VA - Checking access settings (reading)" | "Venus LLC"   |
-	| "VA - Checking access settings (reading)" | "System LLC"  |
+	| "VA - Checking access settings (read)" | "Venus LLC"   |
+	| "VA - Checking access settings (read)" | "System LLC"  |
 
 Scenario: 18.09 Configuring rights for users
 
-	// Access group "VA - Budgeting (Edit)", companies - all
+	// Access group "VA - Budgeting (Editing)", companies - all
 	And I add right "Read, write" for report type "VA - Checking access settings (record)" user "Budgeting1" for all companies
-	And I add right "Read" for report type "VA - Checking access settings (reading)" user "Budgeting1" for all companies
+	And I add right "Read" for report type "VA - Checking access settings (read)" user "Budgeting1" for all companies
 
-	// Access group "VA - Budgeting (Edit)", companies - all
+	// Access group "VA - Budgeting (Editing)", companies - all
 	And I add right "Read, write" for report type "VA - Checking access settings (record)" user "Budgeting2" company "Mercury LLC"
-	And I add right "Read" for report type "VA - Checking access settings (reading)" user "Budgeting2" company "Venus LLC"
+	And I add right "Read" for report type "VA - Checking access settings (read)" user "Budgeting2" company "Venus LLC"
 
 	// Access group "VA - Budgeting (View)", companies - "Mercury LLC" and "Venus LLC"
 	And I add right "Read, write" for report type "VA - Checking access settings (record)" user "Budgeting3" company "Mercury LLC"
@@ -367,12 +367,12 @@ Scenario: 18.12 Checking report instances for "Budgeting1"
 
 	* Searching for report instances
 		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
-		And I search element "VA - Checking access settings" "At beginning of line" by field "Report type" in list "Report instances"
+		And I search element "VA - Checking access settings" "At the beginning of the line" by field "Report type" in list "Report instances"
 		And I click Clear button of the field named 'SavedSetting'
 		Then I check table 'List' contains "3" rows from list:
 			| "Report type"                              | "Company"  | "Report period"  | "End period" | "Scenario"               | "State" | "Project"               | "Dimension 1"   | "Dimension 2" | "Dimension 3" | "Dimension 4" | "Dimension 5" | "Dimension 6" | "Primary currency" | "External infobase" |
-			| "VA - Checking access settings (reading)" | "System LLC"  | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
-			| "VA - Checking access settings (reading)" | "Venus LLC"   | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
+			| "VA - Checking access settings (read)" | "System LLC"  | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
+			| "VA - Checking access settings (read)" | "Venus LLC"   | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
 			| "VA - Checking access settings (record)" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
 
 	* Opening document with write access
@@ -406,9 +406,9 @@ Scenario: 18.12 Checking report instances for "Budgeting1"
 		When "Report instances" window is opened
 		And I go to line in 'List' table:
 			| "Report type"                              | "Company" | "Report period"  | "End period" | "Scenario"               | "State" | "Project"               | "Dimension 1"   | "Primary currency" |
-			| "VA - Checking access settings (reading)" | "Venus LLC"  | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | "RUB"             |
+			| "VA - Checking access settings (read)" | "Venus LLC"  | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | "RUB"             |
 		And I select current line in 'List' table
-		And I open report instance for report type "VA - Checking access settings (reading)" currency "RUB" company "Venus LLC" scenario "VA - Main scenario" frequency 'Month' project "VA - Main project" dimensions "Administration" '' '' '' '' ''
+		And I open report instance for report type "VA - Checking access settings (read)" currency "RUB" company "Venus LLC" scenario "VA - Main scenario" frequency 'Month' project "VA - Main project" dimensions "Administration" '' '' '' '' ''
 		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\18\VA_AccessSettingsCheck_100.mxl'
 		And form attribute named 'EnableEdit' is unavailable
 		And I close '$WindowTitle$' window
@@ -488,7 +488,7 @@ Scenario: 18.13 Checking report instances settings form for "Budgeting1"
 		Then "Select period" window is opened
 		And I input '1/1/2023' text in the field named 'DateBegin'
 		And I input '3/31/2023' text in the field named 'DateEnd'
-		And I click the button named 'select'
+		And I click the button named 'Select'
 		And "Document settings *" window is opened
 		Then there are lines in TestClient message log
 			|"Cannot identify a reporting period management document by the parameters:\n	Scenario: VA - Main scenario,\n	Period: January 2023"|
@@ -580,11 +580,11 @@ Scenario: 18.15 Checking report instances for "Budgeting2"
 
 	* Searching for report instances
 		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
-		And I search element "VA - Checking access settings" "At beginning of line" by field "Report type" in list "Report instances"
+		And I search element "VA - Checking access settings" "At the beginning of the line" by field "Report type" in list "Report instances"
 		And I click Clear button of the field named 'SavedSetting'
 		Then I check table 'List' contains "2" rows from list:
 			| "Report type"                              | "Company"  | "Report period"  | "End period" | "Scenario"               | "State" | "Project"               | "Dimension 1"   | "Dimension 2" | "Dimension 3" | "Dimension 4" | "Dimension 5" | "Dimension 6" | "Primary currency" | "External infobase" |
-			| "VA - Checking access settings (reading)" | "Venus LLC"   | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
+			| "VA - Checking access settings (read)" | "Venus LLC"   | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
 			| "VA - Checking access settings (record)" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | "Administration" | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
 	
 	* Creating report for a company without access
@@ -618,7 +618,7 @@ Scenario: 18.16 Checking pivot table for user "Budgeting2"
 		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
 		Then "Find" window is opened
 		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
-		And I change the radio button named 'CompareType' value to "At beginning of line"
+		And I change the radio button named 'CompareType' value to "At the beginning of the line"
 		And I input "VA - Checking access settings (record)" text in the field named 'Pattern'
 		And I click the button named 'Find'
 		Then "Report types and templates" window is opened
@@ -636,7 +636,7 @@ Scenario: 18.16 Checking pivot table for user "Budgeting2"
 		And I input '1/1/2024' text in the field named 'DateBegin'
 		And I move to the next attribute
 		And I input '3/31/2024' text in the field named 'DateEnd'
-		And I click the button named 'select'
+		And I click the button named 'Select'
 		Then I open pivot table for report type "VA - Checking access settings (no)"
 		Then '$WindowTitle$' window is opened
 		And I select 'RUB' exact value from the drop-down list named 'DisplayCurrency'
@@ -679,8 +679,8 @@ Scenario: 18.16 Checking pivot table for user "Budgeting2"
 		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
 		Then "Find" window is opened
 		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
-		And I change the radio button named 'CompareType' value to "At beginning of line"
-		And I input "VA - Checking access settings (reading)" text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "At the beginning of the line"
+		And I input "VA - Checking access settings (read)" text in the field named 'Pattern'
 		And I click the button named 'Find'
 		Then "Report types and templates" window is opened
 		And I go to line in 'List' table:
@@ -727,7 +727,7 @@ Scenario: 18.17 Checking indicator value adjustments for "Budgeting3"
 		Then there are lines in TestClient message log
 			|"Insufficient access rights to view the document.\nCheck settings in Report type access matrix."|
 		And I clear user message window
-		And the field named 'ListContextMenuUndoPosting' does not exist on the form
+		And the field named 'ListContextMenuCancelPosting' does not exist on the form
 
 	* Opening document with read access
 		When "Indicator value adjustment" window is opened
@@ -750,12 +750,12 @@ Scenario: 18.18 Checking report instances and settings form for "Budgeting3"
 
 	* Searching for report instances
 		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
-		And I search element "VA - Checking access settings" "At beginning of line" by field "Report type" in list "Report instances"
+		And I search element "VA - Checking access settings" "At the beginning of the line" by field "Report type" in list "Report instances"
 		And I click Clear button of the field named 'SavedSetting'
 		If '$$IsERPCPM$$' Then
-			And I save "Administration" value to 'NameDepartments' variable
+			And I save "Administration" value to 'NameDepartment' variable
 		Else
-			And I save "<Object not found> (*)" value to 'NameDepartments' variable
+			And I save "<Object not found> (*)" value to 'NameDepartment' variable
 		Then 'List' table became equal by template
 			| "Report type"                              | "Company"  | "Report period"  | "End period" | "Scenario"               | "State" | "Project"               | "Dimension 1"        | "Dimension 2" | "Dimension 3" | "Dimension 4" | "Dimension 5" | "Dimension 6" | "Primary currency" | "External infobase" |
 			| "VA - Checking access settings (record)" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" | "Draft"  | "VA - Main project" | '$NameDepartment$' | ''            | ''            | ''            | ''            | ''            | "RUB"             | ''           |
@@ -853,7 +853,7 @@ Scenario: 18.19 Checking pivot table for user "Budgeting3"
 		And in the table 'ReportKindList' I click the button named 'ReportKindListFind'
 		Then "Find" window is opened
 		And I select "Report type" exact value from the drop-down list named 'FieldSelector'
-		And I change the radio button named 'CompareType' value to "At beginning of line"
+		And I change the radio button named 'CompareType' value to "At the beginning of the line"
 		And I input "VA - Checking access settings (record)" text in the field named 'Pattern'
 		And I click the button named 'Find'
 		Then "Report types and templates" window is opened
@@ -871,7 +871,7 @@ Scenario: 18.19 Checking pivot table for user "Budgeting3"
 		And I input '1/1/2024' text in the field named 'DateBegin'
 		And I move to the next attribute
 		And I input '3/31/2024' text in the field named 'DateEnd'
-		And I click the button named 'select'
+		And I click the button named 'Select'
 		Then I open pivot table for report type "VA - Checking access settings (no)"
 		Then '$WindowTitle$' window is opened
 		And I select 'RUB' exact value from the drop-down list named 'DisplayCurrency'
@@ -904,9 +904,9 @@ Scenario: 18.20 Interface test for user "Budgeting3" - Sections and functions pa
 
 	* Functions panel
 		If '$$IsERPCPM$$' Then
-			And I save "Companies" value to 'CompanyName' variable
+			And I save "Companies" value to 'NameCompany' variable
 		Else
-			And I save "Business units" value to 'CompanyName' variable
+			And I save "Business units" value to 'NameCompany' variable
 			
 		When in sections panel I select "Budgeting, reporting, and analysis"
 		And functions panel is equal to
@@ -949,9 +949,9 @@ Scenario: 18.21 Interface test for user "Budgeting1" - Sections and functions pa
 
 	* Functions panel
 		If '$$IsERPCPM$$' Then
-			And I save "Companies" value to 'CompanyName' variable
+			And I save "Companies" value to 'NameCompany' variable
 		Else
-			And I save "Business units" value to 'CompanyName' variable
+			And I save "Business units" value to 'NameCompany' variable
 
 		When in sections panel I select "Budgeting, reporting, and analysis"
 		And functions panel is equal to
@@ -974,9 +974,9 @@ Scenario: 18.21 Interface test for user "Budgeting1" - Sections and functions pa
 			| "Dimension types (corporate)" |
 			| "Arbitrary classifier" |
 			| "Projects and phases" | // Investment projects
-			| "Report instance matrix" | // Reports
+			| "Document processing setting" | // Reports
 			| "Organizational regulation structures" |
-			| "Organizational regulation structures" | 		
+			| "Report instance matrix" | 		
 			| "Report on report indicator links" |
 			| "Graphic report link report" |
 			| "Network diagram of project group" |
@@ -1087,7 +1087,7 @@ Scenario: 18.23 Interface test for user "Budgeting1" - Report types, report inst
 		And the field named 'DoOpenDesigner' does not exist on the form
 		And the field named 'CreateReportInstanceTemplate' does not exist on the form
 		And the field named 'ListCreatePivotTabTemplate' does not exist on the form
-		And the field named 'ListSetDefaultReportTemplate' does not exist on the form
+		And the field named 'ListInstallMainTemplateOfReport' does not exist on the form
 		
 	* Template list
 		And I go to line in 'List' table:
@@ -1108,7 +1108,7 @@ Scenario: 18.23 Interface test for user "Budgeting1" - Report types, report inst
 		And I set checkbox named 'UseScenario'
 		And I click Choice button of the field named 'FilteringByScenario'
 		Then "Value list" window is opened
-		And I select "VA - Main scenario" by string from the drop-down list named 'value' in 'ValueList' table
+		And I select "VA - Main scenario" by string from the drop-down list named 'Value' in 'ValueList' table
 		And I click the button named 'OK'
 		Then "Report instances" window is opened
 		And I go to line in 'Companies' table:
@@ -1195,7 +1195,7 @@ Scenario: 18.24 Interface test for user "Budgeting1" - Reporting period manageme
 			| "Description"            |
 			| "Main period data" |
 			| "Setting"               |
-			| "Currency exchange rates"             |
+			| "Exchange rates"             |
 		And the field named 'ChangePeriod' does not exist on the form
 		And I click the button named 'ReportOrganizationStructure'
 		Then "Organizational structure briefly" window is opened
@@ -1241,9 +1241,9 @@ Scenario: 18.25 Interface test for user "Budgeting1" - Indicator value adjustmen
 		And I click the button named 'FormCommonCommandUniversalApproval_UndoApproval'
 		And I click the button named 'FormCommonCommandUniversalApproval_AcceptForApproval'
 		Then in the TestClient message log contains lines by template:
-			|"No person responsible for approval is specified in the responsibility assignment matrix for *. Enter proper approval status manually."|
-			|"Approval has not been initiated for object *."|
-			|"Person responsible for approval of the * object is not specified in the responsibility assignment matrix. The Status field is available for editing. Set the required approval status manually"|
+			|"Person responsible for approval of the Indicator value adjustment * object is not specified in the responsibility assignment matrix. The Status field is available for editing. Set the required approval status manually"|
+			|"Approval has not been initiated for object Indicator value adjustment *."|
+			|"No person responsible for approval is specified in the responsibility assignment matrix for Indicator value adjustment *. Enter proper approval status manually."|
 		And I click the button named 'FormCommonCommandUniversalApproval_ApprovalRoute'
 		Then "Process management console" window is opened
 		And I close "Process management console" window
@@ -1258,13 +1258,13 @@ Scenario: 18.26 Interface test for user "Budgeting1" - Template for adjusting in
 	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustments templates"
-	And I search element "VA - Checking access settings" "At beginning of line" by field "Description" in list "Indicator value adjustments templates"
+	And I search element "VA - Checking access settings" "At the beginning of the line" by field "Description" in list "Indicator value adjustments templates"
 
 	Then I check table 'List' contains '3' rows from list:
 		| "Description"                               | "Comment" | "Balanced" | "Adjustment input method" | "Filter companies" |
 		| "VA - Checking access settings (record)"    | ""            | "No"              | "Manual entry"                  | ""                  |
 		| "VA - Checking access settings (some)" | ""            | "No"              | "Manual entry"                  | ""                  |
-		| "VA - Checking access settings (reading)"    | ""            | "No"              | "Manual entry"                  | ""                  |
+		| "VA - Checking access settings (read)"    | ""            | "No"              | "Manual entry"                  | ""                  |
 
 	And I go to line in 'List' table:
 		| "Description"                               | "Balanced" | "Adjustment input method" |
@@ -1288,18 +1288,18 @@ Scenario: 18.26 Interface test for user "Budgeting1" - Template for adjusting in
 	Then "Indicator value adjustments templates" window is opened
 	And I go to line in 'List' table:
 		| "Description"                            | "Balanced" | "Adjustment input method" |
-		| "VA - Checking access settings (reading)" | "No"              | "Manual entry"                  |
+		| "VA - Checking access settings (read)" | "No"              | "Manual entry"                  |
 	And I select current line in 'List' table
 
-	Then "VA - Checking access settings (reading) (Indicator value adjustments templates)" window is opened
+	Then "VA - Checking access settings (read) (Indicator value adjustments templates)" window is opened
 	Then 'UsedReportTypes' table became equal
 		| "Report type"                              |
-		| "VA - Checking access settings (reading)" |
+		| "VA - Checking access settings (read)" |
 	And 'TableOfAdjustments' table became equal
 		| "Report type"                              | "Indicator"           |
-		| "VA - Checking access settings (reading)" | "ReportLine amount"   |
-		| "VA - Checking access settings (reading)" | "ReportRowX2 amount" |
-	And I close "VA - Checking access settings (reading) (Indicator value adjustments templates)" window
+		| "VA - Checking access settings (read)" | "ReportRow amount"   |
+		| "VA - Checking access settings (read)" | "ReportRowX2 amount" |
+	And I close "VA - Checking access settings (read) (Indicator value adjustments templates)" window
 	
 	Then "Indicator value adjustments templates" window is opened
 	And I close "Indicator value adjustments templates" window
@@ -1309,7 +1309,7 @@ Scenario: 18.27 Interface test for user "Budgeting1" - Reporting preparation reg
 	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Regulations for preparing reports"
-	And I search element "VA - Main regulations" "At beginning of line" by field "Description" in list "Regulations for preparing reports"
+	And I search element "VA - Main regulations" "At the beginning of the line" by field "Description" in list "Regulations for preparing reports"
 
 	Then the number of 'List' table lines is "equal" 1
 
@@ -1368,7 +1368,7 @@ Scenario: 18.28 Interface test for user "Budgeting1" - Scenarios
 	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Scenarios"
-	And I search element "VA - Main scenario" "At beginning of line" by field "Description" in list "Scenarios"
+	And I search element "VA - Main scenario" "At the beginning of the line" by field "Description" in list "Scenarios"
 
 	Then the number of 'List' table lines is "equal" 1
 	And I select current line in 'List' table
@@ -1430,8 +1430,8 @@ Scenario: 18.29 Interface test for user "Budgeting1" - Companies
 			| "Venus LLC"   | "Financial responsibility center"                   |
 			| "Earth LLC"    | "Financial responsibility center"                   |
 			| "Mars LLC"     | "Elimination"            |
-			| "Mercury LLC" | "Tax resident" |
-			| "System LLC"  | "Tax resident" |
+			| "Mercury LLC" | "Russian tax resident" |
+			| "System LLC"  | "Tax resident of the Russian Federation" |
 		
 		When "Companies" window is opened
 		And I click the button named 'FormCommonCommandAdditionalInfoCommandBar'
@@ -1441,7 +1441,7 @@ Scenario: 18.29 Interface test for user "Budgeting1" - Companies
 		When "Companies" window is opened
 		And I go to line in 'List' table:
 			| "Description" | "Company type"       |
-			| "Mercury LLC" | "Tax resident" |
+			| "Mercury LLC" | "Russian tax resident" |
 		And I select current line in 'List' table
 
 		Then "Mercury LLC (Company)" window is opened
@@ -1461,20 +1461,20 @@ Scenario: 18.29 Interface test for user "Budgeting1" - Companies
 
 		Then I check table 'List' contains '5' rows from list:
 			| "Name in the application" | "Company type"       |
-			| "System LLC"              | "Tax resident" |
+			| "System LLC"              | "Russian tax resident" |
 			| "Venus LLC"               | "Financial responsibility center"                   |
 			| "Earth LLC"                | "Financial responsibility center"                   |
 			| "Mars LLC"                 | "Elimination"            |
-			| "Mercury LLC"             | "Tax resident" |
+			| "Mercury LLC"             | "Russian tax resident" |
 
 		And I go to line in 'List' table:
 			| "Name in the application" | "Company type"       |
-			| "Mercury LLC"             | "Tax resident" |
+			| "Mercury LLC"             | "Russian tax resident" |
 	
 		And I click the button named 'FormUseAsMain'
 		And I click the button named 'FormUseAsMain'
 	
-		And I click the button named 'SubmenuPrintNormal__Attributes'
+		And I click the button named 'PrintSubmenuRegular__Attributes'
 		Then "Print details of Mercury LLC" window is opened
 		And I close "Print details Mercury LLC" window
 
@@ -1492,9 +1492,9 @@ Scenario: 18.29 Interface test for user "Budgeting1" - Companies
 		Then "Business units" window is opened
 		And I click the button named 'FormRegulatedManagementAccounting'
 		Then I check table 'List' contains '2' rows from list:
-			| "Name in the application" | "TIN" | "FNP" | "Company type"       |
-			| "Mercury LLC"             | ""    | ""    | "Tax resident" |
-			| "System LLC"              | ""    | ""    | "Tax resident" |
+			| "Name in the application" | "TIN" | "KPP" | "Company type"       |
+			| "Mercury LLC"             | ""    | ""    | "Russian tax resident" |
+			| "System LLC"              | ""    | ""    | "Russian tax resident" |
 		And I click the button named 'FormRegulatedManagementAccounting'
 
 		And I select current line in 'List' table
@@ -1523,7 +1523,7 @@ Scenario: 18.31 Interface test for user "Budgeting1" - Dimension types (corporat
 	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Dimension types (corporate)"
-	And I search element "VA0" "At beginning of line" by field "Code" in list "Dimension types (corporate)"
+	And I search element "VA0" "At the beginning of the line" by field "Code" in list "Dimension types (corporate)"
 	If '$$IsPerform$$' Then
 		Then I check table 'List' contains '6' rows from list:
 			| "Code"        | "Description"              | "Value type"                 | "Create if search failed during import" | "Update attributes during import" | "Divide by companies" |
@@ -1628,8 +1628,8 @@ Scenario: 18.34 Interface test for user "Budgeting1" - Report instances matrix
 		
 		Then "Report instance matrix" window is opened
 		And I go to line in 'SettingsComposerSettingsFilter' table:
-			| "Field"  | "Application" | "Display mode" |
-			| "Report type" | "Обычное" | "Quick access"    |
+			| "Left value"  | "Application" | "Display mode" |
+			| "Report type" | "No hierarchy" | "Quick access"    |
 		And I set checkbox named 'SettingsComposerSettingsFilterUse' in 'SettingsComposerSettingsFilter' table
 		And I activate field named 'SettingsComposerSettingsFilterComparisonType' in 'SettingsComposerSettingsFilter' table
 		And I select "In group" exact value from the drop-down list named 'SettingsComposerSettingsFilterComparisonType' in 'SettingsComposerSettingsFilter' table
@@ -1637,28 +1637,28 @@ Scenario: 18.34 Interface test for user "Budgeting1" - Report instances matrix
 		And I select "VA - Checking access settings (group)" by string from the drop-down list named 'SettingsComposerSettingsFilterRightValue' in 'SettingsComposerSettingsFilter' table
 		And I finish line editing in 'SettingsComposerSettingsFilter' table
 		
-		And I click the button named 'FormFormulate'
+		And I click the button named 'FormGenerate'
 
 	* Verifying the result
 		Then 'Result' spreadsheet document is equal
-			| "Scenario: VA - Main scenario\nPeriod: January 2024 - March 2024\nFrequency: Month" | "Project"               | "Dimension1"                                                   | "Venus LLC" | "Earth LLC" | "Mars LLC" | "Mercury LLC" | "System LLC" |
+			| "Scenario: VA - Main scenario\nPeriod: January 2024 - March 2024\nFrequency: Month" | "Project"               | "Dimension1"                                                   | "Earth LLC" | "Mars LLC" | "Mercury LLC" | "System LLC" | "Venus LLC" |
 			| ''                                                                                              | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
 			| "VA - Report group"                                                                           | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
 			| "VA - Checking access settings (group)"                                                       | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (record)"                                                         | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (record)"                                                         | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (record)"                                                         | "VA - Main project" | "Administration"                                                | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (reading)"                                                     | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (reading)"                                                     | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| "VA - Checking access settings (reading)"                                                     | "VA - Main project" | "Administration"                                                | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (read)"                                                         | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (read)"                                                         | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (read)"                                                         | "VA - Main project" | "Administration"                                                | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (record)"                                                     | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (record)"                                                     | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
+			| "VA - Checking access settings (record)"                                                     | "VA - Main project" | "Administration"                                                | ''           | ''          | ''         | ''             | ''            |
 			| ''                                                                                              | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
 			| ''                                                                                              | ''                     | ''                                                             | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in the \"Not filled in\""              | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in the \"Draft\""                 | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in the \"Checked, pending approval\"" | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in the \"Sent for revision\""   | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in the \"Confirmed\""                | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | ''                     | " - Report instance in the \"Filled in with errors\""      | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Not filled in\" state"              | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Draft\" state"                 | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Checked, pending approval\" state" | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Sent for revision\" state"   | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Confirmed\" state"                | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | ''                     | " - Report instance in the \"Filled in with errors\" state"      | ''           | ''          | ''         | ''             | ''            |
 			| ''                                                                                              | "X"                    | " - This dimension is not used for the report type"          | ''           | ''          | ''         | ''             | ''            |
 
 	* Closing a report WITHOUT saving the variant
@@ -1682,8 +1682,8 @@ Scenario: 18.35 Interface test for user "Budgeting1" - Document processing confi
 
 		When "Document processing setting" window is opened
 		And I go to line in 'SettingsComposerSettingsFilter' table:
-			| "Field"  | "Application" | "Display mode" |
-			| "Report type" | "Обычное" | "Quick access"    |
+			| "Left value"  | "Application" | "Display mode" |
+			| "Report type" | "No hierarchy" | "Quick access"    |
 		And I set checkbox named 'SettingsComposerSettingsFilterUse' in 'SettingsComposerSettingsFilter' table
 		And I activate field named 'SettingsComposerSettingsFilterComparisonType' in 'SettingsComposerSettingsFilter' table
 		And I select "In group" exact value from the drop-down list named 'SettingsComposerSettingsFilterComparisonType' in 'SettingsComposerSettingsFilter' table
@@ -1692,36 +1692,36 @@ Scenario: 18.35 Interface test for user "Budgeting1" - Document processing confi
 		And I finish line editing in 'SettingsComposerSettingsFilter' table
 
 		And I go to line in 'SettingsComposerSettingsFilter' table:
-			| "Field"                                 | "Application" | "Display mode" |
-			| "Indicator value adjustment template" | "Обычное" | "Quick access"    |
+			| "Left value"                                 | "Application" | "Display mode" |
+			| "Indicator value adjustment template" | "No hierarchy" | "Quick access"    |
 		And I set checkbox named 'SettingsComposerSettingsFilterUse' in 'SettingsComposerSettingsFilter' table
 		And I finish line editing in 'SettingsComposerSettingsFilter' table
 
 		And I go to line in 'SettingsComposerSettingsFilter' table:
-			| "Field"         | "Application" | "Display mode" |
-			| "Translation template" | "Обычное" | "Quick access"    |
+			| "Left value"         | "Application" | "Display mode" |
+			| "Translation template" | "No hierarchy" | "Quick access"    |
 		And I set checkbox named 'SettingsComposerSettingsFilterUse' in 'SettingsComposerSettingsFilter' table
 		And I finish line editing in 'SettingsComposerSettingsFilter' table
 
 		And I go to line in 'SettingsComposerSettingsFilter' table:
-			| "Field"                              | "Application" | "Display mode" |
-			| "Transformational adjustment template" | "Обычное" | "Quick access"    |
+			| "Left value"                              | "Application" | "Display mode" |
+			| "Transformational adjustment template" | "No hierarchy" | "Quick access"    |
 		And I set checkbox named 'SettingsComposerSettingsFilterUse' in 'SettingsComposerSettingsFilter' table
 		And I finish line editing in 'SettingsComposerSettingsFilter' table
 		
-		And I click the button named 'FormFormulate'
+		And I click the button named 'FormGenerate'
 
 	* Verifying the result
 		Then 'Result' spreadsheet document is equal
-			| "Document template / Company"          | ''            | ''            | ''                      | "Venus LLC"                                              | "Earth LLC"                                               | "Mars LLC"                                           | "Mercury LLC"                                            | "System LLC"                                             |
+			| "Document template / Company"          | ''            | ''            | ''                      | "Earth LLC"                                              | "Mars LLC"                                               | "Mercury LLC"                                           | "System LLC"                                            | "Venus LLC"                                             |
 			| ''                                        | "Project"      | "Dimension1"  | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
-			| "VA - Checking access settings (record)"   | ''            | ''            | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
+			| "VA - Checking access settings (read)"   | ''            | ''            | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
 			| ''                                        | "< By all >" | "< By all >" | "Template to show" | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Pivot table template" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" |
 			| ''                                        | ''            | ''            | "Processing rule"     | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Check rule"      | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Generation method"   | 'By processing rule'                                   | 'By processing rule'                                   | 'By processing rule'                                   | 'By processing rule'                                   | 'By processing rule'                                   |
-			| "VA - Checking access settings (reading)" | ''            | ''            | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
+			| "VA - Checking access settings (record)" | ''            | ''            | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
 			| ''                                        | "< By all >" | "< By all >" | "Template to show" | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Pivot table template" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" |
 			| ''                                        | ''            | ''            | "Processing rule"     | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
@@ -1768,7 +1768,7 @@ Scenario: 18.37 Interface test for user "Budgeting1" - Report on report indicato
 		And in the table 'MainReports' I click the button named 'MainReportsAdd'
 		And I click choice button of the attribute named 'MainReportsReportKind' in 'MainReports' table
 		And I search and select element "VA - Checking access settings (record)" "Exact match" by field "Description" in list "Report types"
-		And in the table 'MainReports' I click the button named 'FormFormulate'
+		And in the table 'MainReports' I click the button named 'FormGenerate'
 		
 	And I close "Report on report indicator links" window
 
@@ -1795,7 +1795,7 @@ Scenario: 18.39 Interface test for user "Budgeting1" - Network diagram of a proj
 		And In the command interface I select "Budgeting, reporting, and analysis" "Network diagram of project group"
 		Then "Network diagram of project group" window is opened
 		And in 'SpreadsheetDocumentField' spreadsheet document I move to "R1C1" cell
-		And I click the button named 'FormFormulate'
+		And I click the button named 'FormGenerate'
 		
 	And I close "Network diagram of project group" window
 			

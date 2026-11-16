@@ -103,7 +103,7 @@ Scenario: I select indicator with code 'TheIndicatorCode'
 	Else
 		Then "Indicator list" window is opened
 		And I change the radio button named 'IndicatorChoiceMode' value to "Indicator list"
-		And in the table 'List' I click the button named 'Find'
+		And in the table 'List' I click the button named 'ListFind'
 		Then "Find" window is opened
 		And I select "Code" exact value from the drop-down list named 'FieldSelector'
 		And I change the radio button named 'CompareType' value to "Exact match"

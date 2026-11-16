@@ -21,13 +21,13 @@ Scenario: 06.00 Determining application type
 	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
-Scenario: 06.01 Creating report group "VA - Analysts from other sources (group)"
+Scenario: 06.01 Creating report group "VA - Analytics of other sources (group)"
 
-	And I create report type group with name "VA - Analysts from other sources (group)" and parent "VA - Report group"
+	And I create report type group with name "VA - Analytics of other sources (group)" and parent "VA - Report group"
 
 Scenario: 06.02 Creating report type "VA - Data to add analytics"
 
-	And I create report type with name "VA - Data to add analytics" and parent "VA - Analysts from other sources (group)"
+	And I create report type with name "VA - Data to add analytics" and parent "VA - Analytics of other sources (group)"
 	And I open report type with name "VA - Data to add analytics"
 	And I move to the tab named 'DimensionsOfReport'
 	And I select from the drop-down list named 'DimensionKind1'  by "VA0ProCate" string
@@ -85,7 +85,7 @@ Scenario: 06.03 Creating report instance "VA - Data to add analytics"
 
 Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources"
 
-	And I create report type with name "VA - Analysts from fields of other sources" and parent "VA - Analysts from other sources (group)"
+	And I create report type with name "VA - Analysts from fields of other sources" and parent "VA - Analytics of other sources (group)"
 	And I open report type with name "VA - Analysts from fields of other sources"
 	And I move to the tab named 'DimensionsOfReport'
 	And I select from the drop-down list named 'DimensionKind1'  by "VA0ProCate" string
@@ -97,8 +97,8 @@ Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources
 	Then "Report wizard" window is opened
 	And I add row with name "Current formula" in report wizard
 	And I add row with name "Other source" in report wizard
-	And I add row with name "Analyst transformation" in report wizard
-	And I add row with name "Calculated Source" in report wizard
+	And I add row with name "Analytics transformation" in report wizard
+	And I add row with name "Calculated source" in report wizard
 	And I add row with name "Recalculation in code" in report wizard
 	And I add column with name "Count" in report wizard
 	And I add dimension with code "VA0Product" in cell 'R2C3' in report wizard
@@ -131,7 +131,7 @@ Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources
 					Then "Data source (create)" window is opened
 					And I select "Arbitrary query to current infobase" exact value from the drop-down list named 'MethodOfObtaining'
 					And I change checkbox named 'UseMultiperiodContext'
-					And I input 'SELECT 2 AS VALUE' text in the field named 'QueryTextForm'
+					And I input 'SELECT 2 AS Value' text in the field named 'QueryTextForm'
 					And I click the button named 'EditQueryText'
 					And I move to the tab named 'ComplianceAnalyst'
 					And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
@@ -158,7 +158,7 @@ Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources
 				Then "Data source (create)" window is opened
 				And I select "Arbitrary query to current infobase" exact value from the drop-down list named 'MethodOfObtaining'
 				And I change checkbox named 'UseMultiperiodContext'
-				And I input 'SELECT 2 AS VALUE' text in the field named 'QueryTextForm'
+				And I input 'SELECT 2 AS Value' text in the field named 'QueryTextForm'
 				And I click the button named 'EditQueryText'
 				And I move to the tab named 'ComplianceAnalyst'
 				And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
@@ -190,7 +190,7 @@ Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources
 				Then "Data source (create)" window is opened
 				And I select "Arbitrary query to current infobase" exact value from the drop-down list named 'MethodOfObtaining'
 				And I change checkbox named 'UseMultiperiodContext'
-				And I input 'SELECT 3 AS VALUE' text in the field named 'QueryTextForm'
+				And I input 'SELECT 3 AS Value' text in the field named 'QueryTextForm'
 				And I click the button named 'EditQueryText'
 				And I move to the tab named 'ComplianceAnalyst'
 				And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
@@ -262,7 +262,7 @@ Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources
 					|'FROM'|
 					|' Catalog.TimeIntervals AS TimeIntervals'|
 					|'WHERE'|
-					|' TimeIntervals.Ref IN (&Periods)'|
+					|' TimeIntervals.Ref IN (&TimeIntervals)'|
 				And I click the button named 'EditQueryText'
 				And I move to the tab named 'ComplianceAnalyst'
 				And I select current line in 'ComplianceTable' table
@@ -283,7 +283,7 @@ Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources
 					And I select current line in 'List' table
 				Then "Data source (create) *" window is opened
 				And I go to line in 'ComplianceTable' table:
-					| "Destination dimension"       | "Dimension kind" |
+					| "Destination dimension"       | "Dimension type" |
 					| "Dimension 3: Product range" | "Product range"  |
 				And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
 				And I finish line editing in 'ComplianceTable' table
@@ -295,7 +295,7 @@ Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources
 					Then "Data source (create)" window is opened
 					And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Analysts from fields of other sources" string
 					And I click Choice button of the field named 'IndicatorFilter'
-					And I select indicator with code "AnalystTransformatio_Count"
+					And I select indicator with code "AnalyticsTransformat_Count"
 					Then "Data source (create)*" window is opened
 					And I click the button named 'FormWriteAndClose'
 					Then "Data sources" window is opened
@@ -332,14 +332,14 @@ Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources
 					Then "Data source (create)" window is opened
 					And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Analysts from fields of other sources" string
 					And I click Choice button of the field named 'IndicatorFilter'
-					And I select indicator with code "AnalystTransformatio_Count"
+					And I select indicator with code "AnalyticsTransformat_Count"
 					Then "Data source (create) *" window is opened
 					And I click the button named 'FormWriteAndClose'
 					Then "Data sources" window is opened
 					And I select current line in 'List' table
 				Then "Data source (create)*" window is opened
 				And I go to line in 'ComplianceTable' table:
-					| "Destination dimension"       | "Dimension kind" | "Column name"    | "Filling method" |
+					| "Destination dimension"       | "Dimension type" | "Column name"    | "Filling method" |
 					| "Dimension 3: Product range" | "Product range"  | "[Product range]" | "Source field"    |
 				And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
 				And I finish line editing in 'ComplianceTable' table
@@ -401,11 +401,11 @@ Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources
 					If '$$IsPerform$$' Then
 						And I input 'Result = Max([IR_PricesNomenclature_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
 					ElseIf '$$IsERPCPM$$' Then
-						And I input 'Result = Max([BA_ЦенНоме25_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
+						And I input 'Result = Max([RS_PriceNomenclature25_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
 					Else
-						And I input 'Result = Max([BA_ЦеныНомен_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
+						And I input 'Result = Max([RS_PricesNomenclature_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
 				Else
-					And I input 'Result = Max([InformationRegister_ProRanPri_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
+					And I input 'Result = Max([IR_ProRanPri_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
 				And I click the button named 'WriteAndCollapse'
 	
 	And I create default template for report type "VA - Analysts from fields of other sources"
@@ -428,8 +428,8 @@ Scenario: 06.05 Creating report instance "VA - Analysts from fields of other sou
 			| ''                                          | "Count"     | "Count"      | "Count"   | "Count" |
 			| "Current formula"                           | '0'              | '0'               | '0'            | '0'          |
 			| "Other source"                           | '0'              | '0'               | '0'            | '0'          |
-			| "Analyst transformation"                    | '0'              | '0'               | '0'            | '0'          |
-			| "Calculated Source"                   | '0'              | '0'               | '0'            | '0'          |
+			| "Analytics transformation"                    | '0'              | '0'               | '0'            | '0'          |
+			| "Calculated source"                   | '0'              | '0'               | '0'            | '0'          |
 			| "Recalculation in code"                           | '0'              | '0'               | '0'            | '0'          |
 
 	* Running calculation
@@ -450,12 +450,12 @@ Scenario: 06.05 Creating report instance "VA - Analysts from fields of other sou
 			| "5C:Corporate performance management "                                      | '5'              | '5'               | '5'            | '15'         |
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64) "           | '5'              | '5'               | '5'            | '15'         |
 			| "3C:Enterprise 8 CORP. Client license for 100 users " | '5'              | '5'               | '5'            | '15'         |
-			| "Analyst transformation"                                          | '6'              | '12'              | '18'           | '36'         |
+			| "Analytics transformation"                                          | '6'              | '12'              | '18'           | '36'         |
 			| "1Software upgrade "                                  | '6'              | '12'              | '18'           | '36'         |
 			| "5C:Corporate performance management "                                      | '2'              | '4'               | '6'            | '12'         |
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64) "           | '1'              | '2'               | '3'            | '6'          |
 			| "3C:Enterprise 8 CORP. Client license for 100 users " | '3'              | '6'               | '9'            | '18'         |
-			| "Calculated Source"                                         | '6'              | '12'              | '9'            | '27'         |
+			| "Calculated source"                                         | '6'              | '12'              | '9'            | '27'         |
 			| ' '                                                               | '0'              | '0'               | '9'            | '9'          |
 			| "5C:Corporate performance management "                                      | '0'              | '0'               | '3'            | '3'          |
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64) "           | '0'              | '0'               | '3'            | '3'          |

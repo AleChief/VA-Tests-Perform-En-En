@@ -40,10 +40,10 @@ Scenario: 02.01 Creating a report type
 		And I add row with name "Total" in report wizard
 		And I add row with name "Goods" in report wizard
 		And I add column with name "Count" in report wizard
-		And I add column with name "Coefficient" in report wizard
+		And I add column with name "ZoomRatio" in report wizard
 		And I add column with name "Total" in report wizard
 		And I add column with name "Date" in report wizard
-		And I add column with name "Line" in report wizard
+		And I add column with name "String" in report wizard
 
 	* Changing indicator types
 		And I change indicator property 'NonFinancial' to "False" in cell 'R2C3' in report wizard
@@ -101,7 +101,7 @@ Scenario: 02.02 Creating templates for a report type
 
 	And I create default template for report type "VA - Recalculation in context"
 	
-	And I for report type "Cash flow items" create default pivot table template with filters "VA - Recalculation in context"
+	And I for report type "VA - Recalculation in context" create default pivot table template with filters "Cash flow items"
 
 	And I open default pivot table template for report type "VA - Recalculation in context"
 	And I click the button named 'ShowTableSettingsByAxes'
@@ -144,7 +144,7 @@ Scenario: 02.03 Creating a new scenario for indexing
 		And I input '1/1/2024' text in the field named 'DateBegin'
 		And I move to the next attribute
 		And I input '3/31/2024' text in the field named 'DateEnd'
-		And I click the button named 'select'
+		And I click the button named 'Select'
 		Then "Reporting period management (create) *" window is opened
 		And I select from the drop-down list named 'OrganizationalStructureVersion'  by "VA - Main regulations" string
 		And I click the button named 'FormGoForward'
@@ -213,7 +213,7 @@ Scenario: 02.05 Entering data into a pivot table
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''      | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total" | "Date" | "String" | "Count" | "ZoomRatio" | "Total"  | "Date"       | "String" |
 			| "Total"                                                           | '150'            | '10'          | '1,500' | '1/1/2024' | ''        | '150'             | '10'          | '1,500' | '1/1/2024' | ''        | '0'            | '0'           | '0'    | ''     | ''       | '300'        | '20'          | '3,000' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '150'            | '10'          | '300'   | '1/1/2024' | ''        | '150'             | '10'          | '300'   | '1/1/2024' | ''        | '0'            | '0'           | '0'    | ''     | ''       | '300'        | '20'          | '600'   | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '50'             | '2'           | '100'   | '1/1/2024' | "Line1" | '50'              | '2'           | '100'   | '1/1/2024' | "Line1" | '0'            | '0'           | '0'    | ''     | ''       | '100'        | '4'           | '200'   | '1/1/2024' | ''       |
@@ -277,7 +277,7 @@ Scenario: 02.05 Entering data into a pivot table
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)" | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''     | ''     | ''       | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''     | ''     | ''       |
-			| "VA - Recalculation in context (pivot table)" | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total" | "Date" | "Line" | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total" | "Date" | "Line" |
+			| "VA - Recalculation in context (pivot table)" | "Count"     | "ZoomRatio" | "Total" | "Date" | "String" | "Count"      | "ZoomRatio" | "Total" | "Date" | "String" | "Count"   | "ZoomRatio" | "Total" | "Date" | "String" | "Count" | "ZoomRatio" | "Total" | "Date" | "String" |
 			| "Total"                                        | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 			| "Goods"                                      | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 
@@ -288,7 +288,7 @@ Scenario: 02.05 Entering data into a pivot table
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)" | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''     | ''     | ''       | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''     | ''     | ''       |
-			| "VA - Recalculation in context (pivot table)" | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total" | "Date" | "Line" | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total" | "Date" | "Line" |
+			| "VA - Recalculation in context (pivot table)" | "Count"     | "ZoomRatio" | "Total" | "Date" | "String" | "Count"      | "ZoomRatio" | "Total" | "Date" | "String" | "Count"   | "ZoomRatio" | "Total" | "Date" | "String" | "Count" | "ZoomRatio" | "Total" | "Date" | "String" |
 			| "Total"                                        | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 			| "Goods"                                      | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 
@@ -305,7 +305,7 @@ Scenario: 02.05 Entering data into a pivot table
 		And I wait for '$WindowTitle$' form opening for 20 seconds
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)" | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''     | ''     | ''       | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''     | ''     | ''       |
-			| "VA - Recalculation in context (pivot table)" | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total" | "Date" | "Line" | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total" | "Date" | "Line" |
+			| "VA - Recalculation in context (pivot table)" | "Count"     | "ZoomRatio" | "Total" | "Date" | "String" | "Count"      | "ZoomRatio" | "Total" | "Date" | "String" | "Count"   | "ZoomRatio" | "Total" | "Date" | "String" | "Count" | "ZoomRatio" | "Total" | "Date" | "String" |
 			| "Total"                                        | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 			| "Goods"                                      | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 
@@ -347,7 +347,7 @@ Scenario: 02.05 Entering data into a pivot table
 			| "5C:Corporate performance management" | '100'       |
 		And I input '10.00000' text in the field named 'Value1' of 'IndicatorsDrilldown' table
 		And I finish line editing in 'IndicatorsDrilldown' table
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 
 	* Setting comments
 		When '$WindowTitle$' window is opened
@@ -411,7 +411,7 @@ Scenario: 02.05 Entering data into a pivot table
 	* Comparing the result
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''       | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"   | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"   | "Date"       | "String" |
 			| "Total"                                                           | '110'            | '10'          | '1,100' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '860'        | '60'          | '20,600' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '110'            | '10'          | '220'   | '1/1/2024' | ''        | '300'             | '20'          | '1,200' | '1/1/2024' | ''        | '450'          | '30'          | '2,700'  | '1/1/2024' | ''        | '860'        | '60'          | '4,120'  | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '10'             | '2'           | '20'    | '1/1/2024' | "Line1" | '100'             | '4'           | '400'   | '1/1/2024' | "Line1" | '150'          | '6'           | '900'    | '1/1/2024' | "Line1" | '260'        | '12'          | '1,320'  | '1/1/2024' | ''       |
@@ -436,7 +436,7 @@ Scenario: 02.06 Export and import from Excel
 		And I wait for '$WindowTitle$' form opening for 30 seconds
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''       | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"   | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"   | "Date"       | "String" |
 			| "Total"                                                           | '150'            | '10'          | '1,500' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '900'        | '60'          | '21,000' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '150'            | '10'          | '300'   | '1/1/2024' | ''        | '300'             | '20'          | '1,200' | '1/1/2024' | ''        | '450'          | '30'          | '2,700'  | '1/1/2024' | ''        | '900'        | '60'          | '4,200'  | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '10'             | '2'           | '20'    | '1/1/2024' | "Line1" | '20'              | '4'           | '80'    | '1/1/2024' | "Line1" | '30'           | '6'           | '180'    | '1/1/2024' | "Line1" | '60'         | '12'          | '280'    | '1/1/2024' | ''       |
@@ -469,7 +469,7 @@ Scenario: 02.06 Export and import from Excel
 		And I wait for '$WindowTitle$' form opening for 30 seconds
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''       | ''           | ''         | "February 2024" | ''            | ''       | ''           | ''         | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''       | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"   | "Date"       | "Line"   | "Count"      | "Coefficient" | "Total"   | "Date"       | "Line"   | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"   | "Date"       | "String"   | "Count"      | "ZoomRatio" | "Total"   | "Date"       | "String"   | "Count"   | "ZoomRatio" | "Total" | "Date" | "String" | "Count" | "ZoomRatio" | "Total"   | "Date"       | "String" |
 			| "Total"                                                           | '800'            | '60'          | '48,000' | '1/3/2024' | ''         | '600'             | '80'          | '48,000' | '2/2/2024' | ''         | '0'            | '0'           | '0'    | ''     | ''       | '1,400'      | '140'         | '96,000' | '2/2/2024' | ''       |
 			| "Goods"                                                         | '800'            | '60'          | '16,000' | ''           | ''         | '600'             | '80'          | '16,000' | ''           | ''         | '0'            | '0'           | '0'    | ''     | ''       | '1,400'      | '140'         | '32,000' | ''           | ''       |
 			| "5C:Corporate performance management"                                      | '100'            | '20'          | '2,000'  | '1/1/2024' | "Line11" | '200'             | '0'           | '0'      | ''           | ''         | '0'            | '0'           | '0'    | ''     | ''       | '300'        | '20'          | '2,000'  | ''           | ''       |
@@ -489,7 +489,7 @@ Scenario: 02.06 Export and import from Excel
 		And I wait for '$WindowTitle$' form opening for 30 seconds
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''       | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"   | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"   | "Date"       | "String" |
 			| "Total"                                                           | '150'            | '10'          | '1,500' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '900'        | '60'          | '21,000' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '150'            | '10'          | '300'   | '1/1/2024' | ''        | '300'             | '20'          | '1,200' | '1/1/2024' | ''        | '450'          | '30'          | '2,700'  | '1/1/2024' | ''        | '900'        | '60'          | '4,200'  | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '10'             | '2'           | '20'    | '1/1/2024' | "Line1" | '20'              | '4'           | '80'    | '1/1/2024' | "Line1" | '30'           | '6'           | '180'    | '1/1/2024' | "Line1" | '60'         | '12'          | '280'    | '1/1/2024' | ''       |
@@ -554,7 +554,7 @@ Scenario: 02.07 Testing indicator input form
 			| "March 2024"    | "1C:ERP. Corporate performance management"                                   | '0.12000'   | '0.72000'   | '0.00600'   | '1/1/2024' | "Line1"   |
 		And the form attribute named 'Accuracy' became equal to '5'
 		And the editing text of form attribute named 'Divisor' became equal to "thousands"
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 				
 	* Table mode by periods
 		When '$WindowTitle$' window is opened
@@ -578,13 +578,13 @@ Scenario: 02.07 Testing indicator input form
 			| "Product range"                 |
 			| "1C:ERP. Corporate performance management" |
 		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 		When '$WindowTitle$' window is opened
 		And I click the button named 'FormRowsWithValues'
 		And I click the button named 'FormColumnsWithValues'
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''     | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total" | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total" | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"  | "Date"       | "String" |
 			| "Total"                                                           | '90'             | '6'           | '540'  | '1/1/2024' | ''        | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '540'        | '36'          | '7,560' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '90'             | '6'           | '180'  | '1/1/2024' | ''        | '180'             | '12'          | '720'   | '1/1/2024' | ''        | '270'          | '18'          | '1,620' | '1/1/2024' | ''        | '540'        | '36'          | '2,520' | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '10'             | '2'           | '20'   | '1/1/2024' | "Line1" | '20'              | '4'           | '80'    | '1/1/2024' | "Line1" | '30'           | '6'           | '180'   | '1/1/2024' | "Line1" | '60'         | '12'          | '280'   | '1/1/2024' | ''       |
@@ -621,11 +621,11 @@ Scenario: 02.07 Testing indicator input form
 			And I input '20.00000' text in the field named 'Period_1_Value1' of 'IndicatorsDrilldown' table
 			And I input '1/31/2024' text in the field named 'Period_1_Value4' of 'IndicatorsDrilldown' table
 		* Verifying the result
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			When '$WindowTitle$' window is opened
 			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''       | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
-				| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line" | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
+				| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String" | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"  | "Date"       | "String" |
 				| "Total"                                                           | '160'            | '8'           | '1,280' | '1/31/2024' | ''       | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '610'        | '38'          | '8,300' | '1/31/2024' | ''       |
 				| "Goods"                                                         | '160'            | '8'           | '320'   | '1/1/2024' | ''       | '180'             | '12'          | '720'   | ''           | ''        | '270'          | '18'          | '1,620' | ''           | ''        | '610'        | '38'          | '2,660' | ''           | ''       |
 				| "5C:Corporate performance management"                                      | '30'             | '2'           | '60'    | '1/31/2024' | ''       | '20'              | '4'           | '80'    | ''           | ''        | '30'           | '6'           | '180'   | ''           | ''        | '80'         | '12'          | '320'   | ''           | ''       |
@@ -654,7 +654,7 @@ Scenario: 02.07 Testing indicator input form
 		And I click the button named 'FormCancel'
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''       | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line" | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String" | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"  | "Date"       | "String" |
 			| "Total"                                                           | '200'            | '8'           | '1,600' | '1/31/2024' | ''       | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '650'        | '38'          | '8,620' | '1/31/2024' | ''       |
 			| "Goods"                                                         | '200'            | '8'           | '400'   | '1/1/2024' | ''       | '180'             | '12'          | '720'   | ''           | ''        | '270'          | '18'          | '1,620' | ''           | ''        | '650'        | '38'          | '2,740' | ''           | ''       |
 			| "5C:Corporate performance management"                                      | '50'             | '2'           | '100'   | '1/31/2024' | ''       | '20'              | '4'           | '80'    | ''           | ''        | '30'           | '6'           | '180'   | ''           | ''        | '100'        | '12'          | '360'   | ''           | ''       |
@@ -687,11 +687,11 @@ Scenario: 02.07 Testing indicator input form
 			And I select "5C:Corporate performance management" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
 			And I input '2/5/2024' text in the field named 'Value1' of 'IndicatorsDrilldown' table
 			And I finish line editing in 'IndicatorsDrilldown' table
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''       | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line" | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String" | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"  | "Date"       | "String" |
 			| "Total"                                                           | '200'            | '8'           | '1,600' | '2/5/2024' | ''       | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '650'        | '38'          | '8,620' | '2/5/2024' | ''       |
 			| "Goods"                                                         | '200'            | '8'           | '400'   | '1/1/2024' | ''       | '180'             | '12'          | '720'   | ''           | ''        | '270'          | '18'          | '1,620' | ''           | ''        | '650'        | '38'          | '2,740' | ''           | ''       |
 			| "5C:Corporate performance management"                                      | '50'             | '2'           | '100'   | '2/5/2024' | ''       | '20'              | '4'           | '80'    | ''           | ''        | '30'           | '6'           | '180'   | ''           | ''        | '100'        | '12'          | '360'   | ''           | ''       |
@@ -715,11 +715,11 @@ Scenario: 02.07 Testing indicator input form
 		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
 		And I select "5C:Corporate performance management" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
 		And I input 'String3' text in the field named 'Value1' of 'IndicatorsDrilldown' table
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"  | "Date"       | "String" |
 			| "Total"                                                           | '200'            | '8'           | '1,600' | '2/5/2024' | ''        | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '650'        | '38'          | '8,620' | '2/5/2024' | ''       |
 			| "Goods"                                                         | '200'            | '8'           | '400'   | '1/1/2024' | ''        | '180'             | '12'          | '720'   | ''           | ''        | '270'          | '18'          | '1,620' | ''           | ''        | '650'        | '38'          | '2,740' | ''           | ''       |
 			| "5C:Corporate performance management"                                      | '50'             | '2'           | '100'   | '2/5/2024' | 'String3' | '20'              | '4'           | '80'    | ''           | ''        | '30'           | '6'           | '180'   | ''           | ''        | '100'        | '12'          | '360'   | ''           | ''       |
@@ -737,11 +737,11 @@ Scenario: 02.07 Testing indicator input form
 			| "Product range"              | 'Value1' |
 			| "5C:Corporate performance management" | 'String3'   |
 		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"  | "Date"       | "String" |
 			| "Total"                                                           | '200'            | '8'           | '1,600' | '2/5/2024' | ''        | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '650'        | '38'          | '8,620' | '2/5/2024' | ''       |
 			| "Goods"                                                         | '200'            | '8'           | '400'   | '1/1/2024' | ''        | '180'             | '12'          | '720'   | ''           | ''        | '270'          | '18'          | '1,620' | ''           | ''        | '650'        | '38'          | '2,740' | ''           | ''       |
 			| "5C:Corporate performance management"                                      | '50'             | '2'           | '100'   | '2/5/2024' | ''        | '20'              | '4'           | '80'    | ''           | ''        | '30'           | '6'           | '180'   | ''           | ''        | '100'        | '12'          | '360'   | ''           | ''       |
@@ -780,10 +780,10 @@ Scenario: 02.07 Testing indicator input form
 			And I activate field named "VA0Product" in 'IndicatorsDrilldown' table
 			And I select "2C:Corporation" by string from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
 			And I input '30' text in the field named 'Value1' of 'IndicatorsDrilldown' table
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"  | "Date"       | "String" |
 			| "Total"                                                           | '230'            | '8'           | '1,840' | '2/5/2024' | ''        | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '680'        | '38'          | '8,860' | '2/5/2024' | ''       |
 			| "Goods"                                                         | '230'            | '8'           | '460'   | '1/1/2024' | ''        | '180'             | '12'          | '720'   | ''           | ''        | '270'          | '18'          | '1,620' | ''           | ''        | '680'        | '38'          | '2,800' | ''           | ''       |
 			| "5C:Corporate performance management"                                      | '100'            | '2'           | '200'   | '2/5/2024' | ''        | '20'              | '4'           | '80'    | ''           | ''        | '30'           | '6'           | '180'   | ''           | ''        | '150'        | '12'          | '460'   | ''           | ''       |
@@ -812,11 +812,11 @@ Scenario: 02.07 Testing indicator input form
 			And I select "January 2024" exact value from the drop-down list named 'ReportPeriod' in 'IndicatorsDrilldown' table
 			And I select "2C:Corporation" exact value from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
 			And I input '3/10/2024' text in the field named 'Value1' of 'IndicatorsDrilldown' table
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''      | ''           | ''        | "TOTAL"      | ''            | ''      | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"  | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"  | "Date"       | "String" |
 			| "Total"                                                           | '230'            | '8'           | '1,840' | '3/10/2024' | ''        | '180'             | '12'          | '2,160' | '1/1/2024' | ''        | '270'          | '18'          | '4,860' | '1/1/2024' | ''        | '680'        | '38'          | '8,860' | '3/10/2024' | ''       |
 			| "Goods"                                                         | '230'            | '8'           | '460'   | '1/1/2024' | ''        | '180'             | '12'          | '720'   | ''           | ''        | '270'          | '18'          | '1,620' | ''           | ''        | '680'        | '38'          | '2,800' | ''           | ''       |
 			| "5C:Corporate performance management"                                      | '100'            | '2'           | '200'   | '3/10/2024' | ''        | '20'              | '4'           | '80'    | ''           | ''        | '30'           | '6'           | '180'   | ''           | ''        | '150'        | '12'          | '460'   | ''           | ''       |
@@ -882,7 +882,7 @@ Scenario: 02.09 Copying all data of the reporting period
 	* Verifying the result
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''       | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"   | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"   | "Date"       | "String" |
 			| "Total"                                                           | '150'            | '10'          | '1,500' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '900'        | '60'          | '21,000' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '150'            | '10'          | '300'   | '1/1/2024' | ''        | '300'             | '20'          | '1,200' | '1/1/2024' | ''        | '450'          | '30'          | '2,700'  | '1/1/2024' | ''        | '900'        | '60'          | '4,200'  | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '10'             | '2'           | '20'    | '1/1/2024' | "Line1" | '20'              | '4'           | '80'    | '1/1/2024' | "Line1" | '30'           | '6'           | '180'    | '1/1/2024' | "Line1" | '60'         | '12'          | '280'    | '1/1/2024' | ''       |
@@ -983,14 +983,14 @@ Scenario: 02.10 Copying data by indicators
 		And I input '1/1/2024' text in the field named 'DateBegin'
 		And I move to the next attribute
 		And I input '1/31/2024' text in the field named 'DateEnd'
-		And I click the button named 'select'
+		And I click the button named 'Select'
 		Then "Copy report indicator values" window is opened
 		And I click the button named 'ButtonChangePeriodDestination'
 		Then "Select period" window is opened
 		And I input '2/1/2024' text in the field named 'DateBegin'
 		And I move to the next attribute
 		And I input '2/28/2024' text in the field named 'DateEnd'
-		And I click the button named 'select'
+		And I click the button named 'Select'
 		Then "Copy report indicator values" window is opened
 		And I click the button named 'Execute'
 		Затем я жду, что в сообщениях пользователю будет подстрока "Copy successful" в течение 60 секунд
@@ -1003,7 +1003,7 @@ Scenario: 02.10 Copying data by indicators
 		And I set pivot table filter 'Item_Organization' with value "Mercury LLC"
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''       | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"   | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total" | "Date" | "String" | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"   | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"   | "Date"       | "String" |
 			| "Total"                                                           | '0'              | '0'           | '0'    | ''     | ''       | '150'             | '10'          | '1,500' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '600'        | '40'          | '15,000' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '0'              | '0'           | '0'    | ''     | ''       | '140'             | '8'           | '280'   | '1/1/2024' | ''        | '420'          | '24'          | '2,520'  | '1/1/2024' | ''        | '560'        | '32'          | '2,800'  | '1/1/2024' | ''       |
 			| "2C:Corporation"                                                  | '0'              | '0'           | '0'    | ''     | ''       | '20'              | '2'           | '40'    | '1/1/2024' | "Line1" | '60'           | '6'           | '360'    | '1/1/2024' | "Line1" | '80'         | '8'           | '400'    | '1/1/2024' | ''       |
@@ -1057,7 +1057,7 @@ Scenario: 02.11 Checking pivot table
 	* Comparing the result
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal by template
 			| "VA - Recalculation in context (pivot table)" | "Product range"                 | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''        | ''           | ''        | "March 2024" | ''            | ''        | ''           | ''        | "1 quarter of 2024" | ''            | ''        | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)" | ''                             | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"        | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)" | ''                             | "Count"     | "ZoomRatio" | "Total" | "Date" | "String" | "Count"      | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count"        | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"    | "Date"       | "String" |
 			| "Total"                                        | ''                             | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'       | ''           | ''        | '0'            | '0'           | '0'       | ''           | ''        | '0'                 | '0'           | '0'       | ''           | ''        | '0'          | '0'           | '0'       | ''           | ''       |
 			| "Goods"                                      | ''                             | '0'              | '0'           | '0'    | ''     | ''       | '0.0005*'         | '0.00200'     | '0.0010*' | '1/1/2024' | ''        | '0.0016*'      | '0.00600'     | '0.0096*' | '1/1/2024' | ''        | '0.0021*'           | '0.00800'     | '0.0107*' | '1/1/2024' | ''        | '0.0021*'    | '0.00800'     | '0.0107*' | '1/1/2024' | ''       |
 			| ''                                            | "1C:ERP. Corporate performance management" | '0'              | '0'           | '0'    | ''     | ''       | '0.0005*'         | '0.00200'     | '0.0010*' | '1/1/2024' | "Line1" | '0.0016*'      | '0.00600'     | '0.0096*' | '1/1/2024' | "Line1" | '0.0021*'           | '0.00800'     | '0.0107*' | '1/1/2024' | "Line1" | '0.0021*'    | '0.00800'     | '0.0107*' | '1/1/2024' | ''       |
@@ -1097,7 +1097,7 @@ Scenario: 02.12 Indexing by scenario
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''      | ''           | ''        | "February 2024" | ''            | ''        | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"   | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"    | "Date"       | "String" |
 			| "Total"                                                           | '150'            | '10'          | '1,500' | '1/1/2024' | ''        | '10,820'          | '36'          | '389,520' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '11,420'     | '76'          | '404,520' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '150'            | '10'          | '300'   | '1/1/2024' | ''        | '10,820'          | '36'          | '86,480'  | '1/1/2024' | ''        | '450'          | '30'          | '2,700'  | '1/1/2024' | ''        | '11,420'     | '76'          | '89,480'  | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '10'             | '2'           | '20'    | '1/1/2024' | "Line1" | '20'              | '4'           | '80'      | '1/1/2024' | "Line1" | '30'           | '6'           | '180'    | '1/1/2024' | "Line1" | '60'         | '12'          | '280'     | '1/1/2024' | ''       |
@@ -1161,7 +1161,7 @@ Scenario: 02.13 Reverse allocation (uniform)
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''        | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"   | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"    | "Date"       | "String" |
 			| "Total"                                                           | '1,000'          | '100'         | '100,000' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '1,750'      | '150'         | '119,500' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '1,000'          | '100'         | '3,800'   | '1/1/2024' | ''        | '300'             | '20'          | '1,200' | '1/1/2024' | ''        | '450'          | '30'          | '2,700'  | '1/1/2024' | ''        | '1,750'      | '150'         | '7,700'   | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '245'            | '2'           | '490'     | '1/1/2024' | "Line1" | '20'              | '4'           | '80'    | '1/1/2024' | "Line1" | '30'           | '6'           | '180'    | '1/1/2024' | "Line1" | '295'        | '12'          | '750'     | '1/1/2024' | ''       |
@@ -1188,7 +1188,7 @@ Scenario: 02.13 Reverse allocation (uniform)
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''        | ''           | ''        | "February 2024" | ''            | ''        | ''           | ''        | "March 2024" | ''            | ''        | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"    | "Date"       | "String" |
 			| "Total"                                                           | '5,000'          | '100'         | '500,000' | '1/1/2024' | ''        | '5,000'           | '36'          | '180,000' | '1/1/2024' | ''        | '5,000'        | '44'          | '220,000' | '1/1/2024' | ''        | '15,000'     | '180'         | '900,000' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '5,000'          | '100'         | '100,000' | '1/1/2024' | ''        | '5,000'           | '36'          | '36,000'  | '1/1/2024' | ''        | '5,000'        | '44'          | '44,000'  | '1/1/2024' | ''        | '15,000'     | '180'         | '180,000' | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '1,000'          | '2'           | '2,000'   | '1/1/2024' | "Line1" | '1,000'           | '20'          | '20,000'  | '1/1/2024' | "Line1" | '1,000'        | '20'          | '20,000'  | '1/1/2024' | "Line1" | '3,000'      | '42'          | '42,000'  | '1/1/2024' | ''       |
@@ -1230,7 +1230,7 @@ Scenario: 02.13 Reverse allocation (uniform)
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''        | ''           | ''        | "February 2024" | ''            | ''          | ''           | ''        | "March 2024" | ''            | ''          | ''           | ''        | "TOTAL"      | ''            | ''           | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"      | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"      | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"       | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"      | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"      | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"       | "Date"       | "String" |
 			| "Total"                                                           | '5,000'          | '100'         | '500,000' | '1/1/2024' | ''        | '5,000'           | '1,000'       | '5,000,000' | '1/1/2024' | ''        | '5,000'        | '1,000'       | '5,000,000' | '1/1/2024' | ''        | '15,000'     | '2,100'       | '10,500,000' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '5,000'          | '100'         | '100,000' | '1/1/2024' | ''        | '5,000'           | '1,000'       | '1,000,000' | '1/1/2024' | ''        | '5,000'        | '1,000'       | '1,000,000' | '1/1/2024' | ''        | '15,000'     | '2,100'       | '2,100,000'  | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '1,000'          | '2'           | '2,000'   | '1/1/2024' | "Line1" | '1,000'           | '200'         | '200,000'   | '1/1/2024' | "Line1" | '1,000'        | '200'         | '200,000'   | '1/1/2024' | "Line1" | '3,000'      | '402'         | '402,000'    | '1/1/2024' | ''       |
@@ -1296,7 +1296,7 @@ Scenario: 02.14 Reverse allocation (proportional)
 			When '$WindowTitle$' window is opened
 			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''        | ''           | ''        | "February 2024" | ''            | ''      | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
-				| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"  | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
+				| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"  | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"   | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"    | "Date"       | "String" |
 				| "Total"                                                           | '1,050'          | '200'         | '210,000' | '1/1/2024' | ''        | '300'             | '20'          | '6,000' | '1/1/2024' | ''        | '450'          | '30'          | '13,500' | '1/1/2024' | ''        | '1,800'      | '250'         | '229,500' | '1/1/2024' | ''       |
 				| "Goods"                                                         | '1,050'          | '200'         | '42,000'  | '1/1/2024' | ''        | '300'             | '20'          | '1,200' | '1/1/2024' | ''        | '450'          | '30'          | '2,700'  | '1/1/2024' | ''        | '1,800'      | '250'         | '45,900'  | '1/1/2024' | ''       |
 				| "5C:Corporate performance management"                                      | '100'            | '40'          | '4,000'   | '1/1/2024' | "Line1" | '20'              | '4'           | '80'    | '1/1/2024' | "Line1" | '30'           | '6'           | '180'    | '1/1/2024' | "Line1" | '150'        | '50'          | '4,260'   | '1/1/2024' | ''       |
@@ -1341,7 +1341,7 @@ Scenario: 02.14 Reverse allocation (proportional)
 			When '$WindowTitle$' window is opened
 			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''        | ''           | ''        | "February 2024" | ''            | ''       | ''           | ''        | "March 2024" | ''            | ''       | ''           | ''        | "TOTAL"      | ''            | ''        | ''           | ''       |
-				| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"    | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"   | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"    | "Date"       | "Line" |
+				| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"    | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"   | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"   | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"    | "Date"       | "String" |
 				| "Total"                                                           | '2,050'          | '400'         | '820,000' | '1/1/2024' | ''        | '600'             | '40'          | '24,000' | '1/1/2024' | ''        | '900'          | '60'          | '54,000' | '1/1/2024' | ''        | '3,550'      | '500'         | '898,000' | '1/1/2024' | ''       |
 				| "Goods"                                                         | '2,050'          | '400'         | '164,000' | '1/1/2024' | ''        | '600'             | '40'          | '4,800'  | '1/1/2024' | ''        | '900'          | '60'          | '10,800' | '1/1/2024' | ''        | '3,550'      | '500'         | '179,600' | '1/1/2024' | ''       |
 				| "5C:Corporate performance management"                                      | '200'            | '80'          | '16,000'  | '1/1/2024' | "Line1" | '40'              | '8'           | '320'    | '1/1/2024' | "Line1" | '60'           | '12'          | '720'    | '1/1/2024' | "Line1" | '300'        | '100'         | '17,040'  | '1/1/2024' | ''       |
@@ -1365,7 +1365,7 @@ Scenario: 02.15 Changing indicators in an additional currency
 	* Checking the result
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''         | ''           | ''        | "February 2024" | ''            | ''         | ''           | ''        | "March 2024" | ''            | ''          | ''           | ''        | "TOTAL"      | ''            | ''          | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"     | "Date"       | "Line"  | "Count"      | "Coefficient" | "Total"     | "Date"       | "Line"  | "Count"   | "Coefficient" | "Total"      | "Date"       | "Line"  | "Count" | "Coefficient" | "Total"      | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"     | "Date"       | "String"  | "Count"      | "ZoomRatio" | "Total"     | "Date"       | "String"  | "Count"   | "ZoomRatio" | "Total"      | "Date"       | "String"  | "Count" | "ZoomRatio" | "Total"      | "Date"       | "String" |
 			| "Total"                                                           | '2.02102'        | '0.13474'     | '20.21007' | '1/1/2024' | ''        | '4.03362'         | '0.26890'     | '80.67260' | '1/1/2024' | ''        | '6.04810'      | '0.40320'     | '181.44307' | '1/1/2024' | ''        | '12.10274'   | '0.80684'     | '282.32574' | '1/1/2024' | ''       |
 			| "Goods"                                                         | '2.02102'        | '10.00000'    | '4.04202'  | '1/1/2024' | ''        | '4.03363'         | '20.00000'    | '16.13452' | '1/1/2024' | ''        | '6.04808'      | '30.00000'    | '36.28862'  | '1/1/2024' | ''        | '12.10273'   | '60.00000'    | '56.46516'  | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '0.13474'        | '2.00000'     | '0.26947'  | '1/1/2024' | "Line1" | '0.26891'         | '4.00000'     | '1.07563'  | '1/1/2024' | "Line1" | '0.40320'      | '6.00000'     | '2.41925'   | '1/1/2024' | "Line1" | '0.80685'    | '12.00000'    | '3.76435'   | '1/1/2024' | ''       |
@@ -1423,7 +1423,7 @@ Scenario: 02.15 Changing indicators in an additional currency
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''            | ''           | ''          | "February 2024" | ''            | ''            | ''           | ''          | "March 2024" | ''            | ''            | ''           | ''          | "TOTAL"       | ''            | ''             | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"      | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"   | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"  | "Coefficient" | "Total"         | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"        | "Date"       | "String"    | "Count"      | "ZoomRatio" | "Total"        | "Date"       | "String"    | "Count"   | "ZoomRatio" | "Total"        | "Date"       | "String"    | "Count"  | "ZoomRatio" | "Total"         | "Date"       | "String" |
 			| "Total"                                                           | '1,001.94314'    | '7.00000'     | '7,013.60198' | '1/31/2024' | ''          | '1,003.76472'     | '0.26890'     | '269.91233'   | '1/1/2024' | ''          | '1,005.64488'  | '0.40320'     | '405.47602'   | '1/1/2024' | ''          | '3,011.35274' | '7.67210'     | '7,688.99033'  | '1/31/2024' | ''       |
 			| "Goods"                                                         | '1,001.94314'    | '7.00000'     | '2,001.94314' | '1/1/2024' | ''          | '1,003.76472'     | '20.00000'    | '4,015.05888' | '1/1/2024' | ''          | '1,005.64488'  | '30.00000'    | '6,033.86928' | '1/1/2024' | ''          | '3,011.35274' | '57.00000'    | '12,050.87130' | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '1,000.00000'    | '2.00000'     | '2,000.00000' | '1/1/2024' | "Line1"   | '1,000.00000'     | '4.00000'     | '4,000.00000' | '1/1/2024' | "Line1"   | '1,000.00000'  | '6.00000'     | '6,000.00000' | '1/1/2024' | "Line1"   | '3,000.00000' | '12.00000'    | '12,000.00000' | '1/1/2024' | ''       |
@@ -1438,7 +1438,7 @@ Scenario: 02.15 Changing indicators in an additional currency
 	* Verifying the result
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''            | ''           | ''          | "February 2024" | ''            | ''            | ''           | ''          | "March 2024" | ''            | ''            | ''           | ''          | "TOTAL"       | ''            | ''             | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"      | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"   | "Coefficient" | "Total"        | "Date"       | "Line"    | "Count"  | "Coefficient" | "Total"         | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"        | "Date"       | "String"    | "Count"      | "ZoomRatio" | "Total"        | "Date"       | "String"    | "Count"   | "ZoomRatio" | "Total"        | "Date"       | "String"    | "Count"  | "ZoomRatio" | "Total"         | "Date"       | "String" |
 			| "Total"                                                           | '821.73483'      | '5.74098'     | '5,752.14393' | '1/31/2024' | ''          | '830.12297'       | '0.22240'     | '223.22005'   | '1/1/2024' | ''          | '843.72814'    | '0.33828'     | '340.19120'   | '1/1/2024' | ''          | '2,495.58594' | '6.30166'     | '6,315.55518'  | '1/31/2024' | ''       |
 			| "Goods"                                                         | '821.73482'      | '7.00000'     | '1,641.87604' | '1/1/2024' | ''          | '830.12298'       | '20.00000'    | '3,320.49179' | '1/1/2024' | ''          | '843.72813'    | '30.00000'    | '5,062.36882' | '1/1/2024' | ''          | '2,495.58593' | '57.00000'    | '10,024.73665' | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '820.14118'      | '2.00000'     | '1,640.28240' | '1/1/2024' | "Line1"   | '827.00950'       | '4.00000'     | '3,308.03796' | '1/1/2024' | "Line1"   | '838.99213'    | '6.00000'     | '5,033.95276' | '1/1/2024' | "Line1"   | '2,486.14281' | '12.00000'    | '9,982.27312'  | '1/1/2024' | ''       |
@@ -1457,7 +1457,7 @@ Scenario: 02.15 Changing indicators in an additional currency
 	* Verifying the result
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)"                    | "January 2024" | ''            | ''              | ''           | ''          | "February 2024" | ''            | ''              | ''           | ''          | "March 2024" | ''            | ''              | ''           | ''          | "TOTAL"         | ''            | ''              | ''           | ''       |
-			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "Coefficient" | "Total"          | "Date"       | "Line"    | "Count"      | "Coefficient" | "Total"          | "Date"       | "Line"    | "Count"   | "Coefficient" | "Total"          | "Date"       | "Line"    | "Count"    | "Coefficient" | "Total"          | "Date"       | "Line" |
+			| "VA - Recalculation in context (pivot table)"                    | "Count"     | "ZoomRatio" | "Total"          | "Date"       | "String"    | "Count"      | "ZoomRatio" | "Total"          | "Date"       | "String"    | "Count"   | "ZoomRatio" | "Total"          | "Date"       | "String"    | "Count"    | "ZoomRatio" | "Total"          | "Date"       | "String" |
 			| "Total"                                                           | '74,364.61971'   | '519.54234'   | '520,552.34491' | '1/31/2024' | ''          | '74,654.70064'    | '20.00000'    | '20,074.64815'  | '1/1/2024' | ''          | '74,823.49902' | '30.00000'    | '30,168.83560'  | '1/1/2024' | ''          | '223,842.81937' | '569.54234'   | '570,795.82866' | '1/31/2024' | ''       |
 			| "Goods"                                                         | '74,364.61971'   | '7.00000'     | '148,585.02028' | '1/1/2024' | ''          | '74,654.69990'    | '20.00000'    | '298,618.79959' | '1/1/2024' | ''          | '74,823.50051' | '30.00000'    | '448,940.99263' | '1/1/2024' | ''          | '223,842.82012' | '57.00000'    | '896,144.81250' | '1/1/2024' | ''       |
 			| "5C:Corporate performance management"                                      | '74,220.39954'   | '2.00000'     | '148,440.79983' | '1/1/2024' | "Line1"   | '74,374.69990'    | '4.00000'     | '297,498.80034' | '1/1/2024' | "Line1"   | '74,403.50051' | '6.00000'     | '446,420.99933' | '1/1/2024' | "Line1"   | '222,998.59995' | '12.00000'    | '892,360.59950' | '1/1/2024' | ''       |
@@ -1475,7 +1475,7 @@ Scenario: 02.16 Changing indicators in a currency not from the regulation
 	* Checking the result
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)" | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''     | ''     | ''       | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''     | ''     | ''       |
-			| "VA - Recalculation in context (pivot table)" | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total" | "Date" | "Line" | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total" | "Date" | "Line" |
+			| "VA - Recalculation in context (pivot table)" | "Count"     | "ZoomRatio" | "Total" | "Date" | "String" | "Count"      | "ZoomRatio" | "Total" | "Date" | "String" | "Count"   | "ZoomRatio" | "Total" | "Date" | "String" | "Count" | "ZoomRatio" | "Total" | "Date" | "String" |
 			| "Total"                                        | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 			| "Goods"                                      | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 		
@@ -1497,6 +1497,6 @@ Scenario: 02.16 Changing indicators in a currency not from the regulation
 		When '$WindowTitle$' window is opened
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Recalculation in context (pivot table)" | "January 2024" | ''            | ''     | ''     | ''       | "February 2024" | ''            | ''     | ''     | ''       | "March 2024" | ''            | ''     | ''     | ''       | "TOTAL"      | ''            | ''     | ''     | ''       |
-			| "VA - Recalculation in context (pivot table)" | "Count"     | "Coefficient" | "Total" | "Date" | "Line" | "Count"      | "Coefficient" | "Total" | "Date" | "Line" | "Count"   | "Coefficient" | "Total" | "Date" | "Line" | "Count" | "Coefficient" | "Total" | "Date" | "Line" |
+			| "VA - Recalculation in context (pivot table)" | "Count"     | "ZoomRatio" | "Total" | "Date" | "String" | "Count"      | "ZoomRatio" | "Total" | "Date" | "String" | "Count"   | "ZoomRatio" | "Total" | "Date" | "String" | "Count" | "ZoomRatio" | "Total" | "Date" | "String" |
 			| "Total"                                        | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |
 			| "Goods"                                      | '0'              | '0'           | '0'    | ''     | ''       | '0'               | '0'           | '0'    | ''     | ''       | '0'            | '0'           | '0'    | ''     | ''       | '0'          | '0'           | '0'    | ''     | ''       |

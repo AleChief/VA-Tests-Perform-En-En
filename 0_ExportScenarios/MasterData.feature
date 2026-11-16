@@ -102,7 +102,7 @@ Scenario: I set currency rate 'TheCodeSymbol' on date 'TheCourseDate' to value '
 		And I input '[TheCourseDate]' text in the field named 'Period'
 		If '$$IsCPM$$' Then
 			And I input '[TheCourseValue]' text in the field named 'Rate'
-			And I input '[TheCourseRepetition]' text in the field named 'Кратность'
+			And I input '[TheCourseRepetition]' text in the field named 'Repetition'
 		ElseIf '$$IsERPCPM$$' Then
 			And I input '[TheCourseRepetition]' text in the field named 'RateDenominator'
 			And I select '[TheCodeSymbol]' exact value from the drop-down list named 'Currency'
@@ -560,7 +560,7 @@ Scenario: I create payment terms advance 'S1'\'P1' and postpayment 'S2'\'P2'
 		And In the command interface I select "Liability management" "Payment terms"
 
 	* Deleting the current element
-		And I search element "Аванс [P1]% за [S1] к.д., Постоплата [P2]% через [S2] к.д." "Anywhere in the line" by field "Description" in list "Payment terms"
+		And I search element "Advance [P1]% [S1] calendar days before, Postpayment [P2]% [S2] calendar days after" "Anywhere in the line" by field "Description" in list "Payment terms"
 		And While the number of 'List' table lines 'more' 0 Then
 			And I select current line in 'List' table
 			And I remove checkbox named 'AutoName'
@@ -959,7 +959,7 @@ Scenario: I create product category with name 'TheProductCategoryName' nomenclat
 			And I click the button named 'FormCreate'
 			And I select from the drop-down list named 'ProductKind'  by '[TheProductKind]' string
 		If '$$IsERPCPM$$' Then
-			And in the table 'List' I click the button named 'List'
+			And in the table 'List' I click the button named 'ListCreate'
 			And I select from the drop-down list named 'Owner'  by '[TheProductKind]' string
 		Then "Product categories (creation) *" window is opened
 		And I input '[TheProductCategoryName]' text in the field named 'Description'
@@ -1052,11 +1052,11 @@ Scenario: I set value 'TheValuesName' for price type with name 'TheName' for nom
 		* Setting attribute
 		Then "* (Product range)" window is opened
 		And In this window I click command interface button 'Prices'
-		And I input "String(BeginOfYear(CurrentDate()))" expression value in the field named 'ДатаЦен'
+		And I input "String(BeginOfYear(CurrentDate()))" expression value in the field named 'DateValue'
 		And I move to the next attribute
-		And I search value '[TheName]' by field 'Price type' in table 'ItemsPricesPrice'
+		And I search value '[TheName]' by field 'Price type' in table 'ItemsPrices'
 		And I activate field named "ItemsPricesPrice" in "ItemsPrices" table
-		And I select current line in "ItemsPricesPrice" table
+		And I select current line in "ItemsPrices" table
 		And I input '[TheValuesName]' text in the field named 'ItemsPricesPrice' of "ItemsPrices" table
 		And I finish line editing in "ItemsPrices" table
 		And in the table "ItemsPrices" I click the button named 'WritePrices'

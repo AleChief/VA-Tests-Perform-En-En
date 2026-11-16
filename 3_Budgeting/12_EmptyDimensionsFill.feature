@@ -181,13 +181,13 @@ Scenario: 12.02 Creating report type and report structure
 			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
 			Then "VA - Filling empty analytics_Source amount (Data source)" window is opened
 			And I go to line in 'ComplianceTable' table:
-				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
+				| "Destination dimension"             | "Dimension type"      | "Column name"                       | "Filling method" |
 				| "Dimension 2: Product categories" | "Product categories" | "[Dimension 2: Product categories]" | "Source field"    |
 			And I select current line in 'ComplianceTable' table
 			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
 			And I finish line editing in 'ComplianceTable' table
 			And I go to line in 'ComplianceTable' table:
-				| "Destination dimension"       | "Dimension kind" | "Column name"                 | "Filling method" |
+				| "Destination dimension"       | "Dimension type" | "Column name"                 | "Filling method" |
 				| "Dimension 3: Product range" | "Product range"  | "[Dimension 3: Product range]" | "Source field"    |
 			And I select current line in 'ComplianceTable' table
 			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
@@ -216,13 +216,13 @@ Scenario: 12.02 Creating report type and report structure
 			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
 			Then "VA - Filling empty analytics_Source date (Data source)" window is opened
 			And I go to line in 'ComplianceTable' table:
-				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
+				| "Destination dimension"             | "Dimension type"      | "Column name"                       | "Filling method" |
 				| "Dimension 2: Product categories" | "Product categories" | "[Dimension 2: Product categories]" | "Source field"    |
 			And I select current line in 'ComplianceTable' table
 			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
 			And I finish line editing in 'ComplianceTable' table
 			And I go to line in 'ComplianceTable' table:
-				| "Destination dimension"       | "Dimension kind" | "Column name"                 | "Filling method" |
+				| "Destination dimension"       | "Dimension type" | "Column name"                 | "Filling method" |
 				| "Dimension 3: Product range" | "Product range"  | "[Dimension 3: Product range]" | "Source field"    |
 			And I select current line in 'ComplianceTable' table
 			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table

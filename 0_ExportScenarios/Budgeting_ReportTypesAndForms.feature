@@ -250,7 +250,7 @@ Scenario: I open default pivot table template for report type 'TheReportKindName
 	* Forming a pivot table template
 		Then I open pivot table template for report type '[TheReportKindName]'
 		
-Scenario: I for report type 'TheFilter1' create default pivot table template with filters 'TheFilter2' 'TheFilter3' 'TheReportKindName'
+Scenario: I for report type 'TheReportKindName' create default pivot table template with filters 'TheFilter1' 'TheFilter2' 'TheFilter3'
 	
 	* Opening a report type
 		// Opening option from a form

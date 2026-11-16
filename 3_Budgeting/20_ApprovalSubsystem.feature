@@ -84,14 +84,14 @@ Scenario: 20.03 Creating a report type
 			| "Line 3"     |
 		And I add columns in report wizard
 			| "Description" |
-			| "Count"   |
+			| "Quantity"   |
 			| "Price"         |
 			| "Amount"        |
 
 	* Configuring formulas
-		And I set product formula for cell 'R2C2' of cells 'R2C3' 'R2C4' in report wizard
-		And I set product formula for cell 'R3C2' of cells 'R3C3' 'R3C4' in report wizard
-		And I set product formula for cell 'R4C2' of cells 'R4C3' 'R4C4' in report wizard
+		And I set product formula for cell 'R2C4' of cells 'R2C2' 'R2C3' in report wizard
+		And I set product formula for cell 'R3C4' of cells 'R3C2' 'R3C3' in report wizard
+		And I set product formula for cell 'R4C4' of cells 'R4C2' 'R4C3' in report wizard
 
 	* Closing report wizard
 		When "Report wizard" window is opened
@@ -124,10 +124,10 @@ Scenario: 20.05 Creating an approval process template
 		If number of 'List' table lines is "=" 0 Then
 			And I click the button named 'FormCancelSearch'
 			And I click the button named 'FormCreateFolder'
-			Then "Universal process templates (create folder)" window is opened
+			Then "Universal process templates (create group)" window is opened
 			And I input "VA - Approval Process Group" text in the field named 'Description'
 			And I click the button named 'FormWriteAndClose'
-			And I wait "Universal process templates (create folder) *" window closing in 20 seconds
+			And I wait "Universal process templates (create group) *" window closing in 20 seconds
 
 	* Deleting existing templates
 		Then "Universal process templates" window is opened
@@ -288,7 +288,7 @@ Scenario: 20.06 Configuring the authority matrix
 
 	* Deleting existing records
 		And in the table 'ResponsibilitiesRegister' I click the button named 'ResponsibilitiesRegisterListSettings'
-		Then "List Options" window is opened
+		Then "List settings" window is opened
 		And I delete all lines of 'SettingsComposerUserSettingsItem0Filter' table
 		And in the table 'SettingsComposerUserSettingsItem0Filter' I click the button named 'SettingsComposerUserSettingsItem0FilterAddFilterItem'
 		And I go to the last line in 'SettingsComposerUserSettingsItem0Filter' table
@@ -362,7 +362,7 @@ Scenario: 20.07 Saving the report instances list form settings
 			| "Comparison type" | "Use" | "Left value"          | "Display mode" |
 			| "Equal to"         | "No"           | "Report period" | "Quick access"    |
 		And I click choice button of the attribute named 'FilterRightValue' in 'Filter' table
-		And I search and select element "January 2024" "At beginning of line" by field "Description" in list "Periods"
+		And I search and select element "January 2024" "At the beginning of the line" by field "Description" in list "Periods"
 	
 		Then "Report instances" window is opened
 		And I go to line in 'Filter' table:

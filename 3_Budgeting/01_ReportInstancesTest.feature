@@ -164,7 +164,7 @@ Scenario: 01.03 Working in the report wizard - Configuring the report structure
 		And I click the button named 'RowsTreeAddRows'
 		Then "Adding new lines" window is opened
 		And in the table 'NewLines' I click the button named 'NewLinesAdd'
-		And I input "LineDelete" text in the field named 'NewLinesDescription' of 'NewLines' table
+		And I input "StringDelete" text in the field named 'NewLinesDescription' of 'NewLines' table
 		And I finish line editing in 'NewLines' table
 		And I click the button named 'OK'
 		Then "Report wizard" window is opened
@@ -262,23 +262,23 @@ Scenario: 01.03 Working in the report wizard - Configuring the report structure
 			| ''                       | ''                 | 'Code'                   | "LinesGroup_Count1*"     | "LinesGroup_Price1*"     | "LinesGroup_Amount1*"     | ''               |
 			| "LineSynthetic"        | "LineSynthetic*"   | ''                      | '■'                            | '■'                      | '■'                       | ''               |
 			| ''                       | ''                 | 'Code'                   | "LineSynthetic_Count1*"   | "LineSynthetic_Price1*"   | "LineSynthetic_Amount1*"   | ''               |
-			| "LineDimension1"       | "LineDimension1*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
-			| ''                       | ''                 | 'Code'                   | "LineDimension1_Count1*"       | "LineDimension1_Price1*"       | "LineDimension1_Amount1*"       | ''               |
-			| "LineDimension2"       | "LineDimension2*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
-			| ''                       | ''                 | 'Code'                   | "LineDimension2_Count1*"       | "LineDimension2_Price1*"       | "LineDimension2_Amount1*"       | ''               |
-			| "LineDimension3"       | "LineDimension3*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
-			| ''                       | ''                 | 'Code'                   | "LineDimension3_Count1*"       | "LineDimension3_Price1*"       | "LineDimension3_Amount1*"       | ''               |
-			| "LineDimension4"       | "LineDimension4*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
-			| ''                       | ''                 | 'Code'                   | "LineDimension4_Count1*"       | "LineDimension4_Price1*"       | "LineDimension4_Amount1*"       | ''               |
-			| "LineDimension5"       | "LineDimension5*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
-			| ''                       | ''                 | 'Code'                   | "LineDimension5_Count1*"       | "LineDimension5_Price1*"       | "LineDimension5_Amount1*"       | ''               |
-			| "LineDimension6"       | "LineDimension6*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
-			| ''                       | ''                 | 'Code'                   | "LineDimension6_Count1*"       | "LineDimension6_Price1*"       | "LineDimension6_Amount1*"       | ''               |
-			| "LineDimension6Currency" | "LineDimension6Curren*" | ''                      | '■'                            | '■'                      | '■'                       | ''               |
-			| ''                       | ''                 | 'Code'                   | "LineDimension6Curren_Count1*" | "LineDimension6Curren_Price1*" | "LineDimension6Curren_Amount1*" | ''               |
-			| "LineDimensionCurrency"  | "LineDimensionCurrenc*"  | ''                      | '■'                            | '■'                      | '■'                       | ''               |
-			| ''                       | ''                 | 'Code'                   | "LineDimensionCurrenc_Count1*"  | "LineDimensionCurrenc_Price1*"  | "LineDimensionCurrenc_Amount1*"  | ''               |
-			| "LineDelete"          | "LineDelete*"     | ''                      | ''                             | ''                       | ''                        | ''               |
+			| "LineDimension1"       | "LineANLT1*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
+			| ''                       | ''                 | 'Code'                   | "LineANLT1_Count1*"       | "LineANLT1_Price1*"       | "LineANLT1_Amount1*"       | ''               |
+			| "LineDimension2"       | "LineANLT2*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
+			| ''                       | ''                 | 'Code'                   | "LineANLT2_Count1*"       | "LineANLT2_Price1*"       | "LineANLT2_Amount1*"       | ''               |
+			| "LineDimension3"       | "LineANLT3*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
+			| ''                       | ''                 | 'Code'                   | "LineANLT3_Count1*"       | "LineANLT3_Price1*"       | "LineANLT3_Amount1*"       | ''               |
+			| "LineDimension4"       | "LineANLT4*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
+			| ''                       | ''                 | 'Code'                   | "LineANLT4_Count1*"       | "LineANLT4_Price1*"       | "LineANLT4_Amount1*"       | ''               |
+			| "LineDimension5"       | "LineANLT5*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
+			| ''                       | ''                 | 'Code'                   | "LineANLT5_Count1*"       | "LineANLT5_Price1*"       | "LineANLT5_Amount1*"       | ''               |
+			| "LineDimension6"       | "LineANLT6*"       | ''                      | '■'                            | '■'                      | '■'                       | ''               |
+			| ''                       | ''                 | 'Code'                   | "LineANLT6_Count1*"       | "LineANLT6_Price1*"       | "LineANLT6_Amount1*"       | ''               |
+			| "LineDimension6Currency" | "LineANLT6Currency*" | ''                      | '■'                            | '■'                      | '■'                       | ''               |
+			| ''                       | ''                 | 'Code'                   | "LineANLT6Currency_Count1*" | "LineANLT6Currency_Price1*" | "LineANLT6Currency_Amount1*" | ''               |
+			| "LineDimensionCurrency"  | "LineANLTCurrency*"  | ''                      | '■'                            | '■'                      | '■'                       | ''               |
+			| ''                       | ''                 | 'Code'                   | "LineANLTCurrency_Count1*"  | "LineANLTCurrency_Price1*"  | "LineANLTCurrency_Amount1*"  | ''               |
+			| "StringDelete"          | "STRKDelete*"     | ''                      | ''                             | ''                       | ''                        | ''               |
 			| ''                       | ''                 | 'Code'                   | ''                             | ''                       | ''                        | ''               |
 
 	* Removing all settings and comparing
@@ -619,7 +619,7 @@ Scenario: 01.06 Entering formulas in the report wizard
 		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C3' cell
 		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 		And I input ' ' text in the field named 'TextDocumentFieldProcedure'
-		And I input "({VAManualEntryForAllAnalytics.LineSynthetic_Price1}+{VAManualEntryForAllAnalytics.LineDimension1_Price1}+{VAManualEntryForAllAnalytics.LineDimension2_Price1}+{VAManualEntryForAllAnalytics.LineDimension3_Price1}+{VAManualEntryForAllAnalytics.LineDimension4_Price1}+{VAManualEntryForAllAnalytics.LineDimension5_Price1}+{VAManualEntryForAllAnalytics.LineDimension6_Price1}+{VAManualEntryForAllAnalytics.LineDimension6Curren_Price1}+{VAManualEntryForAllAnalytics.LineDimensionCurrenc_Price1})/13" text in the field named 'TextDocumentFieldProcedure'
+		And I input "({VAManualEntryForAllAnalytics.LineSynthetic_Price1}+{VAManualEntryForAllAnalytics.LineANLT1_Price1}+{VAManualEntryForAllAnalytics.LineANLT2_Price1}+{VAManualEntryForAllAnalytics.LineANLT3_Price1}+{VAManualEntryForAllAnalytics.LineANLT4_Price1}+{VAManualEntryForAllAnalytics.LineANLT5_Price1}+{VAManualEntryForAllAnalytics.LineANLT6_Price1}+{VAManualEntryForAllAnalytics.LineANLT6Currency_Price1}+{VAManualEntryForAllAnalytics.LineANLTCurrency_Price1})/13" text in the field named 'TextDocumentFieldProcedure'
 		And I click the button named 'WriteAndCollapse'
 
 	* Entering formula using buttons - 'LinesGroup - Amount'
@@ -693,7 +693,7 @@ Scenario: 01.06 Entering formulas in the report wizard
 			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
 			Then "VA - Manual entry for all analytics_LineDimension1 count (Data source)" window is opened
 			And I click Choice button of the field named 'IndicatorFilter'
-			And I select indicator with code "LineDimension6Curren_Count1"
+			And I select indicator with code "LineANLT6Currency_Count1"
 			Then "VA - Manual entry for all analytics_LineDimension1 count (Data source) *" window is opened
 			And I click the button named 'FormWriteAndClose'
 			And I wait "VA - Manual entry for all analytics_LineDimension1 count *" window closing in 5 seconds
@@ -708,7 +708,7 @@ Scenario: 01.06 Entering formulas in the report wizard
 			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
 			When "VA - Manual entry for all analytics_LineDimension1 price (Data source)" window is opened
 			And I click Choice button of the field named 'IndicatorFilter'
-			And I select indicator with code "LineDimension6Curren_Price1"
+			And I select indicator with code "LineANLT6Currency_Price1"
 			Then "VA - Manual entry for all analytics_LineDimension1 price (Data source) *" window is opened
 			And I click the button named 'FormWriteAndClose'
 			And I wait "VA - Manual entry for all analytics_LineDimension1 price *" window closing in 5 seconds
@@ -795,7 +795,7 @@ Scenario: 01.07 Creating a report type template
 
 Scenario: 01.08 Creating a pivot table template
 
-	And I for report type "Project" create default pivot table template with filters "VA - Manual entry for all analytics"
+	And I for report type "VA - Manual entry for all analytics" create default pivot table template with filters "Project"
 
 	* Refining the template
 		When "VA - Manual entry for all analytics (Report types)" window is opened
@@ -1142,7 +1142,7 @@ Scenario: 01.12 Copying a report instance
 			And I select context menu item named 'ValueListContextMenuDelete' of the form attribute named 'ValueList'
 		When "Value list" window is opened
 		And I click the button named 'Add'
-		And I select "VA - Main scenario" by string from the drop-down list named 'value' in 'ValueList' table
+		And I select "VA - Main scenario" by string from the drop-down list named 'Value' in 'ValueList' table
 		And I finish line editing in 'ValueList' table
 		And I click the button named 'OK'
 
@@ -1450,7 +1450,7 @@ Scenario: 01.13 Checking the report instance document creation form
 		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownAdd'
 		And I select "1C:ERP. Corporate performance management" by string from the drop-down list named "VA0Product" in 'IndicatorsDrilldown' table
 		And I input "2,000.00000" text in the field named 'Value1' of 'IndicatorsDrilldown' table
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 		When '$WindowTitle$' window is opened
 		And in 'SpreadsheetFieldTemlate' spreadsheet document the cell with address "R12C2" is equal to "2,000"
 
@@ -1696,7 +1696,7 @@ Scenario: 01.18 Opening a version
 		When "Indicator version management" window is opened
 		And I click the button named 'ListOpenVersion'
 		Then "VA - Manual entry for all analytics (Version view mode)" window is opened
-		And I click the button named 'FormFormulate'
+		And I click the button named 'FormGenerate'
 		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to '3_Budgeting\Layouts\01\VA_ReportTypeWithDimensions_Empty.mxl'
 		And I close "VA - Manual entry for all analytics *" window
 
@@ -1857,11 +1857,11 @@ Scenario: 01.23 Testing a report instance with different templates
 			Then "Set up line list" window is opened
 			And I go to line in 'TreeOfSelectedLines' table by template:
 				| "Report type"                          | "Drilldown group"          | "Code"              | "Report line"          |
-				| "VA - Manual entry for all analytics" | "DG_LineDimension6Currency" | "LineDimension6Curren*" | "LineDimension6Currency" |
+				| "VA - Manual entry for all analytics" | "DG_LineDimension6Currency" | "LineANLT6Currency*" | "LineDimension6Currency" |
 			And I click the button named 'Delete'
 			And I go to line in 'TreeOfSelectedLines' table by template:
 				| "Report type"                          | "Drilldown group"         | "Code"             | "Report line"         |
-				| "VA - Manual entry for all analytics" | "DG_LineDimensionCurrency" | "LineDimensionCurrenc*" | "LineDimensionCurrency" |
+				| "VA - Manual entry for all analytics" | "DG_LineDimensionCurrency" | "LineANLTCurrency*" | "LineDimensionCurrency" |
 			And I click the button named 'Delete'
 			And I click the button named 'ApplyTheChanges'
 		* Column composition

@@ -23,8 +23,8 @@ Scenario: 13.00 Determining application type
 Scenario: 13.01 Creating report type with indicator calculation recursion
 
 	* Creating a report type
-		And I create report type group with name "VA - Transformations period (group)" and parent "VA - Report group"
-		And I create report type with name "VA - Transformation period" and parent "VA - Transformations period (group)"
+		And I create report type group with name "VA - Period transformations (group)" and parent "VA - Report group"
+		And I create report type with name "VA - Transformation period" and parent "VA - Period transformations (group)"
 		
 	* Configuring report type structure
 		And I open report wizard with name "VA - Transformation period"
@@ -59,7 +59,7 @@ Scenario: 13.01 Creating report type with indicator calculation recursion
 		And I click the button named 'WriteAndCollapse'
 
 	* Creating pivot table template
-		And I for report type "Cash flow items" create default pivot table template with filters "VA - Transformation period"
+		And I for report type "VA - Transformation period" create default pivot table template with filters "Cash flow items"
 
 Scenario: 13.02 Entering data into pivot table, getting recursive calculation error
 

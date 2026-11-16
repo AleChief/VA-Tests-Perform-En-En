@@ -30,7 +30,7 @@ Scenario: 05.01 Creating report type "VA - Filling from PH (no history)"
 	* Editing the report structure
 		And I open report wizard with name "VA - Filling from PH (no history)"
 		And I add row with name "Cash flow items" in report wizard
-		And I add column with name "Amount" in report wizard
+		And I add column with name "Sum" in report wizard
 		And I add dimension with code "VA0CFItems" in cell 'R2C2' in report wizard
 
 	And I create default template for report type "VA - Filling from PH (no history)"
@@ -50,7 +50,7 @@ Scenario: 05.02 Creating pivot table template
 			And I click the button named 'ShowListOfRows'
 			Then "Set up line list" window is opened
 			And I go to line in 'SettingTree' table:
-				| "Dimension kind 1" | "Dimension group" | "Code"       | "Purpose"      | "Report line" |
+				| "Dimension type 1" | "Dimension group" | "Code"       | "Purpose"      | "Report line" |
 				| "Cash flow items"      | "DG_Cash flow items"   | "CashFlowItems" | "Arbitrary data" | "Cash flow items"    |
 			And I click the button named 'MoveLeft'
 			And I click the button named 'ApplyTheChanges'
@@ -122,8 +122,8 @@ Scenario: 05.03 Creating calculation formula with filling from PH
 				When "Data source (create)" window is opened
 				And I select "Current infobase accumulation register" exact value from the drop-down list named 'MethodOfObtaining'
 				If '$$IsERPCPM$$' Then
-					And I select from the drop-down list named 'DBAccumulationRegister'  by 'BudgetsOperations' string
-					And I wait "Amount" value of the attribute named 'DBRegisterResource' for 3 seconds
+					And I select from the drop-down list named 'AccumulationRegisterdb'  by 'BudgetsOperations' string
+					And I wait "Sum" value of the attribute named 'DBRegisterResource' for 3 seconds
 					And I wait "Turnover" value of the attribute named 'TotalKindDB' for 3 seconds
 					And I select "Amount executed" exact value from the drop-down list named 'DBRegisterResource'
 					When "Data source (create) *" window is opened
@@ -140,14 +140,14 @@ Scenario: 05.03 Creating calculation formula with filling from PH
 					And I select context menu item named 'ButtonMapDimensions' of the form attribute named "ComplianceTable"
 					Then "ComplianceTable" table became equal
 						| 'Destination dimension'     | 'Filling method' | 'Column name'                                  | 'Dimension type' |
-						| 'Dimension 1: ARTICLES__ Cash_Flow' | 'Source field'    | '[Budget items dimension].[Budget item]' | 'ARTICLES__ Cash_Flow'    |
+						| 'Dimension 1: ARTICLES__ Cash_Flow' | 'Source field'    | '[Budget items dimension].[Budget item]' | 'Cash flow items'    |
 				Else
-					And I select from the drop-down list named 'DBAccumulationRegister'  by 'CashFlowCPM' string
-					And I wait "Amount" value of the attribute named 'DBRegisterResource' for 3 seconds
+					And I select from the drop-down list named 'AccumulationRegisterdb'  by 'CashFlowCPM' string
+					And I wait "Sum" value of the attribute named 'DBRegisterResource' for 3 seconds
 					And I wait "Turnover" value of the attribute named 'TotalKindDB' for 3 seconds
 					Then 'ComplianceTable' table became equal
 						| 'Destination dimension'     | 'Filling method' | 'Column name'                        | 'Dimension type' |
-						| "Dimension 1: Cash flow items" | 'Source field'    | '[Cash flow item]' | "Cash flow items"    |
+						| "Dimension 1: ARTICLES__ Cash_Flow" | 'Source field'    | '[Cash flow item]' | "Cash flow items"    |
 			* Filling filters
 				And I move to the tab named 'FiltersPage'
 				If '$$IsERPCPM$$' Then
@@ -156,21 +156,21 @@ Scenario: 05.03 Creating calculation formula with filling from PH
 						| 'Dimension of structure' |
 					And I go to line in "FieldsTreeDB" table:
 						| 'Field'        |
-						| 'Organization' |
+						| 'Company' |
 					And I click the button named 'AddConditionItem'
 					And I go to line in "TreeOfFilterParametersDB" table:
 						| 'Field'                                |
 						| '[Structure dimension].[Organization]' |
-					And I select 'Organization Report_' exact value from the drop-down list named "ParameterCalculationMethod" in "TreeOfFilterParametersDB" table
+					And I select 'Report company' exact value from the drop-down list named "ParameterCalculationMethod" in "TreeOfFilterParametersDB" table
 					And I finish line editing in "TreeOfFilterParametersDB" table
 				Else
 					And I go to line in 'TreeOfFilterParametersDB' table:
 						| 'Filter'         | 'Field'         |
-						| 'Project Report_' | '[Dimension1]' |
+						| 'Report project' | '[Dimension1]' |
 					And I click the button named 'TreeOfFilterParametersDBDelete'
 					And I go to line in 'TreeOfFilterParametersDB' table:
 						| 'Filter'           | 'Field'         |
-						| 'Scenario Report_' | '[Dimension2]' |
+						| 'Report scenario' | '[Dimension2]' |
 					And I click the button named 'TreeOfFilterParametersDBDelete'
 					And I go to line in 'TreeOfFilterParametersDB' table:
 						| 'Filter'         | 'Field'         |
@@ -196,7 +196,7 @@ Scenario: 05.04 Creating report instance - "VA - Filling from PH (no history)" w
 				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''      |
 				| ''                                    | ''               | ''                | ''             | ''      |
 				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
-				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount" |
+				| ''                                    | "Sum"          | "Sum"           | "Sum"        | "Sum" |
 				| "Cash flow items"                          | '0'              | '0'               | '0'            | '0'     |
 
 		* Calculating indicator values
@@ -206,7 +206,7 @@ Scenario: 05.04 Creating report instance - "VA - Filling from PH (no history)" w
 				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''           |
 				| ''                                    | ''               | ''                | ''             | ''           |
 				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
-				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount"      |
+				| ''                                    | "Sum"          | "Sum"           | "Sum"        | "Sum"      |
 				| "Cash flow items"                          | '3,120,000'      | '16,000,000'      | '0'            | '19,120,000' |
 				| "1Software upgrade "      | '0'              | '3,450,000'       | '0'            | '3,450,000'  |
 				| "2Software implementation "    | '2,340,000'      | '7,350,000'       | '0'            | '9,690,000'  |
@@ -229,7 +229,7 @@ Scenario: 05.05 Creating report instance - "VA - Filling from PH (no history)" w
 				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''      |
 				| ''                                    | ''               | ''                | ''             | ''      |
 				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
-				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount" |
+				| ''                                    | "Sum"          | "Sum"           | "Sum"        | "Sum" |
 				| "Cash flow items"                          | '0'              | '0'               | '0'            | '0'     |
 
 		* Calculating indicator values
@@ -239,7 +239,7 @@ Scenario: 05.05 Creating report instance - "VA - Filling from PH (no history)" w
 				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''           |
 				| ''                                    | ''               | ''                | ''             | ''           |
 				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
-				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount"      |
+				| ''                                    | "Sum"          | "Sum"           | "Sum"        | "Sum"      |
 				| "Cash flow items"                          | '3,120,000'      | '16,000,000'      | '0'            | '19,120,000' |
 				| "1Software upgrade "      | '0'              | '3,450,000'       | '0'            | '3,450,000'  |
 				| "2Software implementation "    | '2,340,000'      | '7,350,000'       | '0'            | '9,690,000'  |
@@ -273,11 +273,11 @@ Scenario: 05.06 Creating calculation formula with filling from PH for the main t
 				When "Data source (create)" window is opened
 				And I select "Current infobase accumulation register" exact value from the drop-down list named 'MethodOfObtaining'
 				If '$$IsERPCPM$$' Then
-					And I select from the drop-down list named 'DBAccumulationRegister'  by 'BudgetsOperations' string
+					And I select from the drop-down list named 'AccumulationRegisterdb'  by 'BudgetsOperations' string
 				Else
-					And I select from the drop-down list named 'DBAccumulationRegister'  by 'CashFlowCPM' string
+					And I select from the drop-down list named 'AccumulationRegisterdb'  by 'CashFlowCPM' string
 				And I set checkbox named 'IsRegisterMainTable'
-				And I wait "Amount" value of the attribute named 'DBRegisterResource' for 10 seconds
+				And I wait "Sum" value of the attribute named 'DBRegisterResource' for 10 seconds
 				Then 'FieldsTreeDB' table became equal by template
 					| 'Field'                  |
 					| 'Recorder'           |
@@ -301,11 +301,11 @@ Scenario: 05.06 Creating calculation formula with filling from PH for the main t
 					And I select context menu item named 'ButtonMapDimensions' of the form attribute named "ComplianceTable"
 					Then "ComplianceTable" table became equal
 						| 'Destination dimension'     | 'Filling method' | 'Column name'                                  | 'Dimension type' |
-						| 'Dimension 1: ARTICLES__ Cash_Flow' | 'Source field'    | '[Budget items dimension].[Budget item]' | 'ARTICLES__ Cash_Flow'    |
+						| 'Dimension 1: ARTICLES__ Cash_Flow' | 'Source field'    | '[Budget items dimension].[Budget item]' | 'Cash flow items'    |
 				Else
 					Then 'ComplianceTable' table became equal
 						| 'Destination dimension'     | 'Filling method' | 'Column name'                        | 'Dimension type' |
-						| "Dimension 1: Cash flow items" | 'Source field'    | '[Cash flow item]' | "Cash flow items"    |
+						| "Dimension 1: ARTICLES__ Cash_Flow" | 'Source field'    | '[Cash flow item]' | "Cash flow items"    |
 
 			* Adding filters
 				And I move to the tab named 'FiltersPage'
@@ -329,23 +329,23 @@ Scenario: 05.06 Creating calculation formula with filling from PH for the main t
 							| 'Dimension of structure' |
 						And I go to line in "FieldsTreeDB" table:
 							| 'Field'        |
-							| 'Organization' |
+							| 'Company' |
 						And I click the button named 'AddConditionItem'
 						And I go to line in "TreeOfFilterParametersDB" table:
 							| 'Field'                                |
 							| '[Structure dimension].[Organization]' |
-						And I select 'Organization Report_' exact value from the drop-down list named "ParameterCalculationMethod" in "TreeOfFilterParametersDB" table
+						And I select 'Report company' exact value from the drop-down list named "ParameterCalculationMethod" in "TreeOfFilterParametersDB" table
 						And I finish line editing in "TreeOfFilterParametersDB" table
 
 				Else
 					* Deleting current filters
 						And I go to line in 'TreeOfFilterParametersDB' table:
 							| 'Filter'         | 'Field'         |
-							| 'Project Report_' | '[Dimension1]' |
+							| 'Report project' | '[Dimension1]' |
 						And I click the button named 'TreeOfFilterParametersDBDelete'
 						And I go to line in 'TreeOfFilterParametersDB' table:
 							| 'Filter'           | 'Field'         |
-							| 'Scenario Report_' | '[Dimension2]' |
+							| 'Report scenario' | '[Dimension2]' |
 						And I click the button named 'TreeOfFilterParametersDBDelete'
 						And I go to line in 'TreeOfFilterParametersDB' table:
 							| 'Filter'         | 'Field'         |
@@ -426,7 +426,7 @@ Scenario: 05.08 Creating pivot table
 			And I set pivot table filter 'Project' with value "VA - Main project"
 			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
-				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
+				| 'VA - Filling from PH (no history) (pivot table)' | "Sum"          | "Sum"           | "Sum"        |
 				| "Cash flow items"                                            | '3,120,000'      | '16,000,000'      | '0'            |
 				| "1Software upgrade"                         | '0'              | '3,450,000'       | '0'            |
 				| "2Software implementation"                       | '2,340,000'      | '7,350,000'       | '0'            |
@@ -438,7 +438,7 @@ Scenario: 05.08 Creating pivot table
 			And I wait for '$WindowTitle$' form opening for 30 seconds
 			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
-				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
+				| 'VA - Filling from PH (no history) (pivot table)' | "Sum"          | "Sum"           | "Sum"        |
 				| "Cash flow items"                                            | '0'              | '3,120,000'       | '0'            |
 				| "2Software implementation"                       | '0'              | '2,340,000'       | '0'            |
 				| "3Software sale"                      | '0'              | '780,000'         | '0'            |
@@ -447,7 +447,7 @@ Scenario: 05.08 Creating pivot table
 			And I click the button named 'CancelAction'
 			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
-				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
+				| 'VA - Filling from PH (no history) (pivot table)' | "Sum"          | "Sum"           | "Sum"        |
 				| "Cash flow items"                                            | '3,120,000'      | '16,000,000'      | '0'            |
 				| "1Software upgrade"                         | '0'              | '3,450,000'       | '0'            |
 				| "2Software implementation"                       | '2,340,000'      | '7,350,000'       | '0'            |
@@ -461,7 +461,7 @@ Scenario: 05.08 Creating pivot table
 			And I wait for '$WindowTitle$' form opening for 30 seconds
 			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
-				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
+				| 'VA - Filling from PH (no history) (pivot table)' | "Sum"          | "Sum"           | "Sum"        |
 				| "Cash flow items"                                            | '0'              | '3,120,000'       | '0'            |
 				| "2Software implementation"                       | '0'              | '2,340,000'       | '0'            |
 				| "3Software sale"                      | '0'              | '780,000'         | '0'            |
@@ -482,7 +482,7 @@ Scenario: 05.09 Checking movements of report instance
 			| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''          |
 			| ''                                    | ''               | ''                | ''             | ''          |
 			| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL"     |
-			| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount"     |
+			| ''                                    | "Sum"          | "Sum"           | "Sum"        | "Sum"     |
 			| "Cash flow items"                          | '0'              | '3,120,000'       | '0'            | '3,120,000' |
 			| "2Software implementation "    | '0'              | '2,340,000'       | '0'            | '2,340,000' |
 			| "3Software sale "   | '0'              | '780,000'         | '0'            | '780,000'   |

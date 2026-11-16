@@ -208,7 +208,7 @@ Scenario: I set cell sum formula 'TheCell1' for cell 'TheCell' in report wizard
 	
 	And I click the button named 'WriteAndCollapse'
 
-Scenario: I set sum formula for cell 'TheCell1' of cells 'TheCell2' 'TheCell3' 'TheCell4' 'TheCell5' 'TheCell' in report wizard
+Scenario: I set sum formula for cell 'TheCell' of cells 'TheCell1' 'TheCell2' 'TheCell3' 'TheCell4' 'TheCell5' in report wizard
 
 	When "Report wizard*" window is opened
 	And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
@@ -239,7 +239,7 @@ Scenario: I set sum formula for cell 'TheCell1' of cells 'TheCell2' 'TheCell3' '
 	
 	And I click the button named 'WriteAndCollapse'
 
-Scenario: I set product formula for cell 'TheCell1' of cells 'TheCell2' 'TheCell3' 'TheCell4' 'TheCell5' 'TheCell' in report wizard
+Scenario: I set product formula for cell 'TheCell' of cells 'TheCell1' 'TheCell2' 'TheCell3' 'TheCell4' 'TheCell5' in report wizard
 
 	When "Report wizard*" window is opened
 	And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'

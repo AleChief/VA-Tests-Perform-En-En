@@ -24,7 +24,7 @@ Scenario: 01.01 Creating a system user [Administrator]
 		If number of 'List' table lines is "equal" 0 Then
 			And I click the button named 'FormCreate'
 			Then 'Individual (create)' window is opened
-			And I input 'Stark Bran' text in the field named 'ФИО'
+			And I input 'Stark Bran' text in the field named 'Description'
 			And I move to the next attribute
 			И в поле с именем 'ФизлицоДатаРождения' я ввожу текст '01.01.2000'
 			И я перехожу к следующему реквизиту
@@ -84,7 +84,7 @@ Scenario: 01.03 Enabling subsystems
 
 	And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
 
-	* Enabling the "Корпоративные закупки" subsystem
+	* Enabling the "Master data management" subsystem
 		И В командном интерфейсе я выбираю 'Общие справочники и настройки' 'Корпоративные закупки'
 		Тогда открылось окно 'Корпоративные закупки'
 		И я устанавливаю флаг 'Использовать корпоративные закупки'
