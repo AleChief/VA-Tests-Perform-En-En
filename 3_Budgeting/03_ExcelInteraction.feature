@@ -228,11 +228,33 @@ Scenario: 03.03 Creating a multi-period report template and export to Excel
 		Then '$WindowTitle$' window is opened
 		And I close '$WindowTitle$' window
 
+	* Preparing the reference for the current year
+		// The template is exported with periods from the beginning of the current year, the vendor reference keeps 2024.
+		// The year in a copy of the reference is replaced with the current one, the other cells stay; the comparison is exact.
+		And I execute 1C:Enterprise script
+			| 'LayoutsDir = Ванесса.Объект.КаталогПроекта + "\3_Budgeting\Layouts\03" + GetPathSeparator();' |
+			| 'Data = New BinaryData(LayoutsDir + "VA_ImportExcel_Template.mxl");' |
+			| 'Buffer = GetBinaryDataBufferFromBinaryData(Data);' |
+			| 'CurrentYear = Format(CurrentDate(), "DF=yyyy");' |
+			| 'Replaced = 0;' |
+			| 'For Index = 0 To Buffer.Size - 6 Do' |
+			| 'If Buffer.Get(Index) = 32 And Buffer.Get(Index + 1) = 50 And Buffer.Get(Index + 2) = 48 And Buffer.Get(Index + 3) = 50 And Buffer.Get(Index + 4) = 52 And Buffer.Get(Index + 5) = 34 Then' |
+			| 'For DigitNumber = 1 To 4 Do' |
+			| 'Buffer.Set(Index + DigitNumber, CharCode(CurrentYear, DigitNumber));' |
+			| 'EndDo;' |
+			| 'Replaced = Replaced + 1;' |
+			| 'EndIf;' |
+			| 'EndDo;' |
+			| 'If Replaced <> 3 Then' |
+			| 'Raise "VA_ImportExcel_Template.mxl: 3 period headers of 2024 expected, found " + Replaced;' |
+			| 'EndIf;' |
+			| 'GetBinaryDataFromBinaryDataBuffer(Buffer).Write(LayoutsDir + "VA_ImportExcel_TemplateReference.mxl");' |
+
 	* Comparing the file
 		And In the command interface I select "Budgeting, reporting, and analysis" "Compare spreadsheet documents"
 		Then "Compare spreadsheet documents" window is opened
 		And I input "$ProjectPath$\3_Budgeting\Layouts\03\VA_ImportExcel_Template.xlsx" text in the field named 'DocumentPath1'
-		And I input "$ProjectPath$\3_Budgeting\Layouts\03\VA_ImportExcel_Template.mxl" text in the field named 'DocumentPath2'
+		And I input "$ProjectPath$\3_Budgeting\Layouts\03\VA_ImportExcel_TemplateReference.mxl" text in the field named 'DocumentPath2'
 		And I set checkbox named 'AreOnlyValuesCompared'
 		And I set checkbox named 'ShouldCompareByTemplate'
 		And I click the button named 'FormCompareDocuments'
