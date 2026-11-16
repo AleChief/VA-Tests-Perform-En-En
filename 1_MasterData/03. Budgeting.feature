@@ -1128,3 +1128,16 @@ Scenario: 00.23 Creating document "Reflection of actual data"
 			* Saving document
 				And I click the button named 'FormPostAndClose'
 				And I wait "Recording of actual data (creation) *" window closing in 20 seconds
+
+Scenario: 00.24 Enabling reference data management
+
+	And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
+	And I set 'True' value to the constant 'UseMasterDataManagement'
+	* Database type of predefined external IB "Current database"
+		And I execute 1C:Enterprise script at server no context
+				| 'CurrentIB = Catalogs.ExternalInfobases.CurrentIB.GetObject();' |
+				| 'If Not ValueIsFilled(CurrentIB.DBType) Then' |
+				| 'CurrentIB.DBType = Catalogs.DatabasesTypes.CurrentIB;' |
+				| 'CurrentIB.Write();' |
+				| 'EndIf;' |
+	And I close "CPM - NSI" TestClient
