@@ -88,9 +88,9 @@ Scenario: 14.04 Creating report instance "VA - Calculation protocol" for company
 		And I click the button named 'FormFillByDefault'
 		When "Protocol" window is opened
 		Then 'SpreadsheetDocumentField' spreadsheet document is equal
-			| "Errors"                                                                                                                                                                                                       |
-			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"January 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
-			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"February 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
+			| "Additional information"                                                                                                                                                                                    | ''           |
+			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"January 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  | "Information" |
+			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"February 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  | "Information" |
 		And I click the button named 'FormTechnicalInformation'
 		And I close "Protocol" window
 
@@ -122,9 +122,9 @@ Scenario: 14.05 Running calculation of report instances from list
 	* Checking protocol
 		Then "Protocol" window is opened
 		Then 'SpreadsheetDocumentField' spreadsheet document is equal
-			| "Errors"                                                                                                                                                                                                       |
-			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"January 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
-			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"February 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
+			| "Additional information"                                                                                                                                                                                    | ''           |
+			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"January 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  | "Information" |
+			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"February 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  | "Information" |
 		And I click the button named 'FormTechnicalInformation'
 		And I close "Protocol" window
 
@@ -173,9 +173,9 @@ Scenario: 14.06 Running calculation of report instances from list
 	* Checking protocol
 		Then "Protocol" window is opened
 		Then 'SpreadsheetDocumentField' spreadsheet document is equal
-			| "Errors"                                                                                                                                                                                                       |
-			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"January 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
-			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"February 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
+			| "Additional information"                                                                                                                                                                                    | ''           |
+			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"January 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  | "Information" |
+			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"February 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  | "Information" |
 		And I click the button named 'FormTechnicalInformation'
 		And I close "Protocol" window
 

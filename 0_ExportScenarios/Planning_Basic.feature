@@ -141,7 +141,7 @@ Scenario: I form limits report by budget type 'TheBudget' for period from "Perio
 		And In the command interface I select 'Planning and control' 'Limit report'
 		And I click the button named 'AllSettings'
 		Then 'Report settings "Report on limits (period in rows)"' window is opened
-		Если представление элемента с именем 'ExtendedMode' стало равно 'Downtime' тогда
+		If the attribute named 'ExtendedMode' presentation became equal to 'Downtime' Then
 			And I change the radio button named 'ExtendedMode' value to 'Advanced'
 		And in the table "Filters" I click the button named 'Filters_ClearCheckBoxes'
 		And I close 'Report settings "Limits report (period in rows)"' window

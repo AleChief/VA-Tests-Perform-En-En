@@ -5,7 +5,7 @@
 
 Feature: Export scenarios for creating reference data in 1C:ERP Business Management
 
-Сценарий: Я создаю вид номенклатуры с именем 'ТекИмяВидаНоменклатуры' тип 'ТекТип' в 1C:ERPУХ
+Scenario: I create a nomenclature type with name 'TextNomenclatureTypeName' type 'TextType' in 1C:ERP_UH
 
 	* Deleting product categories
 		And In the command interface I select "CRM and marketing" "Settings and directories"
@@ -78,7 +78,7 @@ Feature: Export scenarios for creating reference data in 1C:ERP Business Managem
 		When "Product range" window is opened
 		And I close "Product range" window
 
-Сценарий: Я создаю соглашение с клиентом с именем 'ТекИмяСоглашения' валютой 'ТекВалюта' в 1C:ERPУХ
+Scenario: I create an agreement with a client with name 'TextAgreementName' currency 'TextCurrency' in 1C:ERP_UH
 
 	* Deleting existing elements
 		And In the command interface I select "CRM and marketing" "Standard agreements with customers"
@@ -110,7 +110,7 @@ Feature: Export scenarios for creating reference data in 1C:ERP Business Managem
 		Then "Standard sales terms agreements" window is opened
 		And I close "Standard sales terms agreements" window
 
-Сценарий: Я создаю соглашение с поставщиком 'ТекПоставщик' с именем 'ТекИмяСоглашения' валютой 'ТекВалюта' в 1C:ERPУХ
+Scenario: I create an agreement with a supplier 'TextSupplier' with name 'TextAgreementName' currency 'TextCurrency' in 1C:ERP_UH
 
 	* Deleting existing elements
 		And In the command interface I select "Purchases" "Agreements with suppliers"
@@ -143,7 +143,7 @@ Feature: Export scenarios for creating reference data in 1C:ERP Business Managem
 		Then "Purchase terms agreements" window is opened
 		And I close "Agreements on purchase terms" window
 
-Сценарий: Я создаю партнера с именем 'ТекИмяПартнера' тип 'ТекТип' в 1C:ERPУХ		
+Scenario: I create a partner with name 'TextPartnerName' type 'TextType' in 1C:ERP_UH
 
 	* Opening list form
 		And In the command interface I select "Quick menu" "Partners"
@@ -208,7 +208,7 @@ Feature: Export scenarios for creating reference data in 1C:ERP Business Managem
 		When "Partners" window is opened
 		And I close "Partners" window
 
-Сценарий: Для партнера 'ТекИмяПартнера' я создаю контрагента с именем 'ТекИмяКонтрагента' вид 'ТекВидКонтрагента' в 1C:ERPУХ
+Scenario: For partner 'TextPartnerName' I create a counterparty with name 'TextCounterpartyName' type 'TextCounterpartyType' in 1C:ERP_UH
 
 	* Opening list form
 		And In the command interface I select "Quick menu" "Partners"
@@ -247,7 +247,7 @@ Feature: Export scenarios for creating reference data in 1C:ERP Business Managem
 		Then "Partners" window is opened
 		And I close "Partners" window
 
-Сценарий: Для партнера 'ТекИмяПартнера' контрагента 'ТекИмяКонтрагента' я создаю договор с видом 'ТекВидДоговора' номер 'ТекНомер' от 'ТекДата' организация 'ТекОрганизация' валюта 'ТекВалюта' сумма 'ТекСумма' соглашение 'ТекСоглашение' в 1C:ERPУХ
+Scenario: For partner 'TextPartnerName' counterparty 'TextCounterpartyName' I create a contract with type 'TextTypeOfAgreement' number 'TextNumber' from 'TextDate' company 'TextOrganization' currency 'TextCurrency' amount 'TextAmount' agreement 'TextAgreement' in 1C:ERP_UH
 
 	* Opening list form
 		And In the command interface I select "Quick menu" "Partners"
@@ -311,7 +311,7 @@ Feature: Export scenarios for creating reference data in 1C:ERP Business Managem
 		Then "Partners" window is opened
 		And I close "Partners" window
 
-Сценарий: Я для организации "ТекОрганизация" создаю подразделение с именем "ТекИмяПодразделения" в 1C:ERPУХ
+Scenario: I for company "TextOrganization" create a department with name "TextDepartmentName" in ERP_UH
 
 	* Deleting existing elements
 		And In the command interface I select "Reference data and administration" "Company structure"
@@ -377,9 +377,9 @@ Scenario: I create price kind with name 'TheName' currency 'TheCurrency' in 1C:E
 		And I click the button named 'FormCreate'
 		Then 'Price type (creation)' window is opened
 		And I input '[TheName]' text in the field named 'Description'
-		Если элемент 'CurrencyPrice' присутствует на форме Тогда
+		If the field named 'CurrencyPrice' exists on the form Then
 			And I select '[TheCurrency]' exact value from the drop-down list named 'CurrencyPrice'
-		Если элемент 'PriceIncludesVAT' присутствует на форме Тогда
+		If the field named 'PriceIncludesVAT' exists on the form Then
 			And I change checkbox named 'PriceIncludesVAT'
 		And I click the button named 'FormWriteAndClose'
 		And I wait "Price type (creation) *" window closing in 20 seconds

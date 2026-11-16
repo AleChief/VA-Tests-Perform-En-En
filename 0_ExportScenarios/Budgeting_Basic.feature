@@ -101,7 +101,7 @@ Scenario: I select indicator with code 'TheIndicatorCode'
 		And in 'SpreadsheetDocSelectIndicator' spreadsheet document I move to '[TheIndicatorCode]' cell
 		And in 'SpreadsheetDocSelectIndicator' spreadsheet document I double-click the current cell
 	Else
-		Then "Indicator list" window is opened
+		Then "Report indicators" window is opened
 		And I change the radio button named 'IndicatorChoiceMode' value to "Indicator list"
 		And in the table 'List' I click the button named 'ListFind'
 		Then "Find" window is opened

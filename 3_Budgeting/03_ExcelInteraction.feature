@@ -345,7 +345,7 @@ Scenario: 03.07 Creating a report instance - "VA - ImportExcel" and loading from
 		And I change the radio button named 'ImportApproach' value to "File on hard drive"
 		And I click the button named 'FormSelect'
 		When '$WindowTitle$' window is opened
-		Затем я жду, что в сообщениях пользователю будет подстрока "Imported file path not specified. Operation canceled." в течение 30 секунд
+		Then I wait that in user messages the "The imported file path not specified. The operation canceled." substring will appear in "30" seconds
 		And I clear user message window
 		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to "3_Budgeting\Layouts\03\VA_ImportExcel_Empty.mxl"
 
@@ -512,7 +512,7 @@ Scenario: 03.09 Creating a pivot table
 		And I change the radio button named 'ImportApproach' value to "File on hard drive"
 		And I click the button named 'FormSelect'
 		When '$WindowTitle$' window is opened
-		Затем я жду, что в сообщениях пользователю будет подстрока "Imported file path not specified. Operation canceled." в течение 30 секунд
+		Then I wait that in user messages the "The imported file path not specified. The operation canceled." substring will appear in "30" seconds
 		And I clear user message window
 
 	* Loading an incorrect file

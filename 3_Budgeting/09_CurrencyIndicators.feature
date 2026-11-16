@@ -184,8 +184,13 @@ Scenario: 09.04 Creating a report type "VA - Currency indicators (recipient)"
 			Then the form attribute named 'CurrExchangeType' became equal to "Average rate for period"
 			And I click Clear button of the field named 'CurrExchangeType'
 			And I click the button named 'FormWriteAndClose'
-			Тогда в логе сообщений TestClient есть строки:
-				|"\"Exchange rate kind\" is a required field."|
+			And I wait "* (Report indicators) *" window closing in 20 seconds
+			Then "Report wizard" window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			Then "* (Report indicators)" window is opened
+			And I move to the tab named 'CurrenciesConversion'
+			Then the form attribute named 'CurrExchangeType' became equal to "Average rate for period"
 			And I select "Average rate for period" exact value from the drop-down list named 'CurrExchangeType'
 			And I click the button named 'FormWriteAndClose'
 			And I wait "* (Report indicators) *" window closing in 20 seconds

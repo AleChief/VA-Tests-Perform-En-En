@@ -482,7 +482,7 @@ Scenario: I create nomenclature folder with name 'TheProductGroupName'
 				And I select current line in 'List' table
 				When "* (Product range)" window is opened
 				Then I input 'UID' variable value in the field named 'Description'
-				Если элемент 'Parent' присутствует на форме Тогда
+				If the field named 'Parent' exists on the form Then
 					And I input '' text in the field named 'Parent'
 				And I click the button named 'FormWriteAndClose'
 				And I wait "* (Product range)" window closing in 20 seconds
@@ -514,9 +514,9 @@ Scenario: I create price type with name 'TheName' currency 'TheCurrency'
 		And I click the button named 'FormCreate'
 		Then "Product range price type (create)" window is opened
 		And I input '[TheName]' text in the field named 'Description'
-		Если элемент 'CurrencyPrice' присутствует на форме Тогда
+		If the field named 'CurrencyPrice' exists on the form Then
 			And I select '[TheCurrency]' exact value from the drop-down list named 'CurrencyPrice'
-		Если элемент 'PriceIncludesVAT' присутствует на форме Тогда
+		If the field named 'PriceIncludesVAT' exists on the form Then
 			And I change checkbox named 'PriceIncludesVAT'
 		And I click the button named 'FormWriteAndClose'
 		And I wait "Product range price type (create) *" window closing in 20 seconds

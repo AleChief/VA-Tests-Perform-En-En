@@ -10,7 +10,7 @@ As a business analyst I want to
 simplify creating directories and documents
 to simplify maintaining scenario tests
 
-Сценарий: Я создаю НоваяОрганизация "ТекНаименование", ИНН = "ТекИНН", КПП = "ТекКПП", ОГРН = "ТекОГРН", дата регистрации = "ТекДатаРегистрации"
+Scenario: I create NewOrganization "TextDescription", TIN = "TextTIN", KPP = "TextKPP", OGRN = "TextOGRN", registration date = "TextRegistrationDate"
 
 		And In the command interface I select 'General catalogs and settings' 'Business units'
 		Then 'Business units' window is opened
@@ -34,12 +34,12 @@ to simplify maintaining scenario tests
 		And I input '[TextRegistrationDate]' text in the field named 'DateOfRegistration'
 		And I move to the next attribute
 		And I click 'Save' button
-		И я нажимаю на кнопку 'Записать и закрыть'
+		And I click the button named 'FormWriteAndClose'
 		And I wait '[TextDescription] *' window closing in 20 seconds
 
 		And I close all client application windows
 
-Сценарий: Я создаю НоваяОрганизация223 "ТекНаименование", ИНН = "ТекИНН", КПП = "ТекКПП", ОГРН = "ТекОГРН", дата регистрации = "ТекДатаРегистрации"
+Scenario: I create NewOrganization223 "TextDescription", TIN = "TextTIN", KPP = "TextKPP", OGRN = "TextOGRN", registration date = "TextRegistrationDate"
 
 		And In the command interface I select 'General catalogs and settings' 'Business units'
 		Then 'Business units' window is opened
@@ -65,12 +65,12 @@ to simplify maintaining scenario tests
 		And I set checkbox 'Accounting of purchases under 223-FZ'
 		And I select '500 000' exact value from "Amount of small purchases" drop-down list
 		And I click 'Save' button
-		И я нажимаю на кнопку 'Записать и закрыть'
+		And I click the button named 'FormWriteAndClose'
 		And I wait '[TextDescription] *' window closing in 20 seconds
 
 		And I close all client application windows
 
-Сценарий: Я создаю НоваяОрганизацияИП "ТекФамилия", Имя = "ТекИмя", ИНН = "ТекИНН", ОГРНИП = "ТекОГРНИП", дата регистрации = "ТекДатаРегистрации"
+Scenario: I create NewOrganizationIP "TextLastName", Name = "TextName", TIN = "TextTIN", OGRNIP = "TextOGRNIP", registration date = "TextRegistrationDate"
 
 		And In the command interface I select 'General catalogs and settings' 'Business units'
 		Then 'Business units' window is opened
@@ -96,12 +96,12 @@ to simplify maintaining scenario tests
 		And I input '[TextRegistrationDate]' text in the field named 'DateOfRegistration'
 		And I move to the next attribute
 		And I click 'Save' button
-		И я нажимаю на кнопку 'Записать и закрыть'
+		And I click the button named 'FormWriteAndClose'
 		And I wait 'Business unit*' window closing in 20 seconds
 
 		And I close all client application windows
 
-Сценарий: Я создаю НовоеЦФО "ТекНаименование", Группа = "ТекГруппа"
+Scenario: I create NewCFO "TextDescription", Group = "TextGroup"
 
 		And In the command interface I select 'General catalogs and settings' 'Business units'
 		Then 'Business units' window is opened
@@ -121,7 +121,7 @@ to simplify maintaining scenario tests
 			| '[TextGroup]' |
 		And I select current line in "List" table
 		
-		И я нажимаю на кнопку 'Записать и закрыть'
+		And I click the button named 'FormWriteAndClose'
 		And I wait 'Business unit *' window closing in 20 seconds
 
 		And I close all client application windows
@@ -139,11 +139,11 @@ Scenario: I create warehouse "TextWarehouse"
 			| 'Description'  | 'Currency' |
 			| 'Delivery price' | 'RUB'    |
 		And I select current line in "List" table
-		И я нажимаю на кнопку 'Записать и закрыть'
+		And I click the button named 'FormWriteAndClose'
 
 		And I close all client application windows
 
-Сценарий: Я устанавливаю УстановкаЦенНоменклатуры "ТекНоменклатура", цена = "ТекЦена"
+Scenario: I set SettingNomenclaturePrices "TextNomenclature", price = "TextPrice"
 
 		And in the table "Goods" I click the button named 'GoodsAdd'
 		And I click choice button of the attribute named "GoodsProductRange" in "Goods" table

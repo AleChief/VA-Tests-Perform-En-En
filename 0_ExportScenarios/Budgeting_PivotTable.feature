@@ -40,7 +40,7 @@ Scenario: I set pivot table filter 'TheFilterName' with value 'TheFilterValue'
 	When "Pivot table: *" window is opened
 	And I click the hyperlink named 'FilterHeading'
 	And I wait for "Pivot table: *" form opening for 20 seconds
-	Если элемент '[TheFilterName]' присутствует на форме Тогда
+	If the field named '[TheFilterName]' exists on the form Then
 		And I select from the drop-down list named '[TheFilterName]'  by '[TheFilterValue]' string
 		And I click the button named 'UpdateTabData1'
 	ElseIf 'Item_[TheFilterName]' attribute is present on the form Then

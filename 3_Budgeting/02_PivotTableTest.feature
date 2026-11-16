@@ -455,7 +455,7 @@ Scenario: 02.06 Export and import from Excel
 		And I input "VA_ContextRecalculateInitial" text in the field named 'ExistingFile'
 		And I input "Sheet_123" text in the field named 'SheetName'
 		And I click the button named 'Save'
-		Затем я жду, что в сообщениях пользователю будет подстрока "saved successfully" в течение 60 секунд		
+		Then I wait that in user messages the "saved successfully" substring will appear in "60" seconds
 		And I clear user message window
 
 	* Loading prepared file
@@ -870,10 +870,10 @@ Scenario: 02.09 Copying all data of the reporting period
 		And I select company "Venus LLC"
 		And I set checkbox named 'TransferReportsInstances'
 		And I click the button named 'Execute'
-		Затем я жду, что в сообщениях пользователю будет подстрока "Copy successful" в течение 60 секунд
+		Then I wait that in user messages the "Copy successful" substring will appear in "60" seconds
 		And I clear user message window
 		And I click the button named 'Execute'
-		Затем я жду, что в сообщениях пользователю будет подстрока "Copy successful" в течение 60 секунд		
+		Then I wait that in user messages the "Copy successful" substring will appear in "60" seconds
 		And I close "Copy report indicator values" window
 
 	And I set pivot table filter 'Item_Scenario' with value "VA - Script for indexing"
@@ -993,10 +993,10 @@ Scenario: 02.10 Copying data by indicators
 		And I click the button named 'Select'
 		Then "Copy report indicator values" window is opened
 		And I click the button named 'Execute'
-		Затем я жду, что в сообщениях пользователю будет подстрока "Copy successful" в течение 60 секунд
+		Then I wait that in user messages the "Copy successful" substring will appear in "60" seconds
 		And I clear user message window
 		And I click the button named 'Execute'
-		Затем я жду, что в сообщениях пользователю будет подстрока "Copy successful" в течение 60 секунд		
+		Then I wait that in user messages the "Copy successful" substring will appear in "60" seconds
 		And I close "Copy report indicator values" window
 
 	* Checking the result
