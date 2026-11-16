@@ -128,7 +128,7 @@
 		И я нажимаю на кнопку с именем 'FormTechnicalInformation'
 		И Я закрываю окно "Protocol"
 
-	* Проверяем расчет для "Меркурий ООО"
+	* Проверяем расчет для "Mercury LLC"
 		Тогда открылось окно "Report instances"
 		И в таблице 'List' я перехожу к строке:
 			| "Primary currency" | "Report type"            | "Company"  | "Report period"  | "End period" | "Scenario"               |
@@ -144,7 +144,7 @@
 		Когда открылось окно '$WindowTitle$'
 		И Я закрываю окно '$WindowTitle$'				
 		
-	* Проверяем расчет для "Меркурий ООО"
+	* Проверяем расчет для "Mercury LLC"
 		Тогда открылось окно "Report instances"
 		И в таблице 'List' я перехожу к строке:
 			| "Primary currency" | "Report type"            | "Company" | "Report period"  | "End period" | "Scenario"               |

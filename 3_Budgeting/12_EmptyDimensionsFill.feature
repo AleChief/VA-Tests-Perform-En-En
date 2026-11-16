@@ -351,7 +351,7 @@
 				|'FROM'|
 				|' Catalog.TimeIntervals AS TimeIntervals'|
 				|'WHERE'|
-				|' TimeIntervals.Ref IN (&PeriodsОтчета)'|
+				|' TimeIntervals.Ref IN (&PeriodsReport)'|
 			И я нажимаю на кнопку с именем 'EditQueryText'
 			И я перехожу к закладке с именем 'ComplianceAnalyst'
 			И я перехожу к закладке с именем 'FiltersPage'
@@ -390,7 +390,7 @@
 				|'FROM'|
 				|' Catalog.TimeIntervals AS TimeIntervals'|
 				|'WHERE'|
-				|' TimeIntervals.Ref IN (&PeriodsОтчета)'|
+				|' TimeIntervals.Ref IN (&PeriodsReport)'|
 			И я нажимаю на кнопку с именем 'EditQueryText'
 			И я перехожу к закладке с именем 'ComplianceAnalyst'
 			И я перехожу к закладке с именем 'FiltersPage'

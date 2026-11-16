@@ -66,7 +66,7 @@
 		И я в конструкторе отчета в ячейке 'R2C4:R12C4' меняю свойства показателей 'ValueType' на "Line"
 
 	* Вводим аналитики
-		* Аналитика "Контрагенты"
+		* Аналитика "Counterparties"
 			И Я в конструкторе отчета добавляю аналитику с кодом "VA0Counter" в ячейку 'R7C2' 	
 			Тогда открылось окно "Report wizard"
 			И я нажимаю на кнопку с именем 'CopyDimension'
@@ -78,7 +78,7 @@
 			И я нажимаю на кнопку с именем 'CopyDimension'
 			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R12C2'
 			И я нажимаю на кнопку с именем 'InsertDimension'
-		* Аналитика "Договоры контрагентов"
+		* Аналитика "Counterparty contracts"
 			И Я в конструкторе отчета добавляю аналитику с кодом "VA0Contrac" в ячейку 'R8C3'
 			Тогда открылось окно "Report wizard"
 			И я нажимаю на кнопку с именем 'CopyDimension'
@@ -87,22 +87,22 @@
 			И я нажимаю на кнопку с именем 'CopyDimension'
 			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R12C3'
 			И я нажимаю на кнопку с именем 'InsertDimension'
-		* Аналитика "Товарные категории"
+		* Аналитика "Product categories"
 			И Я в конструкторе отчета добавляю аналитику с кодом "VA0ProCate" в ячейку 'R10C4'
 			И я нажимаю на кнопку с именем 'CopyDimension'
 			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R12C4'
 			И я нажимаю на кнопку с именем 'InsertDimension'
-		* Аналитика "Номенклатура"
+		* Аналитика "Product range"
 			И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R10C5'
 			И я нажимаю на кнопку с именем 'CopyDimension'
 			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R12C5'
 			И я нажимаю на кнопку с именем 'InsertDimension'
-		* Аналитика "Статьи ДДС"
+		* Аналитика "Cash flow items"
 			И Я в конструкторе отчета добавляю аналитику с кодом "VA0CFItems" в ячейку 'R10C6'
 			И я нажимаю на кнопку с именем 'CopyDimension'
 			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R12C6'
 			И я нажимаю на кнопку с именем 'InsertDimension'
-		* Аналитика "Статьи доходов и расходов"
+		* Аналитика "Income and expense items"
 			И Я в конструкторе отчета добавляю аналитику с кодом "VA0IEItems" в ячейку 'R10C7'
 			И я нажимаю на кнопку с именем 'CopyDimension'
 			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R12C7'
@@ -198,7 +198,7 @@
 		Тогда открылось окно '$WindowTitle$'
 		И я нажимаю на кнопку с именем 'OpenCompaniesFilesExchangeSettings'
 		И Я добавляю элемент пути к файлам организаций для типа 'Organization' объект "Mercury LLC" значение "Mercury"
-		И Я добавляю элемент пути к файлам организаций для типа 'ReportKind' объект "VA - ImportExcel" значение "ВА_ИмпортExcel"
+		И Я добавляю элемент пути к файлам организаций для типа 'ReportKind' объект "VA - ImportExcel" значение "VA_ImportExcel"
 		Тогда открылось окно "Company file path items: List form"
 		И я нажимаю на кнопку с именем 'FormClose'
 
@@ -300,7 +300,7 @@
 	Когда открылось окно "Document settings"
 	И я перехожу к закладке с именем 'GroupPageReportSettings'
 	И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Import"
-	И из выпадающего списка с именем 'OuterИнформационнаяБаза' я выбираю по строке "VA - Import from Excel"
+	И из выпадающего списка с именем 'ExternalInfobase' я выбираю по строке "VA - Import from Excel"
 	Тогда элемент формы с именем 'FormForИмпорта' стал равен "VA - ImportExcel"		
 	И я нажимаю на кнопку с именем 'FormApplyAndClose'
 
@@ -324,7 +324,7 @@
 		И я перехожу к закладке с именем 'GroupPageReportSettings'
 		И элемент формы с именем 'ReportGenerationMethod' стал равен "Import"
 		И элемент формы с именем 'ProcessingRule' стал равен "VA - ImportExcel"
-		И элемент формы с именем 'OuterИнформационнаяБаза' стал равен "VA - Import from Excel"
+		И элемент формы с именем 'ExternalInfobase' стал равен "VA - Import from Excel"
 		И элемент формы с именем 'CheckRule' стал равен "VA - ImportExcel"
 		И элемент формы с именем 'FormForИмпорта' стал равен "VA - ImportExcel"
 		И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "By processing rule"
@@ -338,7 +338,7 @@
 		Когда открылось окно "Select method to calculate indicators"
 		И элемент формы с именем 'ReportGenerationMethod' стал равен "Import"
 		И элемент формы с именем 'ProcessingRule' стал равен "VA - ImportExcel"
-		И элемент формы с именем 'OuterИнформационнаяБаза' стал равен "VA - Import from Excel"
+		И элемент формы с именем 'ExternalInfobase' стал равен "VA - Import from Excel"
 		И элемент формы с именем 'CheckRule' стал равен "VA - ImportExcel"
 		И элемент формы с именем 'FormForИмпорта' стал равен "VA - ImportExcel"
 		И элемент формы с именем 'ImportApproach' стал равен "0"
@@ -370,7 +370,7 @@
 		Тогда у элемента формы с именем 'ReportGenerationMethod' текст редактирования стал равен "Import"
 		Тогда у элемента формы с именем 'FormForИмпорта' текст редактирования стал равен "VA - ImportExcel"
 		Тогда элемент формы с именем 'ImportApproach' стал равен "1"
-		Тогда у элемента формы с именем 'ImportFile3' текст редактирования стал равен "ВА_ИмпортExcel+Error.xlsx"
+		Тогда у элемента формы с именем 'ImportFile3' текст редактирования стал равен "VA_ImportExcel_Error.xlsx"
 		И я меняю значение переключателя с именем 'ImportApproach' на "File on hard drive"
 		Тогда у элемента формы с именем 'PathToFile' текст редактирования стал равен "$DirectoryПроекта$\3_Budgeting\Templates\03\VA_ImportExcel+Error.xlsx"
 		И в поле с именем 'PathToFile' я ввожу текст "$DirectoryПроекта$\3_Budgeting\Templates\03\VA_ImportExcel+Mercury.xlsx"
@@ -435,7 +435,7 @@
 		Когда открылось окно "Select method to calculate indicators"
 		И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Import"
 		И элемент формы с именем 'ImportApproach' стал равен "1"
-		И элемент формы с именем 'ImportFile3' стал равен "ВА_ИмпортExcel+Mercury.xlsx"
+		И элемент формы с именем 'ImportFile3' стал равен "VA_ImportExcel_Mercury.xlsx"
 		И элемент формы с именем 'FormForИмпорта' стал равен "VA - ImportExcel"
 		И я нажимаю на кнопку с именем 'FormSelect'
 		Когда открылось окно "Select file version"
@@ -475,7 +475,7 @@
 		И я нажимаю на кнопку с именем 'FormFillInUsingAnotherApproach'
 		Когда открылось окно "Select method to calculate indicators"
 		И я меняю значение переключателя с именем 'ImportApproach' на "External infobase"
-		И из выпадающего списка с именем 'OuterИнформационнаяБаза' я выбираю по строке "VA - Import from Excel"
+		И из выпадающего списка с именем 'ExternalInfobase' я выбираю по строке "VA - Import from Excel"
 		И я нажимаю на кнопку с именем 'FormSelect'
 		Тогда открылось окно '$WindowTitle$'
 		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету "$DirectoryПроекта$\3_Budgeting\Templates\03\VA_ImportExcel_Mercury.mxl"									
@@ -505,7 +505,7 @@
 		Тогда открылось окно "Select method to calculate indicators"
 		И элемент формы с именем 'ReportGenerationMethod' стал равен "Import"
 		И элемент формы с именем 'ProcessingRule' стал равен "VA - ImportExcel"
-		И элемент формы с именем 'OuterИнформационнаяБаза' стал равен "VA - Import from Excel"
+		И элемент формы с именем 'ExternalInfobase' стал равен "VA - Import from Excel"
 		И элемент формы с именем 'CheckRule' стал равен "VA - ImportExcel"
 		И элемент формы с именем 'FormForИмпорта' стал равен "VA - ImportExcel"
 		Тогда элемент формы с именем 'ImportApproach' стал равен "0"
@@ -547,7 +547,7 @@
 		И я нажимаю на кнопку с именем 'RecalculateOther'		
 		Когда открылось окно "Select method to calculate indicators"
 		И я меняю значение переключателя с именем 'ImportApproach' на "External infobase"
-		И из выпадающего списка с именем 'OuterИнформационнаяБаза' я выбираю по строке "VA - Import from Excel"
+		И из выпадающего списка с именем 'ExternalInfobase' я выбираю по строке "VA - Import from Excel"
 		И я нажимаю на кнопку с именем 'FormSelect'			
 		И я жду открытия формы '$WindowTitle$' в течение 30 секунд
 		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету "$DirectoryПроекта$\3_Budgeting\Templates\03\VA_ImportExcel_Mercury_СТ.mxl"	

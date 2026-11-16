@@ -103,9 +103,9 @@
 		И в меню формы я выбираю "Standard area"
 		И Я в списке "Analytical reports" по полю "Description" ищу и выбираю элемент "VA - Analytical reports (Mercury LLC)" "Exact match"
 
-	 	Тогда открылось окно 'DimenKind - Аналитические отчеты (Analytical dashboard)'
- 		И в таблице "CompositionПанели" я нажимаю на кнопку с именем 'PanelContentAdd'		 
- 		И в меню формы я выбираю 'Ordinary область'
+	 	Тогда открылось окно 'VA - Analytical reports (Analytical dashboard)'
+ 		И в таблице "PanelContent" я нажимаю на кнопку с именем 'PanelContentAdd'		 
+ 		И в меню формы я выбираю 'Standard area'
 		И Я в списке "Analytical reports" по полю "Description" ищу и выбираю элемент "VA - Analytical reports (System LLC)" "Exact match"
  		
  	Тогда открылось окно "VA - Analytical reports (Analytical dashboard)"

@@ -352,10 +352,10 @@
 				|' tIndicatorsValues = GetIndicatorsValue(FilterParameterStructure,DimensionsToDrillDown);'|
 				|' tIndicatorsValues.GroupBy("Dimension2","Value");'|
 				|' '|
-				|' For Each RowValuesПоказателей In tIndicatorsValues Do'|
+				|' For Each RowIndicatorValues In tIndicatorsValues Do'|
 				|'  SetIndicatorValue('|
 				|'   IndicatorDestination,  '|
-				|'   RowValuesПоказателей.Value,   '|
+				|'   RowIndicatorValues.Value,   '|
 				|'   ObjectOfARAP.ArrayOfPeriods.Get(CntShared),,'|
 				|'   RowValuesПоказателей.Dimension2);'|
 				|' EndDo;'|
@@ -408,7 +408,7 @@
 			Тогда открылось окно "1C:Enterprise"
 			И я нажимаю на кнопку с именем 'Button0'
 			Тогда Открылась правило расчета для вида отчета "VA - Cumulative total (recipient)"
-			И я запоминаю заголовок формы в переменную "TitleОкна"			
+			И я запоминаю заголовок формы в переменную "WindowTitle"			
 			И я нажимаю на кнопку с именем 'FormWriteAndClose'
 			И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
 			Когда открылось окно "Report wizard"

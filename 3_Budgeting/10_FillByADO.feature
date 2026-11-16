@@ -90,7 +90,7 @@
 				Когда открылось окно "Correspondence with external infobases (create) *"
 				И в таблице 'ComplianceTable' я перехожу к строке:
 					| "Field"             |
-					| "Вид номенклатуры" |
+					| "Nomenclature type" |
 				И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
 				И в таблице 'ComplianceTable' я выбираю текущую строку
 				И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
@@ -116,7 +116,7 @@
 			Если '$$IsERPCPM$$' Тогда
 				И в таблице 'ComplianceTable' я перехожу к строке:
 					| "Field"             |
-					| "Unit хранения" |
+					| "Storage unit" |
 			Иначе
 				И в таблице 'ComplianceTable' я перехожу к строке:
 					| "Field"    |
@@ -379,7 +379,7 @@
 		И я нажимаю на кнопку с именем 'FormOpenSettings'
 		Тогда открылось окно "Document settings"
 		И я перехожу к закладке с именем 'GroupPageReportSettings'
-		И из выпадающего списка с именем 'OuterИнформационнаяБаза' я выбираю точное значение "VA - ADO Import (Excel)"
+		И из выпадающего списка с именем 'ExternalInfobase' я выбираю точное значение "VA - ADO Import (Excel)"
 		И я нажимаю на кнопку с именем 'FormApplyAndClose'
 	
 	* Делаем расчет
@@ -407,7 +407,7 @@
 		И я нажимаю на кнопку с именем 'FormFillInUsingAnotherApproach'
 		Тогда открылось окно "Select method to calculate indicators"
 		Тогда элемент формы с именем 'FormForИмпорта' стал равен "VA - ADO Import (Excel)"
-		И элемент формы с именем 'OuterИнформационнаяБаза' стал равен "VA - ADO Import (Excel)"
+		И элемент формы с именем 'ExternalInfobase' стал равен "VA - ADO Import (Excel)"
 		И элемент формы с именем 'ProcessingRule' стал равен "VA - ADO Import (Excel)"
 		И элемент формы с именем 'CheckRule' стал равен "VA - ADO Import (Excel)"
 		И элемент формы с именем 'ImportApproach' стал равен "0"
@@ -444,11 +444,11 @@
 
 	* Проверяем фору выбора версии файла
 		И я жду открытия окна "Select file version" в течение 20 секунд
-		И элемент формы с именем 'ХранимыйФайл' стал равен "VA_LoadADO2.xls"
-		И элемент формы с именем 'Пароль' стал равен ""
+		И элемент формы с именем 'StoredFile' стал равен "VA_LoadADO2.xls"
+		И элемент формы с именем 'Password' стал равен ""
 		И таблица 'SheetsList' стала равной:
 			| "Document sheet" | "Password protected" |
-			| "Лист1"          | "No"             |
+			| "Sheet1"          | "No"             |
 		И я нажимаю на кнопку с именем 'FormOK'
 
 	* Сверяем результат
@@ -506,7 +506,7 @@
 		Тогда открылось окно "Product range"
 		
 		* 1С:КП ГУ ПРОФ на 6 месяцев
-			И в таблице 'KindsНоменклатуры' я перехожу к строке:
+			И в таблице 'TypesOfNomenclature' я перехожу к строке:
 				| "Description"      |
 				| "VA - Products" |
 			Если в таблице 'ListAdvancedSearchProducts' есть строка Тогда
@@ -518,13 +518,13 @@
 				И в таблице 'ListAdvancedSearchProducts' я выбираю текущую строку
 				Тогда открылось окно "2C:KP GU PROF for 6 months (Product range)"
 				И я перехожу к закладке с именем 'PageProductAttributes'
-				Если открылось окно 'Полезный совет' Тогда
+				Если открылось окно 'Useful tip' Тогда
 					И я нажимаю на кнопку с именем 'Button0'
 				Тогда открылось окно "2C:KP GU PROF for 6 months (Product range)"
-				И я разворачиваю группу с именем 'СворачиваемаяMainParametersGroupУчета'
+				И я разворачиваю группу с именем 'CollapsibleGroupMainParametersAccounting'
 				И из выпадающего списка с именем 'ProductKind' я выбираю по строке 'DimenKind - Other'
 				И я нажимаю на кнопку с именем 'FormWriteAndClose'				
-				Если открылось окно 'Rate1 VAT применZ2етFrom1Z2 From1:' Тогда
+				Если открылось окно 'VAT rate applies from:' Тогда
 					И в поле с именем 'InputFld' я ввожу текст '1/1/2024'
 					И я нажимаю на кнопку с именем 'OK'
 					Тогда открылось окно "1С:FN ГУ PРОФ for * месяцев (Product range)"
@@ -532,7 +532,7 @@
 				И я жду закрытия окна "2C:KP GU PROF for 6 months (Product range) *" в течение 20 секунд
 		
 		* 1С:КП ГУ ПРОФ на 12 месяцев
-			И в таблице 'KindsНоменклатуры' я перехожу к строке:
+			И в таблице 'TypesOfNomenclature' я перехожу к строке:
 				| "Description"      |
 				| "VA - Products" |
 			Если в таблице 'ListAdvancedSearchProducts' есть строка Тогда
@@ -545,10 +545,10 @@
 				Тогда открылось окно "2C:KP GU PROF for 12 months (Product range)"
 				И я перехожу к закладке с именем 'PageProductAttributes'
 				Тогда открылось окно "2C:KP GU PROF for 12 months (Product range)"
-				И я разворачиваю группу с именем 'СворачиваемаяMainParametersGroupУчета'
+				И я разворачиваю группу с именем 'CollapsibleGroupMainParametersAccounting'
 				И из выпадающего списка с именем 'ProductKind' я выбираю по строке 'DimenKind - Other'
 				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				Если открылось окно 'Rate1 VAT применZ2етFrom1Z2 From1:' Тогда
+				Если открылось окно 'VAT rate applies from:' Тогда
 					И в поле с именем 'InputFld' я ввожу текст '1/1/2024'
 					И я нажимаю на кнопку с именем 'OK'
 					Тогда открылось окно "1С:FN ГУ PРОФ for * месяцев (Product range)"

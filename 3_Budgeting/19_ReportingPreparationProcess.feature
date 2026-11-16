@@ -69,7 +69,7 @@
 		И я нажимаю на кнопку с именем 'OpenCompaniesFilesExchangeSettings'
 		И Я добавляю элемент пути к файлам организаций для типа 'Organization' объект "Mercury LLC" значение "Mercury"
 		И Я добавляю элемент пути к файлам организаций для типа 'Organization' объект "Venus LLC" значение "Venus"
-		И Я добавляю элемент пути к файлам организаций для типа 'ReportKind' объект "VA - ProcessPrice" значение "ВА_ПроцессЦена"
+		И Я добавляю элемент пути к файлам организаций для типа 'ReportKind' объект "VA - ProcessPrice" значение "VA_ProcessPrice"
 		Тогда открылось окно "Company file path items: List form"
 		И я нажимаю на кнопку с именем 'FormClose'
 
@@ -152,7 +152,7 @@
 		И я устанавливаю флаг с именем 'UseProcess'
 		И я нажимаю кнопку выбора у поля с именем 'ProcessTemplate'
 		И Я в списке "Universal process templates" по полю "Description" ищу и выбираю элемент "VA - Report preparation process" "Exact match" 
-		И я устанавливаю флаг с именем 'ЗапрещатьДокументыВнеПроцесса'
+		И я устанавливаю флаг с именем 'ProhibitNonProcessDocuments'
 		И я перехожу к закладке с именем 'PerimeterSetting'
 		Тогда таблица 'GroupStructure' стала равной:
 			| "Consolidating company\n/ Business unit" | "Primary currency" | "Additional currencies" | "Effective share, %" | "Company status for consolidation"        | "Company kind" | "Intercompany transactions exclusion method" |
@@ -183,7 +183,7 @@
 		Когда открылось окно "Editing process stages: VA - Report preparation process"
 		И я нажимаю на кнопку с именем 'AddStage_ReportPreparationProcessStep'
 		Тогда открылось окно "Step of report preparation process (Universal process step)"
-		И в поле с именем 'Description' я ввожу текст "Для удаления"
+		И в поле с именем 'Description' я ввожу текст "For deletion"
 		И я нажимаю на кнопку с именем 'FormWriteAndClose'
 		И я жду закрытия окна "Step of report preparation process (Universal process step) *" в течение 20 секунд
 
@@ -201,9 +201,9 @@
 		И я нажимаю на кнопку с именем 'Edit'
 		И Я в списке "Select step" по полю "Description" ищу и выбираю элемент "Копия для удаления" "Exact match"		
 		Когда открылось окно "Копия для удаления (Universal process step)"
-		И в поле с именем 'Description' я ввожу текст "Отредактированная copy для удаления"
+		И в поле с именем 'Description' я ввожу текст "Edited copy for deletion"
 		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Копия для удаления (Universal process step) *" в течение 20 секунд	
+		И я жду закрытия окна "Copy for deletion (Universal process step) *" в течение 20 секунд	
 
 	* Настраиваем связь
 		Когда открылось окно "Editing process stages: VA - Report preparation process"
@@ -245,7 +245,7 @@
 		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Templates of report preparation process"
 		И Я в списке "Universal process templates" по полю "Description" ищу и выбираю элемент "VA - Report preparation process" "Exact match" 
 
-	* Этап для "ВА - ПроцессКоличество"
+	* Этап для "VA - ProcessCount"
 		Когда открылось окно "Editing process stages: VA - Report preparation process"
 		И я нажимаю на кнопку с именем 'AddStage_ReportPreparationProcessStep'
 		Тогда открылось окно "Step of report preparation process (Universal process step)"
@@ -270,51 +270,51 @@
 			Тогда открылось окно "Step of report preparation process (Universal process step) *"
 		* Настройки регламента
 			И я перехожу к закладке с именем 'Page_RegulationSettings'
-			И я нажимаю на кнопку с именем 'SettingОбработкиДокументов'
-			Когда открылось окно "Setting обработки документов"
+			И я нажимаю на кнопку с именем 'DocumentProcessingSettings'
+			Когда открылось окно "Document processing setting"
 			Тогда табличный документ 'Result' равен:
-				| 'Template документа / Organization' | ''                      | 'Венера LLC'                               | 'Земля LLC'                                | 'Марс LLC'                                 | 'Mercury LLC'                             | 'Система LLC'                              |
+				| 'Document template / Company' | ''                      | 'Венера LLC'                               | 'Земля LLC'                                | 'Марс LLC'                                 | 'Mercury LLC'                             | 'Система LLC'                              |
 				| ''                               | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
-				| 'DimenKind - Process_Count'         | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
-				| ''                               | 'Form для отображения' | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   |
-				| ''                               | 'Form сводной таблицы' | 'DimenKind - Process_Count (pivot table)' | 'DimenKind - Process_Count (pivot table)' | 'DimenKind - Process_Count (pivot table)' | 'DimenKind - Process_Count (pivot table)' | 'DimenKind - Process_Count (pivot table)' |
-				| ''                               | 'Rule обработки'     | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   |
-				| ''                               | 'Rule проверки'      | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   |
+				| 'VA - ProcessCount'         | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
+				| ''                               | 'Form для отображения' | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
+				| ''                               | 'Form сводной таблицы' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' |
+				| ''                               | 'Processing rule'     | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
+				| ''                               | 'Check rule'      | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
 				| ''                               | 'Method Formations'   | 'On правилу обработки'                     | 'On правилу обработки'                     | 'On правилу обработки'                     | 'On правилу обработки'                     | 'On правилу обработки'                     |
 			* Меркурий
-				Когда открылось окно "Setting обработки документов"
+				Когда открылось окно "Document processing setting"
 				И в табличном документе 'Result' я перехожу к ячейке "R6C6"
 				И в табличном документе 'Result' я делаю двойной клик на текущей ячейке
-				Тогда открылось окно "Settings обработки шаблона документа"
+				Тогда открылось окно "Settings of document template processing"
 				И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Manual filling"
 				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Settings обработки шаблона документа *" в течение 20 секунд
+				И я жду закрытия окна "Settings of document template processing *" в течение 20 секунд
 			* Венера
-				Тогда открылось окно "Setting обработки документов"
+				Тогда открылось окно "Document processing setting"
 				И в табличном документе 'Result' я перехожу к ячейке "R6C3"
 				И в табличном документе 'Result' я делаю двойной клик на текущей ячейке
-				Тогда открылось окно "Settings обработки шаблона документа"
+				Тогда открылось окно "Settings of document template processing"
 				И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Manual filling"
 				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Settings обработки шаблона документа *" в течение 20 секунд
+				И я жду закрытия окна "Settings of document template processing *" в течение 20 секунд
 			* Сверяем результат и закрываем
-				Когда открылось окно "Setting обработки документов"
+				Когда открылось окно "Document processing setting"
 				Тогда табличный документ 'Result' равен:
-					| 'Template документа / Organization' | ''                      | 'Венера LLC'                               | 'Земля LLC'                                | 'Марс LLC'                                 | 'Mercury LLC'                             | 'Система LLC'                              |
+					| 'Document template / Company' | ''                      | 'Venus LLC'                               | 'Земля LLC'                                | 'Марс LLC'                                 | 'Mercury LLC'                             | 'Система LLC'                              |
 					| ''                               | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
-					| 'DimenKind - Process_Count'         | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
-					| ''                               | 'Form для отображения' | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   |
-					| ''                               | 'Form сводной таблицы' | 'DimenKind - Process_Count (pivot table)' | 'DimenKind - Process_Count (pivot table)' | 'DimenKind - Process_Count (pivot table)' | 'DimenKind - Process_Count (pivot table)' | 'DimenKind - Process_Count (pivot table)' |
-					| ''                               | 'Rule обработки'     | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   |
-					| ''                               | 'Rule проверки'      | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   | 'DimenKind - Process_Count'                   |
-					| ''                               | 'Method Formations'   | 'Ручное заполнение'                        | 'On правилу обработки'                     | 'On правилу обработки'                     | 'Ручное заполнение'                        | 'On правилу обработки'                     |
-				И Я закрываю окно "Setting обработки документов"
+					| 'VA - ProcessCount'         | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
+					| ''                               | 'Form для отображения' | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
+					| ''                               | 'Form сводной таблицы' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' |
+					| ''                               | 'Processing rule'     | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
+					| ''                               | 'Check rule'      | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
+					| ''                               | 'Method Formations'   | 'Manual filling'                        | 'On правилу обработки'                     | 'On правилу обработки'                     | 'Manual filling'                        | 'On правилу обработки'                     |
+				И Я закрываю окно "Document processing setting"
 		* Сохранение
 			Тогда открылось окно "* (Universal process step)"
 			И я нажимаю на кнопку с именем 'FormWriteAndClose'
 			И я жду закрытия окна "* (Universal process step)" в течение 20 секунд
 				
-	* Этап для "ВА - ПроцессЦена"
+	* Этап для "VA - ProcessPrice"
 		Когда открылось окно "Editing process stages: VA - Report preparation process"
 		И я нажимаю на кнопку с именем 'AddStage_ReportPreparationProcessStep'
 		Тогда открылось окно "Step of report preparation process (Universal process step)"
@@ -339,22 +339,22 @@
 			Тогда открылось окно "Step of report preparation process (Universal process step) *"
 		* Настройки регламента
 			И я перехожу к закладке с именем 'Page_RegulationSettings'
-			И я нажимаю на кнопку с именем 'SettingОбработкиДокументов'
-			Когда открылось окно "Setting обработки документов"
+			И я нажимаю на кнопку с именем 'DocumentProcessingSettings'
+			Когда открылось окно "Document processing setting"
 			Тогда табличный документ 'Result' равен:
-				| 'Template документа / Organization' | ''                      | 'Венера LLC'                         | 'Земля LLC'                          | 'Марс LLC'                           | 'Mercury LLC'                       | 'Система LLC'                        |
+				| 'Document template / Company' | ''                      | 'Венера LLC'                         | 'Земля LLC'                          | 'Марс LLC'                           | 'Mercury LLC'                       | 'Система LLC'                        |
 				| ''                               | ''                      | ''                                   | ''                                   | ''                                   | ''                                   | ''                                   |
-				| 'DimenKind - Process_Price'               | ''                      | ''                                   | ''                                   | ''                                   | ''                                   | ''                                   |
-				| ''                               | 'Form для отображения' | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   |
-				| ''                               | 'Form сводной таблицы' | 'DimenKind - Process_Price (pivot table)' | 'DimenKind - Process_Price (pivot table)' | 'DimenKind - Process_Price (pivot table)' | 'DimenKind - Process_Price (pivot table)' | 'DimenKind - Process_Price (pivot table)' |
-				| ''                               | 'Rule обработки'     | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   |
-				| ''                               | 'Rule проверки'      | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   | 'DimenKind - Process_Price'                   |
+				| 'VA - ProcessPrice'               | ''                      | ''                                   | ''                                   | ''                                   | ''                                   | ''                                   |
+				| ''                               | 'Form для отображения' | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   |
+				| ''                               | 'Form сводной таблицы' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' |
+				| ''                               | 'Processing rule'     | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   |
+				| ''                               | 'Check rule'      | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   |
 				| ''                               | 'Method Formations'   | 'On правилу обработки'               | 'On правилу обработки'               | 'On правилу обработки'               | 'On правилу обработки'               | 'On правилу обработки'               |
 			* Меркурий
-				Когда открылось окно "Setting обработки документов"
+				Когда открылось окно "Document processing setting"
 				И в табличном документе 'Result' я перехожу к ячейке "R5C6"
 				И в табличном документе 'Result' я делаю двойной клик на текущей ячейке
-				Тогда открылось окно "Settings обработки шаблона документа"
+				Тогда открылось окно "Settings of document template processing"
 				* Настраиваем тип информационной базы
 					И я нажимаю на кнопку открытия поля с именем 'ProcessingRule'
 					Тогда открылось окно "VA - ProcessPrice (Calculation rules)"
@@ -362,30 +362,30 @@
 					И я нажимаю на кнопку с именем 'FormWriteAndClose'
 					И я жду закрытия окна "VA - ProcessPrice (Calculation rules) *" в течение 20 секунд
 				* Проверяем тип информационной базы	
-					Тогда открылось окно "Settings обработки шаблона документа"
+					Тогда открылось окно "Settings of document template processing"
 					И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Import"
 					Тогда элемент формы с именем 'FormForИмпорта' стал равен "VA - ProcessPrice"
-					И из выпадающего списка с именем 'OuterИнформационнаяБаза' я выбираю по строке "VA - ProcessImportPrice"
-				Когда открылось окно "Settings обработки шаблона документа *"
+					И из выпадающего списка с именем 'ExternalInfobase' я выбираю по строке "VA - ProcessImportPrice"
+				Когда открылось окно "Settings of document template processing *"
 				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Settings обработки шаблона документа *" в течение 20 секунд
+				И я жду закрытия окна "Settings of document template processing *" в течение 20 секунд
 			* Венера
-				Когда открылось окно "Setting обработки документов"
+				Когда открылось окно "Document processing setting"
 				И в табличном документе 'Result' я перехожу к ячейке "R5C3"
 				И в табличном документе 'Result' я делаю двойной клик на текущей ячейке
-				Тогда открылось окно "Settings обработки шаблона документа"
+				Тогда открылось окно "Settings of document template processing"
 				И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Import"
-				И из выпадающего списка с именем 'OuterИнформационнаяБаза' я выбираю по строке "VA - ProcessImportPrice"
+				И из выпадающего списка с именем 'ExternalInfobase' я выбираю по строке "VA - ProcessImportPrice"
 				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Settings обработки шаблона документа *" в течение 20 секунд
-			Тогда открылось окно "Setting обработки документов"
-			И Я закрываю окно "Setting обработки документов"
+				И я жду закрытия окна "Settings of document template processing *" в течение 20 секунд
+			Тогда открылось окно "Document processing setting"
+			И Я закрываю окно "Document processing setting"
 	* Сохранение
 			Тогда открылось окно "* (Universal process step)"
 			И я нажимаю на кнопку с именем 'FormWriteAndClose'
 			И я жду закрытия окна "* (Universal process step)" в течение 20 секунд
 
-	* Этап для "ВА - ПроцессСумма"
+	* Этап для "VA - ProcessAmount"
 		Когда открылось окно "Editing process stages: VA - Report preparation process"
 		И я нажимаю на кнопку с именем 'AddStage_ReportPreparationProcessStep'
 		Тогда открылось окно "Step of report preparation process (Universal process step)"
@@ -412,7 +412,7 @@
 			И я нажимаю на кнопку с именем 'FormWriteAndClose'
 			И я жду закрытия окна "* (Universal process step) *" в течение 20 секунд
 
-	* Этап консолидации для "ВА - ПроцессСумма"
+	* Этап консолидации для "VA - ProcessAmount"
 		Когда открылось окно "Editing process stages: VA - Report preparation process"
 		И я нажимаю на кнопку с именем 'AddStage_ReportPreparationProcessStep'
 		Тогда открылось окно "Step of report preparation process (Universal process step)"
@@ -432,12 +432,12 @@
 		* Настройки регламента
 			Когда открылось окно "Step of report preparation process (Universal process step) *"
 			И я перехожу к закладке с именем 'Page_RegulationSettings'
-			И я нажимаю на кнопку с именем 'SettingОбработкиДокументов'
-			Тогда открылось окно "Setting обработки документов"
+			И я нажимаю на кнопку с именем 'DocumentProcessingSettings'
+			Тогда открылось окно "Document processing setting"
 			* Система
 				И в табличном документе 'Result' я перехожу к ячейке "R5C7"
 				И в табличном документе 'Result' я делаю двойной клик на текущей ячейке
-				Тогда открылось окно "Settings обработки шаблона документа"
+				Тогда открылось окно "Settings of document template processing"
 				И выпадающий список с именем 'ReportGenerationMethod' стал равен:
 					| "Manual filling"                          |
 					| "By processing rule"                       |
@@ -447,9 +447,9 @@
 					| "Collapse by period"                        |						
 				И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Consolidate perimeter (Proportionally)"
 				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Settings обработки шаблона документа *" в течение 20 секунд
-			Тогда открылось окно "Setting обработки документов"
-			И Я закрываю окно "Setting обработки документов"
+				И я жду закрытия окна "Settings of document template processing *" в течение 20 секунд
+			Тогда открылось окно "Document processing setting"
+			И Я закрываю окно "Document processing setting"
 		* Сохранение
 			Тогда открылось окно "* (Universal process step)"
 			И я нажимаю на кнопку с именем 'FormWriteAndClose'
@@ -505,15 +505,15 @@
 			И я нажимаю на кнопку с именем 'FormGoForward'
 		* Настройка отчетов
 			Тогда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'SettingОбработкиШаблоновOnРегламенту'
-			Когда открылось окно "Setting обработки документов"
+			И я нажимаю на кнопку с именем 'TemplatesProcessingSettingsByRegulation'
+			Когда открылось окно "Document processing setting"
 			// ДОДЕЛАТЬ: Сделать проверку
-			И Я закрываю окно "Setting обработки документов"
+			И Я закрываю окно "Document processing setting"
 			Тогда открылось окно '$WindowTitle$'
 			И я нажимаю на кнопку с именем 'SettingОбработкиШаблоновOnPeriodManagement'
-			Тогда открылось окно "Setting обработки документов"
+			Тогда открылось окно "Document processing setting"
 			// ДОДЕЛАТЬ: Сделать проверку
-			И Я закрываю окно "Setting обработки документов"
+			И Я закрываю окно "Document processing setting"
 		* Процесс
 			Когда открылось окно '$WindowTitle$'
 			И я нажимаю на кнопку с именем 'FormGoForward'
@@ -917,7 +917,7 @@
 			| "Calculation by rule - \"VA - ProcessAmount\""      | "Completed"        |
 			| "Consolidation - \"VA - ProcessAmount\""           | "Completed"        |
 
-	* Проверяем статусы "ВА - ПроцессСумма"
+	* Проверяем статусы "VA - ProcessAmount"
 		И в таблице 'StepsTree' я перехожу к строке:
 			| "Step / Company"                        | "Step state" |
 			| "Calculation by rule - \"VA - ProcessAmount\"" | "Completed"        |
@@ -927,7 +927,7 @@
 			| "Venus LLC"               | "Confirmed" |
 			| "Mercury LLC"             | "Confirmed" |
 
-	* Проверяем статусы "ВА - ПроцессСумма"
+	* Проверяем статусы "VA - ProcessAmount"
 		И в таблице 'StepsTree' я перехожу к строке:
 			| "Step / Company"                   | "Step state" |
 			| "Consolidation - \"VA - ProcessAmount\"" | "Completed"        |
