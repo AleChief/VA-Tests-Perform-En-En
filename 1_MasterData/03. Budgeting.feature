@@ -84,7 +84,7 @@ Scenario: 00.02 Configuring the information base
 				Then "Warehouse and delivery" window is opened
 				And I close "Warehouse and delivery" window
 
-	And I create unit of measure with code '796' if it does not exist, name "Piece", full name "PCs"
+	And I create unit of measure with code '796' if it does not exist, name "PCs", full name "Piece"
 
 	* Setting constants and FO
 		And I set 'True' value to the constant 'UseIndicatorRecalculationTraceMode'
@@ -322,10 +322,10 @@ Scenario: 00.12 Creating reporting preparation regulation
 			And I select 'RUB' exact value from the drop-down list named 'GroupStructureCurrency' in 'GroupStructure' table
 		If 'GroupStructure' table contains line Then
 			| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Основная валюта" | "Effective share, %" |
-			| "ВА - Пакет ЦФО"                                             | "Меркурий ООО"                  | ""                | '100,000'                 |
+			| "Venus LLC"                                             | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
 			And I go to line in 'GroupStructure' table:
 				| "Consolidating company\n/ Business unit" | "Intercompany transactions exclusion method" | "Основная валюта" | "Effective share, %" |
-				| "ВА - Пакет ЦФО"                                             | "Меркурий ООО"                  | ""                | '100,000'                 |
+				| "Venus LLC"                                             | "Financial responsibility center"                  | "Financial responsibility center"                | '100'                 |
 			And I activate field named 'GroupStructureCurrency' in 'GroupStructure' table
 			And I select current line in 'GroupStructure' table
 			And I select 'RUB' exact value from the drop-down list named 'GroupStructureCurrency' in 'GroupStructure' table
@@ -1043,9 +1043,9 @@ Scenario: 00.23 Creating document "Reflection of actual data"
 						| '2' | "2Software implementation"  | ''                        | 'Income'        | 'Non-cash'          | 'LLC "Ganymede"'                      | ''           | 'Ganymede-002 from 1/1/2024' | ''           | ''           | ''           | ''           | ''           | '2,340,000.00'     | '2,340,000.00' |
 				If '$$IsERPCPM$$' Then
 					Then "BudgetsOperations" table became equal
-						| 'N' | 'Budget profile'                      | 'Income expense' | 'Amount' | 'Partners dimension'                                    | 'Planning rate' | 'Executed amount' | 'Structure dimension'                              | 'Количество' | 'Currency' | 'Budget items dimension'               |
+						| 'N' | 'Budget profile'                      | 'Income expense' | 'Amount' | 'Partners dimension'                                    | 'Planning rate' | 'Executed amount' | 'Structure dimension'                              | 'Quantity' | 'Currency' | 'Budget items dimension'               |
 						| '1' | 'Cash flow budget' | 'Income'        | ''      | 'Mercury LLC; LLC "Ganymede"; Ganymede-001 from 1/1/2024' | '1.0000'            | '780,000.00'      | 'Mercury LLC; VA - Main project; Mercury LLC' | ''           | 'RUB'    | '3Software sale Income' |
-						| '2' | 'Cash flow budget' | 'Income'        | ''      | 'Mercury LLC; LLC "Ganymede"; Ganymede-002 from 1/1/2024' | '1.0000'            | '2,340,000.00'    | 'Mercury LLC; VA - Main project; Mercury LLC' | ''           | 'RUB'    | 'Внедрение программных продуктов Приход'  |
+						| '2' | 'Cash flow budget' | 'Income'        | ''      | 'Mercury LLC; LLC "Ganymede"; Ganymede-002 from 1/1/2024' | '1.0000'            | '2,340,000.00'    | 'Mercury LLC; VA - Main project; Mercury LLC' | ''           | 'RUB'    | '2Software implementation Income'  |
 
 			* Closing document
 				When "Document register records: Recording actual data * from *" window is opened

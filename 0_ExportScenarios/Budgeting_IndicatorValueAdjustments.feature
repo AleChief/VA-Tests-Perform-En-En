@@ -62,7 +62,7 @@ Scenario: I create indicator values adjustment scenario "TheScenario" period "Th
 
 	And I click Choice button of the field named 'PeriodManagement'
 	And I search element "[TheScenario]" "Exact match" by field "Scenario" in list "Reporting period management"
-	And I search element "[TheFrequency]" "Exact match" by field "Периодичность" in list "Reporting period management"
+	And I search element "[TheFrequency]" "Exact match" by field "Frequency" in list "Reporting period management"
 	And I search and select element "[TheStartDate]" "At the beginning of the line" by field "Start period" in list "Reporting period management"
 
 	When "Indicator value adjustment (create) *" window is opened
@@ -86,7 +86,7 @@ Scenario: I open new indicator values adjustment scenario "TheScenario" period "
 
 	And I click Choice button of the field named 'PeriodManagement'
 	And I search element "[TheScenario]" "Exact match" by field "Scenario" in list "Reporting period management"
-	And I search element "[TheFrequency]" "Exact match" by field "Периодичность" in list "Reporting period management"
+	And I search element "[TheFrequency]" "Exact match" by field "Frequency" in list "Reporting period management"
 	And I search and select element "[TheStartDate]" "At the beginning of the line" by field "Start period" in list "Reporting period management"
 
 	When "Indicator value adjustment (create) *" window is opened

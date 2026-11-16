@@ -36,7 +36,7 @@ Scenario: 10.02 Configuring information bases
 		And I wait "General settings*" window closing in 20 seconds
 
 	And In the command interface I select "Integration and master data management" "Infobase types"
-	And I search and select element "VA - ADO Import (Excel)" "At beginning of line" by field "Description" in list "Infobase types"
+	And I search and select element "VA - ADO Import (Excel)" "At the beginning of the line" by field "Description" in list "Infobase types"
 	Then "VA - ADO Import (Excel) (Infobase type)" window is opened
 	And I select from the drop-down list named 'DefaultEIB'  by "VA - ADO Import (Excel)" string
 	And I click the button named 'FormWrite'
@@ -97,7 +97,7 @@ Scenario: 10.02 Configuring information bases
 				And I finish line editing in 'ComplianceTable' table
 				And I activate field named 'MappingTableEIBAlias' in 'ComplianceTable' table
 				And I select current line in 'ComplianceTable' table
-				And I search and select element "VA - Products" "At beginning of line" by field "Description" in list "Enter a value"
+				And I search and select element "VA - Products" "At the beginning of the line" by field "Description" in list "Enter a value"
 		* Nomenclature group
 			If 'NOT $$IsERPCPM$$' Then
 				When "Correspondence with external infobases (create) *" window is opened
@@ -110,7 +110,7 @@ Scenario: 10.02 Configuring information bases
 				And I finish line editing in 'ComplianceTable' table
 				And I activate field named 'MappingTableEIBAlias' in 'ComplianceTable' table
 				And I select current line in 'ComplianceTable' table
-				And I search and select element "VA - Product range group" "At beginning of line" by field "Description" in list "Enter a value"
+				And I search and select element "VA - Product range group" "At the beginning of the line" by field "Description" in list "Enter a value"
 		* Unit of measure
 			When "Correspondence with external infobases (create) *" window is opened
 			If '$$IsERPCPM$$' Then
@@ -128,13 +128,13 @@ Scenario: 10.02 Configuring information bases
 			And I activate field named 'MappingTableEIBAlias' in 'ComplianceTable' table
 			And I select current line in 'ComplianceTable' table
 			If '$$IsERPCPM$$' Then
-				And I search and select element "PCs" "At beginning of line" by field "Description" in list "Enter a value"
+				And I search and select element "PCs" "At the beginning of the line" by field "Description" in list "Enter a value"
 			Else
-				And I search and select element "Piece" "At beginning of line" by field "Description" in list "Enter a value"
+				And I search and select element "Piece" "At the beginning of the line" by field "Description" in list "Enter a value"
 		* Root directory
 			If '$$IsCPM$$' Then
 				And I click Choice button of the field named 'RootDirectory1'
-				And I search element "VA - Products" "At beginning of line" by field "Reference" in list 'Catalog.Products'
+				And I search element "VA - Products" "At the beginning of the line" by field "Reference" in list 'Catalog.Products'
 				And in the table 'List' I click the button named 'ListChoose'
 				Then the form attribute named 'RootDirectory1' became equal to "VA - Products"
 		And I click the button named 'FormWriteAndClose'
@@ -171,7 +171,7 @@ Scenario: 10.02 Configuring information bases
 	And I finish line editing in 'ComplianceTable' table
 	* Root directory
 		And I click Choice button of the field named 'RootDirectory1'
-		And I search element "VA - Income and expense items" "At beginning of line" by field "Reference" in list 'Catalog.IncomeAndExpenseItems'
+		And I search element "VA - Income and expense items" "At the beginning of the line" by field "Reference" in list 'Catalog.IncomeAndExpenseItems'
 		And in the table 'List' I click the button named 'ListChoose'
 		Then the form attribute named 'RootDirectory1' became equal to "VA - Income and expense items"
 	And I click the button named 'FormWriteAndClose'

@@ -799,7 +799,7 @@ Scenario: 09.07 Creating a report instance - "VA - Currency indicators (source)"
 			| "LLC \"Io\""      | 'RUB'    | '200,000.00000'      | '200,000.00000'            | ''                   | ''                         | ''                   | ''                         |
 			| "LLC \"Io\""      | 'USD'    | '180,000.00000'      | '2,425.20924'              | ''                   | ''                         | ''                   | ''                         |
 			| "LLC \"Io\""      | 'EUR'    | '220,000.00000'      | '2,431.01713'              | ''                   | ''                         | ''                   | ''                         |
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 		And I wait "Drill down indicators: *" window closing in 20 seconds
 
 	* Filling values, checking conversion to currency
@@ -829,7 +829,7 @@ Scenario: 09.07 Creating a report instance - "VA - Currency indicators (source)"
 			| 'RUB'    | '300.0000'  | '300.0000'        |
 			| 'USD'    | '270.0000'  | '3.6378'          |
 			| 'EUR'    | '330.0000'  | '3.6465'          |
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 		And I wait "Drill down indicators: *" window closing in 20 seconds
 
 	* Copying indicator values
@@ -905,7 +905,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,638'           |
 				| 'EUR'    | '330,000'   | '3,647'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Revenue by currency [Average rate for IFRS period]
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R11C2' cell
@@ -921,7 +921,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,597'           |
 				| 'EUR'    | '330,000'   | '3,605'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Revenue by currency [Average rate for period CB]
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R15C2' cell
@@ -937,7 +937,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,641'           |
 				| 'EUR'    | '330,000'   | '3,648'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Revenue by currency [Exchange rate at the beginning of the period]
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R19C2' cell
@@ -953,7 +953,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,655'           |
 				| 'EUR'    | '330,000'   | '3,635'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Revenue by currency [Exchange rate at the end of the period]
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R23C2' cell
@@ -969,7 +969,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,541'           |
 				| 'EUR'    | '330,000'   | '3,575'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Revenue by currency [Average rate for the previous period]
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R27C4' cell
@@ -985,7 +985,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,638'           |
 				| 'EUR'    | '330,000'   | '3,647'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Revenue by currency [Exchange rate at the end of the previous period]
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R31C4' cell
@@ -1001,7 +1001,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,541'           |
 				| 'EUR'    | '330,000'   | '3,575'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Revenue by currency [Average rate for the previous period CB]
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R35C4' cell
@@ -1017,7 +1017,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,641'           |
 				| 'EUR'    | '330,000'   | '3,648'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Rate date
 			And I enter value '3/1/2024' in cell 'R39C2'
@@ -1035,7 +1035,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,627'           |
 				| 'EUR'    | '330,000'   | '3,651'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Revenue by currency [Rate as of the date specified in the indicator of another report]
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R44C2' cell
@@ -1051,7 +1051,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,627'           |
 				| 'EUR'    | '330,000'   | '3,651'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Rate date
 			And I enter value '90' in cell 'R48C2'
@@ -1071,7 +1071,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,699'           |
 				| 'EUR'    | '330,000'   | '3,667'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 		* Revenue by currency [Rate specified in the indicator of another report]
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R54C2' cell
@@ -1087,7 +1087,7 @@ Scenario: 09.08 Manual filling of report instance - "VA - Currency indicators (r
 				| 'RUB'    | '300,000'   | '300,000'         |
 				| 'USD'    | '270,000'   | '3,699'           |
 				| 'EUR'    | '330,000'   | '3,667'           |
-			And I click the button named 'FormOKButton1'
+			And I click the button named 'FormOKButton'
 			And I wait "Drill down indicators: *" window closing in 20 seconds
 
 	* Checking the result
@@ -1314,7 +1314,7 @@ Scenario: 09.10 Changing the rate via Periodic currency rates
 		And I input "1/1/2024" text in the field named 'DateBegin'
 		And I move to the next attribute
 		And I input "3/31/2024" text in the field named 'DateEnd'
-		And I click the button named 'select'
+		And I click the button named 'Select'
 		Then "Periodic exchange rates" window is opened
 		And I select "EUR" exact value from the drop-down list named 'Currency'
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
@@ -1334,7 +1334,7 @@ Scenario: 09.11 Changing the rate in the Scenario period management document
 
 		And I search element "VA - Main scenario" "Exact match" by field "Scenario" in list "Reporting period management"
 		And I search element "Month" "Exact match" by field "Frequency" in list "Reporting period management"
-		And I search element "January 2024" "At beginning of line" by field "Start period" in list "Reporting period management"
+		And I search element "January 2024" "At the beginning of the line" by field "Start period" in list "Reporting period management"
 
 		Then the number of 'List' table lines is "equal" 1
 		And I select current line in 'List' table

@@ -88,7 +88,7 @@ Scenario: 19.05 Creating report type "VA - ProcessAmount"
 		And I add row with name "Goods" in report wizard
 		And I add columns in report wizard
 			| 'Description' |
-			| "Count"   |
+			| "Quantity"   |
 			| "Price"         |
 			| "Amount"        |
 		And I add dimension with code "VA0Product" in cell 'R2C2' in report wizard
@@ -96,7 +96,7 @@ Scenario: 19.05 Creating report type "VA - ProcessAmount"
 	* Configuring formulas
 		And I set link to indicator with code "Goods_Count" of report type "VA - ProcessCount" for cell 'R2C2' in report wizard
 		And I set link to indicator with code "Goods_Price" of report type "VA - ProcessPrice" for cell 'R2C3' in report wizard
-		And I set product formula for cell 'R2C2' of cells 'R2C3' 'R2C4' in report wizard
+		And I set product formula for cell 'R2C4' of cells 'R2C2' 'R2C3' in report wizard
 
 	* Closing report wizard
 		When "Report wizard" window is opened
@@ -253,7 +253,7 @@ Scenario: 19.09 Configuring reporting preparation process
 		* Documents
 			And in the table 'GeneratedDocuments_' I click the button named 'GeneratedDocuments_Add'
 			And I click choice button of the attribute named 'DocumentsToGenerateDBDocument' in 'GeneratedDocuments_' table
-			And I search and select element "Report instance" "At beginning of line" by field "Document" in list "Infobase documents"
+			And I search and select element "Report instance" "At the beginning of the line" by field "Document" in list "Infobase documents"
 			And I select "VA - ProcessCount" by string from the drop-down list named 'GeneratedDocumentsDocumentTemplate' in 'GeneratedDocuments_' table
 		* Companies
 			And I move to the tab named 'Page_BusinessUnitsFilter'
@@ -263,9 +263,9 @@ Scenario: 19.09 Configuring reporting preparation process
 			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю кнопку выбора у реквизита с именем 'BusinessUnitsFilterDCSSettingsFilterRightValue'
 			Тогда открылось окно "Value list"
 			И я нажимаю на кнопку с именем 'Add'
-			And I select 'Mercury LLC' by string from the drop-down list named 'value' in 'ValueList' table
+			And I select 'Mercury LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			И я нажимаю на кнопку с именем 'Add'
-			And I select 'Venus LLC' by string from the drop-down list named 'value' in 'ValueList' table
+			And I select 'Venus LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			И я нажимаю на кнопку с именем 'OK'
 			Then "Step of report preparation process (Universal process step) *" window is opened
 		* Regulation settings
@@ -273,17 +273,17 @@ Scenario: 19.09 Configuring reporting preparation process
 			And I click the button named 'DocumentProcessingSettings'
 			When "Document processing setting" window is opened
 			Then 'Result' spreadsheet document is equal
-				| 'Document template / Company' | ''                      | 'Венера LLC'                               | 'Земля LLC'                                 | 'Марс LLC'                              | 'Mercury LLC'                              | 'Система LLC'                               |
+				| 'Document template / Company' | ''                      | 'Earth LLC'                               | 'Mars LLC'                                 | 'Mercury LLC'                              | 'System LLC'                              | 'Venus LLC'                               |
 				| ''                               | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
 				| 'VA - ProcessCount'         | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
 				| ''                               | 'Template to show' | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
 				| ''                               | 'Pivot table template' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' |
 				| ''                               | 'Processing rule'     | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
 				| ''                               | 'Check rule'      | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
-				| ''                               | 'Method Formations'   | 'By processing rule'                     | 'By processing rule'                     | 'By processing rule'                     | 'By processing rule'                     | 'By processing rule'                     |
+				| ''                               | 'Generation method'   | 'By processing rule'                     | 'By processing rule'                     | 'By processing rule'                     | 'By processing rule'                     | 'By processing rule'                     |
 			* Mercury
 				When "Document processing setting" window is opened
-				And in 'Result' spreadsheet document I move to "R6C6" cell
+				And in 'Result' spreadsheet document I move to "R6C5" cell
 				And in 'Result' spreadsheet document I double-click the current cell
 				Then "Settings of document template processing" window is opened
 				And I select "Manual filling" exact value from the drop-down list named 'ReportGenerationMethod'
@@ -291,7 +291,7 @@ Scenario: 19.09 Configuring reporting preparation process
 				And I wait "Settings of document template processing *" window closing in 20 seconds
 			* Venus
 				Then "Document processing setting" window is opened
-				And in 'Result' spreadsheet document I move to "R6C3" cell
+				And in 'Result' spreadsheet document I move to "R6C7" cell
 				And in 'Result' spreadsheet document I double-click the current cell
 				Then "Settings of document template processing" window is opened
 				And I select "Manual filling" exact value from the drop-down list named 'ReportGenerationMethod'
@@ -300,14 +300,14 @@ Scenario: 19.09 Configuring reporting preparation process
 			* Verifying result and closing
 				When "Document processing setting" window is opened
 				Then 'Result' spreadsheet document is equal
-					| 'Document template / Company' | ''                      | 'Venus LLC'                               | 'Земля LLC'                                 | 'Марс LLC'                              | 'Mercury LLC'                              | 'Система LLC'                               |
+					| 'Document template / Company' | ''                      | 'Earth LLC'                               | 'Mars LLC'                                 | 'Mercury LLC'                              | 'System LLC'                              | 'Venus LLC'                               |
 					| ''                               | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
 					| 'VA - ProcessCount'         | ''                      | ''                                         | ''                                         | ''                                         | ''                                         | ''                                         |
 					| ''                               | 'Template to show' | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
 					| ''                               | 'Pivot table template' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' | 'VA - ProcessCount (pivot table)' |
 					| ''                               | 'Processing rule'     | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
 					| ''                               | 'Check rule'      | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   | 'VA - ProcessCount'                   |
-					| ''                               | 'Method Formations'   | 'Manual filling'                    | 'By processing rule'                     | 'On правилу обработки'                         | 'Manual filling'                    | 'On правилу обработки'                         |
+					| ''                               | 'Generation method'   | 'By processing rule'                    | 'By processing rule'                     | 'Manual filling'                         | 'By processing rule'                    | 'Manual filling'                         |
 				And I close "Document processing setting" window
 		* Saving
 			Then "* (Universal process step)" window is opened
@@ -322,7 +322,7 @@ Scenario: 19.09 Configuring reporting preparation process
 		* Documents
 			And in the table 'GeneratedDocuments_' I click the button named 'GeneratedDocuments_Add'
 			And I click choice button of the attribute named 'DocumentsToGenerateDBDocument' in 'GeneratedDocuments_' table
-			And I search and select element "Report instance" "At beginning of line" by field "Document" in list "Infobase documents"
+			And I search and select element "Report instance" "At the beginning of the line" by field "Document" in list "Infobase documents"
 			And I select "VA - ProcessPrice" by string from the drop-down list named 'GeneratedDocumentsDocumentTemplate' in 'GeneratedDocuments_' table
 		* Companies
 			And I move to the tab named 'Page_BusinessUnitsFilter'
@@ -332,9 +332,9 @@ Scenario: 19.09 Configuring reporting preparation process
 			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю кнопку выбора у реквизита с именем 'BusinessUnitsFilterDCSSettingsFilterRightValue'
 			Тогда открылось окно "Value list"
 			И я нажимаю на кнопку с именем 'Add'
-			And I select 'Mercury LLC' by string from the drop-down list named 'value' in 'ValueList' table
+			And I select 'Mercury LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			И я нажимаю на кнопку с именем 'Add'
-			And I select 'Venus LLC' by string from the drop-down list named 'value' in 'ValueList' table
+			And I select 'Venus LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			И я нажимаю на кнопку с именем 'OK'
 			Then "Step of report preparation process (Universal process step) *" window is opened
 		* Regulation settings
@@ -342,17 +342,17 @@ Scenario: 19.09 Configuring reporting preparation process
 			And I click the button named 'DocumentProcessingSettings'
 			When "Document processing setting" window is opened
 			Then 'Result' spreadsheet document is equal
-				| 'Document template / Company' | ''                      | 'Венера LLC'                         | 'Земля LLC'                           | 'Марс LLC'                        | 'Mercury LLC'                        | 'Система LLC'                         |
+				| 'Document template / Company' | ''                      | 'Earth LLC'                         | 'Mars LLC'                           | 'Mercury LLC'                        | 'System LLC'                        | 'Venus LLC'                         |
 				| ''                               | ''                      | ''                                   | ''                                   | ''                                   | ''                                   | ''                                   |
 				| 'VA - ProcessPrice'               | ''                      | ''                                   | ''                                   | ''                                   | ''                                   | ''                                   |
 				| ''                               | 'Template to show' | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   |
 				| ''                               | 'Pivot table template' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' | 'VA - ProcessPrice (pivot table)' |
 				| ''                               | 'Processing rule'     | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   |
 				| ''                               | 'Check rule'      | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   | 'VA - ProcessPrice'                   |
-				| ''                               | 'Method Formations'   | 'By processing rule'               | 'By processing rule'               | 'By processing rule'               | 'By processing rule'               | 'By processing rule'               |
+				| ''                               | 'Generation method'   | 'By processing rule'               | 'By processing rule'               | 'By processing rule'               | 'By processing rule'               | 'By processing rule'               |
 			* Mercury
 				When "Document processing setting" window is opened
-				And in 'Result' spreadsheet document I move to "R5C6" cell
+				And in 'Result' spreadsheet document I move to "R5C5" cell
 				And in 'Result' spreadsheet document I double-click the current cell
 				Then "Settings of document template processing" window is opened
 				* Configuring the information base type
@@ -393,7 +393,7 @@ Scenario: 19.09 Configuring reporting preparation process
 		* Documents
 			And in the table 'GeneratedDocuments_' I click the button named 'GeneratedDocuments_Add'
 			And I click choice button of the attribute named 'DocumentsToGenerateDBDocument' in 'GeneratedDocuments_' table
-			And I search and select element "Report instance" "At beginning of line" by field "Document" in list "Infobase documents"
+			And I search and select element "Report instance" "At the beginning of the line" by field "Document" in list "Infobase documents"
 			And I select "VA - ProcessAmount" by string from the drop-down list named 'GeneratedDocumentsDocumentTemplate' in 'GeneratedDocuments_' table
 		* Companies
 			And I move to the tab named 'Page_BusinessUnitsFilter'
@@ -403,9 +403,9 @@ Scenario: 19.09 Configuring reporting preparation process
 			И в таблице 'BusinessUnitsFilterDCSSettingsFilter' я нажимаю кнопку выбора у реквизита с именем 'BusinessUnitsFilterDCSSettingsFilterRightValue'
 			Тогда открылось окно "Value list"
 			И я нажимаю на кнопку с именем 'Add'
-			And I select 'Mercury LLC' by string from the drop-down list named 'value' in 'ValueList' table
+			And I select 'Mercury LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			И я нажимаю на кнопку с именем 'Add'
-			And I select 'Venus LLC' by string from the drop-down list named 'value' in 'ValueList' table
+			And I select 'Venus LLC' by string from the drop-down list named 'BusinessUnitsFilterDCSSettingsFilterRightValue' in 'BusinessUnitsFilterDCSSettingsFilter' table
 			И я нажимаю на кнопку с именем 'OK'
 			Then "Step of report preparation process (Universal process step) *" window is opened
 		* Saving
@@ -421,7 +421,7 @@ Scenario: 19.09 Configuring reporting preparation process
 		* Documents
 			And in the table 'GeneratedDocuments_' I click the button named 'GeneratedDocuments_Add'
 			And I click choice button of the attribute named 'DocumentsToGenerateDBDocument' in 'GeneratedDocuments_' table
-			And I search and select element "Report instance" "At beginning of line" by field "Document" in list "Infobase documents"
+			And I search and select element "Report instance" "At the beginning of the line" by field "Document" in list "Infobase documents"
 			And I select "VA - ProcessAmount" by string from the drop-down list named 'GeneratedDocumentsDocumentTemplate' in 'GeneratedDocuments_' table
 		* Companies
 			And I move to the tab named 'Page_BusinessUnitsFilter'
@@ -486,7 +486,7 @@ Scenario: 19.11 Creating reporting period management document
 			And I input '1/1/2024' text in the field named 'DateBegin'
 			And I move to the next attribute
 			And I input '3/31/2024' text in the field named 'DateEnd'
-			And I click the button named 'select'
+			And I click the button named 'Select'
 			Then "Reporting period management (create) *" window is opened
 			And I select from the drop-down list named 'OrganizationalStructureVersion'  by "VA - Report preparation process" string
 			And I click the button named 'FormGoForward'
@@ -556,7 +556,7 @@ Scenario: 19.11 Creating reporting period management document
 				And I click the button named 'FormSettings'
 				And I select "Yes" exact value from the drop-down list named 'SettingsComposerUserSettingsItem1Value'
 				And I select "Yes" exact value from the drop-down list named 'SettingsComposerUserSettingsItem2Value'
-				And I click the button named 'FormFormulate'
+				And I click the button named 'FormGenerate'
 				Then 'Result' spreadsheet document is equal to "3_Budgeting\Layouts\19\VA_ReportingPreparationProcess_ReportMatrix1_En.mxl"
 				And I close "Report instance matrix" window
 		* Saving a document
@@ -702,7 +702,7 @@ Scenario: 19.12 Manual filling - "VA - ProcessCount"
 			| "Manual filling - \"VA - ProcessCount\"" | "Completed"        |
 		And I select context menu item named 'StepsTreeContextMenuCancelStepProcessing' of the form attribute named 'StepsTree'
 		Then "Cancel the step processing for the companies:" window is opened
-		And in the table 'ScenariosPeriodsTable' I click the button named 'ScenariosPeriodsTableCheckAll'
+		And in the table 'CompanyTable' I click the button named 'CheckAll'
 		And I click the button named 'Execute'
 		Then I check table 'TransactionsTree' contains '3' rows from list:
 			| "Document template / Company" | "State" |
@@ -717,7 +717,7 @@ Scenario: 19.12 Manual filling - "VA - ProcessCount"
 			| "Manual filling - \"VA - ProcessCount\"" | "Not active"      |
 		And I select context menu item named 'StepsTreeContextMenuFinishStageProcessing' of the form attribute named 'StepsTree'
 		Then "Complete the step processing for the companies:" window is opened
-		And in the table 'ScenariosPeriodsTable' I click the button named 'ScenariosPeriodsTableCheckAll'
+		And in the table 'CompanyTable' I click the button named 'CheckAll'
 		And I change checkbox named 'ShouldFillDocuments'
 		And I click the button named 'Execute'
 		Then TestClient log message contains "For the \"Report instance *\" document, the \"Manual filling\" generation method is set. Cannot set the document to the \"Confirmed\" state." string by template
@@ -836,12 +836,12 @@ Scenario: 19.14 Import - "VA - ProcessPrice"
 		Then "Reporting preparation management" window is opened
 		And I select context menu item named 'StepsTreeContextMenuFinishStageProcessing' of the form attribute named 'StepsTree'
 		Then "Complete the step processing for the companies:" window is opened
-		And in the table 'ScenariosPeriodsTable' I click the button named 'ScenariosPeriodsTableUncheckAll'
-		And I go to line in 'ScenariosPeriodsTable' table:
+		And in the table 'CompanyTable' I click the button named 'UncheckAll'
+		And I go to line in 'CompanyTable' table:
 			| "Selected" | "Company" |
 			| "No"    | "Venus LLC"  |
-		And I set checkbox named 'ScenariosPeriodsTableSelected' in 'ScenariosPeriodsTable' table
-		And I finish line editing in 'ScenariosPeriodsTable' table
+		And I set checkbox named 'CompanyTableSelected' in 'CompanyTable' table
+		And I finish line editing in 'CompanyTable' table
 		And I click the button named 'Execute'
 		Then I check table 'TransactionsTree' contains '3' rows from list:
 			| "Document template / Company" | "State" |
@@ -947,7 +947,7 @@ Scenario: 19.15 Consolidation - "VA - ProcessAmount"
 			| "VA - ProcessAmount"                                               | ''               | ''          | ''           | ''                | ''          | ''           | ''             | ''          | ''            | ''           | ''           | ''            |
 			| ''                                                                | ''               | ''          | ''           | ''                | ''          | ''           | ''             | ''          | ''            | ''           | ''           | ''            |
 			| ''                                                                | "January 2024" | ''          | ''           | "February 2024" | ''          | ''           | "March 2024" | ''          | ''            | "TOTAL"      | ''           | ''            |
-			| ''                                                                | "Count"     | "Price"      | "Amount"      | "Count"      | "Price"      | "Amount"      | "Count"   | "Price"      | "Amount"       | "Count" | "Price"       | "Amount"       |
+			| ''                                                                | "Quantity"     | "Price"      | "Amount"      | "Quantity"      | "Price"      | "Amount"      | "Quantity"   | "Price"      | "Amount"       | "Quantity" | "Price"       | "Amount"       |
 			| "Goods"                                                          | '60'             | '3,405,000' | '36,100,000' | '120'             | '3,535,000' | '74,900,000' | '180'          | '3,665,000' | '116,400,000' | '360'        | '10,605,000' | '227,400,000' |
 			| "1C:ERP. Corporate performance management "                                   | '5'              | '975,000'   | '4,875,000'  | '10'              | '1,000,000' | '10,000,000' | '15'           | '1,025,000' | '15,375,000'  | '30'         | '3,000,000'  | '30,250,000'  |
 			| "2C:Corporation "                                                  | '15'             | '1,025,000' | '15,375,000' | '30'              | '1,050,000' | '31,500,000' | '45'           | '1,075,000' | '48,375,000'  | '90'         | '3,150,000'  | '95,250,000'  |

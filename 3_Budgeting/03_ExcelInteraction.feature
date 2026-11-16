@@ -135,20 +135,20 @@ Scenario: 03.01 Creating a report with groups and 6 dimensions
 			And I set cell copy formula 'R4C5' for cell 'R3C5' in report wizard
 			And I set cell sum formula 'R4C6' for cell 'R3C6' in report wizard
 		* Group_Dimensions_0
-			And I set formula 'MAX({VAImportExcel.GroupDimensions12_Date},{VAImportExcel.GroupDimensions6_Date})' for cell 'R5C2' in report wizard
-			And I set formula 'MAX({VAImportExcel.GroupDimensions12_Boolean}, {VAImportExcel.GroupDimensions6_Boolean})' for cell 'R5C3' in report wizard
-			And I set sum formula for cell 'R6C5' of cells 'R9C5' 'R5C5' in report wizard
-			And I set sum formula for cell 'R6C6' of cells 'R9C6' 'R5C6' in report wizard
+			And I set formula 'MAX({VAImportExcel.GroupANLTs12_Date},{VAImportExcel.GroupANLTs6_Date})' for cell 'R5C2' in report wizard
+			And I set formula 'MAX({VAImportExcel.GroupANLTs12_Boolean}, {VAImportExcel.GroupANLTs6_Boolean})' for cell 'R5C3' in report wizard
+			And I set sum formula for cell 'R5C5' of cells 'R6C5' 'R9C5' in report wizard
+			And I set sum formula for cell 'R5C6' of cells 'R6C6' 'R9C6' in report wizard
 		* Group_Dimensions_1_2
-			And I set formula 'MAX({VAImportExcel.LineDimensions1_Date}, {VAImportExcel.LineDimensions2_Date})' for cell 'R6C2' in report wizard
-			And I set formula 'MAX({VAImportExcel.LineDimensions1_Boolean}, {VAImportExcel.LineDimensions2_Boolean})' for cell 'R6C3' in report wizard
-			And I set sum formula for cell 'R7C5' of cells 'R8C5' 'R6C5' in report wizard
+			And I set formula 'MAX({VAImportExcel.LineANLTs1_Date}, {VAImportExcel.LineANLTs2_Date})' for cell 'R6C2' in report wizard
+			And I set formula 'MAX({VAImportExcel.LineANLTs1_Boolean}, {VAImportExcel.LineANLTs2_Boolean})' for cell 'R6C3' in report wizard
+			And I set sum formula for cell 'R6C5' of cells 'R7C5' 'R8C5' in report wizard
 			And I set cell sum formula 'R7C6:R8C6' for cell 'R6C6' in report wizard
 		* Group_Dimensions_6
-			And I set formula 'MAX({VAImportExcel.LineDimensions6_Date}, {VAImportExcel.GroupCurrency_Date})' for cell 'R9C2' in report wizard
-			And I set formula 'MAX({VAImportExcel.LineDimensions6_Boolean}, {VAImportExcel.GroupCurrency_Boolean})' for cell 'R9C3' in report wizard
+			And I set formula 'MAX({VAImportExcel.LineANLTs6_Date}, {VAImportExcel.GroupCurrency_Date})' for cell 'R9C2' in report wizard
+			And I set formula 'MAX({VAImportExcel.LineANLTs6_Boolean}, {VAImportExcel.GroupCurrency_Boolean})' for cell 'R9C3' in report wizard
 			And I set cell sum formula 'R10C5:R11C5' for cell 'R9C5' in report wizard
-			And I set sum formula for cell 'R10C6' of cells 'R11C6' 'R9C6' in report wizard
+			And I set sum formula for cell 'R9C6' of cells 'R10C6' 'R11C6' in report wizard
 		* Group_Currency
 			And I set cell copy formula 'R12C2' for cell 'R11C2' in report wizard
 			And I set cell copy formula 'R12C3' for cell 'R11C3' in report wizard
@@ -160,7 +160,7 @@ Scenario: 03.01 Creating a report with groups and 6 dimensions
 		And I click Open button of the field named 'ProcessingRule'
 		Then "VA - ImportExcel (Calculation rules)" window is opened
 		And I click Choice button of the field named 'DBType'
-		And I search and select element "Microsoft Excel files" "At beginning of line" by field "Description" in list "Infobase types"
+		And I search and select element "Microsoft Excel files" "At the beginning of the line" by field "Description" in list "Infobase types"
 		And I click the button named 'FormWriteAndClose'
 		And I wait "VA - ImportExcel (Calculation rules) *" window closing in 20 seconds
 

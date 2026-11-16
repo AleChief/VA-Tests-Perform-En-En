@@ -35,7 +35,7 @@ Scenario: 15.01 Creating report type "VA - Controlled indicators"
 		And I click the button named 'EditTree'
 		When "Report wizard" window is opened
 		And I add row with name "Synthetic" in report wizard
-		And I add row with name "Dimensions" in report wizard
+		And I add row with name "Analysts" in report wizard
 		And I add column with name "Count" in report wizard
 		And I add column with name "ControlYes" in report wizard
 		And I add column with name "ControlNo" in report wizard
@@ -59,7 +59,7 @@ Scenario: 15.01 Creating report type "VA - Controlled indicators"
 		And I create default template for report type "VA - Controlled indicators"
 
 	* Creating pivot table template
-		And I for report type "Project" create default pivot table template with filters "VA - Controlled indicators"
+		And I for report type "VA - Controlled indicators" create default pivot table template with filters "Project"
 		When "VA - Controlled indicators (Report types)" window is opened
 		And I click Open button of the field named 'DefaultPivotTableTemplate'
 		Then I open pivot table template for report type "VA - Controlled indicators"
@@ -138,7 +138,7 @@ Scenario: 15.04 Creating report instance "VA - Controlled indicators"
 			| ''                                  | "January 2024" | ''           | ''            | ''           | "February 2024" | ''           | ''            | ''           | "March 2024" | ''           | ''            | ''     | "TOTAL"      | ''           | ''            | ''           |
 			| ''                                  | "Count"     | "ControlYes" | "ControlNo" | "Date"       | "Count"      | "ControlYes" | "ControlNo" | "Date"       | "Count"   | "ControlYes" | "ControlNo" | "Date" | "Count" | "ControlYes" | "ControlNo" | "Date"       |
 			| "Synthetic"                         | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '1/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
-			| "Dimensions"                         | '300'            | '200'        | '200'         | '1/1/2024' | '600'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '900'        | '600'        | '600'         | ''           |
+			| "Analysts"                         | '300'            | '200'        | '200'         | '1/1/2024' | '600'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '900'        | '600'        | '600'         | ''           |
 			| "3Software sale " | '300'            | '200'        | '200'         | '1/1/2024' | '600'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '900'        | '600'        | '600'         | ''           |
 			| "1C:ERP. Corporate performance management "     | '100'            | '0'          | '0'           | '1/1/2024' | '200'             | '0'          | '0'           | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '0'          | '0'           | ''           |
 			| 'RUB '                              | '100'            | '0'          | '0'           | '1/1/2024' | '200'             | '0'          | '0'           | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '0'          | '0'           | ''           |
@@ -160,7 +160,7 @@ Scenario: 15.04 Creating report instance "VA - Controlled indicators"
 			| "Currencies" | 'Value1' | 'ValueCurrency1' | "Product range"                 | "Report period"  | "Cash flow items"                       |
 			| 'RUB'    | '100'       | '100'             | "1C:ERP. Corporate performance management" | "January 2024" | "3Software sale" |
 		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 		When '$WindowTitle$' window is opened
 		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R7C17" cell
 		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
@@ -173,7 +173,7 @@ Scenario: 15.04 Creating report instance "VA - Controlled indicators"
 			| "Currencies" | 'Value1'  | "Product range"                 | "Report period"  | "Cash flow items"                       |
 			| 'RUB'    | '1/1/2024' | "1C:ERP. Corporate performance management" | "January 2024" | "3Software sale" |
 		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 
 	* Checking document movement
 		When '$WindowTitle$' window is opened
@@ -195,7 +195,7 @@ Scenario: 15.04 Creating report instance "VA - Controlled indicators"
 			| ''                                  | "January 2024" | ''           | ''            | ''           | "February 2024" | ''           | ''            | ''           | "March 2024" | ''           | ''            | ''     | "TOTAL"      | ''           | ''            | ''           |
 			| ''                                  | "Count"     | "ControlYes" | "ControlNo" | "Date"       | "Count"      | "ControlYes" | "ControlNo" | "Date"       | "Count"   | "ControlYes" | "ControlNo" | "Date" | "Count" | "ControlYes" | "ControlNo" | "Date"       |
 			| "Synthetic"                         | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '1/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
-			| "Dimensions"                           | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
+			| "Analysts"                           | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
 			| "3Software sale " | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
 			| "2C:Corporation "                    | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
 			| 'RUB '                              | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
@@ -251,7 +251,7 @@ Scenario: 15.05 Creating a report instance for controlled values
 			| ''                                  | "January 2024" | ''           | ''            | ''           | "February 2024" | ''           | ''            | ''           | "March 2024" | ''           | ''            | ''     | "TOTAL"      | ''           | ''            | ''           |
 			| ''                                  | "Count"     | "ControlYes" | "ControlNo" | "Date"       | "Count"      | "ControlYes" | "ControlNo" | "Date"       | "Count"   | "ControlYes" | "ControlNo" | "Date" | "Count" | "ControlYes" | "ControlNo" | "Date"       |
 			| "Synthetic"                         | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '1/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
-			| "Dimensions"                           | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
+			| "Analysts"                           | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
 			| "3Software sale " | '200'            | '200'        | '200'         | '1/1/2024' | '400'             | '400'        | '400'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '600'        | '600'        | '600'         | '1/1/2024' |
 			| "2C:Corporation "                    | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |
 			| 'RUB '                              | '100'            | '100'        | '100'         | '1/1/2024' | '200'             | '200'        | '200'         | '2/1/2024' | '0'            | '0'          | '0'           | ''     | '300'        | '300'        | '300'         | '1/1/2024' |

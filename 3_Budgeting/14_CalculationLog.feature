@@ -27,8 +27,8 @@ Scenario: 14.01 Creating report type "VA - Calculation protocol"
 
 	* Editing the report structure
 		And I open report wizard with name "VA - Calculation protocol"
-		And I add row with name "ReportLine" in report wizard
-		And I add column with name "Amount" in report wizard
+		And I add row with name "ReportRow" in report wizard
+		And I add column with name "Sum" in report wizard
 	
 	* Entering calculation formulas
 		Then "Report wizard" window is opened
@@ -42,7 +42,7 @@ Scenario: 14.01 Creating report type "VA - Calculation protocol"
 		And I close "Report wizard" window
 
 	And I create default template for report type "VA - Calculation protocol"
-	And I for report type "" create default pivot table template with filters 'VA - Calculation protocol'
+	And I for report type "VA - Calculation protocol" create default pivot table template with filters ''
 
 Scenario: 14.02 Configuring rights for user "Budgeting1"
 
@@ -67,8 +67,8 @@ Scenario: 14.03 Creating report instance "VA - Calculation protocol" for company
 			| "VA - Calculation protocol" | ''               | ''                | ''             | ''      |
 			| ''                      | ''               | ''                | ''             | ''      |
 			| ''                      | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
-			| ''                      | "Amount"          | "Amount"           | "Amount"        | "Amount" |
-			| "ReportLine"          | '123'            | '123'             | '123'          | '369'   |
+			| ''                      | "Sum"          | "Sum"           | "Sum"        | "Sum" |
+			| "ReportRow"          | '123'            | '123'             | '123'          | '369'   |
 		
 	* Closing without saving
 		When '$WindowTitle$' window is opened
@@ -100,8 +100,8 @@ Scenario: 14.04 Creating report instance "VA - Calculation protocol" for company
 			| "VA - Calculation protocol" | ''               | ''                | ''             | ''      |
 			| ''                      | ''               | ''                | ''             | ''      |
 			| ''                      | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
-			| ''                      | "Amount"          | "Amount"           | "Amount"        | "Amount" |
-			| "ReportLine"          | '0'              | '0'               | '123'          | '123'   |
+			| ''                      | "Sum"          | "Sum"           | "Sum"        | "Sum" |
+			| "ReportRow"          | '0'              | '0'               | '123'          | '123'   |
 		
 	* Closing without saving
 		When '$WindowTitle$' window is opened
@@ -139,8 +139,8 @@ Scenario: 14.05 Running calculation of report instances from list
 			| "VA - Calculation protocol" | ''               | ''                | ''             | ''      |
 			| ''                      | ''               | ''                | ''             | ''      |
 			| ''                      | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
-			| ''                      | "Amount"          | "Amount"           | "Amount"        | "Amount" |
-			| "ReportLine"          | '123'            | '123'             | '123'          | '369'   |
+			| ''                      | "Sum"          | "Sum"           | "Sum"        | "Sum" |
+			| "ReportRow"          | '123'            | '123'             | '123'          | '369'   |
 		When '$WindowTitle$' window is opened
 		And I close '$WindowTitle$' window
 		
@@ -155,8 +155,8 @@ Scenario: 14.05 Running calculation of report instances from list
 			| "VA - Calculation protocol" | ''               | ''                | ''             | ''      |
 			| ''                      | ''               | ''                | ''             | ''      |
 			| ''                      | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
-			| ''                      | "Amount"          | "Amount"           | "Amount"        | "Amount" |
-			| "ReportLine"          | '0'              | '0'               | '123'          | '123'   |
+			| ''                      | "Sum"          | "Sum"           | "Sum"        | "Sum" |
+			| "ReportRow"          | '0'              | '0'               | '123'          | '123'   |
 		When '$WindowTitle$' window is opened
 		And I close '$WindowTitle$' window
 
@@ -182,6 +182,6 @@ Scenario: 14.06 Running calculation of report instances from list
 	* Verifying the result
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Calculation protocol (pivot table)" | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
-			| "VA - Calculation protocol (pivot table)" | "Amount"          | "Amount"           | "Amount"        | "Amount" |
-			| "ReportLine"                            | '0'              | '0'               | '123'          | '123'   |
+			| "VA - Calculation protocol (pivot table)" | "Sum"          | "Sum"           | "Sum"        | "Sum" |
+			| "ReportRow"                            | '0'              | '0'               | '123'          | '123'   |
 					

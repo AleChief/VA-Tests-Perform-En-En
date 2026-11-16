@@ -266,7 +266,7 @@ Scenario: I create analytical report with code 'TheCode' report type 'TheReportK
 		Then "Analytical report structure settings ([TheReportKind] ([TheBusinessUnit]))" window is opened
 		
 		And in the table 'RowsGroupingTableBoxPageTable' I click the button named 'RowsGroupingTableBoxPageTableAddGroupingField'
-		And I select "Организация" exact value from the drop-down list named 'RowsGroupingTableBoxPageTableField' in 'RowsGroupingTableBoxPageTable' table
+		And I select "Company" exact value from the drop-down list named 'RowsGroupingTableBoxPageTableField' in 'RowsGroupingTableBoxPageTable' table
 		And I select "Without hierarchy" exact value from the drop-down list named 'RowsGroupingTableBoxPageTableGroupingType' in 'RowsGroupingTableBoxPageTable' table
 		And in the table 'RowsGroupingTableBoxPageTable' I click the button named 'RowsGroupingTableBoxPageTableAddGroupingField'
 		And I select "Report period" exact value from the drop-down list named 'RowsGroupingTableBoxPageTableField' in 'RowsGroupingTableBoxPageTable' table
@@ -280,7 +280,7 @@ Scenario: I create analytical report with code 'TheCode' report type 'TheReportK
 
 		And I move to the tab named 'FilterAndOrder'
 		And in the table 'TableBoxFilterPageWithoutParameters' I click the button named 'TableBoxFilterPageWithoutParametersAddFilterItem'
-		And I select "Организация" exact value from the drop-down list named 'TableBoxFilterPageWithoutParametersLeftValue' in 'TableBoxFilterPageWithoutParameters' table
+		And I select "Company" exact value from the drop-down list named 'TableBoxFilterPageWithoutParametersLeftValue' in 'TableBoxFilterPageWithoutParameters' table
 		And I select "Equal to" exact value from the drop-down list named 'TableBoxFilterPageWithoutParametersComparisonType' in 'TableBoxFilterPageWithoutParameters' table
 		And I click choice button of the attribute named 'TableBoxFilterPageWithoutParametersRightValue' in 'TableBoxFilterPageWithoutParameters' table
 		And I select company '[TheBusinessUnit]'

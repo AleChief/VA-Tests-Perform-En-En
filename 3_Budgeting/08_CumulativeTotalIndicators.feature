@@ -112,13 +112,13 @@ Scenario: 08.04 Creating report type "VA - Cumulative total (recipient)"
 	And I click the button named 'EditTree'
 	When "Report wizard" window is opened
 	
-	And I add row with name "SourceData" in report wizard
+	And I add row with name "DataSource" in report wizard
 	And I add row with name "FromSourceBeforeCalculation" in report wizard
 	And I add row with name "FromSourceBeforeCalculationX2" in report wizard
 	And I add row with name "FromSourceAfterCalculation" in report wizard
-	And I add row with name "FromSourceSelectionByPeriod" in report wizard
-	And I add row with name "FromReceiverSelectionByPeriod" in report wizard
-	And I add row with name "FromReceiverShiftPeriod" in report wizard
+	And I add row with name "FromSourceFilterByPeriod" in report wizard
+	And I add row with name "FromDestinationFilterByPeriod" in report wizard
+	And I add row with name "FromDestinationMovePeriod" in report wizard
 	And I add row with name "FromSourceArbitraryCode" in report wizard
 		
 	And I add column with name "Count" in report wizard
@@ -226,7 +226,7 @@ Scenario: 08.04 Creating report type "VA - Cumulative total (recipient)"
 			And I select "Current infobase report item indicator" exact value from the drop-down list named 'MethodOfObtaining'
 			And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Cumulative total (recipient)" string
 			And I click Choice button of the field named 'IndicatorFilter'
-			And I select indicator with code "SourceData_Count"
+			And I select indicator with code "DataSource_Count"
 			Then "Data source (create) *" window is opened
 			And I move to the tab named 'FiltersPage'
 			And I go to line in 'TreeOfFilterParametersDB' table:
@@ -266,7 +266,7 @@ Scenario: 08.04 Creating report type "VA - Cumulative total (recipient)"
 			Then "Data source (create)" window is opened
 			And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Cumulative total (recipient)" string
 			And I click Choice button of the field named 'IndicatorFilter'
-			And I select indicator with code "FromReceiverSelectio_Count"
+			And I select indicator with code "FromDestinationMoveP_Count"
 			Then "Data source (create) *" window is opened
 			And I move to the tab named 'FiltersPage'
 			And I go to line in 'TreeOfFilterParametersDB' table:
@@ -294,8 +294,8 @@ Scenario: 08.04 Creating report type "VA - Cumulative total (recipient)"
 			And I click the button named 'ArbitraryCode'
 			And I click the button named 'EditProcedure'
 			Then "VA - Cumulative total (recipient): Calculation formula" window is opened
-			And I save "VACumulativeTotalSource" value to 'ReportCode' variable
-			And I save "Goods_Count" value to 'CodeOfIndicator1' variable
+			And I save "VACumulativeTotalSource" value to 'CodeReport' variable
+			And I save "Goods_Count" value to 'CodeIndicator1' variable
 			And I input text in the field named 'TextDocumentFieldProcedure'
 				|'// Getting references to the needed indicators'|
 				|'IndicatorSource = Catalogs.ReportsIndicators.FindByCode("$CodeIndicator1$",,,Catalogs.ReportsKinds.FindByCode("$CodeReport$"));'|
@@ -329,7 +329,7 @@ Scenario: 08.04 Creating report type "VA - Cumulative total (recipient)"
 			When I open calculation rule for report type "VA - Cumulative total (recipient)"
 			And I click the button named 'FormProcedureOfCalculation'
 			When "VA - Cumulative total (recipient), VA - Cumulative total (recipient): Procedure before calculation" window is opened
-			And I save "FromSourceBeforeCalc_Count" value to 'CodeOfIndicator2' variable
+			And I save "FromSourceBeforeCalc_Count" value to 'CodeIndicator2' variable
 			And I input text in the field named 'TextDocumentFieldProcedure'
 				|'// Getting references to the needed indicators'|
 				|'IndicatorSource = Catalogs.ReportsIndicators.FindByCode("$CodeIndicator1$",,,Catalogs.ReportsKinds.FindByCode("$CodeReport$"));'|
@@ -368,7 +368,7 @@ Scenario: 08.04 Creating report type "VA - Cumulative total (recipient)"
 			When I open calculation rule for report type "VA - Cumulative total (recipient)"
 			And I click the button named 'FormProcedureAfterCalculation'
 			When "VA - Cumulative total (recipient), VA - Cumulative total (recipient): Procedure after calculation" window is opened
-			And I save "FromSourceAfterCalcu_Count" value to 'CodeOfIndicator2' variable
+			And I save "FromSourceAfterCalcu_Count" value to 'CodeIndicator2' variable
 			And I input text in the field named 'TextDocumentFieldProcedure'
 				|'// Getting references to the needed indicators'|
 				|'IndicatorSource = Catalogs.ReportsIndicators.FindByCode("$CodeIndicator1$",,,Catalogs.ReportsKinds.FindByCode("$CodeReport$"));'|

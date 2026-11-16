@@ -7,11 +7,11 @@ Feature: General export scenarios
 
 Scenario: I initialize variables
 
-	And I save 'ОбщегоНазначенияКлиентСерверУХ.ИмяКонфигурации() = "Perform"' in '$$IsPerform$$' variable
+	And I save '?(CommonClientServerCPM.ConfigurationName() = "Perform", "True", "False")' in '$$IsPerform$$' variable
 
 	And I save '?(CommonClientServerCPM.ConfigurationName() = "HoldingManagement" OR $$IsPerform$$, "True", "False")' in '$$IsCPM$$' variable
 			
-	And I save 'ОбщегоНазначенияКлиентСерверУХ.ИмяКонфигурации() = "УправлениеХолдингомERP"' in '$$IsERPCPM$$' variable
+	And I save '?(CommonClientServerCPM.ConfigurationName() = "HoldingManagementERP", "True", "False")' in '$$IsERPCPM$$' variable
 
 	Если в панели разделов есть команда 'Бюджетирование, отчетность и анализ' Тогда
 		И Я запоминаю значение выражения 'Ru' в переменную '$$ЯзыкИнтерфейса$$'

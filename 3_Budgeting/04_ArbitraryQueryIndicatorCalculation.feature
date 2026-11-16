@@ -154,7 +154,7 @@ Scenario: 04.02 Checking the behavior of the indicator configuration form
 			| 'Products'                  |
 			| 'Price'                     |
 		Then I check table 'ComplianceTable' contains '3' rows from list:
-			| "Destination dimension"       | "Filling method" | "Column name"    | "Dimension kind" |
+			| "Destination dimension"       | "Filling method" | "Column name"    | "Dimension type" |
 			| "Dimension 1: Product range" | "Source field"    | '[Products]' | "Product range"  |
 			| "Value"                  | "Source field"    | '[Price]'         | ''              |
 			| "Period"                    | "Source field"    | '[Date]'         | ''              |
@@ -292,7 +292,7 @@ Scenario: 04.04 Checking the behavior of the indicator configuration form withou
 			| 'Products'                  |
 			| 'Price'                     |
 		Then I check table 'ComplianceTable' contains '2' rows from list:
-			| "Destination dimension"       | "Filling method" | "Column name"    | "Dimension kind" |
+			| "Destination dimension"       | "Filling method" | "Column name"    | "Dimension type" |
 			| "Dimension 1: Product range" | "Source field"    | '[Products]' | "Product range"  |
 			| "Value"                  | "Source field"    | '[Price]'         | ''              |
 		And I move to the tab named 'FiltersPage'

@@ -32,14 +32,14 @@ Scenario: 17.01 Creating report type
 			| "Line 3"     |
 		And I add columns in report wizard
 			| 'Description' |
-			| "Count"   |
+			| "Quantity"   |
 			| "Price"         |
 			| "Amount"        |
 
 	* Configuring formulas
-		And I set product formula for cell 'R2C2' of cells 'R2C3' 'R2C4' in report wizard
-		And I set product formula for cell 'R3C2' of cells 'R3C3' 'R3C4' in report wizard
-		And I set product formula for cell 'R4C2' of cells 'R4C3' 'R4C4' in report wizard
+		And I set product formula for cell 'R2C4' of cells 'R2C2' 'R2C3' in report wizard
+		And I set product formula for cell 'R3C4' of cells 'R3C2' 'R3C3' in report wizard
+		And I set product formula for cell 'R4C4' of cells 'R4C2' 'R4C3' in report wizard
 
 	* Closing report wizard
 		When "Report wizard" window is opened
@@ -61,7 +61,7 @@ Scenario: 17.03 Creating analytical panel
 		And In the command interface I select "Budgeting, reporting, and analysis" "Analytical dashboards"
 
 	* Deleting an element
-		And I search element "VA - Analytical reports" "At beginning of line" by field "Analytical dashboard" in list "Analytical dashboards"
+		And I search element "VA - Analytical reports" "At the beginning of the line" by field "Analytical dashboard" in list "Analytical dashboards"
 		And While the number of 'List' table lines 'more' 0 Then
 			* Marking for deletion
 				And I delete current row in list 'List'
@@ -92,7 +92,7 @@ Scenario: 17.03 Creating analytical panel
 		And I expand current line in 'PanelContent' table
 		And I go to line in 'PanelContent' table:
 			| "Use" | "Set up report" | "Area"        | "Display description" |
-			| "Yes"            | "(By default)"   | "(New group)" | "Yes"                      |
+			| "Yes"            | "(Default)"   | "(New group)" | "Yes"                      |
 		And I select current line in 'PanelContent' table
 		And I input "Group 1" text in the field named 'PanelContentArea' of 'PanelContent' table
 		And I finish line editing in 'PanelContent' table
@@ -161,7 +161,7 @@ Scenario: 17.06 Viewing analytical reports
 Scenario: 17.07 Viewing analytical panels
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Analytical dashboards"
-	And I search element "VA - Analytical reports" "At beginning of line" by field "Analytical dashboard" in list "Analytical dashboards"
+	And I search element "VA - Analytical reports" "At the beginning of the line" by field "Analytical dashboard" in list "Analytical dashboards"
 	And I click the button named 'FormShowPanel'
 
 	And 'Code_100000000001_1_Window' spreadsheet document is equal to "3_Budgeting\Layouts\18\VA_AnalyticalReport.mxl" by template

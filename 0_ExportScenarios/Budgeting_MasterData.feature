@@ -210,35 +210,35 @@ Scenario: I fill dimension types 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics
 			And I finish line editing in "DimensionKinds" table
 		If 'NOT IsBlankString("[TheAnalytics2]")' Then
 			And I go to line in "DimensionKinds" table:
-				| '№' |
+				| 'No.' |
 				| '2' |
 			And I select current line in "KindsOfDimensions" table
 			And I select '[TheAnalytics2]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
 			And I finish line editing in "DimensionKinds" table
 		If 'NOT IsBlankString("[TheAnalytics3]")' Then
 			And I go to line in "DimensionKinds" table:
-				| '№' |
+				| 'No.' |
 				| '3' |
 			And I select current line in "KindsOfDimensions" table
 			And I select '[TheAnalytics3]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
 			And I finish line editing in "DimensionKinds" table
 		If 'NOT IsBlankString("[TheAnalytics4]")' Then
 			And I go to line in "DimensionKinds" table:
-				| '№' |
+				| 'No.' |
 				| '4' |
 			And I select current line in "KindsOfDimensions" table
 			And I select '[TheAnalytics4]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
 			And I finish line editing in "DimensionKinds" table
 		If 'NOT IsBlankString("[TheAnalytics5]")' Then
 			And I go to line in "DimensionKinds" table:
-				| '№' |
+				| 'No.' |
 				| '5' |
 			And I select current line in "KindsOfDimensions" table
 			And I select '[TheAnalytics5]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
 			And I finish line editing in "DimensionKinds" table
 		If 'NOT IsBlankString("[TheAnalytics6]")' Then
 			And I go to line in "DimensionKinds" table:
-				| '№' |
+				| 'No.' |
 				| '6' |
 			And I select current line in "KindsOfDimensions" table
 			And I select '[TheAnalytics6]' by string from the drop-down list named "DimensionKindsDimensionKind" in "DimensionKinds" table
@@ -271,7 +271,7 @@ Scenario: I check filled dimensions count 'N' in table for dimension group 'TheA
 		And I open "ItemDimensionGroups" catalog default form
 		And I search element '[TheAnalyticsGroup]' "Exact match" by field "Description" in list "Item dimension groups"
 		And I select current line in "List" table
-		And the form attribute named "МаксимальныйНомерЗаполненнойАналитики" became equal to '[N]'
+		And the form attribute named "MaximumNumberFilledAnalysts" became equal to '[N]'
 		And I close '[TheAnalyticsGroup] (Item dimension group)' window
 		And I close 'Item dimension groups' window
 

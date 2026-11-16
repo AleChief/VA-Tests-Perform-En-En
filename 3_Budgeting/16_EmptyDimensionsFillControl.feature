@@ -58,7 +58,7 @@ Scenario: 16.01 Creating a report type "VA - Empty analytics"
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 			When "DG_Destination1 (Report indicator dimension groups)" window is opened
 			And I go to line in 'TabFieldsDisplaySetting' table:
-				| "Group dimension"          | "Dimension kind" | "Required" |
+				| "Group dimension"          | "Dimension type" | "Required" |
 				| "Dimension 2: Product range" | "Product range"  | "No"          |
 			And I activate field named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
 			And I change checkbox named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
@@ -70,13 +70,13 @@ Scenario: 16.01 Creating a report type "VA - Empty analytics"
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 			When "DG_Destination2 (Report indicator dimension groups)" window is opened
 			And I go to line in 'TabFieldsDisplaySetting' table:
-				| "Group dimension"          | "Dimension kind" | "Required" |
+				| "Group dimension"          | "Dimension type" | "Required" |
 				| "Dimension 2: Product range" | "Product range"  | "No"          |
 			And I activate field named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
 			And I change checkbox named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
 			And I finish line editing in 'TabFieldsDisplaySetting' table
 			And I go to line in 'TabFieldsDisplaySetting' table:
-				| "Group dimension"                | "Dimension kind"      | "Required" |
+				| "Group dimension"                | "Dimension type"      | "Required" |
 				| "Dimension 3: Product categories" | "Product categories" | "No"          |
 			And I activate field named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
 			And I change checkbox named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
@@ -92,7 +92,7 @@ Scenario: 16.01 Creating a report type "VA - Empty analytics"
 		And I create default template for report type "VA - Empty analytics"
 
 	* Pivot table template
-		And I for report type "" create default pivot table template with filters "VA - Empty analytics"
+		And I for report type "VA - Empty analytics" create default pivot table template with filters ""
 
 Scenario: 16.02 Configuring the report structure
 
@@ -128,7 +128,7 @@ Scenario: 16.02 Configuring the report structure
 			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
 			Then "VA - Empty analytics_Source number (Data source)" window is opened
 			And I go to line in 'ComplianceTable' table:
-				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
+				| "Destination dimension"             | "Dimension type"      | "Column name"                       | "Filling method" |
 				| "Dimension 3: Product categories" | "Product categories" | "[Dimension 3: Product categories]" | "Source field"    |
 			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
 			And I select current line in 'ComplianceTable' table
@@ -148,7 +148,7 @@ Scenario: 16.02 Configuring the report structure
 			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
 			Then "VA - Empty analytics_Source date (Data source)" window is opened
 			And I go to line in 'ComplianceTable' table:
-				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
+				| "Destination dimension"             | "Dimension type"      | "Column name"                       | "Filling method" |
 				| "Dimension 3: Product categories" | "Product categories" | "[Dimension 3: Product categories]" | "Source field"    |
 			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
 			And I select current line in 'ComplianceTable' table
@@ -168,7 +168,7 @@ Scenario: 16.02 Configuring the report structure
 			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
 			Then "VA - Empty analytics_Source number (Data source)" window is opened
 			And I go to line in 'ComplianceTable' table:
-				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
+				| "Destination dimension"             | "Dimension type"      | "Column name"                       | "Filling method" |
 				| "Dimension 3: Product categories" | "Product categories" | "[Dimension 3: Product categories]" | "Source field"    |
 			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
 			And I select current line in 'ComplianceTable' table
@@ -188,7 +188,7 @@ Scenario: 16.02 Configuring the report structure
 			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
 			Then "VA - Empty analytics_Source date (Data source)" window is opened
 			And I go to line in 'ComplianceTable' table:
-				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
+				| "Destination dimension"             | "Dimension type"      | "Column name"                       | "Filling method" |
 				| "Dimension 3: Product categories" | "Product categories" | "[Dimension 3: Product categories]" | "Source field"    |
 			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
 			And I select current line in 'ComplianceTable' table

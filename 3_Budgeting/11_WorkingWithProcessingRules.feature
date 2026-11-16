@@ -113,7 +113,7 @@ Scenario: 11.04 Creating a report type with loading from RS "VA - Price"
 		And I click the button named 'FormFind'
 		Then "Find" window is opened
 		And I select "Register" exact value from the drop-down list named 'FieldSelector'
-		And I change the radio button named 'CompareType' value to "At beginning of line"
+		And I change the radio button named 'CompareType' value to "At the beginning of the line"
 		If '$$IsERPCPM$$' Then
 			And I input "Product range prices 2.5" text in the field named 'Pattern'
 		Else

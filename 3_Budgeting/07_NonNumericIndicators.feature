@@ -20,13 +20,13 @@ Scenario: 07.00 Determining application type
 	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
-Scenario: 07.01 Creating report group "VA - Non-Numbers and Groupings (group)"
+Scenario: 07.01 Creating report group "VA - Non-numeric indicators and groupings (group)"
 
-	And I create report type group with name "VA - Non-Numbers and Groupings (group)" and parent "VA - Report group"
+	And I create report type group with name "VA - Non-numeric indicators and groupings (group)" and parent "VA - Report group"
 
 Scenario: 07.02 Creating report type "VA - Non-Numbers (source)"
 
-	And I create report type with name "VA - Non-Numbers (source)" and parent "VA - Non-Numbers and Groupings (group)"
+	And I create report type with name "VA - Non-Numbers (source)" and parent "VA - Non-numeric indicators and groupings (group)"
 	
 	And I open report type with name "VA - Non-Numbers (source)"
 	And I set checkbox named 'ProjectSeparation'
@@ -42,9 +42,9 @@ Scenario: 07.02 Creating report type "VA - Non-Numbers (source)"
 	And I add row with name "Goods" in report wizard
 
 	And I add column with name "Price" in report wizard
-	And I add column with name "DateReceipts" in report wizard
+	And I add column with name "DateOfReceipt" in report wizard
 	And I add column with name "IncludeInPrice" in report wizard
-	And I add column with name "Product ID" in report wizard
+	And I add column with name "SKU" in report wizard
 
 	And I change indicator property 'TotalKind' to "Average" in cell 'R2C2' in report wizard
 	And I change indicator property 'ValueType' to "Date" in cell 'R2C3' in report wizard
@@ -60,7 +60,7 @@ Scenario: 07.02 Creating report type "VA - Non-Numbers (source)"
 
 Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 
-	And I create report type with name "VA - Non-Numbers (recipient)" and parent "VA - Non-Numbers and Groupings (group)"
+	And I create report type with name "VA - Non-Numbers (recipient)" and parent "VA - Non-numeric indicators and groupings (group)"
 	
 	And I open report type with name "VA - Non-Numbers (recipient)"
 	And I set checkbox named 'ProjectSeparation'
@@ -78,9 +78,9 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 	And I add row with name "Source" in report wizard
 
 	And I add column with name "Price" in report wizard
-	And I add column with name "DateReceipts" in report wizard
+	And I add column with name "DateOfReceipt" in report wizard
 	And I add column with name "IncludeInPrice" in report wizard
-	And I add column with name "Product ID" in report wizard
+	And I add column with name "SKU" in report wizard
 
 	And I change indicator properties 'ValueType' to "Date" in cell 'R2C3:R4C3' in report wizard
 	* Checking and changing totals
@@ -124,7 +124,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 				Then "Data source (create)" window is opened
 				And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Non-Numbers (source)" string
 				And I click Choice button of the field named 'IndicatorFilter'
-				And I select indicator with code "Goods_DateReceipts"
+				And I select indicator with code "Goods_DateOfReceipt"
 				Then "Data source (create) *" window is opened
 				And I click the button named 'FormWriteAndClose'
 				And I wait "Data source (create) *" window closing in 20 seconds
@@ -145,7 +145,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C5' cell
 				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 				And I click the button named 'RefToIndicator1'
-				And I select indicator with code "Goods_ProductID" of report type "VA - Non-Numbers (source)"
+				And I select indicator with code "Goods_SKU" of report type "VA - Non-Numbers (source)"
 				Then "Report wizard *" window is opened
 				And I click the button named 'WriteAndCollapse'
 		* Formulas
@@ -190,7 +190,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 					Then "Data source (create)" window is opened
 					And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Non-Numbers (source)" string
 					And I click Choice button of the field named 'IndicatorFilter'
-					And I select indicator with code "Goods_DateReceipts"
+					And I select indicator with code "Goods_DateOfReceipt"
 					Then "Data source (create) *" window is opened
 					And I click the button named 'FormWriteAndClose'
 					And I wait "Data source (create) *" window closing in 20 seconds
@@ -198,7 +198,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 					And I select current line in 'List' table
 				* Entering a formula
 					Then "Report wizard *" window is opened
-					And I input "[VANonNumbersSource_Goods_DateReceipts01] + 86400" text in the field named 'TextDocumentFieldProcedure'
+					And I input "[VANonNumbersSource_Goods_DateOfReceipt01] + 86400" text in the field named 'TextDocumentFieldProcedure'
 					And I click the button named 'WriteAndCollapse'
 			* IncludeInPrice
 				* Adding sources
@@ -228,14 +228,14 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 					And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C5' cell
 					And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 					And I click the button named 'RefToIndicator1'
-					And I select indicator with code "Goods_ProductID" of report type "VA - Non-Numbers (source)"
+					And I select indicator with code "Goods_SKU" of report type "VA - Non-Numbers (source)"
 					Then "Report wizard *" window is opened
 					And I click the button named 'WriteFormula'
 				* Entering a formula
 					Then "Report wizard" window is opened
 					And I click the button named 'ArbitraryCode'
 					And I input text in the field named 'TextDocumentFieldProcedure'
-						|"tString = [VANonNumbersSource_Goods_ProductID01];"|
+						|"tString = [VANonNumbersSource_Goods_SKU01];"|
 						|'Result = "";'|
 						|'For Cnt = 1 To StrLen(tString) Do'|
 						|' Result = Mid(tString, Cnt, 1) + Result;'|
@@ -336,7 +336,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 						|' InformationRegister.ItemsPrices AS ItemsPrices'|
 						|'WHERE'|
 						|' ItemsPrices.PriceType_ = &PriceType_'|
-						|' AND ItemsPrices.Products <> &ProductException'|
+						|' AND ItemsPrices.Products <> &ProductRangeException'|
 						|''|
 						|'GROUP BY'|
 						|' ItemsPrices.Products,'|
@@ -351,7 +351,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 						|' InformationRegister.ItemsPrices25 AS ItemsPrices'|
 						|'WHERE'|
 						|' ItemsPrices.PriceKind = &PriceType_'|
-						|' AND ItemsPrices.Products <> &ProductException'|
+						|' AND ItemsPrices.Products <> &ProductRangeException'|
 						|''|
 						|'GROUP BY'|
 						|' ItemsPrices.Products,'|
@@ -382,7 +382,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 				And I finish line editing in 'TreeOfFilterParametersDB' table
 				And I go to line in 'TreeOfFilterParametersDB' table:
 					| "Field"                     |
-					| '[ProductException]' |
+					| '[ProductRangeException]' |
 				And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
 				And I select current line in 'TreeOfFilterParametersDB' table
 				And I select "Fixed value" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
@@ -409,25 +409,25 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 				If '$$IsPerform$$' Then
 					And I input text in the field named 'QueryTextForm'
 						|'SELECT'|
-						|' Products.Ref IN(&CorporatePerformanceManagement) AS ЭтоУх,'|
+						|' Products.Ref IN (&HoldingManagement) AS ThisManagementHolding,'|
 						|' Products.Ref AS Ref'|
 						|'FROM'|
 						|' Catalog.Products AS Products'|
 						|'WHERE'|
 						|' Products.Parent = &ProductKind'|
 						|' AND NOT Products.IsFolder'|
-						|' AND Products.Ref <> &ProductException'|
+						|' AND Products.Ref <> &ProductRangeException'|
 				Else
 					And I input text in the field named 'QueryTextForm'
 						|'SELECT'|
-						|' Products.Ref IN(&CorporatePerformanceManagement) AS ЭтоУх,'|
+						|' Products.Ref IN (&HoldingManagement) AS ThisManagementHolding,'|
 						|' Products.Ref AS Ref'|
 						|'FROM'|
 						|' Catalog.Products AS Products'|
 						|'WHERE'|
 						|' Products.ProductKind = &ProductKind'|
 						|' AND NOT Products.IsFolder'|
-						|' AND Products.Ref <> &ProductException'|
+						|' AND Products.Ref <> &ProductRangeException'|
 				And I click the button named 'EditQueryText'
 				And I move to the tab named 'ComplianceAnalyst'
 				And I move to the tab named 'FiltersPage'
@@ -449,7 +449,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 				And I finish line editing in 'TreeOfFilterParametersDB' table
 				And I go to line in 'TreeOfFilterParametersDB' table:
 					| "Field"                  |
-					| '[CorporatePerformanceManagement]' |
+					| '[HoldingManagement]' |
 				And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
 				And I select current line in 'TreeOfFilterParametersDB' table
 				And I select "Fixed value list" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
@@ -483,7 +483,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 				And I finish line editing in 'TreeOfFilterParametersDB' table
 				And I go to line in 'TreeOfFilterParametersDB' table:
 					| "Field"                     |
-					| '[ProductException]' |
+					| '[ProductRangeException]' |
 				And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
 				And I select current line in 'TreeOfFilterParametersDB' table
 				And I select "Fixed value" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
@@ -507,7 +507,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 				Then "Data source (create)" window is opened
 				And I select "Current infobase catalog" exact value from the drop-down list named 'MethodOfObtaining'
 				And I click Choice button of the field named 'DBObjects'
-				And I search and select element "Product range" "At beginning of line" by field "Catalog" in list "Infobase catalogs"
+				And I search and select element "Product range" "At the beginning of the line" by field "Catalog" in list "Infobase catalogs"
 				If number of 'FieldsTreeDB' table lines is 'equal' 1 Then
 					And I expand current line in 'FieldsTreeDB' table
 				And I go to line in 'FieldsTreeDB' table:
@@ -562,7 +562,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 				And I select current line in 'TreeOfFilterParametersDB' table
 				And I select "Saved filter setting" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
 				And I activate field named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
-				And I select "Catalog_Product range  Reference<>1С:Pредприятие 8 КОРP. Клиентская лицензия for 100 рабочих мест" by string from the drop-down list named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+				And I select "Catalog_ProductRange  Reference<>3C:Enterprise 8 CORP. Client license for 100 users" by string from the drop-down list named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
 				And I finish line editing in 'TreeOfFilterParametersDB' table
 				When "Data source (create) *" window is opened
 				And I click the button named 'FormWriteAndClose'
@@ -581,7 +581,7 @@ Scenario: 07.03 Creating report type "VA - Non-Numbers (recipient)"
 
 Scenario: 07.04 Creating report type "VA - Calculation in code"
 
-	And I create report type with name "VA - Calculation in code" and parent "VA - Non-Numbers and Groupings (group)"
+	And I create report type with name "VA - Calculation in code" and parent "VA - Non-numeric indicators and groupings (group)"
 	And I open report type with name "VA - Calculation in code"
 	And I set checkbox named 'ProjectSeparation'
 	And I click the button named 'RecordButtonForm'
@@ -596,7 +596,7 @@ Scenario: 07.04 Creating report type "VA - Calculation in code"
 	And I add column with name "Number" in report wizard
 	And I add column with name "Date" in report wizard
 	And I add column with name "Boolean" in report wizard
-	And I add column with name "Line" in report wizard
+	And I add column with name "String" in report wizard
 
 	And I change indicator properties 'ValueType' to "Date" in cell 'R2C3:R6C3' in report wizard
 	And I change indicator properties 'ValueType' to "Boolean" in cell 'R2C4:R6C4' in report wizard
@@ -626,7 +626,7 @@ Scenario: 07.04 Creating report type "VA - Calculation in code"
 				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C3' cell
 				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 				And I click the button named 'RefToIndicator1'
-				And I select indicator with code "Goods_DateReceipts" of report type "VA - Non-Numbers (source)"
+				And I select indicator with code "Goods_DateOfReceipt" of report type "VA - Non-Numbers (source)"
 				Then "Report wizard *" window is opened
 				And I click the button named 'WriteAndCollapse'
 			* Boolean
@@ -642,7 +642,7 @@ Scenario: 07.04 Creating report type "VA - Calculation in code"
 				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C5' cell
 				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 				And I click the button named 'RefToIndicator1'
-				And I select indicator with code "Goods_ProductID" of report type "VA - Non-Numbers (source)"
+				And I select indicator with code "Goods_SKU" of report type "VA - Non-Numbers (source)"
 				Then "Report wizard *" window is opened
 				And I click the button named 'WriteAndCollapse'
 		* SourceCode
@@ -898,7 +898,7 @@ Scenario: 07.04 Creating report type "VA - Calculation in code"
 
 Scenario: 07.05 Creating report type "VA - Grouping by analytics"
 
-	And I create report type with name "VA - Grouping by analytics" and parent "VA - Non-Numbers and Groupings (group)"
+	And I create report type with name "VA - Grouping by analytics" and parent "VA - Non-numeric indicators and groupings (group)"
 	
 	And I open report type with name "VA - Grouping by analytics"
 	And I set checkbox named 'ProjectSeparation'
@@ -912,14 +912,14 @@ Scenario: 07.05 Creating report type "VA - Grouping by analytics"
 	When "Report wizard" window is opened
 	
 	And I add row with name "Group" in report wizard
-	And I add row with name "GoodsSum" in report wizard
-	And I add row with name "GoodsNoTotal" in report wizard
+	And I add row with name "GoodsAmount" in report wizard
+	And I add row with name "GoodsWithoutTotal" in report wizard
 	And I add column with name "Amount" in report wizard
 	
 	And I add column with name "Maximum" in report wizard
 	And I add column with name "Minimum" in report wizard
 	And I add column with name "Average" in report wizard
-	And I add column with name "NoTotal" in report wizard
+	And I add column with name "WithoutTotal" in report wizard
 
 	And I change row parent to "Group" in cell 'R3C1' in report wizard
 	And I change row parent to "Group" in cell 'R4C1' in report wizard
@@ -977,19 +977,19 @@ Scenario: 07.05 Creating report type "VA - Grouping by analytics"
 			And I click the button named 'AmountByRowsHierarchy'
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 			And I click the button named 'ArbitraryCode'
-			And I input "Result = Max([VAGroupingByAnalytics_GoodsSum_Maximum], [VAGroupingByAnalytics_GoodsNoTotal_Maximum]) " text in the field named 'TextDocumentFieldProcedure'
+			And I input "Result = Max([VAGroupingByAnalytics_GoodsAmount_Maximum], [VAGroupingByAnalytics_GoodsWithoutTotal_Maximum]) " text in the field named 'TextDocumentFieldProcedure'
 			And I click the button named 'WriteAndCollapse'
 		* Minimum
 			When "Report wizard" window is opened
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C4' cell
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
-			And I input "?({VAGroupingByAnalytics.GoodsSum_Minimum}<{VAGroupingByAnalytics.GoodsNoTotal_Minimum},{VAGroupingByAnalytics.GoodsSum_Minimum},{VAGroupingByAnalytics.GoodsNoTotal_Minimum}) " text in the field named 'TextDocumentFieldProcedure'
+			And I input "?({VAGroupingByAnalytics.GoodsAmount_Minimum}<{VAGroupingByAnalytics.GoodsWithoutTotal_Minimum},{VAGroupingByAnalytics.GoodsAmount_Minimum},{VAGroupingByAnalytics.GoodsWithoutTotal_Minimum}) " text in the field named 'TextDocumentFieldProcedure'
 			And I click the button named 'WriteAndCollapse'
 		* Average
 			When "Report wizard" window is opened
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C5' cell
 			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
-			And I input "({VAGroupingByAnalytics.GoodsSum_Average} + {VAGroupingByAnalytics.GoodsNoTotal_Average})  /  2" text in the field named 'TextDocumentFieldProcedure'
+			And I input "({VAGroupingByAnalytics.GoodsAmount_Average} + {VAGroupingByAnalytics.GoodsWithoutTotal_Average})  /  2" text in the field named 'TextDocumentFieldProcedure'
 			And I click the button named 'WriteAndCollapse'
 		* WithoutTotal
 			When "Report wizard" window is opened
@@ -1006,7 +1006,7 @@ Scenario: 07.05 Creating report type "VA - Grouping by analytics"
 				Then "1C:Enterprise" window is opened
 				And I click the button named 'Button0'
 			Then "Report wizard *" window is opened
-			And I input "?({VAGroupingByAnalytics.GoodsNoTotal_NoTotal}=0,-1,{VAGroupingByAnalytics.GoodsSum_NoTotal} / {VAGroupingByAnalytics.GoodsNoTotal_NoTotal}) " text in the field named 'TextDocumentFieldProcedure'
+			And I input "?({VAGroupingByAnalytics.GoodsWithoutTotal_WithoutTotal}=0,-1,{VAGroupingByAnalytics.GoodsAmount_WithoutTotal} / {VAGroupingByAnalytics.GoodsWithoutTotal_WithoutTotal}) " text in the field named 'TextDocumentFieldProcedure'
 			And I click the button named 'WriteAndCollapse'
 			When "Report wizard" window is opened
 			And I close "Report wizard" window
@@ -1032,7 +1032,7 @@ Scenario: 07.07 Creating report instance - "VA - Non-Numbers (source)"
 			| "VA - Non-Numbers (source)" | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''      | ''                | ''               | ''        |
 			| ''                                      | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''      | ''                | ''               | ''        |
 			| ''                                      | "January 2024" | ''                | ''               | ''        | "February 2024" | ''                | ''               | ''        | "March 2024" | ''                | ''               | ''        | "TOTAL" | ''                | ''               | ''        |
-			| ''                                      | "Price"           | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"            | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"         | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"  | "DateReceipts" | "IncludeInPrice" | "Product ID" |
+			| ''                                      | "Price"           | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"            | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"         | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"  | "DateOfReceipt" | "IncludeInPrice" | "SKU" |
 			| "Goods"                                | '0'              | ''                | "No"            | ''        | '0'               | ''                | "No"            | ''        | '0'            | ''                | "No"            | ''        | '0'     | ''                | "No"            | ''        |
 
 	* Filling indicator values
@@ -1101,7 +1101,7 @@ Scenario: 07.07 Creating report instance - "VA - Non-Numbers (source)"
 			| "VA - Non-Numbers (source)"                           | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''          | ''                | ''               | ''        |
 			| ''                                                                | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''          | ''                | ''               | ''        |
 			| ''                                                                | "January 2024" | ''                | ''               | ''        | "February 2024" | ''                | ''               | ''        | "March 2024" | ''                | ''               | ''        | "TOTAL"     | ''                | ''               | ''        |
-			| ''                                                                | "Price"           | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"            | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"         | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"      | "DateReceipts" | "IncludeInPrice" | "Product ID" |
+			| ''                                                                | "Price"           | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"            | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"         | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"      | "DateOfReceipt" | "IncludeInPrice" | "SKU" |
 			| "Goods"                                                          | '1,206,000'      | '1/1/2024'      | "No"            | ''        | '1,326,600'       | '1/2/2024'      | "No"            | ''        | '1,326,600'    | '1/2/2024'      | "No"            | ''        | '1,286,400' | '1/1/2024'      | "No"            | ''        |
 			| "5C:Corporate performance management "                                      | '1,250,000'      | '1/1/2024'      | "Yes"             | '000001'  | '2,145,000'       | '5/2/2024'      | "Yes"             | '2000005' | '2,145,000'    | '5/2/2024'      | "Yes"             | '2000005' | '1,846,667' | '1/1/2024'      | "Yes"             | ''        |
 			| "2C:Corporation "                                                  | '2,050,000'      | '2/1/2024'      | "Yes"             | '000002'  | '2,255,000'       | ''                | "No"            | ''        | '2,255,000'    | ''                | "No"            | ''        | '2,186,667' | '2/1/2024'      | "Yes"             | ''        |
@@ -1123,7 +1123,7 @@ Scenario: 07.08 Interactive deletion of indicators
 			| "VA - Non-Numbers (source)" | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''      | ''                | ''               | ''        |
 			| ''                                      | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''      | ''                | ''               | ''        |
 			| ''                                      | "January 2024" | ''                | ''               | ''        | "February 2024" | ''                | ''               | ''        | "March 2024" | ''                | ''               | ''        | "TOTAL" | ''                | ''               | ''        |
-			| ''                                      | "Price"           | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"            | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"         | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"  | "DateReceipts" | "IncludeInPrice" | "Product ID" |
+			| ''                                      | "Price"           | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"            | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"         | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"  | "DateOfReceipt" | "IncludeInPrice" | "SKU" |
 			| "Goods"                                | '0'              | ''                | "No"            | ''        | '0'               | ''                | "No"            | ''        | '0'            | ''                | "No"            | ''        | '0'     | ''                | "No"            | ''        |
 
 	* Filling indicator values
@@ -1141,7 +1141,7 @@ Scenario: 07.08 Interactive deletion of indicators
 			| "VA - Non-Numbers (source)"                           | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''          | ''                | ''               | ''        |
 			| ''                                                                | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''          | ''                | ''               | ''        |
 			| ''                                                                | "January 2024" | ''                | ''               | ''        | "February 2024" | ''                | ''               | ''        | "March 2024" | ''                | ''               | ''        | "TOTAL"     | ''                | ''               | ''        |
-			| ''                                                                | "Price"           | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"            | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"         | "DateReceipts" | "IncludeInPrice" | "Product ID" | "Price"      | "DateReceipts" | "IncludeInPrice" | "Product ID" |
+			| ''                                                                | "Price"           | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"            | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"         | "DateOfReceipt" | "IncludeInPrice" | "SKU" | "Price"      | "DateOfReceipt" | "IncludeInPrice" | "SKU" |
 			| "Goods"                                                          | '1,206,000'      | '1/1/2024'      | "No"            | ''        | '1,326,600'       | ''                | "No"            | ''        | '1,326,600'    | ''                | "No"            | ''        | '1,286,400' | ''                | "No"            | ''        |
 			| "5C:Corporate performance management "                                      | '1,250,000'      | '1/1/2024'      | "Yes"             | '000001'  | '2,145,000'       | '5/2/2024'      | "Yes"             | '2000005' | '2,145,000'    | '5/2/2024'      | "Yes"             | '2000005' | '1,846,667' | '1/1/2024'      | "Yes"             | ''        |
 			| "2C:Corporation "                                                  | '2,050,000'      | '2/1/2024'      | "Yes"             | '000002'  | '2,255,000'       | ''                | "No"            | ''        | '2,255,000'    | ''                | "No"            | ''        | '2,186,667' | ''                | "Yes"             | ''        |
@@ -1183,7 +1183,7 @@ Scenario: 07.08 Interactive deletion of indicators
 			| 'Value1'  | "Product range"                 |
 			| '4/1/2024' | "1C:ERP. Corporate performance management" |
 		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 				
 	* Deleting a row from the document form
 		When '$WindowTitle$' window is opened
@@ -1199,14 +1199,14 @@ Scenario: 07.08 Interactive deletion of indicators
 			| "Product range"                                                   | 'Period_1_Value1' | 'Period_1_Value2' | 'Period_1_Value3' | 'Period_1_Value4' | 'Period_2_Value1' | 'Period_2_Value3' | 'Period_3_Value1' | 'Period_3_Value3' |
 			| "3C:Enterprise 8 CORP. Client license for 100 users" | '600,000.00000'      | '5/1/2024'         | "Yes"                 | '000005'             | '1,375,000.00000'    | "No"                | '1,375,000.00000'    | "No"                |
 		And in the table 'IndicatorsDrilldown' I click the button named 'IndicatorsDrilldownDelete'
-		And I click the button named 'FormOKButton1'
+		And I click the button named 'FormOKButton'
 					
 	* Verifying the result
 		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Non-Numbers (source)" | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''          | ''                | ''               | ''        |
 			| ''                                      | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''          | ''                | ''               | ''        |
 			| ''                                      | "January 2024" | ''                | ''               | ''        | "February 2024" | ''                | ''               | ''        | "March 2024" | ''                | ''               | ''        | "TOTAL"     | ''                | ''               | ''        |
-			| ''                                      | "Price"           | "DateReceipts" | "IncludeInPrice" | "Product ID"        | "Price"            | "DateReceipts" | "IncludeInPrice" | "Product ID"        | "Price"         | "DateReceipts" | "IncludeInPrice" | "Product ID"        | "Price"      | "DateReceipts" | "IncludeInPrice" | "Product ID"        |
+			| ''                                      | "Price"           | "DateOfReceipt" | "IncludeInPrice" | "SKU"        | "Price"            | "DateOfReceipt" | "IncludeInPrice" | "SKU"        | "Price"         | "DateOfReceipt" | "IncludeInPrice" | "SKU"        | "Price"      | "DateOfReceipt" | "IncludeInPrice" | "SKU"        |
 			| "Goods"                                | '1,950,000'      | ''                | "No"            | ''        | '1,686,667'       | ''                | "No"            | ''        | '1,686,667'    | ''                | "No"            | ''        | '1,724,286' | ''                | "No"            | ''        |
 			| "5C:Corporate performance management "            | '0'              | ''                | "No"            | ' '       | '2,145,000'       | '5/2/2024'      | "Yes"             | '2000005' | '2,145,000'    | '5/2/2024'      | "Yes"             | '2000005' | '2,145,000' | ''                | "Yes"             | ''        |
 			| "2C:Corporation "                        | '0'              | ''                | "No"            | ''        | '2,255,000'       | ''                | "No"            | ''        | '2,255,000'    | ''                | "No"            | ''        | '2,255,000' | ''                | "No"            | ''        |
@@ -1233,7 +1233,7 @@ Scenario: 07.08 Interactive deletion of indicators
 			| "VA - Non-Numbers (source)" | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''      | ''                | ''               | ''        |
 			| ''                                      | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''      | ''                | ''               | ''        |
 			| ''                                      | "January 2024" | ''                | ''               | ''        | "February 2024" | ''                | ''               | ''        | "March 2024" | ''                | ''               | ''        | "TOTAL" | ''                | ''               | ''        |
-			| ''                                      | "Price"           | "DateReceipts" | "IncludeInPrice" | "Product ID"        | "Price"            | "DateReceipts" | "IncludeInPrice" | "Product ID"        | "Price"         | "DateReceipts" | "IncludeInPrice" | "Product ID"        | "Price"  | "DateReceipts" | "IncludeInPrice" | "Product ID"        |
+			| ''                                      | "Price"           | "DateOfReceipt" | "IncludeInPrice" | "SKU"        | "Price"            | "DateOfReceipt" | "IncludeInPrice" | "SKU"        | "Price"         | "DateOfReceipt" | "IncludeInPrice" | "SKU"        | "Price"  | "DateOfReceipt" | "IncludeInPrice" | "SKU"        |
 			| "Goods"                                | '0'              | ''                | "No"            | ''        | '0'               | ''                | "No"            | ''        | '0'            | ''                | "No"            | ''        | '0'     | ''                | "No"            | ''        |
 
 	* Rolling back a version
@@ -1251,7 +1251,7 @@ Scenario: 07.08 Interactive deletion of indicators
 			| "VA - Non-Numbers (source)" | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''          | ''                | ''               | ''        |
 			| ''                                      | ''               | ''                | ''               | ''        | ''                | ''                | ''               | ''        | ''             | ''                | ''               | ''        | ''          | ''                | ''               | ''        |
 			| ''                                      | "January 2024" | ''                | ''               | ''        | "February 2024" | ''                | ''               | ''        | "March 2024" | ''                | ''               | ''        | "TOTAL"     | ''                | ''               | ''        |
-			| ''                                      | "Price"           | "DateReceipts" | "IncludeInPrice" | "Product ID"        | "Price"            | "DateReceipts" | "IncludeInPrice" | "Product ID"        | "Price"         | "DateReceipts" | "IncludeInPrice" | "Product ID"        | "Price"      | "DateReceipts" | "IncludeInPrice" | "Product ID"        |
+			| ''                                      | "Price"           | "DateOfReceipt" | "IncludeInPrice" | "SKU"        | "Price"            | "DateOfReceipt" | "IncludeInPrice" | "SKU"        | "Price"         | "DateOfReceipt" | "IncludeInPrice" | "SKU"        | "Price"      | "DateOfReceipt" | "IncludeInPrice" | "SKU"        |
 			| "Goods"                                | '1,950,000'      | ''                | "No"            | ''        | '1,686,667'       | ''                | "No"            | ''        | '1,686,667'    | ''                | "No"            | ''        | '1,724,286' | ''                | "No"            | ''        |
 			| "5C:Corporate performance management "            | '0'              | ''                | "No"            | ' '       | '2,145,000'       | '5/2/2024'      | "Yes"             | '2000005' | '2,145,000'    | '5/2/2024'      | "Yes"             | '2000005' | '2,145,000' | ''                | "Yes"             | ''        |
 			| "2C:Corporation "                        | '0'              | ''                | "No"            | ''        | '2,255,000'       | ''                | "No"            | ''        | '2,255,000'    | ''                | "No"            | ''        | '2,255,000' | ''                | "No"            | ''        |
@@ -1362,7 +1362,7 @@ Scenario: 07.11 Creating report instance - "VA - Calculation in code"
 			| "VA - Calculation in code"                                              | ''               | ''           | ''       | ''                                                                 | ''                | ''           | ''       | ''                                                                  | ''             | ''           | ''       | ''                                                               | ''           | ''           | ''       | ''       |
 			| ''                                                                | ''               | ''           | ''       | ''                                                                 | ''                | ''           | ''       | ''                                                                  | ''             | ''           | ''       | ''                                                               | ''           | ''           | ''       | ''       |
 			| ''                                                                | "January 2024" | ''           | ''       | ''                                                                 | "February 2024" | ''           | ''       | ''                                                                  | "March 2024" | ''           | ''       | ''                                                               | "TOTAL"      | ''           | ''       | ''       |
-			| ''                                                                | "Number"          | "Date"       | "Boolean" | "Line"                                                           | "Number"           | "Date"       | "Boolean" | "Line"                                                            | "Number"        | "Date"       | "Boolean" | "Line"                                                         | "Number"      | "Date"       | "Boolean" | "Line" |
+			| ''                                                                | "Number"          | "Date"       | "Boolean" | "String"                                                           | "Number"           | "Date"       | "Boolean" | "String"                                                            | "Number"        | "Date"       | "Boolean" | "String"                                                         | "Number"      | "Date"       | "Boolean" | "String" |
 			| "Source"                                                        | '6,030,000'      | ''           | "No"    | ''                                                                 | '6,633,000'       | ''           | "No"    | ''                                                                  | '6,633,000'    | ''           | "No"    | ''                                                               | '19,296,000' | ''           | "No"    | ''       |
 			| "5C:Corporate performance management "                                      | '1,250,000'      | '1/1/2024' | "Yes"     | '000001'                                                           | '2,145,000'       | '5/2/2024' | "Yes"     | '2000005'                                                           | '2,145,000'    | '5/2/2024' | "Yes"     | '2000005'                                                        | '5,540,000'  | '5/2/2024' | "Yes"     | ''       |
 			| "2C:Corporation "                                                  | '2,050,000'      | '2/1/2024' | "Yes"     | '000002'                                                           | '2,255,000'       | ''           | "No"    | ''                                                                  | '2,255,000'    | ''           | "No"    | ''                                                               | '6,560,000'  | '2/1/2024' | "Yes"     | ''       |
@@ -1390,7 +1390,7 @@ Scenario: 07.11 Creating report instance - "VA - Calculation in code"
 			| "VA - Calculation in code"                                              | ''               | ''           | ''       | ''                                                                 | ''                | ''           | ''       | ''                                                                  | ''             | ''           | ''       | ''                                                               | ''           | ''           | ''       | ''       |
 			| ''                                                                | ''               | ''           | ''       | ''                                                                 | ''                | ''           | ''       | ''                                                                  | ''             | ''           | ''       | ''                                                               | ''           | ''           | ''       | ''       |
 			| ''                                                                | "January 2024" | ''           | ''       | ''                                                                 | "February 2024" | ''           | ''       | ''                                                                  | "March 2024" | ''           | ''       | ''                                                               | "TOTAL"      | ''           | ''       | ''       |
-			| ''                                                                | "Number"          | "Date"       | "Boolean" | "Line"                                                           | "Number"           | "Date"       | "Boolean" | "Line"                                                            | "Number"        | "Date"       | "Boolean" | "Line"                                                         | "Number"      | "Date"       | "Boolean" | "Line" |
+			| ''                                                                | "Number"          | "Date"       | "Boolean" | "String"                                                           | "Number"           | "Date"       | "Boolean" | "String"                                                            | "Number"        | "Date"       | "Boolean" | "String"                                                         | "Number"      | "Date"       | "Boolean" | "String" |
 			| "Source"                                                        | '6,030,000'      | ''           | "No"    | ''                                                                 | '6,633,000'       | ''           | "No"    | ''                                                                  | '6,633,000'    | ''           | "No"    | ''                                                               | '19,296,000' | ''           | "No"    | ''       |
 			| "5C:Corporate performance management "                                      | '1,250,000'      | '1/1/2024' | "Yes"     | '000001'                                                           | '2,145,000'       | '5/2/2024' | "Yes"     | '2000005'                                                           | '2,145,000'    | '5/2/2024' | "Yes"     | '2000005'                                                        | '5,540,000'  | '5/2/2024' | "Yes"     | ''       |
 			| "2C:Corporation "                                                  | '2,050,000'      | '2/1/2024' | "Yes"     | '000002'                                                           | '2,255,000'       | ''           | "No"    | ''                                                                  | '2,255,000'    | ''           | "No"    | ''                                                               | '6,560,000'  | '2/1/2024' | "Yes"     | ''       |
@@ -1430,15 +1430,15 @@ Scenario: 07.12 Creating report instance - "VA - Grouping by analytics"
 			| "VA - Grouping by analytics"                                  | ''               | ''          | ''          | ''          | ''          | ''                | ''          | ''          | ''          | ''          | ''             | ''          | ''          | ''          | ''          | ''           | ''           | ''           | ''           | ''         |
 			| ''                                                                | ''               | ''          | ''          | ''          | ''          | ''                | ''          | ''          | ''          | ''          | ''             | ''          | ''          | ''          | ''          | ''           | ''           | ''           | ''           | ''         |
 			| ''                                                                | "January 2024" | ''          | ''          | ''          | ''          | "February 2024" | ''          | ''          | ''          | ''          | "March 2024" | ''          | ''          | ''          | ''          | "TOTAL"      | ''           | ''           | ''           | ''         |
-			| ''                                                                | "Amount"          | "Maximum"  | "Minimum"   | "Average"   | "NoTotal"  | "Amount"           | "Maximum"  | "Minimum"   | "Average"   | "NoTotal"  | "Amount"        | "Maximum"  | "Minimum"   | "Average"   | "NoTotal"  | "Amount"      | "Maximum"   | "Minimum"    | "Average"    | "NoTotal" |
+			| ''                                                                | "Amount"          | "Maximum"  | "Minimum"   | "Average"   | "WithoutTotal"  | "Amount"           | "Maximum"  | "Minimum"   | "Average"   | "WithoutTotal"  | "Amount"        | "Maximum"  | "Minimum"   | "Average"   | "WithoutTotal"  | "Amount"      | "Maximum"   | "Minimum"    | "Average"    | "WithoutTotal" |
 			| "Group"                                                          | '12,060,000'     | '6,030,000' | '6,030,000' | '6,030,000' | '1'         | '13,266,000'      | '6,633,000' | '6,633,000' | '6,633,000' | '1'         | '13,266,000'   | '6,633,000' | '6,633,000' | '6,633,000' | '1'         | '38,592,000' | '19,296,000' | '19,296,000' | '19,296,000' | '3'        |
-			| "GoodsSum"                                                     | '6,030,000'      | '2,050,000' | '180,000'   | '1,206,000' | '0'         | '6,633,000'       | '2,255,000' | '198,000'   | '1,326,600' | '0'         | '6,633,000'    | '2,255,000' | '198,000'   | '1,326,600' | '0'         | '19,296,000' | '2,255,000'  | '180,000'    | '1,286,400'  | '0'        |
+			| "GoodsAmount"                                                     | '6,030,000'      | '2,050,000' | '180,000'   | '1,206,000' | '0'         | '6,633,000'       | '2,255,000' | '198,000'   | '1,326,600' | '0'         | '6,633,000'    | '2,255,000' | '198,000'   | '1,326,600' | '0'         | '19,296,000' | '2,255,000'  | '180,000'    | '1,286,400'  | '0'        |
 			| "5C:Corporate performance management "                                      | '1,250,000'      | '1,250,000' | '1,250,000' | '1,250,000' | '1,250,000' | '2,145,000'       | '2,145,000' | '2,145,000' | '2,145,000' | '2,145,000' | '2,145,000'    | '2,145,000' | '2,145,000' | '2,145,000' | '2,145,000' | '5,540,000'  | '2,145,000'  | '1,250,000'  | '1,846,667'  | '0'        |
 			| "2C:Corporation "                                                  | '2,050,000'      | '2,050,000' | '2,050,000' | '2,050,000' | '2,050,000' | '2,255,000'       | '2,255,000' | '2,255,000' | '2,255,000' | '2,255,000' | '2,255,000'    | '2,255,000' | '2,255,000' | '2,255,000' | '2,255,000' | '6,560,000'  | '2,255,000'  | '2,050,000'  | '2,186,667'  | '0'        |
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64) "           | '180,000'        | '180,000'   | '180,000'   | '180,000'   | '180,000'   | '198,000'         | '198,000'   | '198,000'   | '198,000'   | '198,000'   | '198,000'      | '198,000'   | '198,000'   | '198,000'   | '198,000'   | '576,000'    | '198,000'    | '180,000'    | '192,000'    | '0'        |
 			| "1C:ERP. Corporate performance management "                                   | '1,950,000'      | '1,950,000' | '1,950,000' | '1,950,000' | '1,950,000' | '660,000'         | '660,000'   | '660,000'   | '660,000'   | '660,000'   | '660,000'      | '660,000'   | '660,000'   | '660,000'   | '660,000'   | '3,270,000'  | '1,950,000'  | '660,000'    | '1,090,000'  | '0'        |
 			| "3C:Enterprise 8 CORP. Client license for 100 users " | '600,000'        | '600,000'   | '600,000'   | '600,000'   | '600,000'   | '1,375,000'       | '1,375,000' | '1,375,000' | '1,375,000' | '1,375,000' | '1,375,000'    | '1,375,000' | '1,375,000' | '1,375,000' | '1,375,000' | '3,350,000'  | '1,375,000'  | '600,000'    | '1,116,667'  | '0'        |
-			| "GoodsNoTotal"                                                  | '6,030,000'      | '6,030,000' | '6,030,000' | '6,030,000' | '0'         | '6,633,000'       | '6,633,000' | '6,633,000' | '6,633,000' | '0'         | '6,633,000'    | '6,633,000' | '6,633,000' | '6,633,000' | '0'         | '19,296,000' | '6,633,000'  | '19,296,000' | '6,432,000'  | '0'        |
+			| "GoodsWithoutTotal"                                                  | '6,030,000'      | '6,030,000' | '6,030,000' | '6,030,000' | '0'         | '6,633,000'       | '6,633,000' | '6,633,000' | '6,633,000' | '0'         | '6,633,000'    | '6,633,000' | '6,633,000' | '6,633,000' | '0'         | '19,296,000' | '6,633,000'  | '19,296,000' | '6,432,000'  | '0'        |
 
 	* Saving a document
 		And I click the button named 'Write'

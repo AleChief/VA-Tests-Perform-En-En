@@ -365,7 +365,7 @@ Scenario: I check dimension filling by budget type 'TheBudget' in OFD
 				| 'Cash flow item' | 'Dimension1'        | 'Dimension2'        | 'Dimension3'        | 'Dimension4'        | 'Dimension5'        | 'Dimension6'        | 'Financial responsibility center'     | 'Project'     | 'Amount in document currency' | 'Document plan' |
 				| '$VAItem$' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '$VACFD$' | '$VAProject$' | '$Amount$'                  | '$PlanningDocument$'     |
 						
-		If "Budget" variable is equal to 'БДР' Then
+		If "Budget" variable is equal to 'Budget of Revenue' Then
 			And I move to the tab named "GroupIEBudget"
 			Then "TabBudgetIncomeAndExpense" table became equal
 				| 'IEB item' | 'Dimension1'        | 'Dimension2'        | 'Dimension3'        | 'Dimension4'        | 'Dimension5'        | 'Dimension6'        | 'Financial responsibility center'     | 'Project'     | 'Amount in document currency' | 'Document plan' |
@@ -391,13 +391,13 @@ Scenario: I check movements by budget type 'TheBudget' in OFD
 					| '1' | 'Cash flow budget' | '$PlanningDoc$'   | ''      | '$Amount$'         | '$VABudgetCode$; $VAProject$; $VAOrganization$' | '$Amount$'         | ''      | 'RUB'    | ''                     | 'RUB'                  | '$VAItem$ Expense'         |
 
 
-		If "Budget" variable is equal to 'БДР' Then
+		If "Budget" variable is equal to 'Budget of Revenue' Then
 			If "ArrivalExpense" variable is equal to 'Income' Then
 				Then "BudgetsOperations" table became equal by template
 					| 'N' | 'Budget profile'               | 'Planning object' | 'Amount'    | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Limit'    | 'Currency' | 'Executed quantity' | 'Limiting currency' | 'Budget items dimension' |
 					| '1' | 'P&amp;L budget' | '$PlanningDoc$'   | '-$Amount$' | '$Amount$'         | '$VABudgetCode$; $VAProject$; $VAOrganization$' | '$Amount$'         | '-$Amount$' | 'RUB'    | ''                     | 'RUB'                  | '$VAItem$ Income'         |
 
-		If "Budget" variable is equal to 'БДР' Then
+		If "Budget" variable is equal to 'Budget of Revenue' Then
 			If "ArrivalExpense" variable is equal to 'Expense' Then
 				Then "BudgetsOperations" table became equal by template
 					| 'N' | 'Budget profile'               | 'Planning object' | 'Amount'    | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Limit'    | 'Currency' | 'Executed quantity' | 'Limiting currency' | 'Budget items dimension' |
@@ -434,7 +434,7 @@ Scenario: I open and check customer payment schedule
 		
 		Then 'Document register records: Payment schedule with buyer or supplier * from *' window is opened
 		Then "BudgetsOperations" table became equal by template
-			| 'N' | 'Budget profile'                      | 'Income expense' | 'Limiting multiplier' | 'Planning object' | 'Amount'   | 'Partners dimension'                                           | 'Version source' | 'State' | 'Planning rate' | 'Needs dimension' | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Supply dimension' | 'Количество' | 'Limit'   | 'Currency' | 'Executed quantity' | 'Nomenclature dimension' | 'Limiting currency' | 'Planning multiplier' | 'Rate specified in operation' | 'Limiting rate' | 'Budget items dimension' | 'Document adjusting' |
+			| 'N' | 'Budget profile'                      | 'Income expense' | 'Limiting multiplier' | 'Planning object' | 'Amount'   | 'Partners dimension'                                           | 'Version source' | 'State' | 'Planning rate' | 'Needs dimension' | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Supply dimension' | 'Quantity' | 'Limit'   | 'Currency' | 'Executed quantity' | 'Nomenclature dimension' | 'Limiting currency' | 'Planning multiplier' | 'Rate specified in operation' | 'Limiting rate' | 'Budget items dimension' | 'Document adjusting' |
 			| '1' | 'P&amp;L budget'        | 'Income'        | '1'                       | '$PlanningDoc$'   | '$Amount$' | '$VAOrganization$; $VACustomer$; $Contract$; $PlanningDoc$' | ''                | ''          | '1.0000'            | ''                       | ''                | '$VABudgetCode$; $VAProject$; $VAOrganization$' | ''                | ''                   | ''           | '$Amount$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'No'                   | '1.0000'             | '$VAItem$ Income'         | ''                        |
 			| '2' | 'Cash flow budget' | 'Income'        | '1'                       | '$DocumentPlan$'   | '$Amount$' | '$VAOrganization$; $VACustomer$; $Contract$; $DocumentPlan$' | ''                | ''          | '1.0000'            | ''                       | ''                | '$VAFinancialResponsibilityCenter$; $VAProject$; $VAOrganization$' | ''                | ''                   | ''           | '$Amount$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'No'                   | '1.0000'             | '$VAItem$ Income'         | ''                        |
 
@@ -469,7 +469,7 @@ Scenario: I open and check supplier payment schedule
 			And I click the button named 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'
 		Then 'Document register records: Payment schedule with buyer or supplier * from *' window is opened
 		Then "BudgetsOperations" table became equal by template
-			| 'N' | 'Budget profile'                      | 'Income expense' | 'Limiting multiplier' | 'Planning object' | 'Amount'   | 'Partners dimension'                                           | 'Version source' | 'State' | 'Planning rate' | 'Needs dimension' | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Supply dimension' | 'Количество' | 'Limit'   | 'Currency' | 'Executed quantity' | 'Nomenclature dimension' | 'Limiting currency' | 'Planning multiplier' | 'Rate specified in operation' | 'Limiting rate' | 'Budget items dimension' | 'Document adjusting' |
+			| 'N' | 'Budget profile'                      | 'Income expense' | 'Limiting multiplier' | 'Planning object' | 'Amount'   | 'Partners dimension'                                           | 'Version source' | 'State' | 'Planning rate' | 'Needs dimension' | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Supply dimension' | 'Quantity' | 'Limit'   | 'Currency' | 'Executed quantity' | 'Nomenclature dimension' | 'Limiting currency' | 'Planning multiplier' | 'Rate specified in operation' | 'Limiting rate' | 'Budget items dimension' | 'Document adjusting' |
 			| '1' | 'P&amp;L budget'        | 'Expense'        | '1'                       | '$PlanningDoc$'   | '$Amount$' | '$VAOrganization$; $VACustomer$; $Contract$; $PlanningDoc$' | ''                | ''          | '1.0000'            | ''                       | ''                | '$VABudgetCode$; $VAProject$; $VAOrganization$' | ''                | ''                   | ''           | '$Amount$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'No'                   | '1.0000'             | '$VAItem$ Expense'         | ''                        |
 			| '2' | 'Cash flow budget' | 'Expense'        | '1'                       | '$DocumentPlan$'   | '$Amount$' | '$VAOrganization$; $VACustomer$; $Contract$; $DocumentPlan$' | ''                | ''          | '1.0000'            | ''                       | ''                | '$VAFinancialResponsibilityCenter$; $VAProject$; $VAOrganization$' | ''                | ''                   | ''           | '$Amount$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'No'                   | '1.0000'             | '$VAItem$ Expense'         | ''                        |
 
