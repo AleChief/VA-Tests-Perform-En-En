@@ -18,7 +18,11 @@ Background:
 Scenario: 04.00 Determining the application type
 
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
 Scenario: 04.01 Creating a report type "VA - Arbitrary request"

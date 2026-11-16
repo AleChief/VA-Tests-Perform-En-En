@@ -18,7 +18,11 @@ Background:
 Scenario: 03.00 Determining the application type
 
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
 Scenario: 03.01 Creating a report with groups and 6 dimensions
@@ -330,7 +334,11 @@ Scenario: 03.06 Configuring rights for the user "Budgeting1"
 
 	And I add right "Read, write" for report type "VA - ImportExcel" user "Budgeting1" for all companies
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 Scenario: 03.07 Creating a report instance - "VA - ImportExcel" and loading from a file
 

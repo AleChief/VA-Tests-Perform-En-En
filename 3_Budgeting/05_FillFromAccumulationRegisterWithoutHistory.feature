@@ -18,7 +18,11 @@ Background:
 Scenario: 05.00 Determining the application type
 
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
 Scenario: 05.01 Creating report type "VA - Filling from PH (no history)"
@@ -407,7 +411,11 @@ Scenario: 05.07 Configuring rights for users
 
 		And I add right "Read, write" for report type "VA - Filling from PH (no history)" user "Budgeting1" for all companies
 		And I close "CPM - Budget" TestClient
-		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+		Try
+			And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+		Except
+			And Delay 30
+			And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 Scenario: 05.08 Creating pivot table
 

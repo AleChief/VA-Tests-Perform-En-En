@@ -61,12 +61,19 @@ Scenario: 01.01 Creating a system user [Administrator]
 		And I click the button named 'FormWriteAndClose'
 		And I wait 'Administrator (User)' window closing in 20 seconds
 
+		And I execute 1C:Enterprise script at server no context
+			| 'SetPrivilegedMode(True);' |
+			| 'Common.CommonSettingsStorageSave("UserCommonSettings", "AskConfirmationOnExit", False, , "Administrator");' |
 
 	And I close "Main client" TestClient
 
 Scenario: 01.02 Allowing opening of external data processors
 
-	And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
+	Try
+		And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
+	Except
+		And Delay 30
+		And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
 
 	If 'Security warning' window is opened Then
 		And I click the button named 'Allow'
@@ -77,7 +84,11 @@ Scenario: 01.02 Allowing opening of external data processors
 
 Scenario: 01.03 Enabling subsystems
 
-	And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
+	Try
+		And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
+	Except
+		And Delay 30
+		And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
 
 	* Enabling the "Master data management" subsystem
 		And I set 'False' value to the constant 'UseMasterDataManagement'

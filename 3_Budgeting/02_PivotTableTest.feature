@@ -17,7 +17,11 @@ Background:
 Scenario: 02.00 Determining application type
 
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
 Scenario: 02.01 Creating a report type
@@ -171,7 +175,11 @@ Scenario: 02.04 Configuring rights for user "Budgeting1"
 
 	And I add right "Read, write" for report type "VA - Recalculation in context" user "Budgeting1" for all companies
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 Scenario: 02.05 Entering data into a pivot table
 
@@ -893,6 +901,14 @@ Scenario: 02.09 Copying all data of the reporting period
 									
 Scenario: 02.10 Copying data by indicators
 
+	And I close "CPM - Budget" TestClient
+	And Delay 20
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+
 	And I open report pivot table with name "VA - Recalculation in context"
 
 	* Copying data
@@ -983,6 +999,7 @@ Scenario: 02.10 Copying data by indicators
 		And I input '1/1/2024' text in the field named 'DateBegin'
 		And I move to the next attribute
 		And I input '1/31/2024' text in the field named 'DateEnd'
+		And Delay 45
 		And I click the button named 'Select'
 		Then "Copy report indicator values" window is opened
 		And I click the button named 'ButtonChangePeriodDestination'
@@ -990,6 +1007,7 @@ Scenario: 02.10 Copying data by indicators
 		And I input '2/1/2024' text in the field named 'DateBegin'
 		And I move to the next attribute
 		And I input '2/28/2024' text in the field named 'DateEnd'
+		And Delay 45
 		And I click the button named 'Select'
 		Then "Copy report indicator values" window is opened
 		And I click the button named 'Execute'

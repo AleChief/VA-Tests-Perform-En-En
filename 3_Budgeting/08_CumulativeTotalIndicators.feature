@@ -17,7 +17,11 @@ Background:
 Scenario: 08.00 Determining the application type
 	
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
 Scenario: 08.01 Creating report group "VA - Cumulative total (group)"

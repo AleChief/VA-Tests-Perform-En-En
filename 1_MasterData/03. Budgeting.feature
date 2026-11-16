@@ -1131,7 +1131,11 @@ Scenario: 00.23 Creating document "Reflection of actual data"
 
 Scenario: 00.24 Enabling reference data management
 
-	And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
+	Try
+		And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
+	Except
+		And Delay 30
+		And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
 	And I set 'True' value to the constant 'UseMasterDataManagement'
 	* Database type of predefined external IB "Current database"
 		And I execute 1C:Enterprise script at server no context

@@ -18,7 +18,11 @@ Background:
 Scenario: 01.00 Determining application type
 
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
 Scenario: 01.01 Creating report type
@@ -884,7 +888,11 @@ Scenario: 01.09 Configuring rights for user "Budgeting1"
 
 	And I add right "Read, write" for report type "VA - Manual entry for all analytics" user "Budgeting1" for all companies
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 Scenario: 01.10 Creating a report instance
 
@@ -1090,7 +1098,11 @@ Scenario: 01.10 Creating a report instance
 
 Scenario: 01.11 Checking document movements
 	
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Opening the document
 		And I find report type with name "VA - Manual entry for all analytics" in list

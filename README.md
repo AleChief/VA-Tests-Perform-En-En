@@ -83,3 +83,37 @@ Vanessa Automation itself (there is no English synonym); it works on a platform 
 1_MasterData — 27 of 27; 3_Budgeting — 240 scenarios, 230 of them pass on a stand without Microsoft Excel;
 02 and 10 (need Excel) — 26 of 26 on a machine with Excel. 17 is tagged `@IgnoreOnCIMainBuild` by the vendor and was
 not executed.
+
+## Ветка file-base-env
+
+`main` плюс слой окружения для запуска на файловой базе с лицензией для разработчиков. Проверки сценариев не
+меняются, добавлены только условия выполнения:
+
+- подключение тестового клиента обёрнуто в `Try ... Except / And Delay 30 / повторное подключение` (75 мест):
+  при медленном старте клиента первая попытка не успевает;
+- паузы, которых нет в исходном наборе (9 мест): 02 (20 и 45 с) и 20.09 (20 с перед каждым переключением
+  пользователя) — сеанс закрытого клиента освобождается с задержкой;
+- 02.10: в начале сценария клиент закрывается и подключается заново под Budgeting1 (в наборе VA-Tests-Perform
+  это снято — конфликт периодов закрывает предусловие 00.24; здесь оставлено, без него EN-набор не прогонялся);
+- 01.01: администратору выключается вопрос «Exit the app?» (`AskConfirmationOnExit = False`). Иначе Vanessa
+  Automation не может закрыть клиента штатно и закрывает процесс, а сеанс закрытого так клиента остаётся в файловой
+  базе и занимает место лицензии для разработчиков — после нескольких переключений следующие клиенты не запускаются.
+  Для пользователей Budgeting1–4 вопрос выключается так же — служебным шагом перед прогоном 3_Budgeting (в набор не
+  входит).
+
+## Branch file-base-env
+
+`main` plus an environment layer for running on a file infobase with the developer licence. Scenario checks are not
+changed, only run conditions are added:
+
+- connecting the test client is wrapped in `Try ... Except / And Delay 30 / connect again` (75 places): when the
+  client starts slowly the first attempt fails;
+- delays the original suite does not have (9 places): 02 (20 and 45 s) and 20.09 (20 s before every switch of the
+  user) — the session of a closed client is released with a delay;
+- 02.10: at the start of the scenario the client is closed and connected again as Budgeting1 (removed in
+  VA-Tests-Perform — precondition 00.24 fixes the period conflict; kept here, the EN suite was not run without it);
+- 01.01: the "Exit the app?" question is turned off for the administrator (`AskConfirmationOnExit = False`). Otherwise
+  Vanessa Automation cannot close the client normally and kills the process; the session of the killed client stays in
+  the file infobase and holds a seat of the developer licence — after several switches the next clients do not start.
+  For users Budgeting1–4 the question is turned off the same way by a run-only step before 3_Budgeting (not part of
+  the suite).

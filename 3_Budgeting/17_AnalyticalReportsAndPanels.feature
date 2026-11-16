@@ -15,7 +15,11 @@ Background:
 Scenario: 17.00 Determining application type
 
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
 Scenario: 17.01 Creating report type
@@ -115,7 +119,11 @@ Scenario: 17.04 Configuring rights for user "Budgeting1"
 
 	And I add right "Read, write" for report type "VA - Analytical reports" user "Budgeting1" for all companies
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 Scenario: 17.05 Creating report instances
 

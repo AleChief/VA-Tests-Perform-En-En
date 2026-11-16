@@ -18,7 +18,11 @@ Background:
 Scenario: 12.00 Initial initialization of variables
 
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 	Given I initialize variables
 
 Scenario: 12.01 Configuring default dimension values
@@ -132,7 +136,11 @@ Scenario: 12.01 Configuring default dimension values
 Scenario: 12.02 Creating report type and report structure
 
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 
 	And I create report type with name "VA - Filling empty analytics" and parent "VA - Report group"
 	

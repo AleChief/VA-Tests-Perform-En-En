@@ -18,7 +18,11 @@ Background:
 Scenario: 18.00 Determining application type
 
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
 	And I enable performance mode of restrictions at record level
@@ -269,7 +273,11 @@ Scenario: 18.09 Configuring rights for users
 
 Scenario: 18.10 Checking report types for "Budgeting1"
 	
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Report "VA - Checking access settings (no)" should not be in the list
 		And In the command interface I select "Budgeting, reporting, and analysis" "Report types and templates"
@@ -294,7 +302,11 @@ Scenario: 18.10 Checking report types for "Budgeting1"
 
 Scenario: 18.11 Checking indicator value adjustments for "Budgeting1"
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Opening list with filters
 		And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustment"
@@ -363,7 +375,11 @@ Scenario: 18.11 Checking indicator value adjustments for "Budgeting1"
 
 Scenario: 18.12 Checking report instances for "Budgeting1"
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Searching for report instances
 		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
@@ -425,7 +441,11 @@ Scenario: 18.12 Checking report instances for "Budgeting1"
 
 Scenario: 18.13 Checking report instances settings form for "Budgeting1"
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And I open first report instance for report type "VA - Checking access settings (record)"
 	Then I open report instance for report type "VA - Checking access settings (record)" currency "RUB" company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project "VA - Main project" dimensions "Administration" '' '' '' '' ''
@@ -551,7 +571,11 @@ Scenario: 18.13 Checking report instances settings form for "Budgeting1"
 
 Scenario: 18.14 Checking indicator value adjustments for "Budgeting2"
 
-	And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
 
 	* Opening list with filters
 		And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustment"
@@ -576,7 +600,11 @@ Scenario: 18.14 Checking indicator value adjustments for "Budgeting2"
 
 Scenario: 18.15 Checking report instances for "Budgeting2"
 
-	And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
 
 	* Searching for report instances
 		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
@@ -605,7 +633,11 @@ Scenario: 18.15 Checking report instances for "Budgeting2"
 
 Scenario: 18.16 Checking pivot table for user "Budgeting2"
 
-	And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
 
 	* Checking pivot table with write rights
 		And In the command interface I select "Budgeting, reporting, and analysis" "Pivot table"
@@ -701,7 +733,11 @@ Scenario: 18.16 Checking pivot table for user "Budgeting2"
 								
 Scenario: 18.17 Checking indicator value adjustments for "Budgeting3"
 
-	And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
 	* Opening list with filters
 		And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustment"
@@ -746,7 +782,11 @@ Scenario: 18.17 Checking indicator value adjustments for "Budgeting3"
 
 Scenario: 18.18 Checking report instances and settings form for "Budgeting3"
 	
-	And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
 	* Searching for report instances
 		And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
@@ -840,7 +880,11 @@ Scenario: 18.18 Checking report instances and settings form for "Budgeting3"
 		
 Scenario: 18.19 Checking pivot table for user "Budgeting3"
 
-	And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
 	* Checking pivot table with read rights
 		And In the command interface I select "Budgeting, reporting, and analysis" "Pivot table"
@@ -895,7 +939,11 @@ Scenario: 18.19 Checking pivot table for user "Budgeting3"
 
 Scenario: 18.20 Interface test for user "Budgeting3" - Sections and functions panel
 
-	And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
 	* Sections panel
 		And section panel is equal to
@@ -940,7 +988,11 @@ Scenario: 18.20 Interface test for user "Budgeting3" - Sections and functions pa
 
 Scenario: 18.21 Interface test for user "Budgeting1" - Sections and functions panel
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Sections panel
 		And section panel is equal to
@@ -985,7 +1037,11 @@ Scenario: 18.21 Interface test for user "Budgeting1" - Sections and functions pa
 
 Scenario: 18.22 Interface test for user "Budgeting1" - Personal settings
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	If '$$IsERPCPM$$' Then
 
@@ -1068,7 +1124,11 @@ Scenario: 18.22 Interface test for user "Budgeting1" - Personal settings
 
 Scenario: 18.23 Interface test for user "Budgeting1" - Report types, report instances, pivot table
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Report types and templates"
 	Then "Report types and templates" window is opened
@@ -1175,7 +1235,11 @@ Scenario: 18.23 Interface test for user "Budgeting1" - Report types, report inst
 			
 Scenario: 18.24 Interface test for user "Budgeting1" - Reporting period management
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Reporting period management"
 
@@ -1211,7 +1275,11 @@ Scenario: 18.24 Interface test for user "Budgeting1" - Reporting period manageme
 				
 Scenario: 18.25 Interface test for user "Budgeting1" - Indicator value adjustment
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Opening list with filters
 		And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustment"
@@ -1255,7 +1323,11 @@ Scenario: 18.25 Interface test for user "Budgeting1" - Indicator value adjustmen
 
 Scenario: 18.26 Interface test for user "Budgeting1" - Template for adjusting indicator values
 	
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustments templates"
 	And I search element "VA - Checking access settings" "At the beginning of the line" by field "Description" in list "Indicator value adjustments templates"
@@ -1306,7 +1378,11 @@ Scenario: 18.26 Interface test for user "Budgeting1" - Template for adjusting in
 		
 Scenario: 18.27 Interface test for user "Budgeting1" - Reporting preparation regulation
 	
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Regulations for preparing reports"
 	And I search element "VA - Main regulations" "At the beginning of the line" by field "Description" in list "Regulations for preparing reports"
@@ -1365,7 +1441,11 @@ Scenario: 18.27 Interface test for user "Budgeting1" - Reporting preparation reg
 			
 Scenario: 18.28 Interface test for user "Budgeting1" - Scenarios
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Scenarios"
 	And I search element "VA - Main scenario" "At the beginning of the line" by field "Description" in list "Scenarios"
@@ -1386,7 +1466,11 @@ Scenario: 18.28 Interface test for user "Budgeting1" - Scenarios
 
 Scenario: 18.29 Interface test for user "Budgeting1" - Companies
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	If '$$IsPerform$$' Then
 
@@ -1506,7 +1590,11 @@ Scenario: 18.29 Interface test for user "Budgeting1" - Companies
 
 Scenario: 18.30 Interface test for user "Budgeting1" - Periods
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Periods"
 	Then "Periods" window is opened
@@ -1520,7 +1608,11 @@ Scenario: 18.30 Interface test for user "Budgeting1" - Periods
 
 Scenario: 18.31 Interface test for user "Budgeting1" - Dimension types (corporate)
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Dimension types (corporate)"
 	And I search element "VA0" "At the beginning of the line" by field "Code" in list "Dimension types (corporate)"
@@ -1566,7 +1658,11 @@ Scenario: 18.31 Interface test for user "Budgeting1" - Dimension types (corporat
 
 Scenario: 18.32 Interface test for user "Budgeting1" - Custom classifier
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Arbitrary classifier"
 	Then "Arbitrary classifier" window is opened
@@ -1587,7 +1683,11 @@ Scenario: 18.32 Interface test for user "Budgeting1" - Custom classifier
 
 Scenario: 18.33 Interface test for user "Budgeting1" - Projects and stages
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	And In the command interface I select "Budgeting, reporting, and analysis" "Projects and phases"
 	And I search element "VA - Main project" "Exact match" by field "Description" in list "Projects and phases"
@@ -1617,7 +1717,11 @@ Scenario: 18.33 Interface test for user "Budgeting1" - Projects and stages
 			
 Scenario: 18.34 Interface test for user "Budgeting1" - Report instances matrix
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Opening a report
 		And In the command interface I select "Budgeting, reporting, and analysis" "Report instance matrix"
@@ -1669,7 +1773,11 @@ Scenario: 18.34 Interface test for user "Budgeting1" - Report instances matrix
 
 Scenario: 18.35 Interface test for user "Budgeting1" - Document processing configuration
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Opening a report
 		And In the command interface I select "Budgeting, reporting, and analysis" "Document processing setting"
@@ -1736,7 +1844,11 @@ Scenario: 18.35 Interface test for user "Budgeting1" - Document processing confi
 
 Scenario: 18.36 Interface test for user "Budgeting1" - Organizational structures of the regulation
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Opening a report
 		And In the command interface I select "Budgeting, reporting, and analysis" "Organizational regulation structures"
@@ -1760,7 +1872,11 @@ Scenario: 18.36 Interface test for user "Budgeting1" - Organizational structures
 
 Scenario: 18.37 Interface test for user "Budgeting1" - Report on report indicator links
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Opening a report
 		And In the command interface I select "Budgeting, reporting, and analysis" "Report on report indicator links"
@@ -1774,7 +1890,11 @@ Scenario: 18.37 Interface test for user "Budgeting1" - Report on report indicato
 
 Scenario: 18.38 Interface test for user "Budgeting1" - Report on links between reports
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Opening a report
 		And In the command interface I select "Budgeting, reporting, and analysis" "Graphic report link report"
@@ -1789,7 +1909,11 @@ Scenario: 18.38 Interface test for user "Budgeting1" - Report on links between r
 
 Scenario: 18.39 Interface test for user "Budgeting1" - Network diagram of a project group
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Opening a report
 		And In the command interface I select "Budgeting, reporting, and analysis" "Network diagram of project group"
@@ -1801,7 +1925,11 @@ Scenario: 18.39 Interface test for user "Budgeting1" - Network diagram of a proj
 			
 Scenario: 18.40 Interface test for user "Budgeting1" - Copying report indicator values
 		
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Copying report indicator data
 		And In the command interface I select "Budgeting, reporting, and analysis" "Copy report indicator values"
@@ -1811,7 +1939,11 @@ Scenario: 18.40 Interface test for user "Budgeting1" - Copying report indicator 
 
 Scenario: 18.41 Interface test for user "Budgeting1" - Comparison of tabular documents
 
-	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 	* Comparison of tabular documents
 		And In the command interface I select "Budgeting, reporting, and analysis" "Compare spreadsheet documents"

@@ -18,7 +18,11 @@ Background:
 Scenario: 20.00 Determining the application type
 	
 	And I close "CPM - Budget" TestClient
-	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Try
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Except
+		And Delay 30
+		And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 	Given I initialize variables
 
 Scenario: 20.01 Creating roles
@@ -419,7 +423,12 @@ Scenario: 20.09 Approval by users
 
 	* Approval 1 (part 1)
 		And I close "CPM - Budget" TestClient
-		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+		And Delay 20
+		Try
+			And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+		Except
+			And Delay 30
+			And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
 		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
@@ -436,7 +445,12 @@ Scenario: 20.09 Approval by users
 		
 	* Approval 3 (deputy)
 		And I close "CPM - Budget" TestClient
-		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+		And Delay 20
+		Try
+			And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+		Except
+			And Delay 30
+			And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
 		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
 		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
@@ -447,7 +461,12 @@ Scenario: 20.09 Approval by users
 
 	* Approval 1 (part 2)
 		And I close "CPM - Budget" TestClient
-		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+		And Delay 20
+		Try
+			And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+		Except
+			And Delay 30
+			And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
 		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
 		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
@@ -476,7 +495,12 @@ Scenario: 20.09 Approval by users
 		
 	* Approval 2
 		And I close "CPM - Budget" TestClient
-		And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
+		And Delay 20
+		Try
+			And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
+		Except
+			And Delay 30
+			And I connect "CPM - Budget" TestClient using "Budgeting2" login and '' password
 
 		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
 		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
@@ -491,7 +515,12 @@ Scenario: 20.09 Approval by users
 
 	* Approval 3
 		And I close "CPM - Budget" TestClient
-		And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+		And Delay 20
+		Try
+			And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
+		Except
+			And Delay 30
+			And I connect "CPM - Budget" TestClient using "Budgeting3" login and '' password
 
 		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
 		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
@@ -502,7 +531,12 @@ Scenario: 20.09 Approval by users
 
 	* Approval 4
 		And I close "CPM - Budget" TestClient
-		And I connect "CPM - Budget" TestClient using "Budgeting4" login and '' password
+		And Delay 20
+		Try
+			And I connect "CPM - Budget" TestClient using "Budgeting4" login and '' password
+		Except
+			And Delay 30
+			And I connect "CPM - Budget" TestClient using "Budgeting4" login and '' password
 
 		And I open report instance by saved setting "VA - Coordination - Mercury LLC"
 		And I open report instance for report type "VA - Coordination" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
