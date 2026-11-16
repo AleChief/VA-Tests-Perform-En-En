@@ -1,556 +1,556 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 10. Расчет показателей с заполнением по ADO
+Feature: 10. Calculation of indicators with ADO filling
 
-	Как Администратор я хочу
-	Проверить, что данные по ADO загружаются в экземпляры отчетов
+	As Administrator I want to
+	Check that ADO data is loaded into report instances
 
-Контекст: 
+Background:
 
-	И я закрыл все окна клиентского приложения
+	And I close all client application windows
 
-Сценарий: 10.00 Определение типа приложения
+Scenario: 10.00 Determining the application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 10.01 Создание информационных баз
+Scenario: 10.01 Creating information bases
 
-	И Я создаю тип информационной базы с именем "VA - ADO Import (Excel)" с версией "Connect via ADO"
+	And I create information base type with name "VA - ADO Import (Excel)" version "Connect via ADO"
 
-	И Я создаю внешнюю информационную базу "VA - ADO Import (Excel)" тип "VA - ADO Import (Excel)" каталог "$DirectoryПроекта$\3_Budgeting\Templates\10\ADO" тип хранилища 'Excel'
+	And I create external information base "VA - ADO Import (Excel)" type "VA - ADO Import (Excel)" catalog "$ProjectPath$\3_Budgeting\Layouts\10\ADO_En" storage type 'Excel'
 
-Сценарий: 10.02 Настройка информационных баз
+Scenario: 10.02 Configuring information bases
 
-	* Включение управления НСИ
-		И В командном интерфейсе я выбираю "General catalogs and settings" "General settings"
-		Тогда открылось окно "General settings*"
-		И я устанавливаю флаг с именем 'UseMasterDataManagement'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "General settings*" в течение 20 секунд
+	* Enabling reference data management
+		And In the command interface I select "General catalogs and settings" "General settings"
+		Then "General settings*" window is opened
+		And I set checkbox named 'UseMasterDataManagement'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "General settings*" window closing in 20 seconds
 
-	И В командном интерфейсе я выбираю "Integration and master data management" "Infobase types"
-	И Я в списке "Infobase types" по полю "Description" ищу и выбираю элемент "VA - ADO Import (Excel)" "At beginning of line"
-	Тогда открылось окно "VA - ADO Import (Excel) (Infobase type)"
-	И из выпадающего списка с именем 'DefaultEIB' я выбираю по строке "VA - ADO Import (Excel)"
-	И я нажимаю на кнопку с именем 'FormWrite'
-	Тогда открылось окно "VA - ADO Import (Excel) (Infobase type)"
-	И В текущем окне я нажимаю кнопку командного интерфейса "ADO tables"
-	И в таблице 'List' я нажимаю на кнопку с именем 'UpdateListOfTables'
-	Когда открылось окно "VA - ADO Import (Excel) (Infobase type)"
-	И В текущем окне я нажимаю кнопку командного интерфейса "Correspondence with external infobases"
+	And In the command interface I select "Integration and master data management" "Infobase types"
+	And I search and select element "VA - ADO Import (Excel)" "At beginning of line" by field "Description" in list "Infobase types"
+	Then "VA - ADO Import (Excel) (Infobase type)" window is opened
+	And I select from the drop-down list named 'DefaultEIB'  by "VA - ADO Import (Excel)" string
+	And I click the button named 'FormWrite'
+	Then "VA - ADO Import (Excel) (Infobase type)" window is opened
+	And In this window I click command interface button "ADO tables"
+	And in the table 'List' I click the button named 'UpdateListOfTables'
+	When "VA - ADO Import (Excel) (Infobase type)" window is opened
+	And In this window I click command interface button "Correspondence with external infobases"
 	
-	* Номенклатура
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Correspondence with external infobases (create)"
-		И я нажимаю кнопку выбора у поля с именем 'ObjectDetailsEIB'
-		Тогда открылось окно "ADO tables"
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Correspondence with external infobases (create) *"
-		И из выпадающего списка с именем 'ConsolidationObjectType' я выбираю точное значение "Catalog"
-		И я нажимаю кнопку выбора у поля с именем 'CrntObjectDetails'
-		Тогда открылось окно "Infobase catalogs"
-		И в таблице 'List' я перехожу к строке:
+	* Nomenclature
+		And I click the button named 'FormCreate'
+		Then "Correspondence with external infobases (create)" window is opened
+		And I click Choice button of the field named 'ObjectDetailsEIB'
+		Then "ADO tables" window is opened
+		And I select current line in 'List' table
+		Then "Correspondence with external infobases (create) *" window is opened
+		And I select "Catalog" exact value from the drop-down list named 'ConsolidationObjectType'
+		And I click Choice button of the field named 'CrntObjectDetails'
+		Then "Infobase catalogs" window is opened
+		And I go to line in 'List' table:
 			| "Not in the configuration" | "Under approval" | "Catalog"   |
 			| "No"                        | "No"         | "Product range" |
-		И в таблице 'List' я выбираю текущую строку
-		* Наименование
-			Тогда открылось окно "Correspondence with external infobases (create) *"
-			И в таблице 'ComplianceTable' я перехожу к строке:
+		And I select current line in 'List' table
+		* Name
+			Then "Correspondence with external infobases (create) *" window is opened
+			And I go to line in 'ComplianceTable' table:
 				| "Field"         |
 				| "Description" |
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-			И в таблице 'DBDimensionsTableBox' я перехожу к строке:
+			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I go to line in 'DBDimensionsTableBox' table:
 				| "Used in mapping" | "Field"         |
 				| "No"                          | "Product range" |
-			И я выбираю пункт контекстного меню с именем 'ComplianceTableContextMenuCommandBarMapsButtonMapDimensions' на элементе формы с именем 'ComplianceTable'
-		* Артикул
-			И в таблице 'ComplianceTable' я перехожу к строке:
+			And I select context menu item named 'ComplianceTableContextMenuCommandBarMapsButtonMapDimensions' of the form attribute named 'ComplianceTable'
+		* Article number
+			And I go to line in 'ComplianceTable' table:
 				| "Field"    |
 				| "Product ID" |
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-			И в таблице 'DBDimensionsTableBox' я перехожу к строке:
+			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I go to line in 'DBDimensionsTableBox' table:
 				| "Used in mapping" | "Field"    |
 				| "No"                          | "Product ID" |
-			И я выбираю пункт контекстного меню с именем 'ComplianceTableContextMenuCommandBarMapsButtonMapDimensions' на элементе формы с именем 'ComplianceTable'	
-			И в таблице 'ComplianceTable' я перехожу к строке:
+			And I select context menu item named 'ComplianceTableContextMenuCommandBarMapsButtonMapDimensions' of the form attribute named 'ComplianceTable'
+			And I go to line in 'ComplianceTable' table:
 				| "Source" | "Key" | "Field"    | "Filling method" |
 				| "Product ID"  | "No"      | "Product ID" | "Source field"    |
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableOfKeyOne'
-			И в таблице 'ComplianceTable' я изменяю флаг с именем 'MapTableOfKeyOne'
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-		* Вид номенклатуры
-			Если 'NOT $$ЭтоPerform$$' Тогда
-				Когда открылось окно "Correspondence with external infobases (create) *"
-				И в таблице 'ComplianceTable' я перехожу к строке:
+			And I activate field named 'MapTableOfKeyOne' in 'ComplianceTable' table
+			And I change checkbox named 'MapTableOfKeyOne' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+		* Nomenclature type
+			If 'NOT $$IsPerform$$' Then
+				When "Correspondence with external infobases (create) *" window is opened
+				And I go to line in 'ComplianceTable' table:
 					| "Field"             |
 					| "Nomenclature type" |
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-				И в таблице 'ComplianceTable' я завершаю редактирование строки
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'MappingTableEIBAlias'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				И Я в списке "Enter a value" по полю "Description" ищу и выбираю элемент "VA - Products" "At beginning of line"
-		* Номенклатурная группа
-			Если 'NOT $$IsERPCPM$$' Тогда
-				Когда открылось окно "Correspondence with external infobases (create) *"
-				И в таблице 'ComplianceTable' я перехожу к строке:
+				And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I finish line editing in 'ComplianceTable' table
+				And I activate field named 'MappingTableEIBAlias' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				And I search and select element "VA - Products" "At beginning of line" by field "Description" in list "Enter a value"
+		* Nomenclature group
+			If 'NOT $$IsERPCPM$$' Then
+				When "Correspondence with external infobases (create) *" window is opened
+				And I go to line in 'ComplianceTable' table:
 					| "Field"                  |
 					| "Product range group" |
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-				И в таблице 'ComplianceTable' я завершаю редактирование строки
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'MappingTableEIBAlias'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				И Я в списке "Enter a value" по полю "Description" ищу и выбираю элемент "VA - Product range group" "At beginning of line"	
-		* Единица измерения
-			Когда открылось окно "Correspondence with external infobases (create) *"
-			Если '$$IsERPCPM$$' Тогда
-				И в таблице 'ComplianceTable' я перехожу к строке:
+				And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I finish line editing in 'ComplianceTable' table
+				And I activate field named 'MappingTableEIBAlias' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				And I search and select element "VA - Product range group" "At beginning of line" by field "Description" in list "Enter a value"
+		* Unit of measure
+			When "Correspondence with external infobases (create) *" window is opened
+			If '$$IsERPCPM$$' Then
+				And I go to line in 'ComplianceTable' table:
 					| "Field"             |
 					| "Storage unit" |
-			Иначе
-				И в таблице 'ComplianceTable' я перехожу к строке:
+			Else
+				And I go to line in 'ComplianceTable' table:
 					| "Field"    |
 					| "Unit" |
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'MappingTableEIBAlias'
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			Если '$$IsERPCPM$$' Тогда
-				И Я в списке "Enter a value" по полю "Description" ищу и выбираю элемент "PCs" "At beginning of line"	
-			Иначе
-				И Я в списке "Enter a value" по полю "Description" ищу и выбираю элемент "Piece" "At beginning of line"
-		* Корневой каталог
-			Если '$$IsCPM$$' Тогда				
-				И я нажимаю кнопку выбора у поля с именем 'RootDirectory1'
-				И Я в списке 'Catalog.Products' по полю "Reference" ищу элемент "VA - Products" "At beginning of line"
-				И в таблице 'List' я нажимаю на кнопку с именем 'ListChoose'
-				Тогда элемент формы с именем 'RootDirectory1' стал равен "VA - Products"			
-		И я нажимаю на кнопку с именем 	'FormWriteAndClose'
-		И я жду закрытия окна "Correspondence with external infobases (create) *" в течение 20 секунд
+			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I select current line in 'ComplianceTable' table
+			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+			And I activate field named 'MappingTableEIBAlias' in 'ComplianceTable' table
+			And I select current line in 'ComplianceTable' table
+			If '$$IsERPCPM$$' Then
+				And I search and select element "PCs" "At beginning of line" by field "Description" in list "Enter a value"
+			Else
+				And I search and select element "Piece" "At beginning of line" by field "Description" in list "Enter a value"
+		* Root directory
+			If '$$IsCPM$$' Then
+				And I click Choice button of the field named 'RootDirectory1'
+				And I search element "VA - Products" "At beginning of line" by field "Reference" in list 'Catalog.Products'
+				And in the table 'List' I click the button named 'ListChoose'
+				Then the form attribute named 'RootDirectory1' became equal to "VA - Products"
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Correspondence with external infobases (create) *" window closing in 20 seconds
 
-	Когда открылось окно "VA - ADO Import (Excel) (Infobase type)"
-	И я нажимаю на кнопку с именем 'FormCreate'
-	Тогда открылось окно "Correspondence with external infobases (create)"
-	И из выпадающего списка с именем 'ObjectDetailsEIB' я выбираю точное значение "Sheet1$"
-	И из выпадающего списка с именем 'ConsolidationObjectType' я выбираю точное значение "Catalog"
-	И я нажимаю кнопку выбора у поля с именем 'CrntObjectDetails'
-	Тогда открылось окно "Infobase catalogs"
-	И в таблице 'List' я перехожу к строке:
+	When "VA - ADO Import (Excel) (Infobase type)" window is opened
+	And I click the button named 'FormCreate'
+	Then "Correspondence with external infobases (create)" window is opened
+	And I select "Sheet1$" exact value from the drop-down list named 'ObjectDetailsEIB'
+	And I select "Catalog" exact value from the drop-down list named 'ConsolidationObjectType'
+	And I click Choice button of the field named 'CrntObjectDetails'
+	Then "Infobase catalogs" window is opened
+	And I go to line in 'List' table:
 		| "Not in the configuration" | "Under approval" | "Catalog"                |
 		| "No"                        | "Yes"          | "Income and expense items" |
-	И в таблице 'List' я выбираю текущую строку
-	Тогда открылось окно "Correspondence with external infobases (create) *"
-	И в таблице 'DBDimensionsTableBox' я перехожу к строке:
+	And I select current line in 'List' table
+	Then "Correspondence with external infobases (create) *" window is opened
+	And I go to line in 'DBDimensionsTableBox' table:
 		| "Used in mapping" | "Field"         |
 		| "No"                          | "Activity" |
-	И в таблице 'ComplianceTable' я перехожу к строке:
+	And I go to line in 'ComplianceTable' table:
 		| "Field"         |
 		| "Description" |
-	И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-	И я выбираю пункт контекстного меню с именем 'ComplianceTableContextMenuCommandBarMapsButtonMapDimensions' на элементе формы с именем 'ComplianceTable'
-	И в таблице 'ComplianceTable' я перехожу к строке:
+	And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+	And I select context menu item named 'ComplianceTableContextMenuCommandBarMapsButtonMapDimensions' of the form attribute named 'ComplianceTable'
+	And I go to line in 'ComplianceTable' table:
 		| "Field" |
 		| "Code"  |
-	И в таблице 'ComplianceTable' я перехожу к строке:
+	And I go to line in 'ComplianceTable' table:
 		| "Source"     | "Key" | "Field"         | "Filling method" |
 		| "Activity" | "No"      | "Description" | "Source field"    |
-	И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableOfKeyOne'
-	И в таблице 'ComplianceTable' я изменяю флаг с именем 'MapTableOfKeyOne'
-	И в таблице 'ComplianceTable' я завершаю редактирование строки
-	* Корневой каталог
-		И я нажимаю кнопку выбора у поля с именем 'RootDirectory1'
-		И Я в списке 'Catalog.IncomeAndExpenseItems' по полю "Reference" ищу элемент "VA - Income and expense items" "At beginning of line"
-		И в таблице 'List' я нажимаю на кнопку с именем 'ListChoose'
-		Тогда элемент формы с именем 'RootDirectory1' стал равен "VA - Income and expense items"
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
-	И я жду закрытия окна "Correspondence with external infobases (create) *" в течение 20 секунд
+	And I activate field named 'MapTableOfKeyOne' in 'ComplianceTable' table
+	And I change checkbox named 'MapTableOfKeyOne' in 'ComplianceTable' table
+	And I finish line editing in 'ComplianceTable' table
+	* Root directory
+		And I click Choice button of the field named 'RootDirectory1'
+		And I search element "VA - Income and expense items" "At beginning of line" by field "Reference" in list 'Catalog.IncomeAndExpenseItems'
+		And in the table 'List' I click the button named 'ListChoose'
+		Then the form attribute named 'RootDirectory1' became equal to "VA - Income and expense items"
+	And I click the button named 'FormWriteAndClose'
+	And I wait "Correspondence with external infobases (create) *" window closing in 20 seconds
 	
-	Тогда открылось окно "VA - ADO Import (Excel) (Infobase type)"
-	И В текущем окне я нажимаю кнопку командного интерфейса "Main"
-	И В текущем окне я нажимаю кнопку командного интерфейса "ADO tables"
-	И в таблице 'List' я нажимаю на кнопку с именем 'ListDataView'
-	Тогда открылось окно "ADO table view form"
-	И Я закрываю окно "ADO table view form"
-	Тогда открылось окно "VA - ADO Import (Excel) (Infobase type)"
-	И Я закрываю окно "VA - ADO Import (Excel) (Infobase type)"
-	Тогда открылось окно "Infobase types"
-	И Я закрываю окно "Infobase types"
+	Then "VA - ADO Import (Excel) (Infobase type)" window is opened
+	And In this window I click command interface button "Main"
+	And In this window I click command interface button "ADO tables"
+	And in the table 'List' I click the button named 'ListDataView'
+	Then "ADO table view form" window is opened
+	And I close "ADO table view form" window
+	Then "VA - ADO Import (Excel) (Infobase type)" window is opened
+	And I close "VA - ADO Import (Excel) (Infobase type)" window
+	Then "Infobase types" window is opened
+	And I close "Infobase types" window
 			
-Сценарий: 10.03 Создание вида отчета
+Scenario: 10.03 Creating a report type
 
-	И Я создаю вид отчета с именем "VA - ADO Import (Excel)" и родителем "VA - Report group"
+	And I create report type with name "VA - ADO Import (Excel)" and parent "VA - Report group"
 
-	* Настройка структуры отчета
-		И Я открываю контруктор отчета с именем "VA - ADO Import (Excel)"
-		И Я в конструкторе отчета добавляю строку с именем "Sales" 
-		И Я в конструкторе отчета добавляю колонку с именем "Price" 
-		И Я в конструкторе отчета добавляю колонку с именем "Count"
-		И Я в конструкторе отчета добавляю колонку с именем "Product ID"
-		И Я в конструкторе отчета в ячейке 'R2C4' меняю свойство показателя 'ValueType' на "Line"
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R2C2'
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0IEItems" в ячейку 'R2C3'
+	* Configuring the report structure
+		And I open report wizard with name "VA - ADO Import (Excel)"
+		And I add row with name "Sales" in report wizard
+		And I add column with name "Price" in report wizard
+		And I add column with name "Count" in report wizard
+		And I add column with name "Product ID" in report wizard
+		And I change indicator property 'ValueType' to "Line" in cell 'R2C4' in report wizard
+		And I add dimension with code "VA0Product" in cell 'R2C2' in report wizard
+		And I add dimension with code "VA0IEItems" in cell 'R2C3' in report wizard
 
-	* Настройки обмена файлами
-		Тогда открылось окно "Report wizard"
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-		И я нажимаю на кнопку открытия поля с именем 'ProcessingRule'
-		Тогда открылось окно "VA - ADO Import (Excel) (Calculation rules)"
-		И из выпадающего списка с именем 'DBType' я выбираю по строке "VA - ADO Import (Excel)"
-		И я нажимаю на кнопку открытия поля с именем 'DBType'
-		Тогда открылось окно "VA - ADO Import (Excel) (Infobase type)"
-		И я нажимаю на кнопку открытия поля с именем 'DefaultEIB'
-		Тогда открылось окно "VA - ADO Import (Excel) (External infobases)"
-		И я нажимаю на кнопку с именем 'OpenCompaniesFilesExchangeSettings'
-		И Я добавляю элемент пути к файлам организаций для типа 'ReportKind' объект "VA - ADO Import (Excel)" значение "VA_LoadingADO"
-		Тогда открылось окно "Company file path items: List form"
-		И Я закрываю окно "Company file path items: List form"		
-		Тогда открылось окно "VA - ADO Import (Excel) (External infobases)"
-		И Я закрываю окно "VA - ADO Import (Excel) (External infobases)"
-		Тогда открылось окно "VA - ADO Import (Excel) (Infobase type)"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "VA - ADO Import (Excel) (Infobase type)" в течение 20 секунд
-		Тогда открылось окно "VA - ADO Import (Excel) (Calculation rules) *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "VA - ADO Import (Excel) (Calculation rules) *" в течение 20 секунд
+	* File exchange settings
+		Then "Report wizard" window is opened
+		And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+		And I click Open button of the field named 'ProcessingRule'
+		Then "VA - ADO Import (Excel) (Calculation rules)" window is opened
+		And I select from the drop-down list named 'DBType'  by "VA - ADO Import (Excel)" string
+		And I click Open button of the field named 'DBType'
+		Then "VA - ADO Import (Excel) (Infobase type)" window is opened
+		And I click Open button of the field named 'DefaultEIB'
+		Then "VA - ADO Import (Excel) (External infobases)" window is opened
+		And I click the button named 'OpenCompaniesFilesExchangeSettings'
+		And I add company files path element for type 'ReportKind' object "VA - ADO Import (Excel)" value "VA_LoadingADO"
+		Then "Company file path items: List form" window is opened
+		And I close "Company file path items: List form" window
+		Then "VA - ADO Import (Excel) (External infobases)" window is opened
+		And I close "VA - ADO Import (Excel) (External infobases)" window
+		Then "VA - ADO Import (Excel) (Infobase type)" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "VA - ADO Import (Excel) (Infobase type)" window closing in 20 seconds
+		Then "VA - ADO Import (Excel) (Calculation rules) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "VA - ADO Import (Excel) (Calculation rules) *" window closing in 20 seconds
 
-	* Настройка формул
-		* Цена
-			Тогда открылось окно "Report wizard"
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Data source (create)"
-			И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Tables from ADO connection"
-			И я нажимаю кнопку выбора у поля с именем 'ADOTable'
-			Тогда открылось окно "ADO tables"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Data source (create) *"
-			И в таблице 'FieldsTreeDB' я разворачиваю текущую строку
-			И в таблице 'FieldsTreeDB' я перехожу к строке:
+	* Configuring formulas
+		* Price
+			Then "Report wizard" window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I click the button named 'FormCreate'
+			Then "Data source (create)" window is opened
+			And I select "Tables from ADO connection" exact value from the drop-down list named 'MethodOfObtaining'
+			And I click Choice button of the field named 'ADOTable'
+			Then "ADO tables" window is opened
+			And I select current line in 'List' table
+			Then "Data source (create) *" window is opened
+			And I expand current line in 'FieldsTreeDB' table
+			And I go to line in 'FieldsTreeDB' table:
 				| "Field" |
 				| "Price" |
-			И в таблице 'ComplianceTable' я перехожу к строке:
+			And I go to line in 'ComplianceTable' table:
 				| "Destination dimension" | "Column name"  | "Filling method" |
 				| "Value"            | "[Count]" | "Source field"    |
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-			И я выбираю пункт контекстного меню с именем 'ButtonMapDimensions' на элементе формы с именем 'ComplianceTable'
-			И я перехожу к закладке с именем 'FiltersPage'
-			И в таблице 'FieldsTreeDB' я перехожу к строке:
+			And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+			And I select context menu item named 'ButtonMapDimensions' of the form attribute named 'ComplianceTable'
+			And I move to the tab named 'FiltersPage'
+			And I go to line in 'FieldsTreeDB' table:
 				| "Field"   |
 				| "Period" |
-			И я нажимаю на кнопку с именем 'AddConditionItem'
-			И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
-			И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
-			И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "In interval"
-			И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'DefiningMethodClarification'
-			И в таблице 'TreeOfFilterParametersDB' я нажимаю кнопку выбора у реквизита с именем 'DefiningMethodClarification'
-			Тогда открылось окно "Specify interval limit calculation methods"
-			И я нажимаю на кнопку с именем 'FormWrite'
-			Тогда открылось окно "Data source (create) *"
-			И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Report wizard *"
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		* Количества
-			Тогда открылось окно "Report wizard"
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Data source (create)"
-			И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Tables from ADO connection"
-			И из выпадающего списка с именем 'ADOTable' я выбираю точное значение "Sheet1$"
-			И я перехожу к закладке с именем 'FiltersPage'
-			И в таблице 'FieldsTreeDB' я разворачиваю текущую строку
-			И в таблице 'FieldsTreeDB' я перехожу к строке:
+			And I click the button named 'AddConditionItem'
+			And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+			And I select current line in 'TreeOfFilterParametersDB' table
+			And I select "In interval" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+			And I activate field named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+			And I click choice button of the attribute named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+			Then "Specify interval limit calculation methods" window is opened
+			And I click the button named 'FormWrite'
+			Then "Data source (create) *" window is opened
+			And I finish line editing in 'TreeOfFilterParametersDB' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "Data source (create) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I select current line in 'List' table
+			Then "Report wizard *" window is opened
+			And I click the button named 'WriteAndCollapse'
+		* Quantities
+			Then "Report wizard" window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I click the button named 'FormCreate'
+			Then "Data source (create)" window is opened
+			And I select "Tables from ADO connection" exact value from the drop-down list named 'MethodOfObtaining'
+			And I select "Sheet1$" exact value from the drop-down list named 'ADOTable'
+			And I move to the tab named 'FiltersPage'
+			And I expand current line in 'FieldsTreeDB' table
+			And I go to line in 'FieldsTreeDB' table:
 				| "Field"   |
 				| "Period" |
-			И я нажимаю на кнопку с именем 'AddConditionItem'
-			И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
-			И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
-			И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "In interval"
-			И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'DefiningMethodClarification'
-			И в таблице 'TreeOfFilterParametersDB' я нажимаю кнопку выбора у реквизита с именем 'DefiningMethodClarification'
-			Тогда открылось окно "Specify interval limit calculation methods"
-			И я нажимаю на кнопку с именем 'FormWrite'
-			Тогда открылось окно "Data source (create) *"
-			И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Report wizard *"
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		* Артикул
-			Тогда открылось окно "Report wizard"
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C4'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Data source (create)"
-			И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Tables from ADO connection"
-			И из выпадающего списка с именем 'ADOTable' я выбираю точное значение "Sheet1$"
-			И в таблице 'FieldsTreeDB' я разворачиваю текущую строку
-			И в таблице 'FieldsTreeDB' я перехожу к строке:
+			And I click the button named 'AddConditionItem'
+			And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+			And I select current line in 'TreeOfFilterParametersDB' table
+			And I select "In interval" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+			And I activate field named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+			And I click choice button of the attribute named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+			Then "Specify interval limit calculation methods" window is opened
+			And I click the button named 'FormWrite'
+			Then "Data source (create) *" window is opened
+			And I finish line editing in 'TreeOfFilterParametersDB' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "Data source (create) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I select current line in 'List' table
+			Then "Report wizard *" window is opened
+			And I click the button named 'WriteAndCollapse'
+		* Article number
+			Then "Report wizard" window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C4' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I click the button named 'FormCreate'
+			Then "Data source (create)" window is opened
+			And I select "Tables from ADO connection" exact value from the drop-down list named 'MethodOfObtaining'
+			And I select "Sheet1$" exact value from the drop-down list named 'ADOTable'
+			And I expand current line in 'FieldsTreeDB' table
+			And I go to line in 'FieldsTreeDB' table:
 				| "Field"    |
 				| "Product ID" |
-			И в таблице 'ComplianceTable' я перехожу к строке:
+			And I go to line in 'ComplianceTable' table:
 				| "Destination dimension" | "Filling method" |
 				| "Value"            | "Source field"    |
-			И я выбираю пункт контекстного меню с именем 'ButtonMapDimensions' на элементе формы с именем 'ComplianceTable'
-			И я перехожу к закладке с именем 'FiltersPage'
-			И в таблице 'FieldsTreeDB' я разворачиваю текущую строку
-			И в таблице 'FieldsTreeDB' я перехожу к строке:
+			And I select context menu item named 'ButtonMapDimensions' of the form attribute named 'ComplianceTable'
+			And I move to the tab named 'FiltersPage'
+			And I expand current line in 'FieldsTreeDB' table
+			And I go to line in 'FieldsTreeDB' table:
 				| "Field"   |
 				| "Period" |
-			И я нажимаю на кнопку с именем 'AddConditionItem'
-			И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
-			И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
-			И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "In interval"
-			И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'DefiningMethodClarification'
-			И в таблице 'TreeOfFilterParametersDB' я нажимаю кнопку выбора у реквизита с именем 'DefiningMethodClarification'
-			Тогда открылось окно "Specify interval limit calculation methods"
-			И я нажимаю на кнопку с именем 'FormWrite'
-			Тогда открылось окно "Data source (create) *"
-			И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Report wizard *"
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
-			Тогда открылось окно "Report wizard"
-			И Я закрываю окно "Report wizard"
+			And I click the button named 'AddConditionItem'
+			And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+			And I select current line in 'TreeOfFilterParametersDB' table
+			And I select "In interval" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+			And I activate field named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+			And I click choice button of the attribute named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+			Then "Specify interval limit calculation methods" window is opened
+			And I click the button named 'FormWrite'
+			Then "Data source (create) *" window is opened
+			And I finish line editing in 'TreeOfFilterParametersDB' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "Data source (create) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I select current line in 'List' table
+			Then "Report wizard *" window is opened
+			And I click the button named 'WriteAndCollapse'
+			Then "Report wizard" window is opened
+			And I close "Report wizard" window
 
-	* Создаем бланк
-		И Я Для вида отчета "VA - ADO Import (Excel)" создаю бланк по умолчанию		
+	* Creating a template
+		And I create default template for report type "VA - ADO Import (Excel)"
 
-Сценарий: 10.04 Настройка справочников ИБ
+Scenario: 10.04 Configuring information base directories
 
-	И В командном интерфейсе я выбираю "General catalogs and settings" "Catalogs"
-	Тогда открылось окно "Current infobase catalogs"	
-	И в таблице 'List' я перехожу к строке:
+	And In the command interface I select "General catalogs and settings" "Catalogs"
+	Then "Current infobase catalogs" window is opened
+	And I go to line in 'List' table:
 		| "Catalog"   |
 		| "Product range" |
-	И в таблице 'List' я выбираю текущую строку
-	Тогда открылось окно "Product range (Infobase catalogs)"
-	И Для каждой строки таблицы 'Attributes' я выполняю
-		И в таблице 'Attributes' я активизирую поле с именем 'AttributesIsRequired'
-		И в таблице 'Attributes' я снимаю флаг с именем 'AttributesIsRequired'	
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
-	И я жду закрытия окна "Product range (Infobase catalogs) *" в течение 20 секунд
-	Тогда открылось окно "Current infobase catalogs"
-	И в таблице 'List' я перехожу к строке:
+	And I select current line in 'List' table
+	Then "Product range (Infobase catalogs)" window is opened
+	And for each line of 'Attributes' table I do
+		And I activate field named 'AttributesIsRequired' in 'Attributes' table
+		And I remove checkbox named 'AttributesIsRequired' in 'Attributes' table
+	And I click the button named 'FormWriteAndClose'
+	And I wait "Product range (Infobase catalogs) *" window closing in 20 seconds
+	Then "Current infobase catalogs" window is opened
+	And I go to line in 'List' table:
 		| "Catalog"     |
 		| "Income and expense items" |
-	И в таблице 'List' я выбираю текущую строку
-	Тогда открылось окно "Income and expense items (Infobase catalogs)"
-	И Для каждой строки таблицы 'Attributes' я выполняю
-		И в таблице 'Attributes' я активизирую поле с именем 'AttributesIsRequired'
-		И в таблице 'Attributes' я снимаю флаг с именем 'AttributesIsRequired'	
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
-	И Я закрываю окно "Current infobase catalogs"
+	And I select current line in 'List' table
+	Then "Income and expense items (Infobase catalogs)" window is opened
+	And for each line of 'Attributes' table I do
+		And I activate field named 'AttributesIsRequired' in 'Attributes' table
+		And I remove checkbox named 'AttributesIsRequired' in 'Attributes' table
+	And I click the button named 'FormWriteAndClose'
+	And I close "Current infobase catalogs" window
 
-Сценарий: 10.05 Создание экземпляра отчета
+Scenario: 10.05 Creating a report instance
 
-	И Я создаю экземпляр отчета для вида отчета "VA - ADO Import (Excel)" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' '' 		
+	And I create report instance for report type "VA - ADO Import (Excel)" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 	
-	* Устанавливаем ИБ
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'FormOpenSettings'
-		Тогда открылось окно "Document settings"
-		И я перехожу к закладке с именем 'GroupPageReportSettings'
-		И из выпадающего списка с именем 'ExternalInfobase' я выбираю точное значение "VA - ADO Import (Excel)"
-		И я нажимаю на кнопку с именем 'FormApplyAndClose'
+	* Installing the information base
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'FormOpenSettings'
+		Then "Document settings" window is opened
+		And I move to the tab named 'GroupPageReportSettings'
+		And I select "VA - ADO Import (Excel)" exact value from the drop-down list named 'ExternalInfobase'
+		And I click the button named 'FormApplyAndClose'
 	
-	* Делаем расчет
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'FormFillByDefault'
-		Тогда открылось окно '$WindowTitle$'
-		Дано табличный документ 'SpreadsheetFieldTemlate' равен макету "3_Budgeting\Templates\10\VA_ImportADO.mxl"
-		И я нажимаю на кнопку с именем 'Write'
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'FormOpenDocumentRegisterRecordsFlatTab'
-		Тогда открылось окно "Flat table of indicator values"
-		И я жду когда в табличном документе 'ReportSpreadsheetDocument' заполнится ячейка 'R2C1' в течение 60 секунд
-		Дано Табличный документ 'ReportSpreadsheetDocument' равен макету "3_Budgeting\Templates\10\VA_ImportADO_Движения.mxl" по шаблону
-		И Я закрываю окно "Flat table of indicator values"
-		Тогда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
+	* Performing calculation
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'FormFillByDefault'
+		Then '$WindowTitle$' window is opened
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to "3_Budgeting\Layouts\10\VA_ImportADO.mxl"
+		And I click the button named 'Write'
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'FormOpenDocumentRegisterRecordsFlatTab'
+		Then "Flat table of indicator values" window is opened
+		And I wait for filling of 'R2C1' cell in 'ReportSpreadsheetDocument' spreadsheet document for 60 seconds
+		Given 'ReportSpreadsheetDocument' spreadsheet document is equal to "3_Budgeting\Layouts\10\VA_ImportADO_Movements.mxl" by template
+		And I close "Flat table of indicator values" window
+		Then '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
 
-Сценарий: 10.06 Грузим второй файл
+Scenario: 10.06 Loading the second file
 
-	* Открываем документ
-		И Я открываю первый экземпляр отчета для вида отчета "VA - ADO Import (Excel)"
-		И Открылся экземпляр отчета для вида отчета "VA - ADO Import (Excel)" валюта "RUB" организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' '' 
+	* Opening the document
+		And I open first report instance for report type "VA - ADO Import (Excel)"
+		And I open report instance for report type "VA - ADO Import (Excel)" currency "RUB" company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
 	
-	* Проверяем форму способа расчета показателей
-		И я нажимаю на кнопку с именем 'FormFillInUsingAnotherApproach'
-		Тогда открылось окно "Select method to calculate indicators"
-		Тогда элемент формы с именем 'FormForИмпорта' стал равен "VA - ADO Import (Excel)"
-		И элемент формы с именем 'ExternalInfobase' стал равен "VA - ADO Import (Excel)"
-		И элемент формы с именем 'ProcessingRule' стал равен "VA - ADO Import (Excel)"
-		И элемент формы с именем 'CheckRule' стал равен "VA - ADO Import (Excel)"
-		И элемент формы с именем 'ImportApproach' стал равен "0"
-		И элемент формы с именем 'ReportGenerationMethod' стал равен "By processing rule"
+	* Checking the indicator calculation method form
+		And I click the button named 'FormFillInUsingAnotherApproach'
+		Then "Select method to calculate indicators" window is opened
+		Then the form attribute named 'TemplateForImport' became equal to "VA - ADO Import (Excel)"
+		And the form attribute named 'ExternalInfobase' became equal to "VA - ADO Import (Excel)"
+		And the form attribute named 'ProcessingRule' became equal to "VA - ADO Import (Excel)"
+		And the form attribute named 'CheckRule' became equal to "VA - ADO Import (Excel)"
+		And the form attribute named 'ImportApproach' became equal to "0"
+		And the form attribute named 'ReportGenerationMethod' became equal to "By processing rule"
 	
-	* Выбирем файл
-		И я меняю значение переключателя с именем 'ImportApproach' на "File on hard drive"
-		И в поле с именем 'PathToFile' я ввожу текст "$DirectoryПроекта$\3_Budgeting\Templates\10\ADO\VA_LoadADO2.xls"
-		И я нажимаю на кнопку с именем 'FormSelect'
+	* Selecting a file
+		And I change the radio button named 'ImportApproach' value to "File on hard drive"
+		And I input "$ProjectPath$\3_Budgeting\Layouts\10\ADO_En2\VA_LoadADO2.xls" text in the field named 'PathToFile'
+		And I click the button named 'FormSelect'
 
-	* Сверяемя результат
-		Тогда открылось окно '$WindowTitle$'
-		Дано табличный документ 'SpreadsheetFieldTemlate' равен макету "3_Budgeting\Templates\10\VA_ImportADO2.mxl"
+	* Verifying the result
+		Then '$WindowTitle$' window is opened
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to "3_Budgeting\Layouts\10\VA_ImportADO2.mxl"
 
-	* Заполняем по умолчанию
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'FormFillByDefault'
-		Дано табличный документ 'SpreadsheetFieldTemlate' равен макету "3_Budgeting\Templates\10\VA_ImportADO.mxl"		
+	* Filling by default
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'FormFillByDefault'
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to "3_Budgeting\Layouts\10\VA_ImportADO.mxl"
 
-	* Повторно загружаем файл
-		И я нажимаю на кнопку с именем 'FormFillInUsingAnotherApproach'
-		Тогда открылось окно "Select method to calculate indicators"
-		И элемент формы с именем 'ImportApproach' стал равен "1"
-		Тогда элемент формы с именем 'ImportFile3' стал равен "VA_LoadADO2.xls"
-		И я меняю значение переключателя с именем 'ImportApproach' на "File on hard drive"
-		И я нажимаю на кнопку с именем 'FormSelect'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+	* Reloading the file
+		And I click the button named 'FormFillInUsingAnotherApproach'
+		Then "Select method to calculate indicators" window is opened
+		And the form attribute named 'ImportApproach' became equal to "1"
+		Then the form attribute named 'ImportFile3' became equal to "VA_LoadADO2.xls"
+		And I change the radio button named 'ImportApproach' value to "File on hard drive"
+		And I click the button named 'FormSelect'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 
-	* Загружаем файл повторно		
-		И я нажимаю на кнопку с именем 'FormFillInUsingAnotherApproach'
-		Тогда открылось окно "Select method to calculate indicators"
-		И я нажимаю на кнопку с именем 'FormSelect'
+	* Reloading the file
+		And I click the button named 'FormFillInUsingAnotherApproach'
+		Then "Select method to calculate indicators" window is opened
+		And I click the button named 'FormSelect'
 
-	* Проверяем фору выбора версии файла
-		И я жду открытия окна "Select file version" в течение 20 секунд
-		И элемент формы с именем 'StoredFile' стал равен "VA_LoadADO2.xls"
-		И элемент формы с именем 'Password' стал равен ""
-		И таблица 'SheetsList' стала равной:
+	* Checking the file version selection form
+		And I wait "Select file version" window opening in 20 seconds
+		And the form attribute named 'StoredFile' became equal to "VA_LoadADO2.xls"
+		And the form attribute named 'Password' became equal to ""
+		And 'SheetsList' table became equal
 			| "Document sheet" | "Password protected" |
 			| "Sheet1"          | "No"             |
-		И я нажимаю на кнопку с именем 'FormOK'
+		And I click the button named 'FormOK'
 
-	* Сверяем результат
-		Тогда открылось окно '$WindowTitle$'
-		Дано табличный документ 'SpreadsheetFieldTemlate' равен макету "3_Budgeting\Templates\10\VA_ImportADO2.mxl"
+	* Verifying the result
+		Then '$WindowTitle$' window is opened
+		Given 'SpreadsheetFieldTemlate' spreadsheet document is equal to "3_Budgeting\Layouts\10\VA_ImportADO2.mxl"
 	
-	* Закрываем документ не сохраняя
-		Тогда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+	* Closing the document without saving
+		Then '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 
-Сценарий: 10.07 Изменим вид номенклатуры
+Scenario: 10.07 Changing the nomenclature type
 
-	Если '$$ЭтоPerform$$' Тогда
-		И Я Для номенклатуры с именем "2C:KP GU PROF for 12 months" для реквизита 'Product_Category' выбираю значение '' в группе ''
-		И Я Для номенклатуры с именем "2C:KP GU PROF for 6 months" для реквизита 'Product_Category' выбираю значение '' в группе ''
+	If '$$IsPerform$$' Then
+		And I select value '' in group '' for attribute 'Product_Category' for nomenclature with name "2C:KP GU PROF for 12 months"
+		And I select value '' in group '' for attribute 'Product_Category' for nomenclature with name "2C:KP GU PROF for 6 months"
 
-	ИначеЕсли '$$IsCPM$$' Тогда 
-		И В командном интерфейсе я выбираю "Catalogs" "Product range"
-		Тогда открылось окно "Product range"
-		И в таблице 'List' я перехожу к строке:
+	ElseIf '$$IsCPM$$' Then
+		And In the command interface I select "Catalogs" "Product range"
+		Then "Product range" window is opened
+		And I go to line in 'List' table:
 			| "Description"      |
 			| "VA - Products" |
-		И в таблице  'List' я перехожу на один уровень вниз
+		And I move one level down in 'List' table
 
-		* 1С:КП ГУ ПРОФ на 12 месяцев
-			Если в таблице 'List' есть строка Тогда
+		* 1C:KP GU PROF for 12 months
+			If 'List' table contains line Then
 				| "Product ID"  | 'Unit' | "Description"                |
 				| "30000012" | 'PCs'      | "2C:KP GU PROF for 12 months" |
-				И в таблице 'List' я перехожу к строке:
+				And I go to line in 'List' table:
 					| "Product ID"  | 'Unit' | "Description"                |
 					| "30000012" | 'PCs'      | "2C:KP GU PROF for 12 months" |
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "2C:KP GU PROF for 12 months (Product range)"
-				И из выпадающего списка с именем 'ProductKind' я выбираю по строке 'DimenKind - Other'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "2C:KP GU PROF for 12 months (Product range) *" в течение 20 секунд
+				And I select current line in 'List' table
+				Then "2C:KP GU PROF for 12 months (Product range)" window is opened
+				And I select from the drop-down list named 'ProductKind'  by 'DimenKind - Other' string
+				And I click the button named 'FormWriteAndClose'
+				And I wait "2C:KP GU PROF for 12 months (Product range) *" window closing in 20 seconds
 
-		* 1С:КП ГУ ПРОФ на 6 месяцев
-			Если в таблице 'List' есть строка Тогда
+		* 1C:KP GU PROF for 6 months
+			If 'List' table contains line Then
 				| "Product ID" | 'Unit' | "Description"               |
 				| "3000006" | 'PCs'      | "2C:KP GU PROF for 6 months" |
-				И в таблице 'List' я перехожу к строке:
+				And I go to line in 'List' table:
 					| "Product ID" | 'Unit' | "Description"               |
 					| "3000006" | 'PCs'      | "2C:KP GU PROF for 6 months" |
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "2C:KP GU PROF for 6 months (Product range)"
-				И из выпадающего списка с именем 'ProductKind' я выбираю по строке 'DimenKind - Other'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "2C:KP GU PROF for 6 months (Product range) *" в течение 20 секунд	
+				And I select current line in 'List' table
+				Then "2C:KP GU PROF for 6 months (Product range)" window is opened
+				And I select from the drop-down list named 'ProductKind'  by 'DimenKind - Other' string
+				And I click the button named 'FormWriteAndClose'
+				And I wait "2C:KP GU PROF for 6 months (Product range) *" window closing in 20 seconds
 		
-	ИначеЕсли '$$IsERPCPM$$' Тогда
-		И В командном интерфейсе я выбираю "Quick menu" "Product range"
-		Тогда открылось окно "Product range"
+	ElseIf '$$IsERPCPM$$' Then
+		And In the command interface I select "Quick menu" "Product range"
+		Then "Product range" window is opened
 		
-		* 1С:КП ГУ ПРОФ на 6 месяцев
-			И в таблице 'TypesOfNomenclature' я перехожу к строке:
+		* 1C:KP GU PROF for 6 months
+			And I go to line in 'TypesOfNomenclature' table:
 				| "Description"      |
 				| "VA - Products" |
-			Если в таблице 'ListAdvancedSearchProducts' есть строка Тогда
+			If 'ListAdvancedSearchProducts' table contains line Then
 				| "Product ID" | "Description"               |
 				| "3000006" | "2C:KP GU PROF for 6 months" |
-				И в таблице 'ListAdvancedSearchProducts' я перехожу к строке:
+				And I go to line in 'ListAdvancedSearchProducts' table:
 					| "Product ID" | "Description"               |
 					| "3000006" | "2C:KP GU PROF for 6 months" |
-				И в таблице 'ListAdvancedSearchProducts' я выбираю текущую строку
-				Тогда открылось окно "2C:KP GU PROF for 6 months (Product range)"
-				И я перехожу к закладке с именем 'PageProductAttributes'
-				Если открылось окно 'Useful tip' Тогда
-					И я нажимаю на кнопку с именем 'Button0'
-				Тогда открылось окно "2C:KP GU PROF for 6 months (Product range)"
-				И я разворачиваю группу с именем 'CollapsibleGroupMainParametersAccounting'
-				И из выпадающего списка с именем 'ProductKind' я выбираю по строке 'DimenKind - Other'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'				
-				Если открылось окно 'VAT rate applies from:' Тогда
-					И в поле с именем 'InputFld' я ввожу текст '1/1/2024'
-					И я нажимаю на кнопку с именем 'OK'
-					Тогда открылось окно "1С:FN ГУ PРОФ for * месяцев (Product range)"
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "2C:KP GU PROF for 6 months (Product range) *" в течение 20 секунд
+				And I select current line in 'ListAdvancedSearchProducts' table
+				Then "2C:KP GU PROF for 6 months (Product range)" window is opened
+				And I move to the tab named 'PageProductAttributes'
+				If 'Useful tip' window is opened Then
+					And I click the button named 'Button0'
+				Then "2C:KP GU PROF for 6 months (Product range)" window is opened
+				And I expand the group named 'CollapsibleGroupMainParametersAccounting'
+				And I select from the drop-down list named 'ProductKind'  by 'DimenKind - Other' string
+				And I click the button named 'FormWriteAndClose'
+				If 'VAT rate applies from:' window is opened Then
+					And I input '1/1/2024' text in the field named 'InputFld'
+					And I click the button named 'OK'
+					Then "2C:KP GU PROF for * months (Product range)" window is opened
+					And I click the button named 'FormWriteAndClose'
+				And I wait "2C:KP GU PROF for 6 months (Product range) *" window closing in 20 seconds
 		
-		* 1С:КП ГУ ПРОФ на 12 месяцев
-			И в таблице 'TypesOfNomenclature' я перехожу к строке:
+		* 1C:KP GU PROF for 12 months
+			And I go to line in 'TypesOfNomenclature' table:
 				| "Description"      |
 				| "VA - Products" |
-			Если в таблице 'ListAdvancedSearchProducts' есть строка Тогда
+			If 'ListAdvancedSearchProducts' table contains line Then
 				| "Product ID"  | "Description"                |
 				| "30000012" | "2C:KP GU PROF for 12 months" |
-				И в таблице 'ListAdvancedSearchProducts' я перехожу к строке:
+				And I go to line in 'ListAdvancedSearchProducts' table:
 					| "Product ID"  | "Description"                |
 					| "30000012" | "2C:KP GU PROF for 12 months" |
-				И в таблице 'ListAdvancedSearchProducts' я выбираю текущую строку
-				Тогда открылось окно "2C:KP GU PROF for 12 months (Product range)"
-				И я перехожу к закладке с именем 'PageProductAttributes'
-				Тогда открылось окно "2C:KP GU PROF for 12 months (Product range)"
-				И я разворачиваю группу с именем 'CollapsibleGroupMainParametersAccounting'
-				И из выпадающего списка с именем 'ProductKind' я выбираю по строке 'DimenKind - Other'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				Если открылось окно 'VAT rate applies from:' Тогда
-					И в поле с именем 'InputFld' я ввожу текст '1/1/2024'
-					И я нажимаю на кнопку с именем 'OK'
-					Тогда открылось окно "1С:FN ГУ PРОФ for * месяцев (Product range)"
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "2C:KP GU PROF for 12 months (Product range) *" в течение 20 секунд
+				And I select current line in 'ListAdvancedSearchProducts' table
+				Then "2C:KP GU PROF for 12 months (Product range)" window is opened
+				And I move to the tab named 'PageProductAttributes'
+				Then "2C:KP GU PROF for 12 months (Product range)" window is opened
+				And I expand the group named 'CollapsibleGroupMainParametersAccounting'
+				And I select from the drop-down list named 'ProductKind'  by 'DimenKind - Other' string
+				And I click the button named 'FormWriteAndClose'
+				If 'VAT rate applies from:' window is opened Then
+					And I input '1/1/2024' text in the field named 'InputFld'
+					And I click the button named 'OK'
+					Then "2C:KP GU PROF for * months (Product range)" window is opened
+					And I click the button named 'FormWriteAndClose'
+				And I wait "2C:KP GU PROF for 12 months (Product range) *" window closing in 20 seconds

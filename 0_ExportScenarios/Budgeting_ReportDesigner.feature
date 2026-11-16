@@ -1,271 +1,271 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для работы с подсистемой "Budgeting" - "Report wizard"
+Feature: Export scenarios for working with the "Budgeting" subsystem - "Report wizard"
 
-Сценарий: Я открываю контруктор отчета с именем 'TheReportKindName'
+Scenario: I open report wizard with name 'TheReportKindName'
 
-	И Я нахожу в списке вид отчета с именем '[TheReportKindName]'
-	И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'DoOpenDesigner'
+	And I find report type with name '[TheReportKindName]' in list
+	And in the table 'ReportKindList' I click the button named 'DoOpenDesigner'
 
-Сценарий: В конструкторе отчета я нажимаю кнопку контекстного меню с именем 'TheName'
+Scenario: I press context menu button with name 'TheName' in report wizard
 
-	Если '$$ЭтоPerform$$' Тогда
-		И я нажимаю на кнопку с именем '[TheName]'
-	Иначе
-		И я выбираю пункт контекстного меню с именем '[TheName]' на элементе формы с именем 'SpreadsheetFieldTemlate'
+	If '$$IsPerform$$' Then
+		And I click the button named '[TheName]'
+	Else
+		And I select context menu item named '[TheName]' of the form attribute named 'SpreadsheetFieldTemlate'
 		
-Сценарий: Я в конструкторе отчета добавляю строку с именем 'TheLineName' 
+Scenario: I add row with name 'TheLineName' in report wizard
 
-	Когда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Report structure"
-	И я нажимаю на кнопку с именем 'RowsTreeAddRows'
-	Тогда открылось окно "Adding new lines"
-	И в таблице 'NewLines' я нажимаю на кнопку с именем 'NewLinesAdd'
-	И в таблице 'NewLines' в поле с именем 'NewLinesDescription' я ввожу текст '[TheLineName]'
-	И в таблице 'NewLines' я завершаю редактирование строки
-	И я нажимаю на кнопку с именем 'OK'
+	When "Report wizard*" window is opened
+	And I select "Report structure" exact value from the drop-down list named 'WorkMode'
+	And I click the button named 'RowsTreeAddRows'
+	Then "Adding new lines" window is opened
+	And in the table 'NewLines' I click the button named 'NewLinesAdd'
+	And I input '[TheLineName]' text in the field named 'NewLinesDescription' of 'NewLines' table
+	And I finish line editing in 'NewLines' table
+	And I click the button named 'OK'
 
-Сценарий: Я в конструкторе отчета добавляю строки 
+Scenario: I add rows in report wizard
 
-	Когда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Report structure"
-	И я нажимаю на кнопку с именем 'RowsTreeAddRows'
-	Тогда открылось окно "Adding new lines"
+	When "Report wizard*" window is opened
+	And I select "Report structure" exact value from the drop-down list named 'WorkMode'
+	And I click the button named 'RowsTreeAddRows'
+	Then "Adding new lines" window is opened
 
-	И я заполняю таблицу 'NewLines' данными
+	And I fill 'NewLines' table with data
 		| 'Table' |
 
-	И я нажимаю на кнопку с именем 'OK'
+	And I click the button named 'OK'
 
-Сценарий: Я в конструкторе отчета добавляю колонку с именем 'TheColumnName' 
+Scenario: I add column with name 'TheColumnName' in report wizard
 
-	Тогда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Report structure"
-	И я нажимаю на кнопку с именем 'RowsTreeAddColumn'
-	Тогда открылось окно "Adding new columns"
-	И в таблице 'NewLines' я нажимаю на кнопку с именем 'NewLinesAdd'
-	И в таблице 'NewLines' в поле с именем 'NewLinesDescription' я ввожу текст '[TheColumnName]'
-	И в таблице 'NewLines' я завершаю редактирование строки
-	И я нажимаю на кнопку с именем 'OK'
+	Then "Report wizard*" window is opened
+	And I select "Report structure" exact value from the drop-down list named 'WorkMode'
+	And I click the button named 'RowsTreeAddColumn'
+	Then "Adding new columns" window is opened
+	And in the table 'NewLines' I click the button named 'NewLinesAdd'
+	And I input '[TheColumnName]' text in the field named 'NewLinesDescription' of 'NewLines' table
+	And I finish line editing in 'NewLines' table
+	And I click the button named 'OK'
 
-Сценарий: Я в конструкторе отчета добавляю колонки 
+Scenario: I add columns in report wizard
 
-	Тогда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Report structure"
-	И я нажимаю на кнопку с именем 'RowsTreeAddColumn'
-	Тогда открылось окно "Adding new columns"
+	Then "Report wizard*" window is opened
+	And I select "Report structure" exact value from the drop-down list named 'WorkMode'
+	And I click the button named 'RowsTreeAddColumn'
+	Then "Adding new columns" window is opened
 
-	И я заполняю таблицу 'NewLines' данными
+	And I fill 'NewLines' table with data
 		| 'Table' |
 
-	И я нажимаю на кнопку с именем 'OK'
+	And I click the button named 'OK'
 
-Сценарий: Я в конструкторе отчета добавляю аналитику с кодом 'TheDimensionCode' в ячейку 'TheCell' 
+Scenario: I add dimension with code 'TheDimensionCode' in cell 'TheCell' in report wizard
 
-	Тогда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicator dimensions"
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-	Тогда открылось окно "Dimension types (corporate)"
-	И я нажимаю на кнопку с именем 'FormFind'
-	Тогда открылась форма с именем 'UniversalListFindExtForm'
-	И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Code"
-	И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-	И в поле с именем 'Pattern' я ввожу текст '[TheDimensionCode]'
-	И я нажимаю на кнопку с именем 'Find'
-	Тогда открылось окно "Dimension types (corporate)"
-	И в таблице 'List' я выбираю текущую строку
+	Then "Report wizard*" window is opened
+	And I select "Indicator dimensions" exact value from the drop-down list named 'WorkMode'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	Then "Dimension types (corporate)" window is opened
+	And I click the button named 'FormFind'
+	Then the form named 'UniversalListFindExtForm' is opened
+	And I select "Code" exact value from the drop-down list named 'FieldSelector'
+	And I change the radio button named 'CompareType' value to "Exact match"
+	And I input '[TheDimensionCode]' text in the field named 'Pattern'
+	And I click the button named 'Find'
+	Then "Dimension types (corporate)" window is opened
+	And I select current line in 'List' table
 
-Сценарий: Я в конструкторе отчета добавляю аналитику с наименованием 'TheDimensionName' в ячейку 'TheCell' 
+Scenario: I add dimension with name 'TheDimensionName' in cell 'TheCell' in report wizard
 
-	Тогда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicator dimensions"
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-	Тогда открылось окно "Dimension types (corporate)"
-	И я нажимаю на кнопку с именем 'FormFind'
-	Тогда открылась форма с именем 'UniversalListFindExtForm'
-	И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-	И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-	И в поле с именем 'Pattern' я ввожу текст '[TheDimensionCode]'
-	И я нажимаю на кнопку с именем 'Find'
-	Тогда открылось окно "Dimension types (corporate)"
-	И в таблице 'List' я выбираю текущую строку	
+	Then "Report wizard*" window is opened
+	And I select "Indicator dimensions" exact value from the drop-down list named 'WorkMode'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	Then "Dimension types (corporate)" window is opened
+	And I click the button named 'FormFind'
+	Then the form named 'UniversalListFindExtForm' is opened
+	And I select "Description" exact value from the drop-down list named 'FieldSelector'
+	And I change the radio button named 'CompareType' value to "Exact match"
+	And I input '[TheDimensionCode]' text in the field named 'Pattern'
+	And I click the button named 'Find'
+	Then "Dimension types (corporate)" window is opened
+	And I select current line in 'List' table
 
-Сценарий: Я в конструкторе отчета в ячейке 'TheCell' меняю аналитику валюта 
+Scenario: I change dimension currency in cell 'TheCell' in report wizard
 
-	Тогда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicator dimensions"
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-	Тогда открылось окно "Report wizard*"
+	Then "Report wizard*" window is opened
+	And I select "Indicator dimensions" exact value from the drop-down list named 'WorkMode'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	Then "Report wizard*" window is opened
 
-Сценарий: Я в конструкторе отчета в ячейке 'TheCell' меняю родителя у строки на 'TheParentName'
+Scenario: I change row parent to 'TheParentName' in cell 'TheCell' in report wizard
 
-	Тогда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Report structure"
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-	Тогда открылось окно "* (Report lines)"
-	И из выпадающего списка с именем 'Parent' я выбираю по строке '[TheParentName]'
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
-	И я жду закрытия окна "* (Report lines) *" в течение 20 секунд
+	Then "Report wizard*" window is opened
+	And I select "Report structure" exact value from the drop-down list named 'WorkMode'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	Then "* (Report lines)" window is opened
+	And I select from the drop-down list named 'Parent'  by '[TheParentName]' string
+	And I click the button named 'FormWriteAndClose'
+	And I wait "* (Report lines) *" window closing in 20 seconds
 
-Сценарий: Я в конструкторе отчета в ячейке 'TheCell' меняю свойство показателя 'TheProperty' на 'TheValue'
+Scenario: I change indicator property 'TheProperty' to 'TheValue' in cell 'TheCell' in report wizard
 
-	Когда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Report structure"
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-	Тогда открылось окно "* (Report indicators)"
-	И Я для реквизита '[TheProperty]' устанавливаю значение '[TheValue]'										
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
-	И я жду закрытия окна "* (Report indicators)" в течение 20 секунд
+	When "Report wizard*" window is opened
+	And I select "Report structure" exact value from the drop-down list named 'WorkMode'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	Then "* (Report indicators)" window is opened
+	And I set value '[TheValue]' for attribute '[TheProperty]'
+	And I click the button named 'FormWriteAndClose'
+	And I wait "* (Report indicators)" window closing in 20 seconds
 
-Сценарий: Я в конструкторе отчета в ячейке 'TheCell' меняю свойства показателей 'TheProperty' на 'TheValue'
+Scenario: I change indicator properties 'TheProperty' to 'TheValue' in cell 'TheCell' in report wizard
 
-	Когда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Report structure"
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuProperties' на элементе формы с именем 'SpreadsheetFieldTemlate'
-	Тогда открылось окно "Bulk edit indicators"
-	И я изменяю флаг с именем '[TheProperty]Change'
-	И Я для реквизита '[TheProperty]' устанавливаю значение '[TheValue]'
-	И я нажимаю на кнопку с именем 'FormWriteAndClose'
+	When "Report wizard*" window is opened
+	And I select "Report structure" exact value from the drop-down list named 'WorkMode'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And I select context menu item named 'SpreadsheetFieldTemlateContextMenuProperties' of the form attribute named 'SpreadsheetFieldTemlate'
+	Then "Bulk edit indicators" window is opened
+	And I change checkbox named '[TheProperty]Change'
+	And I set value '[TheValue]' for attribute '[TheProperty]'
+	And I click the button named 'FormWriteAndClose'
 
-Сценарий: Я в конструкторе отчета в ячейке 'TheCell' проверяю свойство показателя 'TheProperty' на 'TheValue'
+Scenario: I check indicator property 'TheProperty' is 'TheValue' in cell 'TheCell' in report wizard
 
-	Когда открылось окно "Report wizard*"	
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Report structure"		
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-	Когда открылось окно "* (Report indicators)"
-	И элемент формы с именем '[TheProperty]' стал равен '[TheValue]'	
-	И Я закрываю окно "* (Report indicators)"
+	When "Report wizard*" window is opened
+	And I select "Report structure" exact value from the drop-down list named 'WorkMode'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	When "* (Report indicators)" window is opened
+	And the form attribute named '[TheProperty]' became equal to '[TheValue]'
+	And I close "* (Report indicators)" window
 
-Сценарий: Я в конструкторе отчета для ячейки 'TheCell' настраиваю связь с показателем с кодом 'TheIndicatorCode' вида отчета 'TheReportKindName'
+Scenario: I set link to indicator with code 'TheIndicatorCode' of report type 'TheReportKindName' for cell 'TheCell' in report wizard
 
-	Когда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке	
-	И я нажимаю на кнопку с именем 'RefToIndicator1'
+	When "Report wizard*" window is opened
+	And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	And I click the button named 'RefToIndicator1'
 
-	Когда открылось окно "Report indicators"
-	И я нажимаю кнопку выбора у поля с именем 'ReportKind'
-	Тогда открылось окно "Report types"
-	И я нажимаю на кнопку с именем 'Find'
-	Тогда открылось окно "Find"
-	И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-	И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-	И в поле с именем 'Pattern' я ввожу текст '[TheReportKindName]'
-	И я нажимаю на кнопку с именем 'Find'
-	Тогда открылось окно "Report types"
-	И в таблице 'List' я выбираю текущую строку
+	When "Report indicators" window is opened
+	And I click Choice button of the field named 'ReportKind'
+	Then "Report types" window is opened
+	And I click the button named 'Find'
+	Then "Find" window is opened
+	And I select "Description" exact value from the drop-down list named 'FieldSelector'
+	And I change the radio button named 'CompareType' value to "Exact match"
+	And I input '[TheReportKindName]' text in the field named 'Pattern'
+	And I click the button named 'Find'
+	Then "Report types" window is opened
+	And I select current line in 'List' table
 
-	И Я выбираю показатель с кодом '[TheIndicatorCode]'
+	And I select indicator with code '[TheIndicatorCode]'
 	
-	Тогда открылось окно "Report wizard *"
-	И я нажимаю на кнопку с именем 'WriteAndCollapse'
+	Then "Report wizard *" window is opened
+	And I click the button named 'WriteAndCollapse'
 
-Сценарий: Я в конструкторе отчета для ячейки 'TheCell' задаю формулу 'TheFormula'
+Scenario: I set formula 'TheFormula' for cell 'TheCell' in report wizard
 
-	Когда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
+	When "Report wizard*" window is opened
+	And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-	И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст '[TheFormula]'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	And I input '[TheFormula]' text in the field named 'TextDocumentFieldProcedure'
 	
-	И я нажимаю на кнопку с именем 'WriteAndCollapse'	
+	And I click the button named 'WriteAndCollapse'
 
-Сценарий: Я в конструкторе отчета для ячейки 'TheCell' задаю формулу копирования ячейки 'TheCell1'
+Scenario: I set cell copy formula 'TheCell1' for cell 'TheCell' in report wizard
 
-	Когда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
+	When "Report wizard*" window is opened
+	And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell1]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell1]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 	
-	И я нажимаю на кнопку с именем 'WriteAndCollapse'	
+	And I click the button named 'WriteAndCollapse'
 
-Сценарий: Я в конструкторе отчета для ячейки 'TheCell' задаю формулу суммирования ячейки 'TheCell1'
+Scenario: I set cell sum formula 'TheCell1' for cell 'TheCell' in report wizard
 
-	Когда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
+	When "Report wizard*" window is opened
+	And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell1]'
-	И я нажимаю на кнопку с именем 'ButtonSum'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell1]' cell
+	And I click the button named 'ButtonSum'
 	
-	И я нажимаю на кнопку с именем 'WriteAndCollapse'
+	And I click the button named 'WriteAndCollapse'
 
-Сценарий: Я в конструкторе отчета для ячейки 'TheCell' задаю формулу сумма ячеек 'TheCell1' 'TheCell2' 'TheCell3' 'TheCell4' 'TheCell5'
+Scenario: I set sum formula for cell 'TheCell1' of cells 'TheCell2' 'TheCell3' 'TheCell4' 'TheCell5' 'TheCell' in report wizard
 
-	Когда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
+	When "Report wizard*" window is opened
+	And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell1]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-	И я нажимаю на кнопку с именем 'ButtonPlus'
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell2]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell1]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	And I click the button named 'ButtonPlus'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell2]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 
-	Если 'НЕ СтрНачинаетсяС("[TheCell3]", "[") И НЕ ПустаяСтрока("[TheCell3]")' Тогда
-		И я нажимаю на кнопку с именем 'ButtonPlus'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell3]'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
+	If 'NOT StrStartsWith("[TheCell3]", "[") AND NOT IsBlankString("[TheCell3]")' Then
+		And I click the button named 'ButtonPlus'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell3]' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 
-	Если 'НЕ СтрНачинаетсяС("[TheCell4]", "[") И НЕ ПустаяСтрока("[TheCell3]")' Тогда
-		И я нажимаю на кнопку с именем 'ButtonPlus'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell4]'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке	
+	If 'NOT StrStartsWith("[TheCell4]", "[") AND NOT IsBlankString("[TheCell3]")' Then
+		And I click the button named 'ButtonPlus'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell4]' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 
-	Если 'НЕ СтрНачинаетсяС("[TheCell5]", "[") И НЕ ПустаяСтрока("[TheCell3]")' Тогда
-		И я нажимаю на кнопку с именем 'ButtonPlus'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell5]'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке	
+	If 'NOT StrStartsWith("[TheCell5]", "[") AND NOT IsBlankString("[TheCell3]")' Then
+		And I click the button named 'ButtonPlus'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell5]' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 	
-	И я нажимаю на кнопку с именем 'WriteAndCollapse'	
+	And I click the button named 'WriteAndCollapse'
 
-Сценарий: Я в конструкторе отчета для ячейки 'TheCell' задаю формулу произведение ячеек 'TheCell1' 'TheCell2' 'TheCell3' 'TheCell4' 'TheCell5'
+Scenario: I set product formula for cell 'TheCell1' of cells 'TheCell2' 'TheCell3' 'TheCell4' 'TheCell5' 'TheCell' in report wizard
 
-	Когда открылось окно "Report wizard*"
-	И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
+	When "Report wizard*" window is opened
+	And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
 	
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell1]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-	И я нажимаю на кнопку с именем 'ButtonMultiply'
-	И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell2]'
-	И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell1]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+	And I click the button named 'ButtonMultiply'
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell2]' cell
+	And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 
-	Если 'НЕ СтрНачинаетсяС("[TheCell3]", "[") И НЕ ПустаяСтрока("[TheCell3]")' Тогда
-		И я нажимаю на кнопку с именем 'ButtonMultiply'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell3]'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
+	If 'NOT StrStartsWith("[TheCell3]", "[") AND NOT IsBlankString("[TheCell3]")' Then
+		And I click the button named 'ButtonMultiply'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell3]' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 
-	Если 'НЕ СтрНачинаетсяС("[TheCell4]", "[") И НЕ ПустаяСтрока("[TheCell3]")' Тогда
-		И я нажимаю на кнопку с именем 'ButtonMultiply'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell4]'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке	
+	If 'NOT StrStartsWith("[TheCell4]", "[") AND NOT IsBlankString("[TheCell3]")' Then
+		And I click the button named 'ButtonMultiply'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell4]' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 
-	Если 'НЕ СтрНачинаетсяС("[TheCell5]", "[") И НЕ ПустаяСтрока("[TheCell3]")' Тогда
-		И я нажимаю на кнопку с именем 'ButtonMultiply'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке '[TheCell5]'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке	
+	If 'NOT StrStartsWith("[TheCell5]", "[") AND NOT IsBlankString("[TheCell3]")' Then
+		And I click the button named 'ButtonMultiply'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to '[TheCell5]' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
 	
-	И я нажимаю на кнопку с именем 'WriteAndCollapse'
+	And I click the button named 'WriteAndCollapse'

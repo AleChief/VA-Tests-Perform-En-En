@@ -1,174 +1,174 @@
-﻿#language: ru
+﻿#language: en
 @tree
 @IgnoreOnCIMainBuild
 
-Функционал: 17. Тестирование Аналитических отчетов и панелей
+Feature: 17. Testing Analytical reports and panels
 
-	Как Администратор я хочу
-	протестировать аналитические отчеты и аналитические панели 
-	чтобы исключить ошибки при разработке   
+	As Administrator I want to
+	Test analytical reports and analytical panels
+	To eliminate errors during development
 
-Контекст:
+Background:
 	
-	И я закрыл все окна клиентского приложения
+	And I close all client application windows
 
-Сценарий: 17.00 Определение типа приложения
+Scenario: 17.00 Determining application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 17.01 Создание вида отчета
+Scenario: 17.01 Creating report type
 
-	* Создаем вид отчета
-		И Я создаю вид отчета с именем "VA - Analytical reports" и родителем "VA - Report group"
+	* Creating a report type
+		And I create report type with name "VA - Analytical reports" and parent "VA - Report group"
 
-	* Настраиваем структуру
-		И я открываю контруктор отчета с именем "VA - Analytical reports"
-		И Я в конструкторе отчета добавляю строки
+	* Configuring structure
+		And I open report wizard with name "VA - Analytical reports"
+		And I add rows in report wizard
 			| 'Description' |
 			| "Line 1"     |
 			| "Line 2"     |
 			| "Line 3"     |
-		И Я в конструкторе отчета добавляю колонки
+		And I add columns in report wizard
 			| 'Description' |
 			| "Count"   |
 			| "Price"         |
 			| "Amount"        |
 
-	* Настраиваем формулы
-		И Я в конструкторе отчета для ячейки 'R2C4' задаю формулу произведение ячеек 'R2C2' 'R2C3'
-		И Я в конструкторе отчета для ячейки 'R3C4' задаю формулу произведение ячеек 'R3C2' 'R3C3'
-		И Я в конструкторе отчета для ячейки 'R4C4' задаю формулу произведение ячеек 'R4C2' 'R4C3'
+	* Configuring formulas
+		And I set product formula for cell 'R2C2' of cells 'R2C3' 'R2C4' in report wizard
+		And I set product formula for cell 'R3C2' of cells 'R3C3' 'R3C4' in report wizard
+		And I set product formula for cell 'R4C2' of cells 'R4C3' 'R4C4' in report wizard
 
-	* Закрываем конструктор
-		Когда открылось окно "Report wizard"
-		И Я закрываю окно "Report wizard"
+	* Closing report wizard
+		When "Report wizard" window is opened
+		And I close "Report wizard" window
 		
-	* Создаем бланк
-		И Я Для вида отчета "VA - Analytical reports" создаю бланк по умолчанию
+	* Creating a template
+		And I create default template for report type "VA - Analytical reports"
 
-Сценарий: 17.02 Создание аналитических отчетов
+Scenario: 17.02 Creating analytical reports
 
-	И Я создаю группу аналитических отчетов с кодом '100000000000' именем "VA - Analytical reports" родителем ''
+	And I create analytical report group with code '100000000000' name "VA - Analytical reports" parent ''
 
-	И Я создаю аналитический отчет с кодом '100000000001' вид отчета "VA - Analytical reports" период "January 2024" организация "Mercury LLC" родитель "VA - Analytical reports"
-	И Я создаю аналитический отчет с кодом '100000000002' вид отчета"VA - Analytical reports" период "January 2024" организация "System LLC" родитель "VA - Analytical reports"
+	And I create analytical report with code '100000000001' report type "VA - Analytical reports" period "January 2024" company "Mercury LLC" parent "VA - Analytical reports"
+	And I create analytical report with code '100000000002' report type "VA - Analytical reports" period "January 2024" company "System LLC" parent "VA - Analytical reports"
 
-Сценарий: 17.03 Создание аналитической панели
+Scenario: 17.03 Creating analytical panel
 
-	* Открытие формы
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Analytical dashboards"
+	* Opening form
+		And In the command interface I select "Budgeting, reporting, and analysis" "Analytical dashboards"
 
-	* Удаляем элемент
-		И Я в списке "Analytical dashboards" по полю "Analytical dashboard" ищу элемент "VA - Analytical reports" "At beginning of line" 
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление	
-				И Я удаляю текущую строку в списке 'List'
-			* Переименовываем
-				И Я запоминаю значение выражения 'StrReplace(New UUID, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "* (Analytical dashboard)"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Analytical dashboard) *" в течение 20 секунд	
-		И я выбираю пункт контекстного меню с именем 'ListContextMenuCancelSearch' на элементе формы с именем "List"
+	* Deleting an element
+		And I search element "VA - Analytical reports" "At beginning of line" by field "Analytical dashboard" in list "Analytical dashboards"
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "* (Analytical dashboard)" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Analytical dashboard) *" window closing in 20 seconds
+		And I select context menu item named 'ListContextMenuCancelSearch' of the form attribute named "List"
 
-	* Создание элемента	
- 		Тогда открылось окно "Analytical dashboards"
- 		И я нажимаю на кнопку с именем 'FormCreate'
- 		Тогда открылось окно "Analytical dashboard (create)"
- 		И в поле с именем 'Description' я ввожу текст "VA - Analytical reports"
- 		И я нажимаю на кнопку с именем 'FormWrite'
+	* Creating element
+ 		Then "Analytical dashboards" window is opened
+ 		And I click the button named 'FormCreate'
+ 		Then "Analytical dashboard (create)" window is opened
+ 		And I input "VA - Analytical reports" text in the field named 'Description'
+ 		And I click the button named 'FormWrite'
  	
-	 * Настройка панели
-		Тогда открылось окно "VA - Analytical reports (Analytical dashboard)"
-		И в таблице 'PanelContent' я нажимаю на кнопку с именем 'PanelContentCreatePage'
-		И в таблице 'PanelContent' я активизирую поле с именем 'PanelContentArea'
-		И в таблице 'PanelContent' я выбираю текущую строку
-		И в таблице 'PanelContent' в поле с именем 'PanelContentArea' я ввожу текст 'Page 1'
-		И в таблице 'PanelContent' я завершаю редактирование строки
-		И я выбираю пункт контекстного меню с именем 'PanelContentContextMenuCreateFolder' на элементе формы с именем 'PanelContent'
-		И в таблице 'PanelContent' я разворачиваю текущую строку
-		И в таблице 'PanelContent' я перехожу к строке:
+	 * Configuring panel
+		Then "VA - Analytical reports (Analytical dashboard)" window is opened
+		And in the table 'PanelContent' I click the button named 'PanelContentCreatePage'
+		And I activate field named 'PanelContentArea' in 'PanelContent' table
+		And I select current line in 'PanelContent' table
+		And I input 'Page 1' text in the field named 'PanelContentArea' of 'PanelContent' table
+		And I finish line editing in 'PanelContent' table
+		And I select context menu item named 'PanelContentContextMenuCreateFolder' of the form attribute named 'PanelContent'
+		And I expand current line in 'PanelContent' table
+		And I go to line in 'PanelContent' table:
 			| "Use" | "Set up report" | "Area"        | "Display description" |
 			| "Yes"            | "(By default)"   | "(New group)" | "Yes"                      |
-		И в таблице 'PanelContent' я выбираю текущую строку
-		И в таблице 'PanelContent' в поле с именем 'PanelContentArea' я ввожу текст "Group 1"
-		И в таблице 'PanelContent' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormWrite'
+		And I select current line in 'PanelContent' table
+		And I input "Group 1" text in the field named 'PanelContentArea' of 'PanelContent' table
+		And I finish line editing in 'PanelContent' table
+		And I click the button named 'FormWrite'
 
-		Когда открылось окно "VA - Analytical reports (Analytical dashboard)"
-		И в таблице 'PanelContent' я нажимаю на кнопку с именем 'PanelContentAdd'
-		И в меню формы я выбираю "Standard area"
-		И Я в списке "Analytical reports" по полю "Description" ищу и выбираю элемент "VA - Analytical reports (Mercury LLC)" "Exact match"
+		When "VA - Analytical reports (Analytical dashboard)" window is opened
+		And in the table 'PanelContent' I click the button named 'PanelContentAdd'
+		And on the form menu I select "Standard area"
+		And I search and select element "VA - Analytical reports (Mercury LLC)" "Exact match" by field "Description" in list "Analytical reports"
 
-	 	Тогда открылось окно 'VA - Analytical reports (Analytical dashboard)'
- 		И в таблице "PanelContent" я нажимаю на кнопку с именем 'PanelContentAdd'		 
- 		И в меню формы я выбираю 'Standard area'
-		И Я в списке "Analytical reports" по полю "Description" ищу и выбираю элемент "VA - Analytical reports (System LLC)" "Exact match"
+	 	Then 'VA - Analytical reports (Analytical dashboard)' window is opened
+ 		And in the table "PanelContent" I click the button named 'PanelContentAdd'
+ 		And on the form menu I select 'Standard area'
+		And I search and select element "VA - Analytical reports (System LLC)" "Exact match" by field "Description" in list "Analytical reports"
  		
- 	Тогда открылось окно "VA - Analytical reports (Analytical dashboard)"
- 	И я нажимаю на кнопку с именем 'FormWriteAndClose'
+ 	Then "VA - Analytical reports (Analytical dashboard)" window is opened
+ 	And I click the button named 'FormWriteAndClose'
 
-Сценарий: 17.04 Настройка прав для пользователя "Budgeting1"
+Scenario: 17.04 Configuring rights for user "Budgeting1"
 
-	И Я добавляю право "Read, write" для вида отчета "VA - Analytical reports" пользователя "Budgeting1" по всем организациям
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I add right "Read, write" for report type "VA - Analytical reports" user "Budgeting1" for all companies
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-Сценарий: 17.05 Создание экземпляров отчетов
+Scenario: 17.05 Creating report instances
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Analytical reports" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Analytical reports" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 
-	И Я ввожу значение '3.00000' в ячейку 'R6C2'
-	И Я ввожу значение '4.00000' в ячейку 'R7C2'
-	И Я ввожу значение '5.00000' в ячейку 'R8C2'
-	И Я ввожу значение '100.00000' в ячейку 'R6C3'
-	И Я ввожу значение '200.00000' в ячейку 'R7C3'
-	И Я ввожу значение '300.00000' в ячейку 'R8C3'
+	And I enter value '3.00000' in cell 'R6C2'
+	And I enter value '4.00000' in cell 'R7C2'
+	And I enter value '5.00000' in cell 'R8C2'
+	And I enter value '100.00000' in cell 'R6C3'
+	And I enter value '200.00000' in cell 'R7C3'
+	And I enter value '300.00000' in cell 'R8C3'
 
-	Когда открылось окно '$WindowTitle$'
-	И я нажимаю на кнопку с именем 'WriteAndClose'
-	И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	When '$WindowTitle$' window is opened
+	And I click the button named 'WriteAndClose'
+	And I wait '$WindowTitle$' window closing in 20 seconds
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Analytical reports" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "System LLC" проект '' аналитики '' '' '' '' '' ''
-	И я нажимаю на кнопку с именем 'FormFillInUsingAnotherApproach'
-	Тогда открылось окно "Select method to calculate indicators"
-	И из выпадающего списка с именем 'ReportGenerationMethod' я выбираю точное значение "Consolidate perimeter (IFRS)"
-	И я нажимаю на кнопку с именем 'FormSelect'
+	And I create report instance for report type "VA - Analytical reports" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "System LLC" project '' dimensions '' '' '' '' '' ''
+	And I click the button named 'FormFillInUsingAnotherApproach'
+	Then "Select method to calculate indicators" window is opened
+	And I select "Consolidate perimeter (IFRS)" exact value from the drop-down list named 'ReportGenerationMethod'
+	And I click the button named 'FormSelect'
 
-	Когда открылось окно '$WindowTitle$'
-	И я нажимаю на кнопку с именем 'WriteAndClose'
-	И я жду закрытия окна '$WindowTitle$' в течение 20 секунд	
+	When '$WindowTitle$' window is opened
+	And I click the button named 'WriteAndClose'
+	And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: 17.06 Просмотр аналитических отчетов
+Scenario: 17.06 Viewing analytical reports
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Analytical reports"
-	И Я в списке "Analytical reports" по полю "Description" ищу элемент "VA - Analytical reports (Mercury LLC)" "Exact match"
-	И я нажимаю на кнопку с именем 'FormOpenReport'
-	И табличный документ 'Result' равен макету "3_Budgeting\Templates\18\VA_АналитическийReport.mxl" по шаблону
-	И Я закрываю окно "VA - Analytical reports (Mercury LLC) (Analytical report)"
+	And In the command interface I select "Budgeting, reporting, and analysis" "Analytical reports"
+	And I search element "VA - Analytical reports (Mercury LLC)" "Exact match" by field "Description" in list "Analytical reports"
+	And I click the button named 'FormOpenReport'
+	And 'Result' spreadsheet document is equal to "3_Budgeting\Layouts\18\VA_AnalyticalReport.mxl" by template
+	And I close "VA - Analytical reports (Mercury LLC) (Analytical report)" window
 	
-	И Я в списке "Analytical reports" по полю "Description" ищу элемент "VA - Analytical reports (System LLC)" "Exact match"
-	И я нажимаю на кнопку с именем 'FormOpenReport'
-	И табличный документ 'Result' равен макету "3_Budgeting\Templates\18\VA_АналитическийReport.mxl" по шаблону
-	И Я закрываю окно "VA - Analytical reports (System LLC) (Analytical report)"
+	And I search element "VA - Analytical reports (System LLC)" "Exact match" by field "Description" in list "Analytical reports"
+	And I click the button named 'FormOpenReport'
+	And 'Result' spreadsheet document is equal to "3_Budgeting\Layouts\18\VA_AnalyticalReport.mxl" by template
+	And I close "VA - Analytical reports (System LLC) (Analytical report)" window
 
-	Тогда открылось окно "Analytical reports"
-	И Я закрываю окно "Analytical reports"		
+	Then "Analytical reports" window is opened
+	And I close "Analytical reports" window
 		
-Сценарий: 17.07 Просмотр аналитических панелей		
+Scenario: 17.07 Viewing analytical panels
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Analytical dashboards"
-	И Я в списке "Analytical dashboards" по полю "Analytical dashboard" ищу элемент "VA - Analytical reports" "At beginning of line" 
-	И я нажимаю на кнопку с именем 'FormShowPanel'
+	And In the command interface I select "Budgeting, reporting, and analysis" "Analytical dashboards"
+	And I search element "VA - Analytical reports" "At beginning of line" by field "Analytical dashboard" in list "Analytical dashboards"
+	And I click the button named 'FormShowPanel'
 
-	И табличный документ 'Code_100000000001_1_Window' равен макету "3_Budgeting\Templates\18\VA_АналитическийReport.mxl" по шаблону
-	И табличный документ 'Code_100000000002_2_Window' равен макету "3_Budgeting\Templates\18\VA_АналитическийReport.mxl" по шаблону
+	And 'Code_100000000001_1_Window' spreadsheet document is equal to "3_Budgeting\Layouts\18\VA_AnalyticalReport.mxl" by template
+	And 'Code_100000000002_2_Window' spreadsheet document is equal to "3_Budgeting\Layouts\18\VA_AnalyticalReport.mxl" by template
 	
- 	Тогда открылось окно "VA - Analytical reports (Analytical dashboard)"
- 	И Я закрываю окно "VA - Analytical reports (Analytical dashboard)"
- 	Тогда открылось окно "Analytical dashboards"
- 	И Я закрываю окно "Analytical dashboards"	
+ 	Then "VA - Analytical reports (Analytical dashboard)" window is opened
+ 	And I close "VA - Analytical reports (Analytical dashboard)" window
+ 	Then "Analytical dashboards" window is opened
+ 	And I close "Analytical dashboards" window
 	

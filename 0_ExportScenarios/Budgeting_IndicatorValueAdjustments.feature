@@ -1,94 +1,94 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для работы с подсистемой "Budgeting" - "Adjustment of indicator values"
+Feature: Export scenarios for working with the "Budgeting" subsystem - "Adjustment of indicator values"
 
-Сценарий: Я создаю шаблон корректировки значений показателей с имененм "TheName" и видами отчетов
+Scenario: I create indicator values adjustment template with name "TheName" and report types
 
-	* Открываем форму справочника
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Indicator value adjustments templates"
+	* Opening a reference form
+		And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustments templates"
 
-	* Удаляем элемент
-		И Я в списке "Indicator value adjustments templates" по полю "Description" ищу элемент '[TheName]' "Exact match" 
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			* Ставим пометку на удаление	
-				И Я удаляю текущую строку в списке 'List'
-			* Переименовываем
-				И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "* (Indicator value adjustments templates)"
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я удаляю все строки таблицы 'UsedReportTypes'				
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "* (Indicator value adjustments templates) *" в течение 20 секунд
+	* Deleting an element
+		And I search element '[TheName]' "Exact match" by field "Description" in list "Indicator value adjustments templates"
+		And While the number of 'List' table lines 'more' 0 Then
+			* Marking for deletion
+				And I delete current row in list 'List'
+			* Renaming
+				And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I select current line in 'List' table
+				Then "* (Indicator value adjustments templates)" window is opened
+				And I input 'UID' variable value in the field named 'Description'
+				And I delete all lines of 'UsedReportTypes' table
+				And I click the button named 'FormWriteAndClose'
+				And I wait "* (Indicator value adjustments templates) *" window closing in 20 seconds
 
-	* Создаем элемент
-		Когда открылось окно "Indicator value adjustments templates"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Indicator value adjustments templates (create)"		
-		И я заполняю таблицу 'UsedReportTypes' данными
+	* Creating an element
+		When "Indicator value adjustments templates" window is opened
+		And I click the button named 'FormCreate'
+		Then "Indicator value adjustments templates (create)" window is opened
+		And I fill 'UsedReportTypes' table with data
 			|'Table'|
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		Когда открылось окно "Indicator value adjustments templates (create) *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Indicator value adjustments templates (create) *" в течение 20 секунд
+		And I input '[TheName]' text in the field named 'Description'
+		When "Indicator value adjustments templates (create) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Indicator value adjustments templates (create) *" window closing in 20 seconds
 				
-Сценарий: Для шаблона корректировки значений показателей с имененм "TheName" я заполняю таблицу корректировок значениями
+Scenario: I fill adjustment table with values for indicator values adjustment template with name "TheName"
 
-	* Открываем форму справочника
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Indicator value adjustments templates"
+	* Opening a reference form
+		And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustments templates"
 
-	* Ищем элемент
-		И Я в списке "Indicator value adjustments templates" по полю "Description" ищу и выбираю элемент '[TheName]' "Exact match" 
+	* Searching for an element
+		And I search and select element '[TheName]' "Exact match" by field "Description" in list "Indicator value adjustments templates"
 
-	* Заполнение
-		И я заполняю таблицу 'TableOfAdjustments' данными
+	* Filling
+		And I fill 'TableOfAdjustments' table with data
 			|'Table'|
 
-	* Сохраняем элемент
-		Когда открылось окно "[TheName] (Indicator value adjustments templates) *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "[TheName] (Indicator value adjustments templates) *" в течение 20 секунд
+	* Saving an element
+		When "[TheName] (Indicator value adjustments templates) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "[TheName] (Indicator value adjustments templates) *" window closing in 20 seconds
 
-Сценарий: Я создаю корректировку значений показателей сценарий "TheScenario" период "TheStartDate" периодичность "TheFrequency" организация "TheBusinessUnit" значения
+Scenario: I create indicator values adjustment scenario "TheScenario" period "TheStartDate" frequency "TheFrequency" company "TheBusinessUnit" values
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Indicator value adjustment"
-	Тогда открылось окно "Indicator value adjustment"
+	And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustment"
+	Then "Indicator value adjustment" window is opened
 
-	И я нажимаю на кнопку с именем 'FormCreate'
-	Тогда открылось окно "Indicator value adjustment (create)"
+	And I click the button named 'FormCreate'
+	Then "Indicator value adjustment (create)" window is opened
 
-	И я нажимаю кнопку выбора у поля с именем 'PeriodManagement'
-	И Я в списке "Reporting period management" по полю "Scenario" ищу элемент "[TheScenario]" "Exact match"
-	И Я в списке "Управление отчетным периодом" по полю "Периодичность" ищу элемент "[TheFrequency]" "Exact match" 
-	И Я в списке "Reporting period management" по полю "Start period" ищу и выбираю элемент "[TheStartDate]" "At the beginning of the line"
+	And I click Choice button of the field named 'PeriodManagement'
+	And I search element "[TheScenario]" "Exact match" by field "Scenario" in list "Reporting period management"
+	And I search element "[TheFrequency]" "Exact match" by field "Периодичность" in list "Reporting period management"
+	And I search and select element "[TheStartDate]" "At the beginning of the line" by field "Start period" in list "Reporting period management"
 
-	Когда открылось окно "Indicator value adjustment (create) *"
-	И я нажимаю кнопку выбора у поля с именем 'Organization'
-	И Я выбираю организацию "[TheBusinessUnit]"
+	When "Indicator value adjustment (create) *" window is opened
+	And I click Choice button of the field named 'Organization'
+	And I select company "[TheBusinessUnit]"
 
-	И я заполняю таблицу 'TableOfAdjustments' данными
+	And I fill 'TableOfAdjustments' table with data
 		|'Table'|
 	
-	Когда открылось окно "Indicator value adjustment (create) *"
-	И я нажимаю на кнопку с именем 'FormPostAndClose'
-	И я жду закрытия окна "Indicator value adjustment (create) *" в течение 20 секунд
+	When "Indicator value adjustment (create) *" window is opened
+	And I click the button named 'FormPostAndClose'
+	And I wait "Indicator value adjustment (create) *" window closing in 20 seconds
 
-Сценарий: Я открываю новую корректировку значений показателей сценарий "TheScenario" период "TheStartDate" периодичность "TheFrequency" организация "TheBusinessUnit"
+Scenario: I open new indicator values adjustment scenario "TheScenario" period "TheStartDate" frequency "TheFrequency" company "TheBusinessUnit"
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Indicator value adjustment"
-	Тогда открылось окно "Indicator value adjustment"
+	And In the command interface I select "Budgeting, reporting, and analysis" "Indicator value adjustment"
+	Then "Indicator value adjustment" window is opened
 
-	И я нажимаю на кнопку с именем 'FormCreate'
-	Тогда открылось окно "Indicator value adjustment (create)"
+	And I click the button named 'FormCreate'
+	Then "Indicator value adjustment (create)" window is opened
 
-	И я нажимаю кнопку выбора у поля с именем 'PeriodManagement'
-	И Я в списке "Reporting period management" по полю "Scenario" ищу элемент "[TheScenario]" "Exact match"
-	И Я в списке "Управление отчетным периодом" по полю "Периодичность" ищу элемент "[TheFrequency]" "Exact match" 
-	И Я в списке "Reporting period management" по полю "Start period" ищу и выбираю элемент "[TheStartDate]" "At the beginning of the line"
+	And I click Choice button of the field named 'PeriodManagement'
+	And I search element "[TheScenario]" "Exact match" by field "Scenario" in list "Reporting period management"
+	And I search element "[TheFrequency]" "Exact match" by field "Периодичность" in list "Reporting period management"
+	And I search and select element "[TheStartDate]" "At the beginning of the line" by field "Start period" in list "Reporting period management"
 
-	Когда открылось окно "Indicator value adjustment (create) *"
-	И я нажимаю кнопку выбора у поля с именем 'Organization'
-	И Я выбираю организацию "[TheBusinessUnit]"
+	When "Indicator value adjustment (create) *" window is opened
+	And I click Choice button of the field named 'Organization'
+	And I select company "[TheBusinessUnit]"

@@ -1,497 +1,497 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для блока Планирование и контроль
+Feature: Export scenarios for the Planning and control block
 
-Сценарий: Я для статьи бюджета с именем 'TheName' устанавливаю контрольные аналитики по виду аналитики 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6'
-	* в АРМ Управление лимитами открыть настройки статей
-		И я перехожу к закладке с именем "SettingsLimitingBudgetItems"			
+Scenario: I set control dimensions by dimension type 'TheAnalytics1', 'TheAnalytics2', 'TheAnalytics3', 'TheAnalytics4', 'TheAnalytics5', 'TheAnalytics6' for budget item with name 'TheName'
+	* In the Limit management workstation, open item settings
+		And I move to the tab named "SettingsLimitingBudgetItems"
 
-	* Найти статью АРМ Управление лимитами
-		И Я в таблице статей "ListItems" по полю "Budget item" ищу и выбираю элемент '[TheName]' "Exact match"
+	* Find the Limit management workstation item
+		And I search and select element '[TheName]' "Exact match" by field "Budget item" in items table "ListItems"
 
-		Если 'НЕ ПустаяСтрока("[TheAnalytics1]")' Тогда
-			Если таблица "ItemsList" равна переданной тогда
+		If 'NOT IsBlankString("[TheAnalytics1]")' Then
+			If "ItemsList" table is equal to the passed table Then
 				| 'Budget item' | '1'   |
-				| '[TheName]'      | 'Нет' |
-				И в таблице "СписокСтатей" я активизирую поле с именем "СписокСтатейКонтролироватьАналитику1"
-				И в таблице "ListItems" я выбираю текущую строку
-		Если 'НЕ ПустаяСтрока("[TheAnalytics2]")' Тогда
-			Если таблица "ItemsList" равна переданной тогда
+				| '[TheName]'      | 'No' |
+				And I activate field named "ListItemsControlDimension1" in "ListItems" table
+				And I select current line in "ListItems" table
+		If 'NOT IsBlankString("[TheAnalytics2]")' Then
+			If "ItemsList" table is equal to the passed table Then
 				| 'Budget item' | '2'   |
-				| '[TheName]'      | 'Нет' |
-				И в таблице "СписокСтатей" я активизирую поле с именем "СписокСтатейКонтролироватьАналитику2"
-				И в таблице "ListItems" я выбираю текущую строку
-		Если 'НЕ ПустаяСтрока("[TheAnalytics3]")' Тогда
-			Если таблица "ItemsList" равна переданной тогда
+				| '[TheName]'      | 'No' |
+				And I activate field named "ListItemsControlDimension2" in "ListItems" table
+				And I select current line in "ListItems" table
+		If 'NOT IsBlankString("[TheAnalytics3]")' Then
+			If "ItemsList" table is equal to the passed table Then
 				| 'Budget item' | '3'   |
-				| '[TheName]'      | 'Нет' |
-				И в таблице "СписокСтатей" я активизирую поле с именем "СписокСтатейКонтролироватьАналитику3"
-				И в таблице "ListItems" я выбираю текущую строку
-		Если 'НЕ ПустаяСтрока("[TheAnalytics4]")' Тогда
-			Если таблица "ItemsList" равна переданной тогда
+				| '[TheName]'      | 'No' |
+				And I activate field named "ListItemsControlDimension3" in "ListItems" table
+				And I select current line in "ListItems" table
+		If 'NOT IsBlankString("[TheAnalytics4]")' Then
+			If "ItemsList" table is equal to the passed table Then
 				| 'Budget item' | '4'   |
-				| '[TheName]'      | 'Нет' |
-				И в таблице "СписокСтатей" я активизирую поле с именем "СписокСтатейКонтролироватьАналитику4"
-				И в таблице "ListItems" я выбираю текущую строку
-		Если 'НЕ ПустаяСтрока("[TheAnalytics5]")' Тогда
-			Если таблица "ItemsList" равна переданной тогда
+				| '[TheName]'      | 'No' |
+				And I activate field named "ListItemsControlDimension4" in "ListItems" table
+				And I select current line in "ListItems" table
+		If 'NOT IsBlankString("[TheAnalytics5]")' Then
+			If "ItemsList" table is equal to the passed table Then
 				| 'Budget item' | '5'   |
-				| '[TheName]'      | 'Нет' |
-				И в таблице "СписокСтатей" я активизирую поле с именем "СписокСтатейКонтролироватьАналитику5"
-				И в таблице "ListItems" я выбираю текущую строку
-		Если 'НЕ ПустаяСтрока("[TheAnalytics6]")' Тогда
-			Если таблица "ItemsList" равна переданной тогда
+				| '[TheName]'      | 'No' |
+				And I activate field named "ListItemsControlDimension5" in "ListItems" table
+				And I select current line in "ListItems" table
+		If 'NOT IsBlankString("[TheAnalytics6]")' Then
+			If "ItemsList" table is equal to the passed table Then
 				| 'Budget item' | '6'   |
-				| '[TheName]'      | 'Нет' |
-				И в таблице "СписокСтатей" я активизирую поле с именем "СписокСтатейКонтролироватьАналитику6"
-				И в таблице "ListItems" я выбираю текущую строку
+				| '[TheName]'      | 'No' |
+				And I activate field named "ListItemsControlDimension6" in "ListItems" table
+				And I select current line in "ListItems" table
 
-Сценарий: Я создаю  вариант настроек операционного плана 'ThePlanOption' с длительностью 'N'
-	* создание элемента
-		И я нажимаю на кнопку с именем 'FormCreate'
-		И в поле с именем 'Description' я ввожу текст '[ThePlanOption]'
-		И в поле с именем 'NumberOfPeriods' я ввожу текст '[N]'		
-		И я нажимаю на кнопку с именем 'FormWrite'
+Scenario: I create operational plan settings variant 'ThePlanOption' with duration 'N'
+	* Creating an element
+		And I click the button named 'FormCreate'
+		And I input '[ThePlanOption]' text in the field named 'Description'
+		And I input '[N]' text in the field named 'NumberOfPeriods'
+		And I click the button named 'FormWrite'
 
-Сценарий: Я выбираю фиксированный горизонт 'TheFixHorizon' c длительностью 'N' начиная с периода 'TheFirstPeriodOfFixedHorizon'
-		И из выпадающего списка с именем "ВидГоризонта" я выбираю по строке 'Фиксированный'
-		И в поле с именем 'КоличествоПериодов' я ввожу текст '[N]'
-		И из выпадающего списка с именем "FirstPeriod" я выбираю по строке '[TheFirstPeriodOfFixedHorizon]'
-		И я нажимаю на кнопку с именем 'FormWrite'
+Scenario: I select fixed horizon 'TheFixHorizon' with duration 'N' starting from period 'TheFirstPeriodOfFixedHorizon'
+		And I select from the drop-down list named "KindOfHorizon"  by 'Fixed' string
+		And I input '[N]' text in the field named 'NumberOfPeriods'
+		And I select from the drop-down list named "FirstPeriod"  by '[TheFirstPeriodOfFixedHorizon]' string
+		And I click the button named 'FormWrite'
 
-Сценарий: Я в таблице 'TheTable' по полю 'TheAnalytics' ищу значение 'ThePattern' 	
-		И в таблице '[TheTable]' я перехожу к строке:
+Scenario: I search value 'ThePattern' by field 'TheAnalytics' in table 'TheTable'
+		And I go to line in '[TheTable]' table:
 			| '[TheAnalytics]'   |
 			| '[ThePattern]'     |
 
-Сценарий: Я в таблице статей "TheListName" по полю "TheField" ищу и выбираю элемент "ThePattern" "TheCompareType" 
-		Если кнопка с именем 'FormFind' существует Тогда
-			И я нажимаю на кнопку с именем 'FormFind'
-		Иначе
-			И я выбираю пункт контекстного меню с именем 'ListItemsContextMenuFind' на элементе формы с именем '[TheListName]'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем 'FieldSelector' я выбираю по строке '[TheField]'
-		И я меняю значение переключателя с именем 'CompareType' на '[TheCompareType]'
-		И я жду открытия окна "Find" в течение 10 секунд				
-		И в поле с именем 'Pattern' я ввожу текст '[ThePattern]'
-		И я нажимаю на кнопку с именем 'Find'					
+Scenario: I search and select element "ThePattern" "TheCompareType" by field "TheField" in items table "TheListName"
+		If a button named 'FormFind' exists Then
+			And I click the button named 'FormFind'
+		Else
+			And I select context menu item named 'ListItemsContextMenuFind' of the form attribute named '[TheListName]'
+		Then "Find" window is opened
+		And I select from the drop-down list named 'FieldSelector'  by '[TheField]' string
+		And I change the radio button named 'CompareType' value to '[TheCompareType]'
+		And I wait "Find" window opening in 10 seconds
+		And I input '[ThePattern]' text in the field named 'Pattern'
+		And I click the button named 'Find'
 
-Сценарий: Я выбираю вариант плана 'ThePlanOption'
-		И я нажимаю кнопку выбора у поля с именем "VariantSetting"
-		И в таблице "List" я перехожу к строке:
+Scenario: I select plan variant 'ThePlanOption'
+		And I click Choice button of the field named "VariantSetting"
+		And I go to line in "List" table:
 			| 'Description'    |
 			| '[ThePlanOption]' |
-		И я нажимаю на кнопку с именем 'FormSelect'
+		And I click the button named 'FormSelect'
 
-Сценарий: Я создаю документ Операционный план по виду бюджета 'TheBudget'
-		И в таблице "List" я нажимаю на кнопку с именем 'Create'
-		Тогда открылось окно 'Operational plan (creating)'
-		И я меняю значение переключателя 'Budget profile' на '[TheBudget]'
+Scenario: I create operational plan document by budget type 'TheBudget'
+		And in the table "List" I click the button named 'Create'
+		Then 'Operational plan (creating)' window is opened
+		And I change 'Budget profile' radio button value to '[TheBudget]'
 
 
-Сценарий: Я устанавливаю отбор в форме списка ОперПлан 'TheField' 'TheComparisonType' 'TheValue' 
-		И в таблице "List" я нажимаю на кнопку с именем 'ListListSettings'
-		Тогда открылось окно 'List settings'
-		И я активизирую поле 'Filter. Items'
-		И я удаляю все строки таблицы "SettingsComposerUserSettingsItem3Filter"
-		И я удаляю все строки таблицы 'SettingsComposerUserSettingsItem3Filter'		
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' я нажимаю на кнопку с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборДобавитьЭлементОтбора'
-	//	И в таблице 'SettingsComposerUserSettingsItem3Filter' я перехожу к последней строке
-		Если 'StrFind("[TheField]", ".") > 0' Тогда
-			И в таблице 'SettingsComposerUserSettingsItem3Filter' в поле с именем 'SettingsComposerUserSettingsItem3FilterLeftValue' я ввожу текст '[TheField]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборЛевоеЗначение' я выбираю по строке '[TheField]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' я активизирую поле с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборВидСравнения'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборВидСравнения' я выбираю по строке '[TheComparisonType]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' я активизирую поле с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборПравоеЗначение'
-		Если 'StrFind(Lower("[TheComparisonType]"),"содержит")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"начинается с")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"contain")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"begin with")>0' Тогда 
-			И в таблице 'SettingsComposerUserSettingsItem3Filter' в поле с именем 'SettingsComposerUserSettingsItem3FilterRightValue' я ввожу текст '[TheValue]'
-		Иначе
-			И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборПравоеЗначение' я выбираю по строке '[TheValue]'
-		И в таблице 'SettingsComposerUserSettingsItem3Filter' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormEndEdit'
+Scenario: I set filter in operational plan list form 'TheField' 'TheComparisonType' 'TheValue'
+		And in the table "List" I click the button named 'ListListSettings'
+		Then 'List settings' window is opened
+		And I activate 'Filter. Items' field
+		And I delete all lines of "SettingsComposerUserSettingsItem3Filter" table
+		And I delete all lines of 'SettingsComposerUserSettingsItem3Filter' table
+		And in the table 'SettingsComposerUserSettingsItem3Filter' I click the button named 'SettingsComposerUserSettingsItem3FilterAddFilterItem'
+	//	And in the table 'SettingsComposerUserSettingsItem3Filter' I go to the last row
+		If 'StrFind("[TheField]", ".") > 0' Then
+			And I input '[TheField]' text in the field named 'SettingsComposerUserSettingsItem3FilterLeftValue' of 'SettingsComposerUserSettingsItem3Filter' table
+		And I select '[TheField]' by string from the drop-down list named 'SettingsComposerUserSettingsItem3FilterLeftValue' in 'SettingsComposerUserSettingsItem3Filter' table
+		And I activate field named 'SettingsComposerUserSettingsItem3FilterComparisonType' in 'SettingsComposerUserSettingsItem3Filter' table
+		And I select '[TheComparisonType]' by string from the drop-down list named 'SettingsComposerUserSettingsItem3FilterComparisonType' in 'SettingsComposerUserSettingsItem3Filter' table
+		And I activate field named 'SettingsComposerUserSettingsItem3FilterRightValue' in 'SettingsComposerUserSettingsItem3Filter' table
+		If 'StrFind(Lower("[TheComparisonType]"),"contains")>0 OR StrFind(Lower("[TheComparisonType]"),"begin with")>0 OR StrFind(Lower("[TheComparisonType]"),"contain")>0 OR StrFind(Lower("[TheComparisonType]"),"begin with")>0' Then
+			And I input '[TheValue]' text in the field named 'SettingsComposerUserSettingsItem3FilterRightValue' of 'SettingsComposerUserSettingsItem3Filter' table
+		Else
+			And I select '[TheValue]' by string from the drop-down list named 'SettingsComposerUserSettingsItem3FilterRightValue' in 'SettingsComposerUserSettingsItem3Filter' table
+		And I finish line editing in 'SettingsComposerUserSettingsItem3Filter' table
+		And I click the button named 'FormEndEdit'
 
-Сценарий: Я добавляю отбор в форме списка ОперПлан 'TheField' 'TheComparisonType' 'TheValue' 
-		И в таблице "List" я нажимаю на кнопку с именем 'ListListSettings'
-		Тогда открылось окно "List settings"
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' я нажимаю на кнопку с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборДобавитьЭлементОтбора'
-		Если 'StrFind("[TheField]", ".") > 0' Тогда
-			И в таблице 'SettingsComposerUserSettingsItem3Filter' в поле с именем 'SettingsComposerUserSettingsItem3FilterLeftValue' я ввожу текст '[TheField]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборЛевоеЗначение' я выбираю по строке '[TheField]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' я активизирую поле с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборВидСравнения'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборВидСравнения' я выбираю по строке '[TheComparisonType]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' я активизирую поле с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборПравоеЗначение'
-		Если 'StrFind(Lower("[TheComparisonType]"),"содержит")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"начинается с")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"contain")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"begin with")>0' Тогда 
-			И в таблице 'SettingsComposerUserSettingsItem3Filter' в поле с именем 'SettingsComposerUserSettingsItem3FilterRightValue' я ввожу текст '[TheValue]'
-		Иначе
-			И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент3ОтборПравоеЗначение' я выбираю по строке '[TheValue]'
-		И в таблице 'SettingsComposerUserSettingsItem3Filter' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormEndEdit'	
+Scenario: I add filter in operational plan list form 'TheField' 'TheComparisonType' 'TheValue'
+		And in the table "List" I click the button named 'ListListSettings'
+		Then "List settings" window is opened
+		And in the table 'SettingsComposerUserSettingsItem3Filter' I click the button named 'SettingsComposerUserSettingsItem3FilterAddFilterItem'
+		If 'StrFind("[TheField]", ".") > 0' Then
+			And I input '[TheField]' text in the field named 'SettingsComposerUserSettingsItem3FilterLeftValue' of 'SettingsComposerUserSettingsItem3Filter' table
+		And I select '[TheField]' by string from the drop-down list named 'SettingsComposerUserSettingsItem3FilterLeftValue' in 'SettingsComposerUserSettingsItem3Filter' table
+		And I activate field named 'SettingsComposerUserSettingsItem3FilterComparisonType' in 'SettingsComposerUserSettingsItem3Filter' table
+		And I select '[TheComparisonType]' by string from the drop-down list named 'SettingsComposerUserSettingsItem3FilterComparisonType' in 'SettingsComposerUserSettingsItem3Filter' table
+		And I activate field named 'SettingsComposerUserSettingsItem3FilterRightValue' in 'SettingsComposerUserSettingsItem3Filter' table
+		If 'StrFind(Lower("[TheComparisonType]"),"contains")>0 OR StrFind(Lower("[TheComparisonType]"),"begin with")>0 OR StrFind(Lower("[TheComparisonType]"),"contain")>0 OR StrFind(Lower("[TheComparisonType]"),"begin with")>0' Then
+			And I input '[TheValue]' text in the field named 'SettingsComposerUserSettingsItem3FilterRightValue' of 'SettingsComposerUserSettingsItem3Filter' table
+		Else
+			And I select '[TheValue]' by string from the drop-down list named 'SettingsComposerUserSettingsItem3FilterRightValue' in 'SettingsComposerUserSettingsItem3Filter' table
+		And I finish line editing in 'SettingsComposerUserSettingsItem3Filter' table
+		And I click the button named 'FormEndEdit'
 
-Сценарий: Я снимаю все отборы в форме списка ОперПлан 
-		И в таблице "List" я нажимаю на кнопку с именем 'ListListSettings'
-		Тогда открылось окно "List settings"
-		И я перехожу к закладке с именем 'SettingsComposerUserSettingsItem3'
-		И я удаляю все строки таблицы 'SettingsComposerUserSettingsItem3Filter'
-		И я нажимаю на кнопку с именем 'FormEndEdit'
+Scenario: I remove all filters in operational plan list form
+		And in the table "List" I click the button named 'ListListSettings'
+		Then "List settings" window is opened
+		And I move to the tab named 'SettingsComposerUserSettingsItem3'
+		And I delete all lines of 'SettingsComposerUserSettingsItem3Filter' table
+		And I click the button named 'FormEndEdit'
 
-Сценарий: Я формирую Отчет по лимитам по виду бюджета 'TheBudget' за период с "PeriodValue1" по  "PeriodValue2" в валюте 'TheCurrency'
-		И В командном интерфейсе я выбираю 'Планирование и контроль' 'Отчет по лимитам'
-		И я нажимаю на кнопку с именем 'AllSettings'
-		Тогда открылось окно 'Report settings "Report on limits (period in rows)"'
+Scenario: I form limits report by budget type 'TheBudget' for period from "PeriodValue1" to "PeriodValue2" in currency 'TheCurrency'
+		And In the command interface I select 'Planning and control' 'Limit report'
+		And I click the button named 'AllSettings'
+		Then 'Report settings "Report on limits (period in rows)"' window is opened
 		Если представление элемента с именем 'ExtendedMode' стало равно 'Downtime' тогда
-			И я меняю значение переключателя с именем 'ExtendedMode' на 'Advanced'
-		И в таблице "Filters" я нажимаю на кнопку с именем 'Filters_ClearCheckBoxes'
-		И Я закрываю окно 'Report settings "Limits report (period in rows)"'
-		Тогда открылось окно '1C:Enterprise'
-		И я нажимаю на кнопку 'Да'				
-		И из выпадающего списка с именем "КомпоновщикНастроекПользовательскиеНастройкиЭлемент1Значение" я выбираю по строке '[TheBudget]'
-		И из выпадающего списка с именем "SettingsComposerUserSettingsItem2Value" я выбираю по строке '[TheCurrency]'
-		И я нажимаю на кнопку с именем 'SelectPeriod1'
-		И в поле с именем 'DateBegin' я ввожу текст '[PeriodValue1]'
-		И в поле с именем 'DateEnd' я ввожу текст '[PeriodValue2]'
-		И я нажимаю на кнопку с именем 'Select'
-		И я нажимаю на кнопку с именем 'GenerateReport'
+			And I change the radio button named 'ExtendedMode' value to 'Advanced'
+		And in the table "Filters" I click the button named 'Filters_ClearCheckBoxes'
+		And I close 'Report settings "Limits report (period in rows)"' window
+		Then '1C:Enterprise' window is opened
+		And I click 'Yes' button
+		And I select from the drop-down list named "SettingsComposerUserSettingsItem1Value"  by '[TheBudget]' string
+		And I select from the drop-down list named "SettingsComposerUserSettingsItem2Value"  by '[TheCurrency]' string
+		And I click the button named 'SelectPeriod1'
+		And I input '[PeriodValue1]' text in the field named 'DateBegin'
+		And I input '[PeriodValue2]' text in the field named 'DateEnd'
+		And I click the button named 'Select'
+		And I click the button named 'GenerateReport'
 
-Сценарий: Я добавляю отбор в Отчете по лимитам 'TheField' 'TheComparisonType' 'TheValue'
-		И я нажимаю на кнопку с именем 'AllSettings'
-		И в таблице "Filters" я нажимаю на кнопку с именем 'Filters_Add'
-		И в таблице "AvailableFields" я перехожу к строке:
+Scenario: I add filter in limits report 'TheField' 'TheComparisonType' 'TheValue'
+		And I click the button named 'AllSettings'
+		And in the table "Filters" I click the button named 'Filters_Add'
+		And I go to line in "AvailableFields" table:
 			| 'Title'  |
 			| '[TheField]' |
-		И в таблице "AvailableFields" я выбираю текущую строку
-		И в таблице "Filters" я перехожу к строке:
+		And I select current line in "AvailableFields" table
+		And I go to line in "Filters" table:
 			| 'Use' | 'Field'       |
-			| 'Да'            | '[TheField]' |
-		И в таблице 'Filters' я активизирую поле с именем 'FiltersComparisonType'
-		И в таблице 'Filters' из выпадающего списка с именем 'ОтборыВидСравнения' я выбираю по строке '[TheComparisonType]'
-		И в таблице 'Отборы' я активизирую поле с именем 'ОтборыПравоеЗначение'
-		Если 'StrFind(Lower("[TheComparisonType]"),"содержит")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"начинается с")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"contain")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"begin with")>0' Тогда 
-			И в таблице 'Filters' в поле с именем 'FiltersRightValue' я ввожу текст '[TheValue]'
-		Иначе
-			И в таблице 'Filters' из выпадающего списка с именем 'FiltersRightValue' я выбираю по строке '[TheValue]'
-		И в таблице "Filters" я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'GenerateAndClose'
+			| 'Yes'            | '[TheField]' |
+		And I activate field named 'FiltersComparisonType' in 'Filters' table
+		And I select '[TheComparisonType]' by string from the drop-down list named 'FiltersComparisonType' in 'Filters' table
+		And I activate field named 'FiltersRightValue' in 'Filters' table
+		If 'StrFind(Lower("[TheComparisonType]"),"contains")>0 OR StrFind(Lower("[TheComparisonType]"),"begin with")>0 OR StrFind(Lower("[TheComparisonType]"),"contain")>0 OR StrFind(Lower("[TheComparisonType]"),"begin with")>0' Then
+			And I input '[TheValue]' text in the field named 'FiltersRightValue' of 'Filters' table
+		Else
+			And I select '[TheValue]' by string from the drop-down list named 'FiltersRightValue' in 'Filters' table
+		And I finish line editing in "Filters" table
+		And I click the button named 'GenerateAndClose'
 
 	
 
 
 
-//		Дано Я задаю таблицу строк "Filters"
+//		Given I set the table of rows "Filters"
 //			| 'Use' | 'Field'       | 'Condition'             |
-//			| 'Да'            | '[TheField]' | '[TheComparisonType]' |
+//			| 'Yes'            | '[TheField]' | '[TheComparisonType]' |
 //	
-//		И в таблице "Filters" я активизирую поле с именем "FiltersRightValue"
-//		И в таблице "Filters" я выбираю текущую строку
-//		И в таблице "Filters" из выпадающего списка с именем "FiltersRightValue" я выбираю по строке '[TheValue]'
+//		And in the table "Filters" I activate the field named "FiltersRightValue"
+//		And in the table "Filters" I select the current row
+//		And in the table "Filters" from the drop-down list named "FiltersRightValue" I select by row '[TheValue]'
 
-Сценарий: Я устанавливаю отбор в форме списка Резерв 'TheField' 'TheComparisonType' 'TheValue' 
-		И в таблице "List" я нажимаю на кнопку с именем 'ListListSettings'
-		Тогда открылось окно 'List settings'
-		И я активизирую поле 'Filter. Items'
-		И я удаляю все строки таблицы "SettingsComposerUserSettingsItem4Filter"
-		И я удаляю все строки таблицы 'SettingsComposerUserSettingsItem4Filter'		
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' я нажимаю на кнопку с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборДобавитьЭлементОтбора'
-		Если 'StrFind("[TheField]", ".") > 0' Тогда
-			И в таблице 'SettingsComposerUserSettingsItem4Filter' в поле с именем 'SettingsComposerUserSettingsItem4FilterLeftValue' я ввожу текст '[TheField]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборЛевоеЗначение' я выбираю по строке '[TheField]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' я активизирую поле с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборВидСравнения'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборВидСравнения' я выбираю по строке '[TheComparisonType]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' я активизирую поле с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборПравоеЗначение'
-		Если 'StrFind(Lower("[TheComparisonType]"),"содержит")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"начинается с")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"contain")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"begin with")>0' Тогда 
-			И в таблице 'SettingsComposerUserSettingsItem4Filter' в поле с именем 'SettingsComposerUserSettingsItem4FilterRightValue' я ввожу текст '[TheValue]'
-		Иначе
-			И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборПравоеЗначение' я выбираю по строке '[TheValue]'
-		И в таблице 'SettingsComposerUserSettingsItem4Filter' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormEndEdit'
+Scenario: I set filter in reserve list form 'TheField' 'TheComparisonType' 'TheValue'
+		And in the table "List" I click the button named 'ListListSettings'
+		Then 'List settings' window is opened
+		And I activate 'Filter. Items' field
+		And I delete all lines of "SettingsComposerUserSettingsItem4Filter" table
+		And I delete all lines of 'SettingsComposerUserSettingsItem4Filter' table
+		And in the table 'SettingsComposerUserSettingsItem4Filter' I click the button named 'SettingsComposerUserSettingsItem4FilterAddFilterItem'
+		If 'StrFind("[TheField]", ".") > 0' Then
+			And I input '[TheField]' text in the field named 'SettingsComposerUserSettingsItem4FilterLeftValue' of 'SettingsComposerUserSettingsItem4Filter' table
+		And I select '[TheField]' by string from the drop-down list named 'SettingsComposerUserSettingsItem4FilterLeftValue' in 'SettingsComposerUserSettingsItem4Filter' table
+		And I activate field named 'SettingsComposerUserSettingsItem4FilterComparisonType' in 'SettingsComposerUserSettingsItem4Filter' table
+		And I select '[TheComparisonType]' by string from the drop-down list named 'SettingsComposerUserSettingsItem4FilterComparisonType' in 'SettingsComposerUserSettingsItem4Filter' table
+		And I activate field named 'SettingsComposerUserSettingsItem4FilterRightValue' in 'SettingsComposerUserSettingsItem4Filter' table
+		If 'StrFind(Lower("[TheComparisonType]"),"contains")>0 OR StrFind(Lower("[TheComparisonType]"),"begin with")>0 OR StrFind(Lower("[TheComparisonType]"),"contain")>0 OR StrFind(Lower("[TheComparisonType]"),"begin with")>0' Then
+			And I input '[TheValue]' text in the field named 'SettingsComposerUserSettingsItem4FilterRightValue' of 'SettingsComposerUserSettingsItem4Filter' table
+		Else
+			And I select '[TheValue]' by string from the drop-down list named 'SettingsComposerUserSettingsItem4FilterRightValue' in 'SettingsComposerUserSettingsItem4Filter' table
+		And I finish line editing in 'SettingsComposerUserSettingsItem4Filter' table
+		And I click the button named 'FormEndEdit'
 
-Сценарий: Я добавляю отбор в форме списка Резерв 'TheField' 'TheComparisonType' 'TheValue' 
-		И в таблице "List" я нажимаю на кнопку с именем 'ListListSettings'
-		Тогда открылось окно "List settings"
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' я нажимаю на кнопку с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборДобавитьЭлементОтбора'
-		Если 'StrFind("[TheField]", ".") > 0' Тогда
-			И в таблице 'SettingsComposerUserSettingsItem4Filter' в поле с именем 'SettingsComposerUserSettingsItem4FilterLeftValue' я ввожу текст '[TheField]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборЛевоеЗначение' я выбираю по строке '[TheField]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' я активизирую поле с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборВидСравнения'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборВидСравнения' я выбираю по строке '[TheComparisonType]'
-		И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' я активизирую поле с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборПравоеЗначение'
-		Если 'StrFind(Lower("[TheComparisonType]"),"содержит")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"начинается с")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"contain")>0 ИЛИ StrFind(Lower("[TheComparisonType]"),"begin with")>0' Тогда 
-			И в таблице 'SettingsComposerUserSettingsItem4Filter' в поле с именем 'SettingsComposerUserSettingsItem4FilterRightValue' я ввожу текст '[TheValue]'
-		Иначе
-			И в таблице 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4Отбор' из выпадающего списка с именем 'КомпоновщикНастроекПользовательскиеНастройкиЭлемент4ОтборПравоеЗначение' я выбираю по строке '[TheValue]'
-		И в таблице 'SettingsComposerUserSettingsItem4Filter' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormEndEdit'	
+Scenario: I add filter in reserve list form 'TheField' 'TheComparisonType' 'TheValue'
+		And in the table "List" I click the button named 'ListListSettings'
+		Then "List settings" window is opened
+		And in the table 'SettingsComposerUserSettingsItem4Filter' I click the button named 'SettingsComposerUserSettingsItem4FilterAddFilterItem'
+		If 'StrFind("[TheField]", ".") > 0' Then
+			And I input '[TheField]' text in the field named 'SettingsComposerUserSettingsItem4FilterLeftValue' of 'SettingsComposerUserSettingsItem4Filter' table
+		And I select '[TheField]' by string from the drop-down list named 'SettingsComposerUserSettingsItem4FilterLeftValue' in 'SettingsComposerUserSettingsItem4Filter' table
+		And I activate field named 'SettingsComposerUserSettingsItem4FilterComparisonType' in 'SettingsComposerUserSettingsItem4Filter' table
+		And I select '[TheComparisonType]' by string from the drop-down list named 'SettingsComposerUserSettingsItem4FilterComparisonType' in 'SettingsComposerUserSettingsItem4Filter' table
+		And I activate field named 'SettingsComposerUserSettingsItem4FilterRightValue' in 'SettingsComposerUserSettingsItem4Filter' table
+		If 'StrFind(Lower("[TheComparisonType]"),"contains")>0 OR StrFind(Lower("[TheComparisonType]"),"begin with")>0 OR StrFind(Lower("[TheComparisonType]"),"contain")>0 OR StrFind(Lower("[TheComparisonType]"),"begin with")>0' Then
+			And I input '[TheValue]' text in the field named 'SettingsComposerUserSettingsItem4FilterRightValue' of 'SettingsComposerUserSettingsItem4Filter' table
+		Else
+			And I select '[TheValue]' by string from the drop-down list named 'SettingsComposerUserSettingsItem4FilterRightValue' in 'SettingsComposerUserSettingsItem4Filter' table
+		And I finish line editing in 'SettingsComposerUserSettingsItem4Filter' table
+		And I click the button named 'FormEndEdit'
 
-Сценарий: Я снимаю все отборы в форме списка Резерв 
-		Тогда открылось окно "List settings"
-		И я перехожу к закладке с именем 'SettingsComposerUserSettingsItem4'
-		И я удаляю все строки таблицы 'SettingsComposerUserSettingsItem4Filter'
-		И я нажимаю на кнопку с именем 'FormEndEdit'
+Scenario: I remove all filters in reserve list form
+		Then "List settings" window is opened
+		And I move to the tab named 'SettingsComposerUserSettingsItem4'
+		And I delete all lines of 'SettingsComposerUserSettingsItem4Filter' table
+		And I click the button named 'FormEndEdit'
 
-Сценарий: Я создаю документ Резервирование по виду бюджета 'TheBudget'
-		И в таблице "List" я нажимаю на кнопку с именем 'Create'
-		Тогда открылось окно 'Reservation of plans and limits (creating)'
-		И я меняю значение переключателя 'Budget profile' на '[TheBudget]'
+Scenario: I create reservation document by budget type 'TheBudget'
+		And in the table "List" I click the button named 'Create'
+		Then 'Reservation of plans and limits (creating)' window is opened
+		And I change 'Budget profile' radio button value to '[TheBudget]'
 
-Сценарий: Я открываю АРМ Управление лимитами по виду бюджета 'TheBudget'
-		И В командном интерфейсе я выбираю 'Планирование и контроль' 'Управление планами и лимитами'
-		И я нажимаю на кнопку '[TheBudget]'
+Scenario: I open limits management workstation by budget type 'TheBudget'
+		And In the command interface I select 'Planning and control' 'Plan and limit management'
+		And I click '[TheBudget]' button
 
-Сценарий: Я создаю счет от поставщика 'TheContractor' по организации 'TheBusinessUnitName'
+Scenario: I create supplier invoice 'TheContractor' for company 'TheBusinessUnitName'
 	
-		И В командном интерфейсе я выбираю 'Покупки' 'Счета от поставщиков'	
-		И я снимаю флаг с именем 'SettingsComposerUserSettingsItem1Use'			
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно 'Supplier invoice (creating)'
-		И из выпадающего списка с именем "Counterparty" я выбираю по строке '[TheContractor]'
-		И из выпадающего списка с именем "Organization" я выбираю по строке '[TheBusinessUnitName]'
-		И я нажимаю на кнопку с именем 'FormWrite'
+		And In the command interface I select 'Purchases' 'Supplier invoices'
+		And I remove checkbox named 'SettingsComposerUserSettingsItem1Use'
+		And I click the button named 'FormCreate'
+		Then 'Supplier invoice (creating)' window is opened
+		And I select from the drop-down list named "Counterparty"  by '[TheContractor]' string
+		And I select from the drop-down list named "Organization"  by '[TheBusinessUnitName]' string
+		And I click the button named 'FormWrite'
 
-Сценарий: Я добавляю в счет от поставщика номенклатуру 'TheProductName' в количестве 'N' по цене 'X' по ставке 'TheVATrate'
-		И в таблице "Goods" я добавляю строку
-		И в таблице "Goods" я нажимаю кнопку выбора у реквизита с именем "GoodsProductRange"			
-		И Я в списке "List" по полю "Description" ищу и выбираю элемент '[TheProductName]' "Exact match" 
-		И в таблице "Goods" я активизирую поле с именем "GoodsCount"
-		И в таблице "Goods" в поле с именем 'ТоварыКоличество' я ввожу текст '[N]'
-		И в таблице "Goods" в поле с именем 'GoodsPrice' я ввожу текст '[X]'
-		И в таблице "Goods" я активизирую поле с именем "GoodsVATRate"
-		И в таблице "Goods" из выпадающего списка с именем "GoodsVATRate" я выбираю по строке '[TheVATrate]'
-		И в таблице "Goods" я завершаю редактирование строки			
-//		И в таблице "Goods" я отменяю редактирование строки
+Scenario: I add nomenclature 'TheProductName' in quantity 'N' at price 'X' at rate 'TheVATrate' to supplier invoice
+		And I add a line in "Goods" table
+		And I click choice button of the attribute named "GoodsProductRange" in "Goods" table
+		And I search and select element '[TheProductName]' "Exact match" by field "Description" in list "List"
+		And I activate field named "GoodsCount" in "Goods" table
+		And I input '[N]' text in the field named 'GoodsCount' of "Goods" table
+		And I input '[X]' text in the field named 'GoodsPrice' of "Goods" table
+		And I activate field named "GoodsVATRate" in "Goods" table
+		And I select '[TheVATrate]' by string from the drop-down list named "GoodsVATRate" in "Goods" table
+		And I finish line editing in "Goods" table
+//		And in the table "Goods" I cancel row editing
 				
-Сценарий: Нарушен контроль лимитов
-		И я перехожу к закладке с именем "PageDocumentControl"
-		И я нажимаю на кнопку с именем 'ExecuteCheckDocument'
-		Тогда таблица "TableControlDocument" стала равной:
+Scenario: I check limit control is violated
+		And I move to the tab named "PageDocumentControl"
+		And I click the button named 'ExecuteCheckDocument'
+		Then "TableControlDocument" table became equal
 			| 'Type of control'                | 'Result' | 'Additional information' |
-			| 'Контроль бюджетных лимитов'  | 'Нарушен'   | 'Details'                 |
+			| 'Budget limit control'  | 'Violated'   | 'Details'                 |
 			| 'Budget reserve control' | '*'         | '*'                         |
 
-Сценарий: Нарушен контроль резервов
-		И я перехожу к закладке с именем "PageDocumentControl"
-		И я нажимаю на кнопку с именем 'ExecuteCheckDocument'
-		Тогда таблица "TableControlDocument" стала равной:
+Scenario: I check reserve control is violated
+		And I move to the tab named "PageDocumentControl"
+		And I click the button named 'ExecuteCheckDocument'
+		Then "TableControlDocument" table became equal
 			| 'Type of control'                | 'Result' | 'Additional information' |
 			| 'Budget limit control'  | '*'         | '*'                         |
-			| 'Контроль бюджетных резервов' | 'Нарушен'   | 'Details'                 |
+			| 'Budget reserve control' | 'Violated'   | 'Details'                 |
 		
-Сценарий: Контроль лимитов и резервов пройден успешно
-		И я перехожу к закладке с именем "PageDocumentControl"
-		И я нажимаю на кнопку с именем 'ExecuteCheckDocument'
-		Тогда таблица "TableControlDocument" стала равной:
+Scenario: I check limit and reserve control passed successfully
+		And I move to the tab named "PageDocumentControl"
+		And I click the button named 'ExecuteCheckDocument'
+		Then "TableControlDocument" table became equal
 			| 'Type of control'                | 'Result' | 'Additional information' |
 			| 'Budget limit control'  | 'OK'        | 'Details'                 |
 			| 'Budget reserve control' | 'OK'        | 'Details'                 |
 
-Сценарий: Я создаю Реестр платежей по организации 'TheBusinessUnitName' 
-		И В командном интерфейсе я выбираю 'Казначейство' 'Реестры платежей'
+Scenario: I create payment register for company 'TheBusinessUnitName'
+		And In the command interface I select 'Treasury' 'Payment registers'
 
-	* Отменить проведение документов
-		И из выпадающего списка с именем "SettingsComposerUserSettingsItem0Value" я выбираю по строке '[TheBusinessUnitName]'
-		И для каждой строки таблицы 'List' я выполняю		
-			И Я удаляю текущую строку в списке 'List'
+	* Cancel document posting
+		And I select from the drop-down list named "SettingsComposerUserSettingsItem0Value"  by '[TheBusinessUnitName]' string
+		And for each line of 'List' table I do
+			And I delete current row in list 'List'
 
-	* Создать новый документ
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно 'Payment register (creating)'
-//		И я нажимаю кнопку выбора у поля с именем "Organization"
-//		И Я в таблице 'List' по полю 'Name in the application' ищу значение '[TheBusinessUnitName]' 	
-//		И в таблице "List" я выбираю текущую строку
-		И я нажимаю на кнопку с именем 'FormWrite'
+	* Create a new document
+		And I click the button named 'FormCreate'
+		Then 'Payment register (creating)' window is opened
+//		And I press the selection button for the field named "Organization"
+//		And I in the table 'List' by the field 'Name in the application' I search for the value '[TheBusinessUnitName]'
+//		And in the table "List" I select the current row
+		And I click the button named 'FormWrite'
 
-Сценарий: Я создаю на основании Заявку на корректировку планов и лимитов
-		И я нажимаю на кнопку 'Request for correction of plans and limits'
-		Тогда открылось окно 'Application for correction of plans and limits (creation) *'
-		И я нажимаю на кнопку с именем 'FormPost'
-		И я удаляю переменную '$$СсылкаЗнК$$'	
-		И я сохраняю навигационную ссылку текущего окна в переменную "$$СсылкаЗнК$$"	 	 
-		И я нажимаю на кнопку с именем 'FormShowInListRequestForPlansAdjustment'		
-		И я запоминаю значение поля с именем 'DocumentAmount' таблицы 'List' как 'ToGuarantee'
+Scenario: I create plan and limits adjustment request based on
+		And I click 'Request for correction of plans and limits' button
+		Then 'Application for correction of plans and limits (creation) *' window is opened
+		And I click the button named 'FormPost'
+		And I delete '$$ReferenceValue$$' variable
+		And I save current window navigation link to "$$ReferenceKnowledgeKey$$" variable
+		And I click the button named 'FormShowInListRequestForPlansAdjustment'
+		And I save the value of the field named 'DocumentAmount' of 'List' table as 'ToGuarantee'
 
-Сценарий: Я проверяю создание ОФД 1"DocumentIB"
-    * Открытие списка ОФД
-        И В командном интерфейсе я выбираю 'Казначейство' 'Отражения фактических данных'
-        Тогда открылось окно 'Recording of actual data'
+Scenario: I check the creation of OFD 1 "DocumentIB"
+    * Opening the OFD list
+        And In the command interface I select 'Treasury' 'Actual data reflections'
+        Then 'Recording of actual data' window is opened
     
-	* Поиск типа документа
-        И я нажимаю на кнопку с именем 'FormFind'
-        Тогда открылось окно 'Find'
-        И из выпадающего списка с именем "FieldSelector" я выбираю точное значение 'Infobase document'
-        И я нажимаю кнопку выбора у поля с именем "Pattern"
-        Тогда открылось окно 'Infobase documents'
-        И в таблице "List" я перехожу к строке:
+	* Searching for a document type
+        And I click the button named 'FormFind'
+        Then 'Find' window is opened
+        And I select 'Infobase document' exact value from the drop-down list named "FieldSelector"
+        And I click Choice button of the field named "Pattern"
+        Then 'Infobase documents' window is opened
+        And I go to line in "List" table:
             | 'Document'                 |
             | '[DocumentIB]' |
-        И в таблице "List" я выбираю текущую строку
-        Тогда открылось окно 'Find'
-        И я нажимаю на кнопку с именем 'Find'
+        And I select current line in "List" table
+        Then 'Find' window is opened
+        And I click the button named 'Find'
    	
-	* Отфильтровать список документов по дате
-		И в таблице "List" я активизирую поле с именем "Date"
-		И в таблице "List" я нажимаю на кнопку с именем 'ListContextMenuSetDateInterval'
-		Тогда открылось окно 'Select period'
-		И в поле с именем 'DateBegin' я ввожу значение переменной '$ДатаДок$'
-		И я перехожу к следующему реквизиту
-		И я нажимаю на кнопку с именем 'Select'
+	* Filter the document list by date
+		And I activate field named "Date" in "List" table
+		And in the table "List" I click the button named 'ListContextMenuSetDateInterval'
+		Then 'Select period' window is opened
+		And I input '$DateDoc$' variable value in the field named 'DateBegin'
+		And I move to the next attribute
+		And I click the button named 'Select'
 
-	* Позиционирование на исходном документе для автоопределения типа документа в окне поиска
-        И в таблице "List" я активизирую поле с именем "SourceDocument_"
+	* Positioning on the source document for automatic determination of the document type in the search window
+        And I activate field named "SourceDocument_" in "List" table
     
-	* Поиск по номеру исходного документа
-        И я нажимаю на кнопку с именем 'FormFind'
-        Тогда открылось окно 'Find'
-        И из выпадающего списка с именем "FieldSelector" я выбираю точное значение 'Original document'
-       И в поле с именем 'Pattern' я ввожу текст '$НомерДок$'
-        И я нажимаю на кнопку с именем 'Find'
+	* Search by source document number
+        And I click the button named 'FormFind'
+        Then 'Find' window is opened
+        And I select 'Original document' exact value from the drop-down list named "FieldSelector"
+       And I input '$NumberDoc$' text in the field named 'Pattern'
+        And I click the button named 'Find'
  
-	* Проверка результата(должна быть одна строка)
-        Тогда таблица "List" стала равной:
+	* Checking the result (there should be one row)
+        Then "List" table became equal
             | 'Infobase document'                           |
             | '[DocumentIB]' |
 
-   //* Закрываем список ОФД (нужно оставить открытым список с найденным документом)
- 	//	И Я закрываю окно 'Actual data reflections'
+   //* Closing the OFD list (the list with the found document should remain open)
+ 	//	And I close the window 'Actual data reflections'
 
-Сценарий: Я проверяю заполнение аналитик по виду бюджета 'TheBudget' в ОФД
+Scenario: I check dimension filling by budget type 'TheBudget' in OFD
 	
-		И я запоминаю строку '[TheBudget]' в переменную "Бюджет"
-		Когда открылось окно 'Actual data recordings'
-		И в таблице "List" я выбираю текущую строку		
-		Если переменная "Бюджет" имеет значение 'БДДС' Тогда
-			И я перехожу к закладке с именем "GroupCFB"
-			Тогда таблица "TabBudgetMovementMonetaryFunds" стала равной по шаблону:
-				| 'Cash flow item' | 'Dimension1'        | 'Dimension2'        | 'Dimension3'        | 'Dimension4'        | 'Dimension5'        | 'Dimension6'        | 'Financial responsibility center'     | 'Project'     | 'Сумма в валюте документа' | 'Документ планирования' |
-				| '$ВАСтатья$' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '$ВАЦФО$' | '$ВАПроект$' | '$Сумма$'                  | '$ДокПланирования$'     |
+		And I save '[TheBudget]' line to the variable "Budget"
+		When 'Actual data recordings' window is opened
+		And I select current line in "List" table
+		If "Budget" variable is equal to 'Budget of Cash Flows' Then
+			And I move to the tab named "GroupCFB"
+			Then "TabBudgetMovementMonetaryFunds" table became equal by template
+				| 'Cash flow item' | 'Dimension1'        | 'Dimension2'        | 'Dimension3'        | 'Dimension4'        | 'Dimension5'        | 'Dimension6'        | 'Financial responsibility center'     | 'Project'     | 'Amount in document currency' | 'Document plan' |
+				| '$VAItem$' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '$VACFD$' | '$VAProject$' | '$Amount$'                  | '$PlanningDocument$'     |
 						
-		Если переменная "Бюджет" имеет значение 'БДР' Тогда
-			И я перехожу к закладке с именем "GroupIEBudget"
-			Тогда таблица "TabBudgetIncomeAndExpense" стала равной:
-				| 'IEB item' | 'Dimension1'        | 'Dimension2'        | 'Dimension3'        | 'Dimension4'        | 'Dimension5'        | 'Dimension6'        | 'Financial responsibility center'     | 'Project'     | 'Сумма в валюте документа' | 'Документ планирования' |
-				| '$ВАСтатья$' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '$ВАЦФО$' | '$ВАПроект$' | '$Сумма$'                  | '$ДокПланирования$'     |			
+		If "Budget" variable is equal to 'БДР' Then
+			And I move to the tab named "GroupIEBudget"
+			Then "TabBudgetIncomeAndExpense" table became equal
+				| 'IEB item' | 'Dimension1'        | 'Dimension2'        | 'Dimension3'        | 'Dimension4'        | 'Dimension5'        | 'Dimension6'        | 'Financial responsibility center'     | 'Project'     | 'Amount in document currency' | 'Document plan' |
+				| '$VAItem$' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '$VACFD$' | '$VAProject$' | '$Amount$'                  | '$PlanningDocument$'     |
 			
-Сценарий: Я проверяю движения по виду бюджета 'TheBudget' в ОФД
+Scenario: I check movements by budget type 'TheBudget' in OFD
 		
-		И я запоминаю строку '[TheBudget]' в переменную "Бюджет"
-		И я запоминаю значение поля с именем 'ArrivalExpense' как 'ArrivalExpense'
-		И я нажимаю на кнопку с именем 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'		
-		Когда открылось окно 'Document register records: Recording actual data *'
-		И я перехожу к закладке с именем "GroupBudgetsOperations"
-		Если переменная "Бюджет" имеет значение 'БДДС' Тогда
-			Если переменная "ArrivalExpense" имеет значение 'Income' Тогда
-				Тогда таблица "BudgetsOperations" стала равной:
-					| 'N' | 'Budget profile'                      | 'Объект планирования' | 'Amount' | 'Сумма исполнено' | 'Аналитика структуры'                  | 'Лимит исполнено' | 'Лимит' | 'Currency' | 'Количество исполнено' | 'Валюта лимитирования' | 'Аналитика статей бюджетов' |
-					| '1' | 'Cash flow budget' | '$ДокПланирования$'   | ''      | '$Сумма$'         | '$ВАЦФО$; $ВАПроект$; $ВАОрганизация$' | '$Сумма$'         | ''      | 'RUB'    | ''                     | 'RUB'                  | '$ВАСтатья$ Приход'         |
+		And I save '[TheBudget]' line to the variable "Budget"
+		And I save the value of the field named 'ArrivalExpense' as 'ArrivalExpense'
+		And I click the button named 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'
+		When 'Document register records: Recording actual data *' window is opened
+		And I move to the tab named "GroupBudgetsOperations"
+		If "Budget" variable is equal to 'Budget of Cash Flows' Then
+			If "ArrivalExpense" variable is equal to 'Income' Then
+				Then "BudgetsOperations" table became equal
+					| 'N' | 'Budget profile'                      | 'Planning object' | 'Amount' | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Limit' | 'Currency' | 'Executed quantity' | 'Limiting currency' | 'Budget items dimension' |
+					| '1' | 'Cash flow budget' | '$PlanningDoc$'   | ''      | '$Amount$'         | '$VABudgetCode$; $VAProject$; $VAOrganization$' | '$Amount$'         | ''      | 'RUB'    | ''                     | 'RUB'                  | '$VAItem$ Income'         |
 
-		Если переменная "Бюджет" имеет значение 'БДДС' Тогда
-			Если переменная "ArrivalExpense" имеет значение 'Expense' Тогда
-				Тогда таблица "BudgetsOperations" стала равной:
-					| 'N' | 'Budget profile'                      | 'Объект планирования' | 'Amount' | 'Сумма исполнено' | 'Аналитика структуры'                  | 'Лимит исполнено' | 'Лимит' | 'Currency' | 'Количество исполнено' | 'Валюта лимитирования' | 'Аналитика статей бюджетов' |
-					| '1' | 'Cash flow budget' | '$ДокПланирования$'   | ''      | '$Сумма$'         | '$ВАЦФО$; $ВАПроект$; $ВАОрганизация$' | '$Сумма$'         | ''      | 'RUB'    | ''                     | 'RUB'                  | '$ВАСтатья$ Расход'         |
+		If "Budget" variable is equal to 'Budget of Cash Flows' Then
+			If "ArrivalExpense" variable is equal to 'Expense' Then
+				Then "BudgetsOperations" table became equal
+					| 'N' | 'Budget profile'                      | 'Planning object' | 'Amount' | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Limit' | 'Currency' | 'Executed quantity' | 'Limiting currency' | 'Budget items dimension' |
+					| '1' | 'Cash flow budget' | '$PlanningDoc$'   | ''      | '$Amount$'         | '$VABudgetCode$; $VAProject$; $VAOrganization$' | '$Amount$'         | ''      | 'RUB'    | ''                     | 'RUB'                  | '$VAItem$ Expense'         |
 
 
-		Если переменная "Бюджет" имеет значение 'БДР' Тогда
-			Если переменная "ArrivalExpense" имеет значение 'Income' Тогда
-				Тогда таблица "BudgetsOperations" стала равной по шаблону:
-					| 'N' | 'Budget profile'               | 'Объект планирования' | 'Amount'    | 'Сумма исполнено' | 'Аналитика структуры'                  | 'Лимит исполнено' | 'Лимит'    | 'Currency' | 'Количество исполнено' | 'Валюта лимитирования' | 'Аналитика статей бюджетов' |
-					| '1' | 'P&amp;L budget' | '$ДокПланирования$'   | '-$Сумма$' | '$Сумма$'         | '$ВАЦФО$; $ВАПроект$; $ВАОрганизация$' | '$Сумма$'         | '-$Сумма$' | 'RUB'    | ''                     | 'RUB'                  | '$ВАСтатья$ Приход'         |
+		If "Budget" variable is equal to 'БДР' Then
+			If "ArrivalExpense" variable is equal to 'Income' Then
+				Then "BudgetsOperations" table became equal by template
+					| 'N' | 'Budget profile'               | 'Planning object' | 'Amount'    | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Limit'    | 'Currency' | 'Executed quantity' | 'Limiting currency' | 'Budget items dimension' |
+					| '1' | 'P&amp;L budget' | '$PlanningDoc$'   | '-$Amount$' | '$Amount$'         | '$VABudgetCode$; $VAProject$; $VAOrganization$' | '$Amount$'         | '-$Amount$' | 'RUB'    | ''                     | 'RUB'                  | '$VAItem$ Income'         |
 
-		Если переменная "Бюджет" имеет значение 'БДР' Тогда
-			Если переменная "ArrivalExpense" имеет значение 'Expense' Тогда
-				Тогда таблица "BudgetsOperations" стала равной по шаблону:
-					| 'N' | 'Budget profile'               | 'Объект планирования' | 'Amount'    | 'Сумма исполнено' | 'Аналитика структуры'                  | 'Лимит исполнено' | 'Лимит'    | 'Currency' | 'Количество исполнено' | 'Валюта лимитирования' | 'Аналитика статей бюджетов' |
-					| '1' | 'P&amp;L budget' | '$ДокПланирования$'   | '-$Сумма$' | '$Сумма$'         | '$ВАЦФО$; $ВАПроект$; $ВАОрганизация$' | '$Сумма$'         | '-$Сумма$' | 'RUB'    | ''                     | 'RUB'                  | '$ВАСтатья$ Расход'         |
+		If "Budget" variable is equal to 'БДР' Then
+			If "ArrivalExpense" variable is equal to 'Expense' Then
+				Then "BudgetsOperations" table became equal by template
+					| 'N' | 'Budget profile'               | 'Planning object' | 'Amount'    | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Limit'    | 'Currency' | 'Executed quantity' | 'Limiting currency' | 'Budget items dimension' |
+					| '1' | 'P&amp;L budget' | '$DocumentPlan$'   | '-$Amount$' | '$Amount$'         | '$VAFinancialResponsibilityCenter$; $VAProject$; $VAOrganization$' | '$Amount$'         | '-$Amount$' | 'RUB'    | ''                     | 'RUB'                  | '$VAItem$ Expense'         |
 
-Сценарий: Я открываю и проверяю График расчетов с покупателем
+Scenario: I open and check customer payment schedule
 
-		И я нажимаю на кнопку с именем 'OpenScheduleCalculations'
-		Тогда открылось окно 'Payment schedule with buyer or supplier *'
-		И я запоминаю значение поля с именем 'ОбъектРасчетов' как 'ДокПланирования'
+		And I click the button named 'OpenScheduleCalculations'
+		Then 'Payment schedule with buyer or supplier *' window is opened
+		And I save the value of the field named 'ObjectCalculations' as 'PlanningDocument'
 
-	* Проверяем аналитики графика
-		И я перехожу к закладке с именем "GroupSchedule"
-		Если в таблице 'ГрафикРасчетов' количество строк "равно" 0 тогда
-			И в поле с именем 'ДатаПервойОперации' я ввожу значение выражения 'ТекущаяДата()'
-			И в таблице "ГрафикРасчетов" я нажимаю на кнопку с именем 'ГрафикРассчитатьОтДатыПервогоПлатежа'			
-		И в таблице 'ScheduleOfCalculations' я перехожу к первой строке
-		Тогда таблица "ScheduleCalculationsLinear" стала равной по шаблону:
-			| 'Операция графика' | 'Budget profile'               | 'Элемент структуры задолженности' | 'Направление движения' | 'Budget item' | 'Dimension 1'       | 'Dimension 2'       | 'Dimension 3'       | 'Dimension 4'       | 'Dimension 5'       | 'Dimension 6'       | 'Financial responsibility center'   | 'Project'   | 'Company account' | 'Counterparty account' | 'Currency' | 'Amount'   |
-			| 'Accrual'       | 'P&amp;L budget' | 'Principal debt'                   | 'Income'               | 'ВАСтатья'       | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | 'ВАЦФО' | 'ВАПроект' | ''                 | ''                 | 'RUB'    | '$Сумма$' |
+	* Checking the dimensions of the chart
+		And I move to the tab named "GroupSchedule"
+		If number of 'ScheduleCalculations' table lines is "equal" 0 Then
+			And I input 'CurrentDate()' expression value in the field named 'DateFirstOperation'
+			And in the table "ScheduleCalculations" I click the button named 'ScheduleCalculateFromDateFirstPayment'
+		And I go to the first line in 'ScheduleOfCalculations' table
+		Then "ScheduleCalculationsLinear" table became equal by template
+			| 'Schedule transaction' | 'Budget profile'               | 'Debt structure item' | 'Direction of movement' | 'Budget item' | 'Dimension 1'       | 'Dimension 2'       | 'Dimension 3'       | 'Dimension 4'       | 'Dimension 5'       | 'Dimension 6'       | 'Financial responsibility center'   | 'Project'   | 'Company account' | 'Counterparty account' | 'Currency' | 'Amount'   |
+			| 'Accrual'       | 'P&amp;L budget' | 'Principal debt'                   | 'Income'               | 'VAItem'       | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | 'VAFinancialResponsibilityCenter' | 'VAProject' | ''                 | ''                 | 'RUB'    | '$Amount$' |
 		
-		И в таблице 'ScheduleOfCalculations' я перехожу к последней строке
-		Тогда таблица "ScheduleCalculationsLinear" стала равной по шаблону:
-			| 'Операция графика' | 'Budget profile'                      | 'Элемент структуры задолженности' | 'Направление движения' | 'Budget item' | 'Dimension 1'       | 'Dimension 2'       | 'Dimension 3'       | 'Dimension 4'       | 'Dimension 5'       | 'Dimension 6'       | 'Financial responsibility center'   | 'Project'   | 'Company account' | 'Counterparty account' | 'Currency' | 'Amount'   |
-			| 'Оплата'           | 'Cash flow budget' | 'Principal debt'                   | 'Income'               | 'ВАСтатья'       | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | 'ВАЦФО' | 'ВАПроект' | ''                 | ''                 | 'RUB'    | '$Сумма$' |
+		And I go to the last line in 'ScheduleOfCalculations' table
+		Then "ScheduleCalculationsLinear" table became equal by template
+			| 'Schedule transaction' | 'Budget profile'                      | 'Debt structure item' | 'Direction of movement' | 'Budget item' | 'Dimension 1'       | 'Dimension 2'       | 'Dimension 3'       | 'Dimension 4'       | 'Dimension 5'       | 'Dimension 6'       | 'Financial responsibility center'   | 'Project'   | 'Company account' | 'Counterparty account' | 'Currency' | 'Amount'   |
+			| 'Payment'           | 'Cash flow budget' | 'Principal debt'                   | 'Income'               | 'VAItem'       | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | 'VAFRC' | 'VAProject' | ''                 | ''                 | 'RUB'    | '$Amount$' |
 
-	* Проверяем движения	
-		И я перехожу к закладке с именем "MainGroup3"	
-		Если элемент формы с именем "ОбъектРасчетов" стал равен 'Заказ покупателя *' по шаблону тогда
-			И я нажимаю на кнопку с именем 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'	
-		Иначе 
-			И я нажимаю на кнопку с именем 'FormPost'
-			И я нажимаю на кнопку с именем 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'
+	* Checking the movements
+		And I move to the tab named "MainGroup3"
+		If form element named "ObjectCalculations" became equal to 'Customer order *' by template Then
+			And I click the button named 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'
+		Else
+			And I click the button named 'FormPost'
+			And I click the button named 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'
 		
-		Тогда открылось окно 'Document register records: Payment schedule with buyer or supplier * from *'
-		Тогда таблица "BudgetsOperations" стала равной по шаблону:
-			| 'N' | 'Budget profile'                      | 'Income expense' | 'Кратность лимитирования' | 'Объект планирования' | 'Amount'   | 'Аналитика партнеров'                                           | 'Источник версии' | 'State' | 'Курс планирования' | 'Аналитика потребностей' | 'Сумма исполнено' | 'Аналитика структуры'                  | 'Лимит исполнено' | 'Аналитика поставки' | 'Количество' | 'Лимит'   | 'Currency' | 'Количество исполнено' | 'Аналитика номенклатуры' | 'Валюта лимитирования' | 'Кратность планирования' | 'Курс задан в операции' | 'Курс лимитирования' | 'Аналитика статей бюджетов' | 'Корректировка документа' |
-			| '1' | 'P&amp;L budget'        | 'Income'        | '1'                       | '$ДокПланирования$'   | '$Сумма$' | '$ВАОрганизация$; $ВАПокупатель$; $Договор$; $ДокПланирования$' | ''                | ''          | '1,0000'            | ''                       | ''                | '$ВАЦФО$; $ВАПроект$; $ВАОрганизация$' | ''                | ''                   | ''           | '$Сумма$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'Нет'                   | '1,0000'             | '$ВАСтатья$ Приход'         | ''                        |
-			| '2' | 'Cash flow budget' | 'Income'        | '1'                       | '$ДокПланирования$'   | '$Сумма$' | '$ВАОрганизация$; $ВАПокупатель$; $Договор$; $ДокПланирования$' | ''                | ''          | '1,0000'            | ''                       | ''                | '$ВАЦФО$; $ВАПроект$; $ВАОрганизация$' | ''                | ''                   | ''           | '$Сумма$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'Нет'                   | '1,0000'             | '$ВАСтатья$ Приход'         | ''                        |
+		Then 'Document register records: Payment schedule with buyer or supplier * from *' window is opened
+		Then "BudgetsOperations" table became equal by template
+			| 'N' | 'Budget profile'                      | 'Income expense' | 'Limiting multiplier' | 'Planning object' | 'Amount'   | 'Partners dimension'                                           | 'Version source' | 'State' | 'Planning rate' | 'Needs dimension' | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Supply dimension' | 'Количество' | 'Limit'   | 'Currency' | 'Executed quantity' | 'Nomenclature dimension' | 'Limiting currency' | 'Planning multiplier' | 'Rate specified in operation' | 'Limiting rate' | 'Budget items dimension' | 'Document adjusting' |
+			| '1' | 'P&amp;L budget'        | 'Income'        | '1'                       | '$PlanningDoc$'   | '$Amount$' | '$VAOrganization$; $VACustomer$; $Contract$; $PlanningDoc$' | ''                | ''          | '1.0000'            | ''                       | ''                | '$VABudgetCode$; $VAProject$; $VAOrganization$' | ''                | ''                   | ''           | '$Amount$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'No'                   | '1.0000'             | '$VAItem$ Income'         | ''                        |
+			| '2' | 'Cash flow budget' | 'Income'        | '1'                       | '$DocumentPlan$'   | '$Amount$' | '$VAOrganization$; $VACustomer$; $Contract$; $DocumentPlan$' | ''                | ''          | '1.0000'            | ''                       | ''                | '$VAFinancialResponsibilityCenter$; $VAProject$; $VAOrganization$' | ''                | ''                   | ''           | '$Amount$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'No'                   | '1.0000'             | '$VAItem$ Income'         | ''                        |
 
-		И Я закрываю окно 'Document register records: Payment schedule with buyer or supplier * from *'
-		Тогда открылось окно 'Payment schedule with buyer or supplier * from *'
-		И Я закрываю окно 'Payment schedule with buyer or supplier * from *'
+		And I close 'Document register records: Payment schedule with buyer or supplier * from *' window
+		Then 'Payment schedule with buyer or supplier * from *' window is opened
+		And I close 'Payment schedule with buyer or supplier * from *' window
 
-Сценарий: Я открываю и проверяю График расчетов с поставщиком
+Scenario: I open and check supplier payment schedule
 
-		И я нажимаю на кнопку с именем 'OpenScheduleCalculations'
-		Тогда открылось окно 'Payment schedule with buyer or supplier *'
-		И я запоминаю значение поля с именем 'ОбъектРасчетов' как 'ДокПланирования'
+		And I click the button named 'OpenScheduleCalculations'
+		Then 'Payment schedule with buyer or supplier *' window is opened
+		And I save the value of the field named 'ObjectCalculations' as 'PlanningDocument'
 
-	* Проверяем аналитики графика
-		И я перехожу к закладке с именем "GroupSchedule"
-		И в таблице 'ScheduleOfCalculations' я перехожу к первой строке
-		Тогда таблица "ScheduleCalculationsLinear" стала равной по шаблону:
-			| 'Операция графика' | 'Budget profile'               | 'Элемент структуры задолженности' | 'Направление движения' | 'Budget item' | 'Dimension 1'       | 'Dimension 2'       | 'Dimension 3'       | 'Dimension 4'       | 'Dimension 5'       | 'Dimension 6'       | 'Financial responsibility center'   | 'Project'   | 'Company account' | 'Counterparty account' | 'Currency' | 'Amount'   |
-			| 'Accrual'       | 'P&amp;L budget' | 'Principal debt'                   | 'Expense'               | 'ВАСтатья'       | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | 'ВАЦФО' | 'ВАПроект' | ''                 | ''                 | 'RUB'    | '$Сумма$' |
+	* Checking the dimensions of the chart
+		And I move to the tab named "GroupSchedule"
+		And I go to the first line in 'ScheduleOfCalculations' table
+		Then "ScheduleCalculationsLinear" table became equal by template
+			| 'Schedule transaction' | 'Budget profile'               | 'Debt structure item' | 'Direction of movement' | 'Budget item' | 'Dimension 1'       | 'Dimension 2'       | 'Dimension 3'       | 'Dimension 4'       | 'Dimension 5'       | 'Dimension 6'       | 'Financial responsibility center'   | 'Project'   | 'Company account' | 'Counterparty account' | 'Currency' | 'Amount'   |
+			| 'Accrual'       | 'P&amp;L budget' | 'Principal debt'                   | 'Expense'               | 'VAItem'       | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | 'VAFinancialResponsibilityCenter' | 'VAProject' | ''                 | ''                 | 'RUB'    | '$Amount$' |
 		
-		И в таблице 'ScheduleOfCalculations' я перехожу к последней строке
-		Тогда таблица "ScheduleCalculationsLinear" стала равной по шаблону:
-			| 'Операция графика' | 'Budget profile'                      | 'Элемент структуры задолженности' | 'Направление движения' | 'Budget item' | 'Dimension 1'       | 'Dimension 2'       | 'Dimension 3'       | 'Dimension 4'       | 'Dimension 5'       | 'Dimension 6'       | 'Financial responsibility center'   | 'Project'   | 'Company account' | 'Counterparty account' | 'Currency' | 'Amount'   |
-			| 'Оплата'           | 'Cash flow budget' | 'Principal debt'                   | 'Expense'               | 'ВАСтатья'       | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | '<Не используется>' | 'ВАЦФО' | 'ВАПроект' | ''                 | ''                 | 'RUB'    | '$Сумма$' |
+		And I go to the last line in 'ScheduleOfCalculations' table
+		Then "ScheduleCalculationsLinear" table became equal by template
+			| 'Schedule transaction' | 'Budget profile'                      | 'Debt structure item' | 'Direction of movement' | 'Budget item' | 'Dimension 1'       | 'Dimension 2'       | 'Dimension 3'       | 'Dimension 4'       | 'Dimension 5'       | 'Dimension 6'       | 'Financial responsibility center'   | 'Project'   | 'Company account' | 'Counterparty account' | 'Currency' | 'Amount'   |
+			| 'Payment'           | 'Cash flow budget' | 'Principal debt'                   | 'Expense'               | 'VAItem'       | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | '<Not used>' | 'VAFRC' | 'VAProject' | ''                 | ''                 | 'RUB'    | '$Amount$' |
 
-	* Проверяем движения	
-		И я перехожу к закладке с именем "MainGroup3"	
-		Если элемент формы с именем "ОбъектРасчетов" стал равен 'Заказ поставщику *' по шаблону тогда
-			И я нажимаю на кнопку с именем 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'	
-		Иначе 
-			И я нажимаю на кнопку с именем 'FormPost'
-			И я нажимаю на кнопку с именем 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'
-		Тогда открылось окно 'Document register records: Payment schedule with buyer or supplier * from *'
-		Тогда таблица "BudgetsOperations" стала равной по шаблону:
-			| 'N' | 'Budget profile'                      | 'Income expense' | 'Кратность лимитирования' | 'Объект планирования' | 'Amount'   | 'Аналитика партнеров'                                           | 'Источник версии' | 'State' | 'Курс планирования' | 'Аналитика потребностей' | 'Сумма исполнено' | 'Аналитика структуры'                  | 'Лимит исполнено' | 'Аналитика поставки' | 'Количество' | 'Лимит'   | 'Currency' | 'Количество исполнено' | 'Аналитика номенклатуры' | 'Валюта лимитирования' | 'Кратность планирования' | 'Курс задан в операции' | 'Курс лимитирования' | 'Аналитика статей бюджетов' | 'Корректировка документа' |
-			| '1' | 'P&amp;L budget'        | 'Expense'        | '1'                       | '$ДокПланирования$'   | '$Сумма$' | '$ВАОрганизация$; $ВАПокупатель$; $Договор$; $ДокПланирования$' | ''                | ''          | '1,0000'            | ''                       | ''                | '$ВАЦФО$; $ВАПроект$; $ВАОрганизация$' | ''                | ''                   | ''           | '$Сумма$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'Нет'                   | '1,0000'             | '$ВАСтатья$ Расход'         | ''                        |
-			| '2' | 'Cash flow budget' | 'Expense'        | '1'                       | '$ДокПланирования$'   | '$Сумма$' | '$ВАОрганизация$; $ВАПокупатель$; $Договор$; $ДокПланирования$' | ''                | ''          | '1,0000'            | ''                       | ''                | '$ВАЦФО$; $ВАПроект$; $ВАОрганизация$' | ''                | ''                   | ''           | '$Сумма$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'Нет'                   | '1,0000'             | '$ВАСтатья$ Расход'         | ''                        |
+	* Checking the movements
+		And I move to the tab named "MainGroup3"
+		If form element named "ObjectCalculations" became equal to 'Supplier order *' by template Then
+			And I click the button named 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'
+		Else
+			And I click the button named 'FormPost'
+			And I click the button named 'FormProcessingDocumentRegisterRecordsDocumentRegisterRecordsReport'
+		Then 'Document register records: Payment schedule with buyer or supplier * from *' window is opened
+		Then "BudgetsOperations" table became equal by template
+			| 'N' | 'Budget profile'                      | 'Income expense' | 'Limiting multiplier' | 'Planning object' | 'Amount'   | 'Partners dimension'                                           | 'Version source' | 'State' | 'Planning rate' | 'Needs dimension' | 'Executed amount' | 'Structure dimension'                  | 'Executed limit' | 'Supply dimension' | 'Количество' | 'Limit'   | 'Currency' | 'Executed quantity' | 'Nomenclature dimension' | 'Limiting currency' | 'Planning multiplier' | 'Rate specified in operation' | 'Limiting rate' | 'Budget items dimension' | 'Document adjusting' |
+			| '1' | 'P&amp;L budget'        | 'Expense'        | '1'                       | '$PlanningDoc$'   | '$Amount$' | '$VAOrganization$; $VACustomer$; $Contract$; $PlanningDoc$' | ''                | ''          | '1.0000'            | ''                       | ''                | '$VABudgetCode$; $VAProject$; $VAOrganization$' | ''                | ''                   | ''           | '$Amount$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'No'                   | '1.0000'             | '$VAItem$ Expense'         | ''                        |
+			| '2' | 'Cash flow budget' | 'Expense'        | '1'                       | '$DocumentPlan$'   | '$Amount$' | '$VAOrganization$; $VACustomer$; $Contract$; $DocumentPlan$' | ''                | ''          | '1.0000'            | ''                       | ''                | '$VAFinancialResponsibilityCenter$; $VAProject$; $VAOrganization$' | ''                | ''                   | ''           | '$Amount$' | 'RUB'    | ''                     | ''                       | 'RUB'                  | '1'                      | 'No'                   | '1.0000'             | '$VAItem$ Expense'         | ''                        |
 
-		И Я закрываю окно 'Document register records: Payment schedule with buyer or supplier * from *'
-		Тогда открылось окно 'Payment schedule with buyer or supplier * from *'
-		И Я закрываю окно 'Payment schedule with buyer or supplier * from *'
+		And I close 'Document register records: Payment schedule with buyer or supplier * from *' window
+		Then 'Payment schedule with buyer or supplier * from *' window is opened
+		And I close 'Payment schedule with buyer or supplier * from *' window
 
-Сценарий: Я открываю движения документа с отбором по виду движений 'MovementType' в ЕРП УХ
+Scenario: I open the document movements with a filter by movement type 'MovementType' in ERP_UH
 
-		И я нажимаю на кнопку 'Document register records'
-		Тогда открылось окно 'Document register records (Horizontal)'
-		И я активизирую поле 'Display only'
-		И я нажимаю кнопку выбора у поля  "Display only"
-		Тогда открылось окно 'Display only'
-		И я нажимаю на кнопку с именем 'ListClearCheckBoxes'
-		И в таблице "List" я перехожу к строке:
+		And I click 'Document register records' button
+		Then 'Document register records (Horizontal)' window is opened
+		And I activate 'Display only' field
+		And I click Select button of "Display only" field
+		Then 'Display only' window is opened
+		And I click the button named 'ListClearCheckBoxes'
+		And I go to line in "List" table:
 			| 'Value'      | 'Mark' |
-			| '[ВидДвижений]' | 'Нет'     |
-		И в таблице "List" я изменяю флаг с именем 'ListCheckBox'
-		И в таблице "List" я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'OkCommand'
-		Тогда открылось окно 'Document register records (Horizontal)'
-		И я нажимаю на кнопку с именем 'GenerateReport'
+			| '[MovementType]' | 'No'     |
+		And I change checkbox named 'ListCheckBox' in "List" table
+		And I finish line editing in "List" table
+		And I click the button named 'OkCommand'
+		Then 'Document register records (Horizontal)' window is opened
+		And I click the button named 'GenerateReport'
 
 

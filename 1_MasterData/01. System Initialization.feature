@@ -1,90 +1,90 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_NSI
 
-Функционал: 01. Инициализация системы
+Feature: 01. System initialization
 
-	Как Аналитик я хочу
-	наполнить базу НСИ
-	чтобы использовать её в сценарных тестах
+	As an Analyst I want to
+	fill the reference data database
+	to use it in scenario tests
 
-Сценарий: 01.01 Создание пользователя системы [Администратор]
+Scenario: 01.01 Creating a system user [Administrator]
 
-	И Я подключаю клиент тестирования "Этот клиент" из таблицы клиентов тестирования
+	And I connect "Main client" test client from test client table
 	
-	* Создаем физическое лицо	
-		И Я открываю основную форму списка справочника "Persons"
-		Тогда открылось окно 'Individuals'
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылось окно "Find"
-		И в поле с именем 'Pattern' я ввожу текст "Stark Bran"
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И я нажимаю на кнопку с именем 'Find'
-		Если в таблице 'Список' количество строк "равно" 0 Тогда
-			И я нажимаю на кнопку с именем 'ФормаСоздать'
-			Тогда открылось окно 'Физическое лицо (создание)'
-			И в поле с именем 'ФИО' я ввожу текст 'Старк Бран'
-			И я перехожу к следующему реквизиту
+	* Creating an individual
+		And I open "Persons" catalog default form
+		Then 'Individuals' window is opened
+		And I click the button named 'FormFind'
+		Then "Find" window is opened
+		And I input "Stark Bran" text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I click the button named 'Find'
+		If number of 'List' table lines is "equal" 0 Then
+			And I click the button named 'FormCreate'
+			Then 'Individual (create)' window is opened
+			And I input 'Stark Bran' text in the field named 'ФИО'
+			And I move to the next attribute
 			И в поле с именем 'ФизлицоДатаРождения' я ввожу текст '01.01.2000'
 			И я перехожу к следующему реквизиту
 			И из выпадающего списка с именем "ФизлицоПол" я выбираю точное значение 'Мужской'
 			И я перехожу к следующему реквизиту
-			И я нажимаю на кнопку с именем 'КомандаЗаписать'
-			И я нажимаю на кнопку с именем 'КомандаЗаписатьИЗакрыть'
-			И я жду закрытия окна 'Физическое лицо (создание) *' в течение 20 секунд
-		Тогда открылось окно 'Физические лица'
-		И Я закрываю окно "Физические лица"
+			And I click the button named 'FormWrite'
+			And I click the button named 'FormWriteAndClose'
+			And I wait 'Individual (create) *' window closing in 20 seconds
+		Then 'Individuals' window is opened
+		And I close "Individuals" window
 	
-	* Ищем пользователя Администратор
-		И В командном интерфейсе я выбираю 'Администрирование' 'Настройки пользователей и прав'
-		Тогда открылось окно 'Настройки пользователей и прав'
-		И я нажимаю на кнопку 'Пользователи'
-		Когда открылось окно "Пользователи"
-		И я нажимаю на кнопку с именем 'ФормаНайти'
-		Тогда открылось окно "Найти"
-		И в поле с именем 'Pattern' я ввожу текст "Администратор"
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И я нажимаю на кнопку с именем 'Find'
-		Если в таблице 'ПользователиСписок' количество строк "равно" 0 Тогда
-			И я нажимаю на кнопку с именем 'СоздатьПользователя'
-			Тогда открылось окно 'Пользователь (создание)'
-			И в поле 'Полное имя' я ввожу текст 'Администратор'
-		Иначе
-			И в таблице 'ПользователиСписок' я выбираю текущую строку
-			Тогда открылось окно 'Администратор (Пользователь)'
+	* Searching for user Administrator
+		And In the command interface I select 'Administration' 'Users and rights settings'
+		Then 'Users and rights settings' window is opened
+		And I click 'Users' button
+		When "Users" window is opened
+		And I click the button named 'FormFind'
+		Then "Find" window is opened
+		And I input "Administrator" text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I click the button named 'Find'
+		If number of 'UsersList' table lines is "equal" 0 Then
+			And I click the button named 'CreateUser'
+			Then 'User (create)' window is opened
+			And I input 'Administrator' text in 'Full name' field
+		Else
+			And I select current line in 'UsersList' table
+			Then 'Administrator (User)' window is opened
 
-	* Заполняем пользователя		
+	* Filling the user
 		И в поле с именем 'ФизическоеЛицо' я ввожу текст "Старк Бран"
 		И из выпадающего списка с именем 'ФизическоеЛицо' я выбираю по строке "Старк Бран"
-		И я нажимаю на кнопку с именем 'ФормаЗаписать'
-		Если открылось окно 'Запись пользователя информационной базы' Тогда
-			И я нажимаю на кнопку 'Да'
-		Если открылось окно 'Обсуждения (система взаимодействий)' Тогда
-			И я изменяю флаг 'Больше не задавать этот вопрос'
-			И я нажимаю на кнопку 'Нет'
-		Тогда открылось окно 'Администратор (Пользователь)'
+		And I click the button named 'FormWrite'
+		If 'Save infobase user' window is opened Then
+			And I click 'Yes' button
+		If 'Conversations (interaction system)' window is opened Then
+			And I change checkbox 'Do not ask again'
+			And I click 'No' button
+		Then 'Administrator (User)' window is opened
 		И я нажимаю на кнопку 'Записать и закрыть'
-		И я жду закрытия окна 'Администратор (Пользователь)' в течение 20 секунд
+		And I wait 'Administrator (User)' window closing in 20 seconds
 
 		И я закрываю TestClient "Этот клиент"
 
-Сценарий: 01.02 Разрешаем открытие внешних обработок
+Scenario: 01.02 Allowing opening of external data processors
 
-	И я подключаю TestClient "CPM - NSI" логин "Administrator" пароль ""
+	And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
 
-	Если открылось окно 'Security warning' Тогда
-		И я нажимаю на кнопку с именем 'Allow'
-		Когда открылось окно '1C:Enterprise'
-		И я нажимаю на кнопку с именем 'Button1'
+	If 'Security warning' window is opened Then
+		And I click the button named 'Allow'
+		When '1C:Enterprise' window is opened
+		And I click the button named 'Button1'
 
-	И я закрываю TestClient "CPM - NSI"					
+	And I close "CPM - NSI" TestClient
 
-Сценарий: 01.03 Включение подсистем
+Scenario: 01.03 Enabling subsystems
 
-	И я подключаю TestClient "УХ - НСИ" логин "Администратор" пароль "" 
+	And I connect "CPM - NSI" TestClient using "Administrator" login and "" password
 
-	* Включаем подсистему "Корпоративные закупки"
+	* Enabling the "Корпоративные закупки" subsystem
 		И В командном интерфейсе я выбираю 'Общие справочники и настройки' 'Корпоративные закупки'
 		Тогда открылось окно 'Корпоративные закупки'
 		И я устанавливаю флаг 'Использовать корпоративные закупки'
@@ -110,4 +110,4 @@
 		И я нажимаю на кнопку с именем 'ФормаЗаписатьИЗакрыть'
 		И я жду закрытия окна 'Общие настройки" *' в течение 20 секунд
 
-	И я закрываю TestClient "УХ - НСИ"
+	And I close "CPM - NSI" TestClient

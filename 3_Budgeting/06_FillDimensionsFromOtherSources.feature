@@ -1,57 +1,57 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 06. Проверка заполнения аналитик из других источников
+Feature: 06. Checking filling of dimensions from other sources
 
-	Как Администратор я хочу
-	Проверить что коорректно отрабатывало заполнение аналитик из других источников
-	чтобы показатели отчетов рассчитывались без ошибок
+	As Administrator I want to
+	Checking that filling of dimensions from other sources was working correctly
+	so that report indicators are calculated without errors
 
-Контекст: 
+Background:
 
-	И я закрыл все окна клиентского приложения
+	And I close all client application windows
 
-Сценарий: 06.00 Определение типа приложения
+Scenario: 06.00 Determining application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 06.01 Создание группы отчетов "VA - Analysts from other sources (group)"
+Scenario: 06.01 Creating report group "VA - Analysts from other sources (group)"
 
-	И Я создаю группу видов отчетов с именем "VA - Analysts from other sources (group)" и родителем "VA - Report group"
+	And I create report type group with name "VA - Analysts from other sources (group)" and parent "VA - Report group"
 
-Сценарий: 06.02 Создание вида отчета "VA - Data to add analytics"	
+Scenario: 06.02 Creating report type "VA - Data to add analytics"
 
-	И Я создаю вид отчета с именем "VA - Data to add analytics" и родителем "VA - Analysts from other sources (group)"
-	И Я открываю вид отчета с именем "VA - Data to add analytics"
-	И я перехожу к закладке с именем 'DimensionsOfReport'
-	И из выпадающего списка с именем 'DimensionKind1' я выбираю по строке "VA0ProCate"				
-	И я нажимаю на кнопку с именем 'RecordButtonForm'
-	Когда открылось окно "Data restructuring"
-	И я нажимаю на кнопку с именем 'FormOK'		
+	And I create report type with name "VA - Data to add analytics" and parent "VA - Analysts from other sources (group)"
+	And I open report type with name "VA - Data to add analytics"
+	And I move to the tab named 'DimensionsOfReport'
+	And I select from the drop-down list named 'DimensionKind1'  by "VA0ProCate" string
+	And I click the button named 'RecordButtonForm'
+	When "Data restructuring" window is opened
+	And I click the button named 'FormOK'
 
-	И я нажимаю на кнопку с именем 'EditTree'
-	Когда открылось окно "Report wizard"
-	И Я в конструкторе отчета добавляю строку с именем "Cash flow items"
-	И Я в конструкторе отчета добавляю строку с именем "Goods"
-	И Я в конструкторе отчета добавляю колонку с именем "Count"
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0CFItems" в ячейку 'R2C3'
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R3C3'
+	And I click the button named 'EditTree'
+	When "Report wizard" window is opened
+	And I add row with name "Cash flow items" in report wizard
+	And I add row with name "Goods" in report wizard
+	And I add column with name "Count" in report wizard
+	And I add dimension with code "VA0CFItems" in cell 'R2C3' in report wizard
+	And I add dimension with code "VA0Product" in cell 'R3C3' in report wizard
 
-	И Я Для вида отчета "VA - Data to add analytics" создаю бланк по умолчанию
+	And I create default template for report type "VA - Data to add analytics"
 
-Сценарий: 06.03 Создание экземпляра отчета "VA - Data to add analytics"
+Scenario: 06.03 Creating report instance "VA - Data to add analytics"
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Data to add analytics" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики "Software products" '' '' '' '' '' 
-	И я запоминаю текущее окно как 'WindowTitle'
+	And I create report instance for report type "VA - Data to add analytics" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions "Software products" '' '' '' '' ''
+	And I save the window as 'WindowTitle'
 
-	* Документ должен быть пустой
-		И табличный документ 'SpreadsheetFieldTemlate' равен:
+	* The document should be empty
+		And 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Data to add analytics" | ''               | ''                | ''             | ''           |
 			| ''                                    | ''               | ''                | ''             | ''           |
 			| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
@@ -59,203 +59,203 @@
 			| "Cash flow items"                          | '0'              | '0'               | '0'            | '0'          |
 			| "Goods"                              | '0'              | '0'               | '0'            | '0'          |
 
-	* Вводим значения показателей
-		* Товарные категории
-			И Я добавляю значения с раскрытием показателей в ячейку 'R6C2'
+	* Filling indicator values
+		* Product categories
+			And I add values with indicator expansion in cell 'R6C2'
 				| "VA0CFItems"                       | 'Value1' |
 				| "3Software sale" | '1.00000'   |
 				| "2Software implementation"  | '2.00000'   |
-			И Я ввожу значение '1.00000' в ячейку 'R7C3'
-			И Я ввожу значение '2.00000' в ячейку 'R8C3'
-		* Товары
-			И Я добавляю значения с раскрытием показателей в ячейку 'R9C2'
+			And I enter value '1.00000' in cell 'R7C3'
+			And I enter value '2.00000' in cell 'R8C3'
+		* Products
+			And I add values with indicator expansion in cell 'R9C2'
 				| "VA0Product"                                                     | 'Value1' |
 				| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '1.00000'   |
 				| "3C:Enterprise 8 CORP. Client license for 100 users" | '3.00000'   |
 				| "5C:Corporate performance management"                                      | '2.00000'   |
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R10C2:R12C2'
-			И я нажимаю на кнопку с именем 'SpreadsheetFieldTemplateCopyDataOnRow'
-			И я изменяю значение на '100.00000' процентов в ячейке 'R10C3:R12C3'
-			И я изменяю значение на '200.00000' процентов в ячейке 'R10C4:R12C4'
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R10C2:R12C2' cell
+			And I click the button named 'SpreadsheetFieldTemplateCopyDataOnRow'
+			And I change value to '100.00000' percent in cell 'R10C3:R12C3'
+			And I change value to '200.00000' percent in cell 'R10C4:R12C4'
 
-	* Записываем и закрываем документ	
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'WriteAndClose'
-		И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	* Saving and closing the document
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'WriteAndClose'
+		And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: 06.04 Создание вида отчета "VA - Analysts from fields of other sources"
+Scenario: 06.04 Creating report type "VA - Analysts from fields of other sources"
 
-	И Я создаю вид отчета с именем "VA - Analysts from fields of other sources" и родителем "VA - Analysts from other sources (group)"
-	И Я открываю вид отчета с именем "VA - Analysts from fields of other sources"
-	И я перехожу к закладке с именем 'DimensionsOfReport'
-	И из выпадающего списка с именем 'DimensionKind1' я выбираю по строке "VA0ProCate"				
-	И я нажимаю на кнопку с именем 'RecordButtonForm'
-	Когда открылось окно "Data restructuring"
-	И я нажимаю на кнопку с именем 'FormOK'	
+	And I create report type with name "VA - Analysts from fields of other sources" and parent "VA - Analysts from other sources (group)"
+	And I open report type with name "VA - Analysts from fields of other sources"
+	And I move to the tab named 'DimensionsOfReport'
+	And I select from the drop-down list named 'DimensionKind1'  by "VA0ProCate" string
+	And I click the button named 'RecordButtonForm'
+	When "Data restructuring" window is opened
+	And I click the button named 'FormOK'
 
-	И я нажимаю на кнопку с именем 'EditTree'
-	Тогда открылось окно "Report wizard"
-	И Я в конструкторе отчета добавляю строку с именем "Current formula"
-	И Я в конструкторе отчета добавляю строку с именем "Other source"
-	И Я в конструкторе отчета добавляю строку с именем "Analyst transformation"
-	И Я в конструкторе отчета добавляю строку с именем "Calculated Source"
-	И Я в конструкторе отчета добавляю строку с именем "Recalculation in code"
-	И Я в конструкторе отчета добавляю колонку с именем "Count"
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R2C3'
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R3C3'
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0CFItems" в ячейку 'R4C3'
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R4C4'
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0CFItems" в ячейку 'R5C3'
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R5C4'
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0CFItems" в ячейку 'R6C3'
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R6C4'
+	And I click the button named 'EditTree'
+	Then "Report wizard" window is opened
+	And I add row with name "Current formula" in report wizard
+	And I add row with name "Other source" in report wizard
+	And I add row with name "Analyst transformation" in report wizard
+	And I add row with name "Calculated Source" in report wizard
+	And I add row with name "Recalculation in code" in report wizard
+	And I add column with name "Count" in report wizard
+	And I add dimension with code "VA0Product" in cell 'R2C3' in report wizard
+	And I add dimension with code "VA0Product" in cell 'R3C3' in report wizard
+	And I add dimension with code "VA0CFItems" in cell 'R4C3' in report wizard
+	And I add dimension with code "VA0Product" in cell 'R4C4' in report wizard
+	And I add dimension with code "VA0CFItems" in cell 'R5C3' in report wizard
+	And I add dimension with code "VA0Product" in cell 'R5C4' in report wizard
+	And I add dimension with code "VA0CFItems" in cell 'R6C3' in report wizard
+	And I add dimension with code "VA0Product" in cell 'R6C4' in report wizard
 
-	* Устанавливаем формулы расчета
-		Когда открылось окно "Report wizard*"
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-		* Текущая формула
-			* Основной источник
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И я нажимаю на кнопку с именем 'RefToIndicator1'
-				И Я выбираю показатель с кодом "Goods_Count" вида отчета "VA - Data to add analytics"
-				Когда открылось окно "Report wizard*"
-				И я нажимаю на кнопку с именем 'WriteAndCollapse'
-				* Источник с доп. аналитиками
-					Когда открылось окно "Report wizard"
-					И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-					И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-					И я нажимаю на кнопку с именем 'AddOperand1'
-					Тогда открылось окно "Data sources"
-					И я нажимаю на кнопку с именем 'FormCreate'
-					Тогда открылось окно "Data source (create)"
-					И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Arbitrary query to current infobase"
-					И я изменяю флаг с именем 'UseMultiperiodContext'
-					И в поле с именем 'QueryTextForm' я ввожу текст 'SELECT 2 AS VALUE'
-					И я нажимаю на кнопку с именем 'EditQueryText'
-					И я перехожу к закладке с именем 'ComplianceAnalyst'
-					И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Another source field"
-					И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-					И в таблице 'ComplianceTable' я выбираю текущую строку
-					Тогда открылось окно "Data sources"
-					И в таблице 'List' я выбираю текущую строку
-					Тогда открылось окно "Data source (create)*"
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					И я жду закрытия окна "Data source (create)*" в течение 20 секунд
-				Тогда открылось окно "Data sources"
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Report wizard*"
-				И я нажимаю на кнопку с именем 'ButtonMultiply'
-				И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		* Другой источник
-			* Источник с прозвольным запросом №1
-				Когда открылось окно "Report wizard"
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C2'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И я нажимаю на кнопку с именем 'AddOperand1'
-				Тогда открылось окно "Data sources"
-				И я нажимаю на кнопку с именем 'FormCreate'
-				Тогда открылось окно "Data source (create)"
-				И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Arbitrary query to current infobase"
-				И я изменяю флаг с именем 'UseMultiperiodContext'
-				И в поле с именем 'QueryTextForm' я ввожу текст 'SELECT 2 AS VALUE'
-				И я нажимаю на кнопку с именем 'EditQueryText'
-				И я перехожу к закладке с именем 'ComplianceAnalyst'
-				И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Another source field"
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				* Источник для дополнения аналитик
-					Тогда открылось окно "Data sources"
-					И я нажимаю на кнопку с именем 'FormCreate'
-					Тогда открылось окно "Data source (create)"
-					И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Data to add analytics"
-					И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-					И Я выбираю показатель с кодом "Goods_Count"
-					Тогда открылось окно "Data source (create)*"
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				Тогда открылось окно "Data sources"
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Data source (create)*"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Data source (create)*" в течение 20 секунд
-				Тогда открылось окно "Data sources"
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Report wizard*"
-				И я нажимаю на кнопку с именем 'ButtonPlus'
-			* Источник с прозвольным запросом №1
-				Когда открылось окно "Report wizard*"
-				И я нажимаю на кнопку с именем 'AddOperand1'
-				Тогда открылось окно "Data sources"
-				И я нажимаю на кнопку с именем 'FormCreate'
-				Тогда открылось окно "Data source (create)"
-				И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Arbitrary query to current infobase"
-				И я изменяю флаг с именем 'UseMultiperiodContext'
-				И в поле с именем 'QueryTextForm' я ввожу текст 'SELECT 3 AS VALUE'
-				И я нажимаю на кнопку с именем 'EditQueryText'
-				И я перехожу к закладке с именем 'ComplianceAnalyst'
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Another source field"
-				И в таблице 'ComplianceTable' я завершаю редактирование строки
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				Когда открылось окно "Data sources"
-				И в таблице 'List' я перехожу к строке:
+	* Configuring calculation formulas
+		When "Report wizard*" window is opened
+		And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+		* Current formula
+			* Main source
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And I click the button named 'RefToIndicator1'
+				And I select indicator with code "Goods_Count" of report type "VA - Data to add analytics"
+				When "Report wizard*" window is opened
+				And I click the button named 'WriteAndCollapse'
+				* Source with additional dimensions
+					When "Report wizard" window is opened
+					And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+					And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+					And I click the button named 'AddOperand1'
+					Then "Data sources" window is opened
+					And I click the button named 'FormCreate'
+					Then "Data source (create)" window is opened
+					And I select "Arbitrary query to current infobase" exact value from the drop-down list named 'MethodOfObtaining'
+					And I change checkbox named 'UseMultiperiodContext'
+					And I input 'SELECT 2 AS VALUE' text in the field named 'QueryTextForm'
+					And I click the button named 'EditQueryText'
+					And I move to the tab named 'ComplianceAnalyst'
+					And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+					And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+					And I select current line in 'ComplianceTable' table
+					Then "Data sources" window is opened
+					And I select current line in 'List' table
+					Then "Data source (create)*" window is opened
+					And I click the button named 'FormWriteAndClose'
+					And I wait "Data source (create)*" window closing in 20 seconds
+				Then "Data sources" window is opened
+				And I select current line in 'List' table
+				Then "Report wizard*" window is opened
+				And I click the button named 'ButtonMultiply'
+				And I click the button named 'WriteAndCollapse'
+		* Other source
+			* Source with custom query No. 1
+				When "Report wizard" window is opened
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C2' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And I click the button named 'AddOperand1'
+				Then "Data sources" window is opened
+				And I click the button named 'FormCreate'
+				Then "Data source (create)" window is opened
+				And I select "Arbitrary query to current infobase" exact value from the drop-down list named 'MethodOfObtaining'
+				And I change checkbox named 'UseMultiperiodContext'
+				And I input 'SELECT 2 AS VALUE' text in the field named 'QueryTextForm'
+				And I click the button named 'EditQueryText'
+				And I move to the tab named 'ComplianceAnalyst'
+				And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				* Source for supplementing dimensions
+					Then "Data sources" window is opened
+					And I click the button named 'FormCreate'
+					Then "Data source (create)" window is opened
+					And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Data to add analytics" string
+					And I click Choice button of the field named 'IndicatorFilter'
+					And I select indicator with code "Goods_Count"
+					Then "Data source (create)*" window is opened
+					And I click the button named 'FormWriteAndClose'
+				Then "Data sources" window is opened
+				And I select current line in 'List' table
+				Then "Data source (create)*" window is opened
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Data source (create)*" window closing in 20 seconds
+				Then "Data sources" window is opened
+				And I select current line in 'List' table
+				Then "Report wizard*" window is opened
+				And I click the button named 'ButtonPlus'
+			* Source with custom query No. 1
+				When "Report wizard*" window is opened
+				And I click the button named 'AddOperand1'
+				Then "Data sources" window is opened
+				And I click the button named 'FormCreate'
+				Then "Data source (create)" window is opened
+				And I select "Arbitrary query to current infobase" exact value from the drop-down list named 'MethodOfObtaining'
+				And I change checkbox named 'UseMultiperiodContext'
+				And I input 'SELECT 3 AS VALUE' text in the field named 'QueryTextForm'
+				And I click the button named 'EditQueryText'
+				And I move to the tab named 'ComplianceAnalyst'
+				And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I finish line editing in 'ComplianceTable' table
+				And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				When "Data sources" window is opened
+				And I go to line in 'List' table:
 					| "Description"                                          | "Receipt method"                                 | "Indicator filter"  |
 					| "VA - Data to add analytics_Goods count" | "Current infobase report indicator (easy setup)" | "Goods count" |
-				И в таблице 'List' я выбираю текущую строку				
-				Тогда открылось окно "Data source (create)*"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Data source (create)*" в течение 20 секунд
-				Тогда открылось окно "Data sources"
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Report wizard*"
-				И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		* Трансформация аналитик
-			* Источник данных для трансформации
-				Когда открылось окно "Report wizard"
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И я нажимаю на кнопку с именем 'AddOperand1'
-				Тогда открылось окно "Data sources"
-				И я нажимаю на кнопку с именем 'FormCreate'
-				Тогда открылось окно "Data source (create)"
-				И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Data to add analytics"
-				И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-				И Я выбираю показатель с кодом "Goods_Count"
-				Тогда открылось окно "Data source (create) *"
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-				И в таблице 'ComplianceTable' я завершаю редактирование строки
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				Тогда открылось окно "Cash flow items"
-				И я нажимаю на кнопку с именем 'FormFind'
-				Тогда открылась форма с именем 'UniversalListFindExtForm'
-				И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-				И в поле с именем 'Pattern' я ввожу текст "1Software upgrade"
-				И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-				И я нажимаю на кнопку с именем 'Find'
-				Тогда открылось окно "Cash flow items"
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Data source (create) *"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-				Тогда открылось окно "Data sources"
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Report wizard *"
-				И я нажимаю на кнопку с именем 'WriteAndCollapse'											
-		* Рассчитываемый источник
-			* Произвольный запрос к БД с многопериодным контекстом
-				Когда открылось окно "Report wizard"
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C2'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И я нажимаю на кнопку с именем 'AddOperand1'
-				Тогда открылось окно "Data sources"
-				И я нажимаю на кнопку с именем 'FormCreate'
-				Тогда открылось окно "Data source (create)"
-				И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Arbitrary query to current infobase"
-				И в поле с именем 'QueryTextForm' я ввожу текст 
+				And I select current line in 'List' table
+				Then "Data source (create)*" window is opened
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Data source (create)*" window closing in 20 seconds
+				Then "Data sources" window is opened
+				And I select current line in 'List' table
+				Then "Report wizard*" window is opened
+				And I click the button named 'WriteAndCollapse'
+		* Dimension transformation
+			* Data source for transformation
+				When "Report wizard" window is opened
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And I click the button named 'AddOperand1'
+				Then "Data sources" window is opened
+				And I click the button named 'FormCreate'
+				Then "Data source (create)" window is opened
+				And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Data to add analytics" string
+				And I click Choice button of the field named 'IndicatorFilter'
+				And I select indicator with code "Goods_Count"
+				Then "Data source (create) *" window is opened
+				And I select current line in 'ComplianceTable' table
+				And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I finish line editing in 'ComplianceTable' table
+				And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				Then "Cash flow items" window is opened
+				And I click the button named 'FormFind'
+				Then the form named 'UniversalListFindExtForm' is opened
+				And I select "Description" exact value from the drop-down list named 'FieldSelector'
+				And I input "1Software upgrade" text in the field named 'Pattern'
+				And I change the radio button named 'CompareType' value to "Exact match"
+				And I click the button named 'Find'
+				Then "Cash flow items" window is opened
+				And I select current line in 'List' table
+				Then "Data source (create) *" window is opened
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Data source (create) *" window closing in 20 seconds
+				Then "Data sources" window is opened
+				And I select current line in 'List' table
+				Then "Report wizard *" window is opened
+				And I click the button named 'WriteAndCollapse'
+		* Calculated source
+			* Custom database query with multi-period context
+				When "Report wizard" window is opened
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C2' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And I click the button named 'AddOperand1'
+				Then "Data sources" window is opened
+				And I click the button named 'FormCreate'
+				Then "Data source (create)" window is opened
+				And I select "Arbitrary query to current infobase" exact value from the drop-down list named 'MethodOfObtaining'
+				And I input text in the field named 'QueryTextForm'
 					|'SELECT'|
 					|' TimeIntervals.StartDate AS Date,'|
 					|' MONTH(TimeIntervals.EndDate) AS Value'|
@@ -263,165 +263,165 @@
 					|' Catalog.TimeIntervals AS TimeIntervals'|
 					|'WHERE'|
 					|' TimeIntervals.Ref IN (&Periods)'|
-				И я нажимаю на кнопку с именем 'EditQueryText'
-				И я перехожу к закладке с именем 'ComplianceAnalyst'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Another source field"
-				И в таблице 'ComplianceTable' я завершаю редактирование строки
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				* Источник для заполнения Анилитики2
-					Тогда открылось окно "Data sources"
-					И я нажимаю на кнопку с именем 'FormCreate'
-					Тогда открылось окно "Data source (create)"
-					И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Data to add analytics"
-					И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-					И Я выбираю показатель с кодом "CashFlowItems_Count"
-					Тогда открылось окно "Data source (create)*"
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					Тогда открылось окно "Data sources"
-					И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Data source (create) *"
-				И в таблице 'ComplianceTable' я перехожу к строке:
+				And I click the button named 'EditQueryText'
+				And I move to the tab named 'ComplianceAnalyst'
+				And I select current line in 'ComplianceTable' table
+				And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I finish line editing in 'ComplianceTable' table
+				And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				* Source for filling Analytics2
+					Then "Data sources" window is opened
+					And I click the button named 'FormCreate'
+					Then "Data source (create)" window is opened
+					And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Data to add analytics" string
+					And I click Choice button of the field named 'IndicatorFilter'
+					And I select indicator with code "CashFlowItems_Count"
+					Then "Data source (create)*" window is opened
+					And I click the button named 'FormWriteAndClose'
+					Then "Data sources" window is opened
+					And I select current line in 'List' table
+				Then "Data source (create) *" window is opened
+				And I go to line in 'ComplianceTable' table:
 					| "Destination dimension"       | "Dimension kind" |
 					| "Dimension 3: Product range" | "Product range"  |
-				И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Another source field"
-				И в таблице 'ComplianceTable' я завершаю редактирование строки
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				* Источник для заполненния Анилитики3
-					Тогда открылось окно "Data sources"
-					И я нажимаю на кнопку с именем 'FormCreate'
-					Тогда открылось окно "Data source (create)"
-					И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Analysts from fields of other sources"
-					И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-					И Я выбираю показатель с кодом "AnalystTransformatio_Count"
-					Тогда открылось окно "Data source (create)*"
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					Тогда открылось окно "Data sources"
-					И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Data source (create)*"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Data source (create)*" в течение 20 секунд
-				Тогда открылось окно "Data sources"
-				И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Report wizard*"
-				И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		* Пересчет в коде
-			* Основной источник
-				Когда открылось окно "Report wizard"
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C2'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И я нажимаю на кнопку с именем 'AddOperand1'
-				Тогда открылось окно "Data sources"
-				И я нажимаю на кнопку с именем 'FormCreate'
-				Тогда открылось окно "Data source (create)"
-				И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Current infobase information register"
-				Если '$$IsERPCPM$$' Тогда
-					И из выпадающего списка с именем 'DBInformationRegister' я выбираю по строке 'ItemsPrices25'
-				Иначе
-					И из выпадающего списка с именем 'DBInformationRegister' я выбираю по строке 'ItemsPrices'
-				И из выпадающего списка с именем 'SliceType' я выбираю точное значение "Slice of the last ones"
-				И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Another source field"
-				И в таблице 'ComplianceTable' я завершаю редактирование строки
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				* Источник с доп. аналитиками - Статьи ДДС 
-					Тогда открылось окно "Data sources"
-					И я нажимаю на кнопку с именем 'FormCreate'
-					Тогда открылось окно "Data source (create)"
-					И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Analysts from fields of other sources"
-					И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-					И Я выбираю показатель с кодом "AnalystTransformatio_Count"
-					Тогда открылось окно "Data source (create) *"
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					Тогда открылось окно "Data sources"
-					И в таблице 'List' я выбираю текущую строку
-				Тогда открылось окно "Data source (create)*"
-				И в таблице 'ComplianceTable' я перехожу к строке:
+				And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I finish line editing in 'ComplianceTable' table
+				And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				* Source for filling Analytics3
+					Then "Data sources" window is opened
+					And I click the button named 'FormCreate'
+					Then "Data source (create)" window is opened
+					And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Analysts from fields of other sources" string
+					And I click Choice button of the field named 'IndicatorFilter'
+					And I select indicator with code "AnalystTransformatio_Count"
+					Then "Data source (create)*" window is opened
+					And I click the button named 'FormWriteAndClose'
+					Then "Data sources" window is opened
+					And I select current line in 'List' table
+				Then "Data source (create)*" window is opened
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Data source (create)*" window closing in 20 seconds
+				Then "Data sources" window is opened
+				And I select current line in 'List' table
+				Then "Report wizard*" window is opened
+				And I click the button named 'WriteAndCollapse'
+		* Recalculation in code
+			* Main source
+				When "Report wizard" window is opened
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C2' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And I click the button named 'AddOperand1'
+				Then "Data sources" window is opened
+				And I click the button named 'FormCreate'
+				Then "Data source (create)" window is opened
+				And I select "Current infobase information register" exact value from the drop-down list named 'MethodOfObtaining'
+				If '$$IsERPCPM$$' Then
+					And I select from the drop-down list named 'DBInformationRegister'  by 'ItemsPrices25' string
+				Else
+					And I select from the drop-down list named 'DBInformationRegister'  by 'ItemsPrices' string
+				And I select "Slice of the last ones" exact value from the drop-down list named 'SliceType'
+				And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I finish line editing in 'ComplianceTable' table
+				And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				* Source with additional dimensions - Cash flow statement items
+					Then "Data sources" window is opened
+					And I click the button named 'FormCreate'
+					Then "Data source (create)" window is opened
+					And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Analysts from fields of other sources" string
+					And I click Choice button of the field named 'IndicatorFilter'
+					And I select indicator with code "AnalystTransformatio_Count"
+					Then "Data source (create) *" window is opened
+					And I click the button named 'FormWriteAndClose'
+					Then "Data sources" window is opened
+					And I select current line in 'List' table
+				Then "Data source (create)*" window is opened
+				And I go to line in 'ComplianceTable' table:
 					| "Destination dimension"       | "Dimension kind" | "Column name"    | "Filling method" |
 					| "Dimension 3: Product range" | "Product range"  | "[Product range]" | "Source field"    |
-				И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Another source field"
-				И в таблице 'ComplianceTable' я завершаю редактирование строки
-				И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-				И в таблице 'ComplianceTable' я выбираю текущую строку
-				* Источник с доп. аналитиками - Товары 
-					Тогда открылось окно "Data sources"
-					И я нажимаю на кнопку с именем 'FormCreate'
-					Тогда открылось окно "Data source (create)"
-					И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Analysts from fields of other sources"
-					И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-					И Я выбираю показатель с кодом "CurrentFormula_Count"
-					Тогда открылось окно "Data source (create) *"
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					Тогда открылось окно "Data sources"
-					И в таблице 'List' я выбираю текущую строку
-				* Устанавливаем отборы
-					Тогда открылось окно "Data source (create)*"
-					И я перехожу к закладке с именем 'FiltersPage'
-					И в таблице 'FieldsTreeDB' я разворачиваю текущую строку
-					И в таблице 'FieldsTreeDB' я перехожу к строке:
+				And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+				And I finish line editing in 'ComplianceTable' table
+				And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+				And I select current line in 'ComplianceTable' table
+				* Source with additional dimensions - Products
+					Then "Data sources" window is opened
+					And I click the button named 'FormCreate'
+					Then "Data source (create)" window is opened
+					And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Analysts from fields of other sources" string
+					And I click Choice button of the field named 'IndicatorFilter'
+					And I select indicator with code "CurrentFormula_Count"
+					Then "Data source (create) *" window is opened
+					And I click the button named 'FormWriteAndClose'
+					Then "Data sources" window is opened
+					And I select current line in 'List' table
+				* Configuring filters
+					Then "Data source (create)*" window is opened
+					And I move to the tab named 'FiltersPage'
+					And I expand current line in 'FieldsTreeDB' table
+					And I go to line in 'FieldsTreeDB' table:
 						| "Field"         |
 						| "Product range" |
-					И я нажимаю на кнопку с именем 'AddConditionItem'
-					И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+					And I click the button named 'AddConditionItem'
+					And I go to line in 'TreeOfFilterParametersDB' table:
 						| "Field"           |
 						| "[Product range]" |
-					И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Fixed value"
-					И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'DefiningMethodClarification' я выбираю по строке "5C:Corporate performance management"
-					И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
-					Если '$$IsCPM$$' Тогда
-						И в таблице 'FieldsTreeDB' я перехожу к строке:
+					And I select "Fixed value" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+					And I select "5C:Corporate performance management" by string from the drop-down list named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+					And I finish line editing in 'TreeOfFilterParametersDB' table
+					If '$$IsCPM$$' Then
+						And I go to line in 'FieldsTreeDB' table:
 							| "Field"    |
 							| "Price type" |
-						И я нажимаю на кнопку с именем 'AddConditionItem'
-						И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+						And I click the button named 'AddConditionItem'
+						And I go to line in 'TreeOfFilterParametersDB' table:
 							| "Field"      |
 							| "[Price type]" |
-					Если '$$IsERPCPM$$' Тогда
-						И в таблице 'FieldsTreeDB' я перехожу к строке:
+					If '$$IsERPCPM$$' Then
+						And I go to line in 'FieldsTreeDB' table:
 							| "Field"    |
 							| 'Price type' |
-						И я нажимаю на кнопку с именем 'AddConditionItem'
-						И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+						And I click the button named 'AddConditionItem'
+						And I go to line in 'TreeOfFilterParametersDB' table:
 							| "Field"       |
 							| "[Price type]" |
-					И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Fixed value"
-					И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'DefiningMethodClarification' я выбираю по строке "VA - Products"
-					И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Data source (create)*" в течение 20 секунд
-				Тогда открылось окно "Data sources"
-				И в таблице 'List' я выбираю текущую строку
-			* Вводим формулу расчета
-				Когда открылось окно "Report wizard*"
-				И я нажимаю на кнопку с именем 'ArbitraryCode'
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-				Если '$$InterfaceLanguage$$ = "Ru"' Тогда					
-					Если '$$ЭтоPerform$$' Тогда
-						И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст 'Result = Max([IR_ЦеныНомен_Price_], 1500000)'
-					ИначеЕсли '$$IsERPCPM$$' Тогда	
-						И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст 'Result = Max([BA_ЦенНоме25_Price_], 1500000)'
-					Иначе
-						И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст 'Result = Max([BA_ЦеныНомен_Price_], 1500000)'
-				Иначе
-					И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст 'Result = Max([InformationRegister_ProRanPri_Price_], 1500000)' 
-				И я нажимаю на кнопку с именем 'WriteAndCollapse'
+					And I select "Fixed value" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+					And I select "VA - Products" by string from the drop-down list named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+					And I finish line editing in 'TreeOfFilterParametersDB' table
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Data source (create)*" window closing in 20 seconds
+				Then "Data sources" window is opened
+				And I select current line in 'List' table
+			* Entering the calculation formula
+				When "Report wizard*" window is opened
+				And I click the button named 'ArbitraryCode'
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+				If '$$LanguageInterface$$ = "Ru"' Then
+					If '$$IsPerform$$' Then
+						And I input 'Result = Max([IR_PricesNomenclature_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
+					ElseIf '$$IsERPCPM$$' Then
+						And I input 'Result = Max([BA_ЦенНоме25_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
+					Else
+						And I input 'Result = Max([BA_ЦеныНомен_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
+				Else
+					And I input 'Result = Max([InformationRegister_ProRanPri_Price_], 1500000)' text in the field named 'TextDocumentFieldProcedure'
+				And I click the button named 'WriteAndCollapse'
 	
-	И Я Для вида отчета "VA - Analysts from fields of other sources" создаю бланк по умолчанию
-	И Я Для вида отчета "VA - Analysts from fields of other sources" в бланке для группы раскрытия с адресом 'R8C1' задаю сортировку "Product range" "Product ID"
-	И Я Для вида отчета "VA - Analysts from fields of other sources" в бланке для группы раскрытия с адресом 'R10C1' задаю сортировку "Product range" "Product ID"
-	И Я Для вида отчета "VA - Analysts from fields of other sources" в бланке для группы раскрытия с адресом 'R13C1' меняю сортировку "Product range" "Description" на сортировку "Product range" "Product ID"
-	И Я Для вида отчета "VA - Analysts from fields of other sources" в бланке для группы раскрытия с адресом 'R16C1' меняю сортировку "Product range" "Description" на сортировку "Product range" "Product ID"
-	И Я Для вида отчета "VA - Analysts from fields of other sources" в бланке для группы раскрытия с адресом 'R19C1' меняю сортировку "Product range" "Description" на сортировку "Product range" "Product ID"
+	And I create default template for report type "VA - Analysts from fields of other sources"
+	And I set sorting "Product range" "Product ID" in template for expansion group with address 'R8C1' for report type "VA - Analysts from fields of other sources"
+	And I set sorting "Product range" "Product ID" in template for expansion group with address 'R10C1' for report type "VA - Analysts from fields of other sources"
+	And I change sorting "Product range" "Description" to sorting "Product range" "Product ID" in template for expansion group with address 'R13C1' for report type "VA - Analysts from fields of other sources"
+	And I change sorting "Product range" "Description" to sorting "Product range" "Product ID" in template for expansion group with address 'R16C1' for report type "VA - Analysts from fields of other sources"
+	And I change sorting "Product range" "Description" to sorting "Product range" "Product ID" in template for expansion group with address 'R19C1' for report type "VA - Analysts from fields of other sources"
 
-Сценарий: 06.05 Создание экземпляра отчета "VA - Analysts from fields of other sources"
+Scenario: 06.05 Creating report instance "VA - Analysts from fields of other sources"
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Analysts from fields of other sources" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики "Software products" '' '' '' '' ''
-	И я запоминаю текущее окно как 'WindowTitle' 
+	And I create report instance for report type "VA - Analysts from fields of other sources" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions "Software products" '' '' '' '' ''
+	And I save the window as 'WindowTitle'
 
-	* Документ должен быть пустой
-		И табличный документ 'SpreadsheetFieldTemlate' равен:
+	* The document should be empty
+		And 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Analysts from fields of other sources" | ''               | ''                | ''             | ''           |
 			| ''                                          | ''               | ''                | ''             | ''           |
 			| ''                                          | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
@@ -432,12 +432,12 @@
 			| "Calculated Source"                   | '0'              | '0'               | '0'            | '0'          |
 			| "Recalculation in code"                           | '0'              | '0'               | '0'            | '0'          |
 
-	* Выполняем расчет
-		И я нажимаю на кнопку с именем 'FormFillByDefault'
+	* Running calculation
+		And I click the button named 'FormFillByDefault'
 
-	* Сравниваем результат
-		Тогда открылось окно '$WindowTitle$'	
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Comparing the result
+		Then '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Analysts from fields of other sources"                       | ''               | ''                | ''             | ''           |
 			| ''                                                                | ''               | ''                | ''             | ''           |
 			| ''                                                                | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
@@ -474,77 +474,77 @@
 			| "4C:Enterprise 8.3 CORP. Server License (x86-64) "           | '1,500,000'      | '1,500,000'       | '1,553,800'    | '4,553,800'  |
 			| "3C:Enterprise 8 CORP. Client license for 100 users " | '1,500,000'      | '1,500,000'       | '1,553,800'    | '4,553,800'  |
 			
-	* Записываем и закрываем документ
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'WriteAndClose'
-		И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	* Saving and closing the document
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'WriteAndClose'
+		And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: 06.06 Проверка на рекурсивное вложение дополнения аналитик
+Scenario: 06.06 Checking for recursive nesting of dimension extension
 
-	И Я открываю контруктор отчета с именем "VA - Analysts from fields of other sources"
-	И Я в конструкторе отчета добавляю строку с именем 'Recursion in analytics'
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R7C3'
+	And I open report wizard with name "VA - Analysts from fields of other sources"
+	And I add row with name 'Recursion in analytics' in report wizard
+	And I add dimension with code "VA0Product" in cell 'R7C3' in report wizard
 
-	* Вводим источники данных	
-		Тогда открылось окно "Report wizard"
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'AddOperand1'
-		Тогда открылось окно "Data sources"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Data source (create)"
-		И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Analysts from fields of other sources"
-		И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-		И Я выбираю показатель с кодом "CurrentFormula_Count"
-		Тогда открылось окно "Data source (create)*"
-		И в таблице 'ComplianceTable' я выбираю текущую строку
-		И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Another source field"
-		И в таблице 'ComplianceTable' я завершаю редактирование строки
-		И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-		И в таблице 'ComplianceTable' я выбираю текущую строку
-		* Источник данных для дополнения аналитик №1
-			Тогда открылось окно "Data sources"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Data source (create)"
-			И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Data to add analytics"
-			И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-			И Я выбираю показатель с кодом "Goods_Count"
-			Тогда открылось окно "Data source (create) *"
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Another source field"
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'MapTableDBAlias'
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			* Источник данных для дополнения аналитик №2
-				Тогда открылось окно "Data sources"
-				И я нажимаю на кнопку с именем 'FormCreate'
-				Тогда открылось окно "Data source (create)"
-				И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Data to add analytics"
-				И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-				И Я выбираю показатель с кодом "Goods_Count"
-				Тогда открылось окно "Data source (create)*"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			Тогда открылось окно "Data sources"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Data source (create)*"
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		Тогда открылось окно "Data sources"
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Data source (create)*"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		* Получаем сообщение об ошибке
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'OK'
+	* Entering data sources
+		Then "Report wizard" window is opened
+		And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R7C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'AddOperand1'
+		Then "Data sources" window is opened
+		And I click the button named 'FormCreate'
+		Then "Data source (create)" window is opened
+		And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Analysts from fields of other sources" string
+		And I click Choice button of the field named 'IndicatorFilter'
+		And I select indicator with code "CurrentFormula_Count"
+		Then "Data source (create)*" window is opened
+		And I select current line in 'ComplianceTable' table
+		And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+		And I finish line editing in 'ComplianceTable' table
+		And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+		And I select current line in 'ComplianceTable' table
+		* Data source for dimension extension No. 1
+			Then "Data sources" window is opened
+			And I click the button named 'FormCreate'
+			Then "Data source (create)" window is opened
+			And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Data to add analytics" string
+			And I click Choice button of the field named 'IndicatorFilter'
+			And I select indicator with code "Goods_Count"
+			Then "Data source (create) *" window is opened
+			And I select current line in 'ComplianceTable' table
+			And I select "Another source field" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+			And I activate field named 'MapTableDBAlias' in 'ComplianceTable' table
+			And I select current line in 'ComplianceTable' table
+			* Data source for dimension extension No. 2
+				Then "Data sources" window is opened
+				And I click the button named 'FormCreate'
+				Then "Data source (create)" window is opened
+				And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Data to add analytics" string
+				And I click Choice button of the field named 'IndicatorFilter'
+				And I select indicator with code "Goods_Count"
+				Then "Data source (create)*" window is opened
+				And I click the button named 'FormWriteAndClose'
+			Then "Data sources" window is opened
+			And I select current line in 'List' table
+			Then "Data source (create)*" window is opened
+			And I click the button named 'FormWriteAndClose'
+		Then "Data sources" window is opened
+		And I select current line in 'List' table
+		Then "Data source (create)*" window is opened
+		And I click the button named 'FormWriteAndClose'
+		* Receiving an error message
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'OK'
 			Затем я жду, что в сообщениях пользователю будет подстрока "Data source used to add data to dimensions cannot contain dimension filling method \"Another source field\"." в течение 30 секунд
 
-	* Закрываем все окна
-		Когда открылось окно "Data source (create)*"
-		И Я закрываю окно "Data source (create)*"
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
-		Тогда открылось окно "Data sources"
-		И Я закрываю окно "Data sources"
-		Тогда открылось окно "Report wizard"
-		И я нажимаю на кнопку с именем 'UndoFormulaEdit'
+	* Closing all windows
+		When "Data source (create)*" window is opened
+		And I close "Data source (create)*" window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
+		Then "Data sources" window is opened
+		And I close "Data sources" window
+		Then "Report wizard" window is opened
+		And I click the button named 'UndoFormulaEdit'
 	

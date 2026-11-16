@@ -1,260 +1,260 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 12. Автоматическое заполнение пустых аналитик
+Feature: 12. Automatic filling of empty dimensions
 
-	Как Администратор я хочу
-	Проверить автоматическое заполнение аналитик
-	чтобы пустые аналитики заполнялись 
+	As Administrator I want to
+	Checking automatic filling of dimensions
+	so that empty dimensions are filled
 
-Контекст: 
+Background:
 
-	И я закрыл все окна клиентского приложения
+	And I close all client application windows
 
-Сценарий: 12.00 Начальная инициализация переменных
+Scenario: 12.00 Initial initialization of variables
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
+	Given I initialize variables
 
-Сценарий: 12.01 Настраиваем значения аналитик по умолчанию
+Scenario: 12.01 Configuring default dimension values
 
-	* Открываем список
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Dimension types (corporate)"
-		Когда открылось окно "Dimension types (corporate)"
+	* Opening a list
+		And In the command interface I select "Budgeting, reporting, and analysis" "Dimension types (corporate)"
+		When "Dimension types (corporate)" window is opened
 
-	* Настраиваем Товарные категории
-		* Находим вид аналитики
-			И я нажимаю на кнопку с именем 'FormFind'
-			Тогда открылось окно "Find"
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Code"
-			И в поле с именем 'Pattern' я ввожу текст "VA0ProCate"
-			И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-			И я нажимаю на кнопку с именем 'Find'
-			Тогда открылось окно "Dimension types (corporate)"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Product categories (Dimension types (corporate))"
-			И В текущем окне я нажимаю кнопку командного интерфейса "Default dimension values"
-		* Удаляем текущие позиции
-			И пока в таблице 'List' количество строк '>' 0 Тогда
-				И я выбираю пункт контекстного меню с именем 'ListContextMenuDelete' на элементе формы с именем 'List'
-				Тогда открылось окно "1C:Enterprise"
-				И я нажимаю на кнопку с именем 'Button0'				
-		* Создаем значение на январь
-			Тогда открылось окно "Product categories (Dimension types (corporate))"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Default dimension values (create)"
-			И в поле с именем 'Period' я ввожу текст '12/2/2020'
-			Если '$$ЭтоPerform$$' Тогда
-				И я нажимаю кнопку выбора у поля с именем 'DefaultValue'
-				Тогда открылось окно "Arbitrary classifier"
-				И я нажимаю на кнопку с именем 'FormFind'
-				Тогда открылось окно "Find"
-				И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-				И в поле с именем 'Pattern' я ввожу текст "Software products"
-				И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-				И я нажимаю на кнопку с именем 'Find'
-				Тогда открылось окно "Arbitrary classifier"
-				И в таблице 'List' я выбираю текущую строку
-			Иначе					
-				И из выпадающего списка с именем 'DefaultValue' я выбираю по строке "Software products"
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "Default dimension values (create) *" в течение 20 секунд
-		* Закрываем окна
-			Тогда открылось окно "Product categories (Dimension types (corporate))"
-			И Я закрываю окно "Product categories (Dimension types (corporate))"
+	* Configuring Product categories
+		* Finding dimension type
+			And I click the button named 'FormFind'
+			Then "Find" window is opened
+			And I select "Code" exact value from the drop-down list named 'FieldSelector'
+			And I input "VA0ProCate" text in the field named 'Pattern'
+			And I change the radio button named 'CompareType' value to "Exact match"
+			And I click the button named 'Find'
+			Then "Dimension types (corporate)" window is opened
+			And I select current line in 'List' table
+			Then "Product categories (Dimension types (corporate))" window is opened
+			And In this window I click command interface button "Default dimension values"
+		* Deleting current items
+			And While the number of 'List' table lines '>' 0 Then
+				And I select context menu item named 'ListContextMenuDelete' of the form attribute named 'List'
+				Then "1C:Enterprise" window is opened
+				And I click the button named 'Button0'
+		* Creating a value for January
+			Then "Product categories (Dimension types (corporate))" window is opened
+			And I click the button named 'FormCreate'
+			Then "Default dimension values (create)" window is opened
+			And I input '12/2/2020' text in the field named 'Period'
+			If '$$IsPerform$$' Then
+				And I click Choice button of the field named 'DefaultValue'
+				Then "Arbitrary classifier" window is opened
+				And I click the button named 'FormFind'
+				Then "Find" window is opened
+				And I select "Description" exact value from the drop-down list named 'FieldSelector'
+				And I input "Software products" text in the field named 'Pattern'
+				And I change the radio button named 'CompareType' value to "Exact match"
+				And I click the button named 'Find'
+				Then "Arbitrary classifier" window is opened
+				And I select current line in 'List' table
+			Else
+				And I select from the drop-down list named 'DefaultValue'  by "Software products" string
+			And I click the button named 'FormWriteAndClose'
+			And I wait "Default dimension values (create) *" window closing in 20 seconds
+		* Closing windows
+			Then "Product categories (Dimension types (corporate))" window is opened
+			And I close "Product categories (Dimension types (corporate))" window
 
-	* Настраиваем Номенклатуру	
-		* Находим вид аналитики
-			И я нажимаю на кнопку с именем 'FormFind'
-			Тогда открылось окно "Find"
-			И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Code"
-			И в поле с именем 'Pattern' я ввожу текст "VA0Product"
-			И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-			И я нажимаю на кнопку с именем 'Find'
-			Тогда открылось окно "Dimension types (corporate)"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Product range (Dimension types (corporate))"
-			И В текущем окне я нажимаю кнопку командного интерфейса "Default dimension values"
-		* Удаляем текущие позиции
-			И пока в таблице 'List' количество строк '>' 0 Тогда
-				И я выбираю пункт контекстного меню с именем 'ListContextMenuDelete' на элементе формы с именем 'List'
-				Тогда открылось окно "1C:Enterprise"
-				И я нажимаю на кнопку с именем 'Button0'				
-		* Создаем значение на февраль
-			Тогда открылось окно "Product range (Dimension types (corporate))"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Default dimension values (create)"
-			И в поле с именем 'Period' я ввожу текст '1/2/2024'
-			Если '$$ЭтоPerform$$' Тогда
-				И я нажимаю кнопку выбора у поля с именем 'DefaultValue'
-				Тогда открылось окно "Product range"
-				И я нажимаю на кнопку с именем 'FormFind'
-				Тогда открылось окно "Find"
-				И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-				И в поле с именем 'Pattern' я ввожу текст "5C:Corporate performance management"
-				И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-				И я нажимаю на кнопку с именем 'Find'
-				Тогда открылось окно "Product range"
-				И в таблице 'List' я выбираю текущую строку
-			Иначе
-				И из выпадающего списка с именем 'DefaultValue' я выбираю по строке "5C:Corporate performance management"
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "Default dimension values (create) *" в течение 20 секунд
-		* Создаем значение на март
-			Тогда открылось окно "Product range (Dimension types (corporate))"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Default dimension values (create)"
-			И в поле с именем 'Period' я ввожу текст '2/2/2024'
-			Если '$$ЭтоPerform$$' Тогда
-				И я нажимаю кнопку выбора у поля с именем 'DefaultValue'
-				Тогда открылось окно "Product range"
-				И я нажимаю на кнопку с именем 'FormFind'
-				Тогда открылось окно "Find"
-				И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Description"
-				И в поле с именем 'Pattern' я ввожу текст "1C:ERP. Corporate performance management"
-				И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-				И я нажимаю на кнопку с именем 'Find'
-				Тогда открылось окно "Product range"
-				И в таблице 'List' я выбираю текущую строку
-			Иначе
-				И из выпадающего списка с именем 'DefaultValue' я выбираю по строке "1C:ERP. Corporate performance management"
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "Default dimension values (create) *" в течение 20 секунд
-		* Закрываем окна
-			Тогда открылось окно "Product range (Dimension types (corporate))"
-			И Я закрываю окно "Product range (Dimension types (corporate))"
+	* Configuring Product range
+		* Finding dimension type
+			And I click the button named 'FormFind'
+			Then "Find" window is opened
+			And I select "Code" exact value from the drop-down list named 'FieldSelector'
+			And I input "VA0Product" text in the field named 'Pattern'
+			And I change the radio button named 'CompareType' value to "Exact match"
+			And I click the button named 'Find'
+			Then "Dimension types (corporate)" window is opened
+			And I select current line in 'List' table
+			Then "Product range (Dimension types (corporate))" window is opened
+			And In this window I click command interface button "Default dimension values"
+		* Deleting current items
+			And While the number of 'List' table lines '>' 0 Then
+				And I select context menu item named 'ListContextMenuDelete' of the form attribute named 'List'
+				Then "1C:Enterprise" window is opened
+				And I click the button named 'Button0'
+		* Creating a value for February
+			Then "Product range (Dimension types (corporate))" window is opened
+			And I click the button named 'FormCreate'
+			Then "Default dimension values (create)" window is opened
+			And I input '1/2/2024' text in the field named 'Period'
+			If '$$IsPerform$$' Then
+				And I click Choice button of the field named 'DefaultValue'
+				Then "Product range" window is opened
+				And I click the button named 'FormFind'
+				Then "Find" window is opened
+				And I select "Description" exact value from the drop-down list named 'FieldSelector'
+				And I input "5C:Corporate performance management" text in the field named 'Pattern'
+				And I change the radio button named 'CompareType' value to "Exact match"
+				And I click the button named 'Find'
+				Then "Product range" window is opened
+				And I select current line in 'List' table
+			Else
+				And I select from the drop-down list named 'DefaultValue'  by "5C:Corporate performance management" string
+			And I click the button named 'FormWriteAndClose'
+			And I wait "Default dimension values (create) *" window closing in 20 seconds
+		* Creating a value for March
+			Then "Product range (Dimension types (corporate))" window is opened
+			And I click the button named 'FormCreate'
+			Then "Default dimension values (create)" window is opened
+			And I input '2/2/2024' text in the field named 'Period'
+			If '$$IsPerform$$' Then
+				And I click Choice button of the field named 'DefaultValue'
+				Then "Product range" window is opened
+				And I click the button named 'FormFind'
+				Then "Find" window is opened
+				And I select "Description" exact value from the drop-down list named 'FieldSelector'
+				And I input "1C:ERP. Corporate performance management" text in the field named 'Pattern'
+				And I change the radio button named 'CompareType' value to "Exact match"
+				And I click the button named 'Find'
+				Then "Product range" window is opened
+				And I select current line in 'List' table
+			Else
+				And I select from the drop-down list named 'DefaultValue'  by "1C:ERP. Corporate performance management" string
+			And I click the button named 'FormWriteAndClose'
+			And I wait "Default dimension values (create) *" window closing in 20 seconds
+		* Closing windows
+			Then "Product range (Dimension types (corporate))" window is opened
+			And I close "Product range (Dimension types (corporate))" window
 		
-Сценарий: 12.02 Создаем вид отчета и структуру отчета
+Scenario: 12.02 Creating report type and report structure
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
 
-	И Я создаю вид отчета с именем "VA - Filling empty analytics" и родителем "VA - Report group"
+	And I create report type with name "VA - Filling empty analytics" and parent "VA - Report group"
 	
-	И Я открываю вид отчета с именем "VA - Filling empty analytics"
-	И я перехожу к закладке с именем 'DimensionsOfReport'
-	И из выпадающего списка с именем 'DimensionKind1' я выбираю по строке "VA0CFItems"
-	И я нажимаю на кнопку с именем 'RecordButtonForm'	
-	Тогда открылось окно "Data restructuring"
-	И я нажимаю на кнопку с именем 'FormOK'
+	And I open report type with name "VA - Filling empty analytics"
+	And I move to the tab named 'DimensionsOfReport'
+	And I select from the drop-down list named 'DimensionKind1'  by "VA0CFItems" string
+	And I click the button named 'RecordButtonForm'
+	Then "Data restructuring" window is opened
+	And I click the button named 'FormOK'
 
-	И я нажимаю на кнопку с именем 'EditTree'
-	И Я в конструкторе отчета добавляю строку с именем "Source"
-	И Я в конструкторе отчета добавляю строку с именем "SuccessorSameAnalytics"		
-	И Я в конструкторе отчета добавляю строку с именем "SuccessorEmptyAnalytics"
-	И Я в конструкторе отчета добавляю колонку с именем "Amount"
-	И Я в конструкторе отчета добавляю колонку с именем "Date"
+	And I click the button named 'EditTree'
+	And I add row with name "Source" in report wizard
+	And I add row with name "SuccessorSameAnalytics" in report wizard
+	And I add row with name "SuccessorEmptyAnalytics" in report wizard
+	And I add column with name "Amount" in report wizard
+	And I add column with name "Date" in report wizard
 
-	И Я в конструкторе отчета в ячейке 'R2C3:R4C3' меняю свойства показателей 'ValueType' на "Date"
-	И Я в конструкторе отчета в ячейке 'R2C3:R4C3' меняю свойства показателей 'TotalKind' на "Maximum"
+	And I change indicator properties 'ValueType' to "Date" in cell 'R2C3:R4C3' in report wizard
+	And I change indicator properties 'TotalKind' to "Maximum" in cell 'R2C3:R4C3' in report wizard
 		
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0ProCate" в ячейку 'R2C3'
-	И я нажимаю на кнопку с именем 'CopyAndShiftDown1'
-	И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R2C4'
-	И я нажимаю на кнопку с именем 'CopyAndShiftDown1'	
+	And I add dimension with code "VA0ProCate" in cell 'R2C3' in report wizard
+	And I click the button named 'CopyAndShiftDown1'
+	And I add dimension with code "VA0Product" in cell 'R2C4' in report wizard
+	And I click the button named 'CopyAndShiftDown1'
 
-	* Устанавливаем формулы
-		* Сумма
-			Когда открылось окно "Report wizard"
-			И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
-			Тогда открылось окно "Report wizard"
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
-			Тогда открылось окно "Report wizard"
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я выбираю пункт контекстного меню с именем 'ListContextMenuChange' на элементе формы с именем 'List'
-			Тогда открылось окно "VA - Filling empty analytics_Source amount (Data source)"
-			И в таблице 'ComplianceTable' я перехожу к строке:
+	* Setting formulas
+		* Sum
+			When "Report wizard" window is opened
+			And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'WriteAndCollapse'
+			Then "Report wizard" window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'WriteAndCollapse'
+			Then "Report wizard" window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
+			Then "VA - Filling empty analytics_Source amount (Data source)" window is opened
+			And I go to line in 'ComplianceTable' table:
 				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
 				| "Dimension 2: Product categories" | "Product categories" | "[Dimension 2: Product categories]" | "Source field"    |
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-			И в таблице 'ComplianceTable' я перехожу к строке:
+			And I select current line in 'ComplianceTable' table
+			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+			And I go to line in 'ComplianceTable' table:
 				| "Destination dimension"       | "Dimension kind" | "Column name"                 | "Filling method" |
 				| "Dimension 3: Product range" | "Product range"  | "[Dimension 3: Product range]" | "Source field"    |
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "VA - Filling empty analytics_Source amount (Data source) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И Я закрываю окно "Data sources"
-		* Дата
-			Тогда открылось окно "Report wizard"
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
-			Тогда открылось окно "Report wizard"
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'WriteFormula'
-			Тогда открылось окно "Report wizard"
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я выбираю пункт контекстного меню с именем 'ListContextMenuChange' на элементе формы с именем 'List'
-			Тогда открылось окно "VA - Filling empty analytics_Source date (Data source)"
-			И в таблице 'ComplianceTable' я перехожу к строке:
+			And I select current line in 'ComplianceTable' table
+			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "VA - Filling empty analytics_Source amount (Data source) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I close "Data sources" window
+		* Date
+			Then "Report wizard" window is opened
+			And I click the button named 'WriteAndCollapse'
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'WriteAndCollapse'
+			Then "Report wizard" window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'WriteFormula'
+			Then "Report wizard" window is opened
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
+			Then "VA - Filling empty analytics_Source date (Data source)" window is opened
+			And I go to line in 'ComplianceTable' table:
 				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
 				| "Dimension 2: Product categories" | "Product categories" | "[Dimension 2: Product categories]" | "Source field"    |
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-			И в таблице 'ComplianceTable' я перехожу к строке:
+			And I select current line in 'ComplianceTable' table
+			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+			And I go to line in 'ComplianceTable' table:
 				| "Destination dimension"       | "Dimension kind" | "Column name"                 | "Filling method" |
 				| "Dimension 3: Product range" | "Product range"  | "[Dimension 3: Product range]" | "Source field"    |
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "VA - Filling empty analytics_Source date (Data source) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И Я закрываю окно "Data sources"
-			Тогда открылось окно "Report wizard"
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		* Закрываем конструктор
-			Тогда открылось окно "Report wizard"
-			И Я закрываю окно "Report wizard"
+			And I select current line in 'ComplianceTable' table
+			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "VA - Filling empty analytics_Source date (Data source) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I close "Data sources" window
+			Then "Report wizard" window is opened
+			And I click the button named 'WriteAndCollapse'
+		* Closing report wizard
+			Then "Report wizard" window is opened
+			And I close "Report wizard" window
 					
-	И Я для вида отчета "VA - Filling empty analytics" создаю бланк по умолчанию
-	И Я Для вида отчета "VA - Filling empty analytics" в бланке для группы раскрытия с адресом 'R9C1' меняю сортировку "Product range" "Description" на сортировку "Product range" "Product ID"
-	И Я Для вида отчета "VA - Filling empty analytics" в бланке для группы раскрытия с адресом 'R12C1' меняю сортировку "Product range" "Description" на сортировку "Product range" "Product ID"
-	И Я Для вида отчета "VA - Filling empty analytics" в бланке для группы раскрытия с адресом 'R15C1' меняю сортировку "Product range" "Description" на сортировку "Product range" "Product ID"
+	And I create default template for report type "VA - Filling empty analytics"
+	And I change sorting "Product range" "Description" to sorting "Product range" "Product ID" in template for expansion group with address 'R9C1' for report type "VA - Filling empty analytics"
+	And I change sorting "Product range" "Description" to sorting "Product range" "Product ID" in template for expansion group with address 'R12C1' for report type "VA - Filling empty analytics"
+	And I change sorting "Product range" "Description" to sorting "Product range" "Product ID" in template for expansion group with address 'R15C1' for report type "VA - Filling empty analytics"
 
-Сценарий: 12.03 Создаем экземпляр отчета без записи и заполнения аналитик
+Scenario: 12.03 Creating report instance without saving and filling dimensions
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Filling empty analytics" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Filling empty analytics" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 
-	И Я добавляю значения с раскрытием показателей в ячейку 'R6C2'
+	And I add values with indicator expansion in cell 'R6C2'
 		| 'Value1' |
 		| '1,000'     |
-	И Я добавляю значения с раскрытием показателей в ячейку 'R6C5'
+	And I add values with indicator expansion in cell 'R6C5'
 		| 'Value1'  |
 		| '2/1/2024' |
 
-	* Сравниваем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Comparing the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Filling empty analytics" | ''               | ''     | ''                | ''           | ''             | ''     | ''      | ''           |
 			| ''                                | ''               | ''     | ''                | ''           | ''             | ''     | ''      | ''           |
 			| ''                                | "January 2024" | ''     | "February 2024" | ''           | "March 2024" | ''     | "TOTAL" | ''           |
@@ -269,40 +269,40 @@
 			| ' '                               | '1,000'          | ''     | '0'               | '2/1/2024' | '0'            | ''     | '1,000' | '2/1/2024' |
 			| ' '                               | '1,000'          | ''     | '0'               | '2/1/2024' | '0'            | ''     | '1,000' | '2/1/2024' |
 		
-	* Закрываем без сохранения
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+	* Closing without saving
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 				
-Сценарий: 12.04 Создаем экземпляр отчета без записи с заполнением аналитик
+Scenario: 12.04 Creating report instance without saving with filling dimensions
 
-	И Я для регламента "VA - Main regulations" изменяю флаг 'ShouldInsertDimensionValuesByDefault'
+	And I change flag 'ShouldInsertDimensionValuesByDefault' for regulation "VA - Main regulations"
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Filling empty analytics" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Filling empty analytics" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 
-	* Заполняем значения показателей
-		И Я добавляю значения с раскрытием показателей в ячейку 'R6C2'
+	* Filling indicator values
+		And I add values with indicator expansion in cell 'R6C2'
 			| 'Value1' |
 			| '100'       |
-		И Я добавляю значения с раскрытием показателей в ячейку 'R6C3'
+		And I add values with indicator expansion in cell 'R6C3'
 			| 'Value1'  |
 			| '1/1/2024' |
-		И Я добавляю значения с раскрытием показателей в ячейку 'R6C4'
+		And I add values with indicator expansion in cell 'R6C4'
 			| 'Value1' |
 			| '200'       |
-		И Я добавляю значения с раскрытием показателей в ячейку 'R6C5'
+		And I add values with indicator expansion in cell 'R6C5'
 			| 'Value1'  |
 			| '2/1/2024' |
-		И Я добавляю значения с раскрытием показателей в ячейку 'R6C6'
+		And I add values with indicator expansion in cell 'R6C6'
 			| 'Value1' |
 			| '300'       |
-		И Я добавляю значения с раскрытием показателей в ячейку 'R6C7'
+		And I add values with indicator expansion in cell 'R6C7'
 			| 'Value1'  |
 			| '3/1/2024' |
 
-	* Сравниваем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Comparing the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Filling empty analytics" | ''               | ''           | ''                | ''           | ''             | ''           | ''      | ''           |
 			| ''                                | ''               | ''           | ''                | ''           | ''             | ''           | ''      | ''           |
 			| ''                                | "January 2024" | ''           | "February 2024" | ''           | "March 2024" | ''           | "TOTAL" | ''           |
@@ -323,28 +323,28 @@
 			| "5C:Corporate performance management "      | '0'              | ''           | '200'             | '2/1/2024' | '0'            | ''           | '200'   | '2/1/2024' |
 			| "1C:ERP. Corporate performance management "   | '0'              | ''           | '0'               | ''           | '300'          | '3/1/2024' | '300'   | '3/1/2024' |
 				
-	* Закрываем без сохранения
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+	* Closing without saving
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 
-Сценарий: 12.05 Добавляем расчет для источника
+Scenario: 12.05 Adding calculation for source
 
-	И Я открываю контруктор отчета с именем "VA - Filling empty analytics"
+	And I open report wizard with name "VA - Filling empty analytics"
 
-	* Добавляем формулу
-		* Сумма
-			Когда открылось окно "Report wizard"
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Data source (create)"
-			И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Arbitrary query to current infobase"	
-			Когда открылось окно "Data source (create) *"
-			И в поле с именем 'QueryTextForm' я ввожу текст 
+	* Adding formula
+		* Sum
+			When "Report wizard" window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I click the button named 'FormCreate'
+			Then "Data source (create)" window is opened
+			And I select "Arbitrary query to current infobase" exact value from the drop-down list named 'MethodOfObtaining'
+			When "Data source (create) *" window is opened
+			And I input text in the field named 'QueryTextForm'
 				|'SELECT'|
 				|' MONTH(TimeIntervals.StartDate) * 100 AS Value,'|
 				|' TimeIntervals.StartDate AS StartDate'|
@@ -352,76 +352,76 @@
 				|' Catalog.TimeIntervals AS TimeIntervals'|
 				|'WHERE'|
 				|' TimeIntervals.Ref IN (&PeriodsReport)'|
-			И я нажимаю на кнопку с именем 'EditQueryText'
-			И я перехожу к закладке с именем 'ComplianceAnalyst'
-			И я перехожу к закладке с именем 'FiltersPage'
-			И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
-			И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
-			И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "List of values (function in 1C:Enterprise script)"
-			И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'DefiningMethodClarification'
-			И в таблице 'TreeOfFilterParametersDB' я нажимаю кнопку выбора у реквизита с именем 'DefiningMethodClarification'
-			Тогда открылось окно "VA - Filling empty analytics: Calculate a parameter value"
-			И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст 
+			And I click the button named 'EditQueryText'
+			And I move to the tab named 'ComplianceAnalyst'
+			And I move to the tab named 'FiltersPage'
+			And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+			And I select current line in 'TreeOfFilterParametersDB' table
+			And I select "List of values (function in 1C:Enterprise script)" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+			And I activate field named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+			And I click choice button of the attribute named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+			Then "VA - Filling empty analytics: Calculate a parameter value" window is opened
+			And I input text in the field named 'TextDocumentFieldProcedure'
 				|'Result = ObjectOfARAP.ArrayOfPeriods; '|
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
-			Тогда открылось окно "Data source (create) *"
-			И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Report wizard *"
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		* Дата
-			Когда открылось окно "Report wizard"
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я нажимаю на кнопку с именем 'FormCreate'
-			Тогда открылось окно "Data source (create)"
-			И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Arbitrary query to current infobase"	
-			Когда открылось окно "Data source (create) *"
-			И в поле с именем 'QueryTextForm' я ввожу текст 
+			And I click the button named 'FormWriteAndClose'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
+			Then "Data source (create) *" window is opened
+			And I finish line editing in 'TreeOfFilterParametersDB' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "Data source (create) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I select current line in 'List' table
+			Then "Report wizard *" window is opened
+			And I click the button named 'WriteAndCollapse'
+		* Date
+			When "Report wizard" window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I click the button named 'FormCreate'
+			Then "Data source (create)" window is opened
+			And I select "Arbitrary query to current infobase" exact value from the drop-down list named 'MethodOfObtaining'
+			When "Data source (create) *" window is opened
+			And I input text in the field named 'QueryTextForm'
 				|'SELECT'|
 				|' TimeIntervals.StartDate AS StartDate'|
 				|'FROM'|
 				|' Catalog.TimeIntervals AS TimeIntervals'|
 				|'WHERE'|
 				|' TimeIntervals.Ref IN (&PeriodsReport)'|
-			И я нажимаю на кнопку с именем 'EditQueryText'
-			И я перехожу к закладке с именем 'ComplianceAnalyst'
-			И я перехожу к закладке с именем 'FiltersPage'
-			И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
-			И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
-			И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "List of values (function in 1C:Enterprise script)"
-			И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'DefiningMethodClarification'
-			И в таблице 'TreeOfFilterParametersDB' я нажимаю кнопку выбора у реквизита с именем 'DefiningMethodClarification'
-			Тогда открылось окно "VA - Filling empty analytics: Calculate a parameter value"
-			И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст 
+			And I click the button named 'EditQueryText'
+			And I move to the tab named 'ComplianceAnalyst'
+			And I move to the tab named 'FiltersPage'
+			And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+			And I select current line in 'TreeOfFilterParametersDB' table
+			And I select "List of values (function in 1C:Enterprise script)" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+			And I activate field named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+			And I click choice button of the attribute named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+			Then "VA - Filling empty analytics: Calculate a parameter value" window is opened
+			And I input text in the field named 'TextDocumentFieldProcedure'
 				|'Result = ObjectOfARAP.ArrayOfPeriods; '|
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button0'
-			Тогда открылось окно "Data source (create) *"
-			И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Report wizard *"
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'	
+			And I click the button named 'FormWriteAndClose'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button0'
+			Then "Data source (create) *" window is opened
+			And I finish line editing in 'TreeOfFilterParametersDB' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "Data source (create) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I select current line in 'List' table
+			Then "Report wizard *" window is opened
+			And I click the button named 'WriteAndCollapse'
 		
-Сценарий: 12.06 Создаем экземпляр отчета с расчетом по правилам
+Scenario: 12.06 Creating report instance with calculation by rules
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Filling empty analytics" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Filling empty analytics" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 	
-	* Рассчитаем и сравним результат
-		И я нажимаю на кнопку с именем 'FormFillByDefault'
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Calculating and comparing the result
+		And I click the button named 'FormFillByDefault'
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Filling empty analytics" | ''               | ''           | ''                | ''           | ''             | ''           | ''      | ''           |
 			| ''                                | ''               | ''           | ''                | ''           | ''             | ''           | ''      | ''           |
 			| ''                                | "January 2024" | ''           | "February 2024" | ''           | "March 2024" | ''           | "TOTAL" | ''           |
@@ -442,16 +442,16 @@
 			| "5C:Corporate performance management "      | '0'              | ''           | '200'             | '2/1/2024' | '0'            | ''           | '200'   | '2/1/2024' |
 			| "1C:ERP. Corporate performance management "   | '0'              | ''           | '0'               | ''           | '300'          | '3/1/2024' | '300'   | '3/1/2024' |
 
-	* Запишем документ
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'WriteAndClose'
-		И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	* Saving document
+		When '$WindowTitle$' window is opened
+		And I click the button named 'WriteAndClose'
+		And I wait '$WindowTitle$' window closing in 20 seconds
 
-	* Откроем документ
-		И Я открываю первый экземпляр отчета для вида отчета "VA - Filling empty analytics"
+	* Opening document
+		And I open first report instance for report type "VA - Filling empty analytics"
 
-	* Сравним результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Comparing the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Filling empty analytics" | ''               | ''           | ''                | ''           | ''             | ''           | ''      | ''           |
 			| ''                                | ''               | ''           | ''                | ''           | ''             | ''           | ''      | ''           |
 			| ''                                | "January 2024" | ''           | "February 2024" | ''           | "March 2024" | ''           | "TOTAL" | ''           |
@@ -472,6 +472,6 @@
 			| "5C:Corporate performance management "      | '0'              | ''           | '200'             | '2/1/2024' | '0'            | ''           | '200'   | '2/1/2024' |
 			| "1C:ERP. Corporate performance management "   | '0'              | ''           | '0'               | ''           | '300'          | '3/1/2024' | '300'   | '3/1/2024' |
 				
-Сценарий: 12.06 Возвращаем регламент в прежнее состояние
+Scenario: 12.06 Returning regulation to its previous state
 
-	И Я для регламента "VA - Main regulations" изменяю флаг 'ShouldInsertDimensionValuesByDefault'
+	And I change flag 'ShouldInsertDimensionValuesByDefault' for regulation "VA - Main regulations"

@@ -1,86 +1,86 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для работы с подсистемой "Budgeting" - "Report instances"
+Feature: Export scenarios for working with the "Budgeting" subsystem - "Report instances"
 
-Сценарий: Я создаю экземпляр отчета для вида отчета 'TheReportKind' сценарий 'TheScenario' период 'TheStartDate' 'TheEndDate' периодичность 'TheFrequency' организация 'TheBusinessUnit' проект 'TheProject' аналитики 'TheDimension1' 'TheDimension2' 'TheDimension3' 'TheDimension4' 'TheDimension5' 'TheDimension6' 
+Scenario: I create report instance for report type 'TheReportKind' scenario 'TheScenario' period 'TheStartDate' 'TheEndDate' frequency 'TheFrequency' company 'TheBusinessUnit' project 'TheProject' dimensions 'TheDimension1' 'TheDimension2' 'TheDimension3' 'TheDimension4' 'TheDimension5' 'TheDimension6'
 
-	* Откроем форму ключевых реквизитов
-		Если текущее окно имеет заголовок "Specify key document attributes" Тогда
-			// Форма уже открыта
-		Иначе
-			И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report instances"
-			Тогда открылось окно "Report instances"
-			И я нажимаю кнопку очистить у поля с именем 'SavedSetting'
-			И я нажимаю на кнопку с именем 'FormCreate'
+	* Opening a key attributes form
+		If current window header is "Specify key document attributes" Then
+			// The form is already open
+		Else
+			And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
+			Then "Report instances" window is opened
+			And I click Clear button of the field named 'SavedSetting'
+			And I click the button named 'FormCreate'
 
-	* Заполняем ключевые реквизиты
-		Тогда открылось окно "Specify key document attributes"
-		И из выпадающего списка с именем 'ReportKind' я выбираю по строке '[TheReportKind]'				
-		И из выпадающего списка с именем 'Scenario' я выбираю по строке '[TheScenario]'
-		И из выпадающего списка с именем 'ReportFrequency' я выбираю точное значение '[TheFrequency]'
-		И я нажимаю на кнопку с именем 'ChangePeriod'
-		Тогда открылось окно "Select period"
-		И в поле с именем 'DateBegin' я ввожу текст '[TheStartDate]'
-		И в поле с именем 'DateEnd' я ввожу текст '[TheEndDate]'
-		И я нажимаю на кнопку с именем 'Select'
-		Тогда открылось окно "Specify key document attributes *"
-		И я нажимаю кнопку выбора у поля с именем 'Organization'
-		И Я выбираю организацию '[TheBusinessUnit]'
-		Тогда открылось окно "Specify key document attributes *"
-		Если 'НЕ ПустаяСтрока("[TheProject]")' Тогда
-			И из выпадающего списка с именем 'Project' я выбираю по строке '[TheProject]'
-		Если 'НЕ ПустаяСтрока("[TheDimension1]")' Тогда
-			И из выпадающего списка с именем 'Dimension1' я выбираю по строке '[TheDimension1]'
-		Если 'НЕ ПустаяСтрока("[TheDimension2]")' Тогда
-			И из выпадающего списка с именем 'Dimension2' я выбираю по строке '[TheDimension2]'
-		Если 'НЕ ПустаяСтрока("[TheDimension3]")' Тогда
-			И из выпадающего списка с именем 'Dimension3' я выбираю по строке '[TheDimension3]'
-		Если 'НЕ ПустаяСтрока("[TheDimension4]")' Тогда
-			И из выпадающего списка с именем 'Dimension4' я выбираю по строке '[TheDimension4]'
-		Если 'НЕ ПустаяСтрока("[TheDimension5]")' Тогда
-			И из выпадающего списка с именем 'Dimension5' я выбираю по строке '[TheDimension5]'
-		Если 'НЕ ПустаяСтрока("[TheDimension6]")' Тогда
-			И из выпадающего списка с именем 'Dimension6' я выбираю по строке '[TheDimension6]'
-		Когда открылось окно "Specify key document attributes *"
-		И я нажимаю на кнопку с именем 'FormApplyAndClose'
+	* Filling key attributes
+		Then "Specify key document attributes" window is opened
+		And I select from the drop-down list named 'ReportKind'  by '[TheReportKind]' string
+		And I select from the drop-down list named 'Scenario'  by '[TheScenario]' string
+		And I select '[TheFrequency]' exact value from the drop-down list named 'ReportFrequency'
+		And I click the button named 'ChangePeriod'
+		Then "Select period" window is opened
+		And I input '[TheStartDate]' text in the field named 'DateBegin'
+		And I input '[TheEndDate]' text in the field named 'DateEnd'
+		And I click the button named 'Select'
+		Then "Specify key document attributes *" window is opened
+		And I click Choice button of the field named 'Organization'
+		And I select company '[TheBusinessUnit]'
+		Then "Specify key document attributes *" window is opened
+		If 'NOT IsBlankString("[TheProject]")' Then
+			And I select from the drop-down list named 'Project'  by '[TheProject]' string
+		If 'NOT IsBlankString("[TheDimension1]")' Then
+			And I select from the drop-down list named 'Dimension1'  by '[TheDimension1]' string
+		If 'NOT IsBlankString("[TheDimension2]")' Then
+			And I select from the drop-down list named 'Dimension2'  by '[TheDimension2]' string
+		If 'NOT IsBlankString("[TheDimension3]")' Then
+			And I select from the drop-down list named 'Dimension3'  by '[TheDimension3]' string
+		If 'NOT IsBlankString("[TheDimension4]")' Then
+			And I select from the drop-down list named 'Dimension4'  by '[TheDimension4]' string
+		If 'NOT IsBlankString("[TheDimension5]")' Then
+			And I select from the drop-down list named 'Dimension5'  by '[TheDimension5]' string
+		If 'NOT IsBlankString("[TheDimension6]")' Then
+			And I select from the drop-down list named 'Dimension6'  by '[TheDimension6]' string
+		When "Specify key document attributes *" window is opened
+		And I click the button named 'FormApplyAndClose'
 		
-		И Открылся экземпляр отчета для вида отчета '[TheReportKind]' валюта '*' организация '[TheBusinessUnit]' сценарий '[TheScenario]' периодичность '[TheFrequency]' проект '[TheProject]' аналитики '[TheDimension1]' '[TheDimension2]' '[TheDimension3]' '[TheDimension4]' '[TheDimension5]' '[TheDimension6]' 	
+		And I open report instance for report type '[TheReportKind]' currency '*' company '[TheBusinessUnit]' scenario '[TheScenario]' frequency '[TheFrequency]' project '[TheProject]' dimensions '[TheDimension1]' '[TheDimension2]' '[TheDimension3]' '[TheDimension4]' '[TheDimension5]' '[TheDimension6]'
 
-Сценарий: Я открываю первый экземпляр отчета для вида отчета 'TheReportKind'
+Scenario: I open first report instance for report type 'TheReportKind'
 
-	И Я нахожу в списке вид отчета с именем '[TheReportKind]'
-	И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListOpenInstancesList'
-	Тогда открылось окно "Report instances"
-	И в таблице 'List' я выбираю текущую строку
+	And I find report type with name '[TheReportKind]' in list
+	And in the table 'ReportKindList' I click the button named 'ReportKindListOpenInstancesList'
+	Then "Report instances" window is opened
+	And I select current line in 'List' table
 
-Сценарий: Я открываю экземпляр отчета по сохраненной настройке 'TheName'
+Scenario: I open report instance by saved setting 'TheName'
 
-	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report instances"
-	Тогда открылось окно "Report instances"
-	И я нажимаю кнопку выбора у поля с именем 'SavedSetting'
-	И из выпадающего списка с именем 'SavedSetting' я выбираю точное значение '[TheName]'
-	И в таблице 'List' я выбираю текущую строку
+	And In the command interface I select "Budgeting, reporting, and analysis" "Report instances"
+	Then "Report instances" window is opened
+	And I click Choice button of the field named 'SavedSetting'
+	And I select '[TheName]' exact value from the drop-down list named 'SavedSetting'
+	And I select current line in 'List' table
 
-Сценарий: В экземпляре отчета я удаляю все существующие версии
+Scenario: I delete all existing versions in report instance
 
-	И я нажимаю на кнопку с именем 'FormVersionsManagement'
-	Тогда открылось окно "Indicator version management"
-	И Пока в таблице 'List' количество строк ">" 0 Тогда
-		И я нажимаю на кнопку с именем 'ListDeleteVersions'
-		Если открылось окно "1C:Enterprise" Тогда
-			И я нажимаю на кнопку с именем 'Button0'
-		Если открылось окно "1C:Enterprise" Тогда
-			И я нажимаю на кнопку с именем 'Button0'
-	Тогда открылось окно "Indicator version management*"
-	И Я закрываю окно "Indicator version management*"
+	And I click the button named 'FormVersionsManagement'
+	Then "Indicator version management" window is opened
+	And While the number of 'List' table lines ">" 0 Then
+		And I click the button named 'ListDeleteVersions'
+		If "1C:Enterprise" window is opened Then
+			And I click the button named 'Button0'
+		If "1C:Enterprise" window is opened Then
+			And I click the button named 'Button0'
+	Then "Indicator version management*" window is opened
+	And I close "Indicator version management*" window
 
-Сценарий: Движения экземпляра отчета стали равны "ThePath"
+Scenario: I check report instance movements are equal to "ThePath"
 
-	И я нажимаю на кнопку с именем 'FormDocumentRegisterRecords'
-	Тогда открылось окно "Flat table of indicator values with attributes"
-	И я жду когда в табличном документе 'ReportSpreadsheetDocument' заполнится ячейка 'R2C1' в течение 60 секунд
-	Дано Табличный документ 'ReportSpreadsheetDocument' равен макету "[ThePath]" по шаблону
-	И Я закрываю окно "Flat table of indicator values with attributes"
+	And I click the button named 'FormDocumentRegisterRecords'
+	Then "Flat table of indicator values with attributes" window is opened
+	And I wait for filling of 'R2C1' cell in 'ReportSpreadsheetDocument' spreadsheet document for 60 seconds
+	Given 'ReportSpreadsheetDocument' spreadsheet document is equal to "[ThePath]" by template
+	And I close "Flat table of indicator values with attributes" window

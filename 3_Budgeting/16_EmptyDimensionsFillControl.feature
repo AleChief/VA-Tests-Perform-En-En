@@ -1,235 +1,235 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 16. Проверка контроля заполнения пустых аналитик
+Feature: 16. Checking the control of empty dimension filling
 
-	Как Администратор я хочу
-	чтобы нельзя было записать значение показателя с пустой аналитикой
+	As Administrator I want to
+	so that it is not possible to save an indicator value with an empty dimension
 
-Контекст:
+Background:
 
-	И я закрыл все окна клиентского приложения
+	And I close all client application windows
 
-Сценарий: 16.00 Определение типа приложения
+Scenario: 16.00 Determining the application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 16.01 Создание вида отчета "VA - Empty analytics"
+Scenario: 16.01 Creating a report type "VA - Empty analytics"
 
-	* Создаем вид отчета
-		И Я создаю вид отчета с именем "VA - Empty analytics" и родителем "VA - Report group"
-		И Я открываю вид отчета с именем "VA - Empty analytics"
+	* Creating a report type
+		And I create report type with name "VA - Empty analytics" and parent "VA - Report group"
+		And I open report type with name "VA - Empty analytics"
 	
-	* Доработаем вид отчета	
-		И я перехожу к закладке с именем 'DimensionsOfReport'
-		И из выпадающего списка с именем 'DimensionKind1' я выбираю по строке "VA0CFItems"
-		И я нажимаю на кнопку с именем 'RecordButtonForm'	
-		Тогда открылось окно "Data restructuring"
-		И я нажимаю на кнопку с именем 'FormOK'
+	* Refining a report type
+		And I move to the tab named 'DimensionsOfReport'
+		And I select from the drop-down list named 'DimensionKind1'  by "VA0CFItems" string
+		And I click the button named 'RecordButtonForm'
+		Then "Data restructuring" window is opened
+		And I click the button named 'FormOK'
 
-	* Настраиваем структуру вида отчета
-		И я нажимаю на кнопку с именем 'EditTree'
-		Когда открылось окно "Report wizard"
-		И Я в конструкторе отчета добавляю строку с именем "Source"
-		И Я в конструкторе отчета добавляю строку с именем "Destination1"
-		И Я в конструкторе отчета добавляю строку с именем "Destination2"
-		И Я в конструкторе отчета добавляю колонку с именем "Number"
-		И Я в конструкторе отчета добавляю колонку с именем "Date"
+	* Configuring report type structure
+		And I click the button named 'EditTree'
+		When "Report wizard" window is opened
+		And I add row with name "Source" in report wizard
+		And I add row with name "Destination1" in report wizard
+		And I add row with name "Destination2" in report wizard
+		And I add column with name "Number" in report wizard
+		And I add column with name "Date" in report wizard
 
-	* Настраиваем показатели
-		И Я в конструкторе отчета в ячейке 'R2C3:R4C3' меняю свойства показателей 'ValueType' на "Date"
-		И Я в конструкторе отчета в ячейке 'R2C3:R4C3' меняю свойства показателей 'TotalKind' на "Maximum"		
+	* Configuring indicators
+		And I change indicator properties 'ValueType' to "Date" in cell 'R2C3:R4C3' in report wizard
+		And I change indicator properties 'TotalKind' to "Maximum" in cell 'R2C3:R4C3' in report wizard
 
-	* Настраиваем аналитики
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R2C3'
-		И я нажимаю на кнопку с именем 'CopyAndShiftDown1'				
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0ProCate" в ячейку 'R2C4'
-		И я нажимаю на кнопку с именем 'CopyAndShiftDown1'
+	* Configuring dimensions
+		And I add dimension with code "VA0Product" in cell 'R2C3' in report wizard
+		And I click the button named 'CopyAndShiftDown1'
+		And I add dimension with code "VA0ProCate" in cell 'R2C4' in report wizard
+		And I click the button named 'CopyAndShiftDown1'
 
-	* Устанавливаем обязателность заполнения аналитик	
-		* ГР_Приемник1
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R3C9"
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			Когда открылось окно "DG_Destination1 (Report indicator dimension groups)"
-			И в таблице 'TabFieldsDisplaySetting' я перехожу к строке:
+	* Setting dimension filling as mandatory
+		* GR_Destination1
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R3C9" cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			When "DG_Destination1 (Report indicator dimension groups)" window is opened
+			And I go to line in 'TabFieldsDisplaySetting' table:
 				| "Group dimension"          | "Dimension kind" | "Required" |
 				| "Dimension 2: Product range" | "Product range"  | "No"          |
-			И в таблице 'TabFieldsDisplaySetting' я активизирую поле с именем 'MandatoryAnalytics'
-			И в таблице 'TabFieldsDisplaySetting' я изменяю флаг с именем 'MandatoryAnalytics'
-			И в таблице 'TabFieldsDisplaySetting' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "DG_Destination1 (Report indicator dimension groups) *" в течение 20 секунд
-		* ГР_Приемник2
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R4C9"
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			Когда открылось окно "DG_Destination2 (Report indicator dimension groups)"
-			И в таблице 'TabFieldsDisplaySetting' я перехожу к строке:
+			And I activate field named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
+			And I change checkbox named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
+			And I finish line editing in 'TabFieldsDisplaySetting' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "DG_Destination1 (Report indicator dimension groups) *" window closing in 20 seconds
+		* GR_Destination2
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R4C9" cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			When "DG_Destination2 (Report indicator dimension groups)" window is opened
+			And I go to line in 'TabFieldsDisplaySetting' table:
 				| "Group dimension"          | "Dimension kind" | "Required" |
 				| "Dimension 2: Product range" | "Product range"  | "No"          |
-			И в таблице 'TabFieldsDisplaySetting' я активизирую поле с именем 'MandatoryAnalytics'
-			И в таблице 'TabFieldsDisplaySetting' я изменяю флаг с именем 'MandatoryAnalytics'
-			И в таблице 'TabFieldsDisplaySetting' я завершаю редактирование строки
-			И в таблице 'TabFieldsDisplaySetting' я перехожу к строке:
+			And I activate field named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
+			And I change checkbox named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
+			And I finish line editing in 'TabFieldsDisplaySetting' table
+			And I go to line in 'TabFieldsDisplaySetting' table:
 				| "Group dimension"                | "Dimension kind"      | "Required" |
 				| "Dimension 3: Product categories" | "Product categories" | "No"          |
-			И в таблице 'TabFieldsDisplaySetting' я активизирую поле с именем 'MandatoryAnalytics'
-			И в таблице 'TabFieldsDisplaySetting' я изменяю флаг с именем 'MandatoryAnalytics'
-			И в таблице 'TabFieldsDisplaySetting' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "DG_Destination2 (Report indicator dimension groups) *" в течение 20 секунд
+			And I activate field named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
+			And I change checkbox named 'MandatoryAnalytics' in 'TabFieldsDisplaySetting' table
+			And I finish line editing in 'TabFieldsDisplaySetting' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "DG_Destination2 (Report indicator dimension groups) *" window closing in 20 seconds
 
-	* Закрываем конструктор
-		Когда открылось окно "Report wizard"
-		И Я закрываю окно "Report wizard"
+	* Closing report wizard
+		When "Report wizard" window is opened
+		And I close "Report wizard" window
 		
-	* Бланк вида отчета
-		И Я Для вида отчета "VA - Empty analytics" создаю бланк по умолчанию
+	* Report type template
+		And I create default template for report type "VA - Empty analytics"
 
-	* Бланк сводной таблицы
-		И Я для вида отчета "VA - Empty analytics" создаю бланк сводной таблицы по умолчанию с отборами ""
+	* Pivot table template
+		And I for report type "" create default pivot table template with filters "VA - Empty analytics"
 
-Сценарий: 16.02 Настраиваем структуру отчета
+Scenario: 16.02 Configuring the report structure
 
-	И Я открываю контруктор отчета с именем "VA - Empty analytics"
+	And I open report wizard with name "VA - Empty analytics"
 
-	* Ввод формул
-		Когда открылось окно "Report wizard"
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"				
-		И я нажимаю на кнопку с именем 'FormShowSourceData'
-		И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Empty analytics"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C2'
-		И в табличном документе 'SpreadsheetDocSelectIndicator' я перехожу к ячейке "Source_Number"
-		Тогда открылось окно "Report wizard"
-		И я нажимаю на кнопку с именем 'AddDataToCell1'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C3'
-		И в табличном документе 'SpreadsheetDocSelectIndicator' я перехожу к ячейке "Source_Date"
-		И я нажимаю на кнопку с именем 'AddDataToCell1'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
-		И в табличном документе 'SpreadsheetDocSelectIndicator' я перехожу к ячейке "Source_Number"
-		И я нажимаю на кнопку с именем 'AddDataToCell1'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C3'
-		И в табличном документе 'SpreadsheetDocSelectIndicator' я перехожу к ячейке "Source_Date"
-		И я нажимаю на кнопку с именем 'AddDataToCell1'
-		И я нажимаю на кнопку с именем 'FormShowSourceData'
+	* Entering formulas
+		When "Report wizard" window is opened
+		And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+		And I click the button named 'FormShowSourceData'
+		And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Empty analytics" string
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C2' cell
+		And in 'SpreadsheetDocSelectIndicator' spreadsheet document I move to "Source_Number" cell
+		Then "Report wizard" window is opened
+		And I click the button named 'AddDataToCell1'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C3' cell
+		And in 'SpreadsheetDocSelectIndicator' spreadsheet document I move to "Source_Date" cell
+		And I click the button named 'AddDataToCell1'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2' cell
+		And in 'SpreadsheetDocSelectIndicator' spreadsheet document I move to "Source_Number" cell
+		And I click the button named 'AddDataToCell1'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C3' cell
+		And in 'SpreadsheetDocSelectIndicator' spreadsheet document I move to "Source_Date" cell
+		And I click the button named 'AddDataToCell1'
+		And I click the button named 'FormShowSourceData'
 
-	* Настройка аналитик
-		* Приемник1 число
-			Когда открылось окно "Report wizard"
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я выбираю пункт контекстного меню с именем 'ListContextMenuChange' на элементе формы с именем 'List'
-			Тогда открылось окно "VA - Empty analytics_Source number (Data source)"
-			И в таблице 'ComplianceTable' я перехожу к строке:
+	* Configuring dimensions
+		* Receiver1 number
+			When "Report wizard" window is opened
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
+			Then "VA - Empty analytics_Source number (Data source)" window is opened
+			And I go to line in 'ComplianceTable' table:
 				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
 				| "Dimension 3: Product categories" | "Product categories" | "[Dimension 3: Product categories]" | "Source field"    |
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "VA - Empty analytics_Source number (Data source) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И Я закрываю окно "Data sources"
-			Тогда открылось окно "Report wizard"
-			И я нажимаю на кнопку с именем 'UndoFormulaEdit'
-		* Приемник1 дата		
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R3C3"
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я выбираю пункт контекстного меню с именем 'ListContextMenuChange' на элементе формы с именем 'List'
-			Тогда открылось окно "VA - Empty analytics_Source date (Data source)"
-			И в таблице 'ComplianceTable' я перехожу к строке:
+			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I select current line in 'ComplianceTable' table
+			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "VA - Empty analytics_Source number (Data source) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I close "Data sources" window
+			Then "Report wizard" window is opened
+			And I click the button named 'UndoFormulaEdit'
+		* Receiver1 date
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R3C3" cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
+			Then "VA - Empty analytics_Source date (Data source)" window is opened
+			And I go to line in 'ComplianceTable' table:
 				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
 				| "Dimension 3: Product categories" | "Product categories" | "[Dimension 3: Product categories]" | "Source field"    |
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "VA - Empty analytics_Source date (Data source) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И Я закрываю окно "Data sources"
-			Тогда открылось окно "Report wizard"
-			И я нажимаю на кнопку с именем 'UndoFormulaEdit'
-		* Приемник2 число
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я выбираю пункт контекстного меню с именем 'ListContextMenuChange' на элементе формы с именем 'List'
-			Тогда открылось окно "VA - Empty analytics_Source number (Data source)"
-			И в таблице 'ComplianceTable' я перехожу к строке:
+			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I select current line in 'ComplianceTable' table
+			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "VA - Empty analytics_Source date (Data source) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I close "Data sources" window
+			Then "Report wizard" window is opened
+			And I click the button named 'UndoFormulaEdit'
+		* Receiver2 number
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
+			Then "VA - Empty analytics_Source number (Data source)" window is opened
+			And I go to line in 'ComplianceTable' table:
 				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
 				| "Dimension 3: Product categories" | "Product categories" | "[Dimension 3: Product categories]" | "Source field"    |
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "VA - Empty analytics_Source number (Data source) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И Я закрываю окно "Data sources"
-			Тогда открылось окно "Report wizard"
-			И я нажимаю на кнопку с именем 'UndoFormulaEdit'
-		* Приемник2 дата
-			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C3'
-			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-			И я нажимаю на кнопку с именем 'AddOperand1'
-			Тогда открылось окно "Data sources"
-			И я выбираю пункт контекстного меню с именем 'ListContextMenuChange' на элементе формы с именем 'List'
-			Тогда открылось окно "VA - Empty analytics_Source date (Data source)"
-			И в таблице 'ComplianceTable' я перехожу к строке:
+			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I select current line in 'ComplianceTable' table
+			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "VA - Empty analytics_Source number (Data source) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I close "Data sources" window
+			Then "Report wizard" window is opened
+			And I click the button named 'UndoFormulaEdit'
+		* Receiver2 date
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C3' cell
+			And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+			And I click the button named 'AddOperand1'
+			Then "Data sources" window is opened
+			And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
+			Then "VA - Empty analytics_Source date (Data source)" window is opened
+			And I go to line in 'ComplianceTable' table:
 				| "Destination dimension"             | "Dimension kind"      | "Column name"                       | "Filling method" |
 				| "Dimension 3: Product categories" | "Product categories" | "[Dimension 3: Product categories]" | "Source field"    |
-			И в таблице 'ComplianceTable' я активизирую поле с именем 'ComplianceTableFillingMethod'
-			И в таблице 'ComplianceTable' я выбираю текущую строку
-			И в таблице 'ComplianceTable' из выпадающего списка с именем 'ComplianceTableFillingMethod' я выбираю точное значение "Fixed value"
-			И в таблице 'ComplianceTable' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "VA - Empty analytics_Source date (Data source) *" в течение 20 секунд
-			Тогда открылось окно "Data sources"
-			И Я закрываю окно "Data sources"
-			Тогда открылось окно "Report wizard"
-			И я нажимаю на кнопку с именем 'UndoFormulaEdit'
+			And I activate field named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I select current line in 'ComplianceTable' table
+			And I select "Fixed value" exact value from the drop-down list named 'ComplianceTableFillingMethod' in 'ComplianceTable' table
+			And I finish line editing in 'ComplianceTable' table
+			And I click the button named 'FormWriteAndClose'
+			And I wait "VA - Empty analytics_Source date (Data source) *" window closing in 20 seconds
+			Then "Data sources" window is opened
+			And I close "Data sources" window
+			Then "Report wizard" window is opened
+			And I click the button named 'UndoFormulaEdit'
 
-	* Закрываем конструктор
-		Когда открылось окно "Report wizard"
-		И Я закрываю окно "Report wizard"		
+	* Closing report wizard
+		When "Report wizard" window is opened
+		And I close "Report wizard" window
 
-Сценарий: 16.03 Настройка прав для пользователя "Budgeting1"
+Scenario: 16.03 Configuring rights for user "Budgeting1"
 
-	И Я добавляю право "Read, write" для вида отчета "VA - Empty analytics" пользователя "Budgeting1" по всем организациям
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I add right "Read, write" for report type "VA - Empty analytics" user "Budgeting1" for all companies
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-Сценарий: 16.04 Создание экземпляра отчета "VA - Empty analytics"
+Scenario: 16.04 Creating a report instance "VA - Empty analytics"
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Empty analytics" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики "3Software sale" '' '' '' '' ''
-	И я нажимаю на кнопку с именем 'Write'
+	And I create report instance for report type "VA - Empty analytics" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions "3Software sale" '' '' '' '' ''
+	And I click the button named 'Write'
 
-	И Я добавляю значения с раскрытием показателей в ячейку 'R6C8'
+	And I add values with indicator expansion in cell 'R6C8'
 		| "Product range"                 | "Product categories"   | 'Period_1_Value1' | 'Period_2_Value1' |
 		| "5C:Corporate performance management"    | "Software products" | '100'                | '200'                |
 		| "1C:ERP. Corporate performance management" | "Software products" | '100'                | '200'                |
 
-	И Я добавляю значения с раскрытием показателей в ячейку 'R6C9'
+	And I add values with indicator expansion in cell 'R6C9'
 		| "Product range"                 | "Product categories"   | 'Period_1_Value1' | 'Period_2_Value1' |
 		| "5C:Corporate performance management"    | "Software products" | '1/1/2024'         | '2/2/2024'         |
 		| "1C:ERP. Corporate performance management" | "Software products" | '1/1/2024'         | '2/2/2024'         |
 
-	И Я ввожу комментарий "Number" в ячейку 'R8C2'
-	И Я ввожу комментарий "Date" в ячейку 'R10C5'
+	And I enter comment "Number" in cell 'R8C2'
+	And I enter comment "Date" in cell 'R10C5'
 
-	Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 		| "VA - Empty analytics"         | ''               | ''           | ''                | ''           | ''             | ''     | ''      | ''           |
 		| ''                              | ''               | ''           | ''                | ''           | ''             | ''     | ''      | ''           |
 		| ''                              | "January 2024" | ''           | "February 2024" | ''           | "March 2024" | ''     | "TOTAL" | ''           |
@@ -250,48 +250,48 @@
 		| "5C:Corporate performance management "    | '100'            | '1/1/2024' | '200'             | '2/2/2024' | '0'            | ''     | '300'   | '2/2/2024' |
 		| ' '                             | '100'            | '1/1/2024' | '200'             | '2/2/2024' | '0'            | ''     | '300'   | '2/2/2024' |
 
-	Когда открылось окно '$WindowTitle$'
-	И я нажимаю на кнопку с именем 'Write'
-	Тогда открылось окно "1C:Enterprise"
-	И я нажимаю на кнопку с именем 'OK'
+	When '$WindowTitle$' window is opened
+	And I click the button named 'Write'
+	Then "1C:Enterprise" window is opened
+	And I click the button named 'OK'
 
-	Тогда в логе сообщений TestClient есть строки:
+	Then there are lines in TestClient message log
 		|"Required dimension is not filled for the indicator:\n	Indicator: Destination2 number\n	Dimension3: \"Product categories\""|
 		|"Required dimension is not filled for the indicator:\n	Indicator: Destination2 date\n	Dimension3: \"Product categories\""|
 
-	Когда открылось окно '$WindowTitle$'
-	И Я закрываю окно '$WindowTitle$'
-	Тогда открылось окно "1C:Enterprise"
-	И я нажимаю на кнопку с именем 'Button1'		
+	When '$WindowTitle$' window is opened
+	And I close '$WindowTitle$' window
+	Then "1C:Enterprise" window is opened
+	And I click the button named 'Button1'
 		
-Сценарий: 16.05 Создание сводной таблицы "VA - Empty analytics"		
+Scenario: 16.05 Creating a pivot table "VA - Empty analytics"
 		
-	И Я октрываю сводную таблицу отчета с именем "VA - Empty analytics"
-	И Я устанавливаю отборы сводной таблицы: дата начала '1/1/2024', дата конца '3/31/2024', валюта 'RUB', сценарий "VA - Main scenario", организация "Mercury LLC"		
+	And I open report pivot table with name "VA - Empty analytics"
+	And I set pivot table filters: start date '1/1/2024', end date '3/31/2024', currency 'RUB', scenario "VA - Main scenario", company "Mercury LLC"
 
-	* Настраиваем порядок аналитик
-		И я нажимаю на кнопку с именем 'ShowTableSettingsByAxes'
-		И Я в сводной таблице перемещаю аналитику с именем "Product categories" вверх
-		И Я в сводной таблице перемещаю аналитику с именем "Product range" вверх
-		И Я в сводной таблице перемещаю аналитику с именем "Cash flow items" вверх
-		И я нажимаю на кнопку с именем 'ButtonApply'			
-		И я жду открытия формы "Pivot table: *" в течение 20 секунд
+	* Configuring the dimension order
+		And I click the button named 'ShowTableSettingsByAxes'
+		And I move dimension with name "Product categories" up in pivot table
+		And I move dimension with name "Product range" up in pivot table
+		And I move dimension with name "Cash flow items" up in pivot table
+		And I click the button named 'ButtonApply'
+		And I wait for "Pivot table: *" form opening for 20 seconds
 
-	И Я добавляю значения с раскрытием показателей в ячейку 'R4C8'
+	And I add values with indicator expansion in cell 'R4C8'
 		 | "Product range"                 | "Product categories"   | "Cash flow items"                       | 'Period_1_Value1' | 'Period_2_Value1' |
 		 | "5C:Corporate performance management"    | "Software products" | "3Software sale" | '100'                | '200'                |
 		 | "1C:ERP. Corporate performance management" | "Software products" | "2Software implementation"  | '100'                | '200'                |
 
-	И Я добавляю значения с раскрытием показателей в ячейку 'R4C9'
+	And I add values with indicator expansion in cell 'R4C9'
 		| "Product range"                 | "Product categories"   | "Cash flow items"                       | 'Period_1_Value1' | 'Period_2_Value1' |
 		| "5C:Corporate performance management"    | "Software products" | "3Software sale" | '1/1/2024'         | '2/2/2024'         |
 		| "1C:ERP. Corporate performance management" | "Software products" | "2Software implementation"  | '1/1/2024'         | '2/2/2024'         |
 
-	И Я ввожу комментарий "Number" в ячейку 'R7C2'
-	И Я ввожу комментарий "Date" в ячейку 'R10C5'
+	And I enter comment "Number" in cell 'R7C2'
+	And I enter comment "Date" in cell 'R10C5'
 
-	* Сверяем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Verifying the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Empty analytics (pivot table)" | "January 2024" | ''           | "February 2024" | ''           | "March 2024" | ''     | "TOTAL" | ''           |
 			| "VA - Empty analytics (pivot table)" | "Number"          | "Date"       | "Number"           | "Date"       | "Number"        | "Date" | "Number" | "Date"       |
 			| "Source"                                | '200'            | '1/1/2024' | '400'             | '2/2/2024' | '0'            | ''     | '600'   | '2/2/2024' |
@@ -316,25 +316,25 @@
 			| "5C:Corporate performance management"               | '100'            | '1/1/2024' | '200'             | '2/2/2024' | '0'            | ''     | '300'   | '2/2/2024' |
 			| ''                                        | '100'            | '1/1/2024' | '200'             | '2/2/2024' | '0'            | ''     | '300'   | '2/2/2024' |
 	
-	* Открываем экземпляр отчета
-		Когда открылось окно "Pivot table: *"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R10C3"
-		И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuOpenReportInstance' на элементе формы с именем 'SpreadsheetFieldTemlate'
-		И Открылся экземпляр отчета для вида отчета "VA - Empty analytics" валюта "RUB" организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month"  проект '' аналитики "3Software sale" '' '' '' '' ''
-		И Я закрываю окно '$WindowTitle$'
+	* Opening a report instance
+		When "Pivot table: *" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R10C3" cell
+		And I select context menu item named 'SpreadsheetFieldTemlateContextMenuOpenReportInstance' of the form attribute named 'SpreadsheetFieldTemlate'
+		And I open report instance for report type "VA - Empty analytics" currency "RUB" company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions "3Software sale" '' '' '' '' ''
+		And I close '$WindowTitle$' window
 
-	* Открываем несуществующий экземпляр отчета
-		Когда открылось окно "Pivot table: *"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке "R7C3"
-		И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuOpenReportInstance' на элементе формы с именем 'SpreadsheetFieldTemlate'
-		Тогда в логе сообщений TestClient есть строки:
+	* Opening a non-existent report instance
+		When "Pivot table: *" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to "R7C3" cell
+		And I select context menu item named 'SpreadsheetFieldTemlateContextMenuOpenReportInstance' of the form attribute named 'SpreadsheetFieldTemlate'
+		Then there are lines in TestClient message log
 			|"A report instance is not found by the key slices:\n	Scenario: VA - Main scenario\n	Company: Mercury LLC\n	Period: January 2024,\n	Dimension1: 2Software implementation"|
 	
-	Когда открылось окно "Pivot table: *"
-	И я нажимаю на кнопку с именем 'Apply'
+	When "Pivot table: *" window is opened
+	And I click the button named 'Apply'
 
-	Тогда открылось окно "Protocol"		
-	Тогда табличный документ 'SpreadsheetDocumentField' равен:
+	Then "Protocol" window is opened
+	Then 'SpreadsheetDocumentField' spreadsheet document is equal
 		| "Errors"                                                                                                                     |
 		| "Required dimension is not filled for the indicator:\n	Indicator: Destination2 number\n	Dimension3: \"Product categories\"" |
 		| "Required dimension is not filled for the indicator:\n	Indicator: Destination2 date\n	Dimension3: \"Product categories\"" |

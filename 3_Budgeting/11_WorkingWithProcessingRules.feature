@@ -1,49 +1,49 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 11. Проверка функционала работы с правилами расчета
+Feature: 11. Checking the calculation rules functionality
 
-	Как Администратор я хочу
-	Проверить создание и работу видов отчетов
-	чтобы Виды отчетов вводились без ошибок
+	As Administrator I want to
+	Check creation and operation of report types
+	so that report types are entered without errors
 
-Контекст: 
+Background:
 
-	И я закрыл все окна клиентского приложения	
+	And I close all client application windows
 
-Сценарий: 11.00 Определение типа приложения
+Scenario: 11.00 Determining the application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 11.01 Создание группы видов отчетов "VA - Calculation rules (group)"
+Scenario: 11.01 Creating a group of report types "VA - Calculation rules (group)"
 
-	И Я создаю группу видов отчетов с именем "VA - Calculation rules (group)" и родителем "VA - Report group"
+	And I create report type group with name "VA - Calculation rules (group)" and parent "VA - Report group"
 
-Сценарий: 11.02 Создание вида отчета с ручным вводом - "VA - Count"
+Scenario: 11.02 Creating a report type with manual input - "VA - Count"
 
-	И Я создаю вид отчета с именем "VA - Count" и родителем "VA - Calculation rules (group)"
+	And I create report type with name "VA - Count" and parent "VA - Calculation rules (group)"
 	
-	* Редактируем структуру отчета
-		И Я открываю контруктор отчета с именем "VA - Count"
-		И Я в конструкторе отчета добавляю строку с именем "Product range"
-		И Я в конструкторе отчета добавляю колонку с именем "Count"
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R2C2' 
-		И Я закрываю окно "Report wizard"
+	* Editing the report structure
+		And I open report wizard with name "VA - Count"
+		And I add row with name "Product range" in report wizard
+		And I add column with name "Count" in report wizard
+		And I add dimension with code "VA0Product" in cell 'R2C2' in report wizard
+		And I close "Report wizard" window
 
-	И Я Для вида отчета "VA - Count" создаю бланк по умолчанию
-	И Я Для вида отчета "VA - Count" в бланке для группы раскрытия с адресом 'R8C1' задаю сортировку "Product range" "Product ID"
+	And I create default template for report type "VA - Count"
+	And I set sorting "Product range" "Product ID" in template for expansion group with address 'R8C1' for report type "VA - Count"
 
-Сценарий: 11.03 Создание экземпляра отчета - "VA - Count"
+Scenario: 11.03 Creating a report instance - "VA - Count"
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Count" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' '' 
+	And I create report instance for report type "VA - Count" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 
-	И Я добавляю значения с раскрытием показателей в ячейку 'R6C2'
+	And I add values with indicator expansion in cell 'R6C2'
 		| "VA0Product"                                                     | 'Value1' |
 		| "4C:Enterprise 8.3 CORP. Server License (x86-64)"           | '20.00000'  |
 		| "3C:Enterprise 8 CORP. Client license for 100 users" | '40.00000'  |
@@ -51,17 +51,17 @@
 		| "2C:Corporation"                                                  | '7.00000'   |
 		| "1C:ERP. Corporate performance management"                                   | '8.00000'   |
 
-	* Копируем и меняем значения показателей
-		Тогда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C2:R11C2'
-		И я нажимаю на кнопку с именем 'SpreadsheetFieldTemplateCopyDataOnRow'
-		И Я изменяю значение на '10.00000' в ячейке 'R7C3:R11C3'		
-		Когда открылось окно '$WindowTitle$'
-		И Я изменяю значение на '100.00000' процентов в ячейке 'R6C4:R11C4'
+	* Copying and changing indicator values
+		Then '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R6C2:R11C2' cell
+		And I click the button named 'SpreadsheetFieldTemplateCopyDataOnRow'
+		And I change value to '10.00000' in cell 'R7C3:R11C3'
+		When '$WindowTitle$' window is opened
+		And I change value to '100.00000' percent in cell 'R6C4:R11C4'
 
-	* Проверим результат
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Checking the result
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Count"                                                 | ''               | ''                | ''             | ''           |
 			| ''                                                                | ''               | ''                | ''             | ''           |
 			| ''                                                                | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
@@ -73,102 +73,102 @@
 			| "1C:ERP. Corporate performance management "                                   | '8'              | '18'              | '16'           | '42'         |
 			| "3C:Enterprise 8 CORP. Client license for 100 users " | '40'             | '50'              | '80'           | '170'        |
 
-	* Запишем документ
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'Write'
+	* Saving document
+		When '$WindowTitle$' window is opened
+		And I click the button named 'Write'
 
-	* Проверим, можно ли имзенить значение пустой ячейки
-		Когда Открылся экземпляр отчета для вида отчета "VA - Count" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' '' 
-		И я запоминаю текущее окно как 'WindowTitle'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R12C2:R12C4'
-		И я нажимаю на кнопку с именем 'ChangeIndicators'
+	* Checking whether it is possible to change the value of an empty cell
+		When I open report instance for report type "VA - Count" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		And I save the window as 'WindowTitle'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R12C2:R12C4' cell
+		And I click the button named 'ChangeIndicators'
 
-	* Закроем и сохраним документ
-		Тогда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'WriteAndClose'
-		И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	* Closing and saving the document
+		Then '$WindowTitle$' window is opened
+		And I click the button named 'WriteAndClose'
+		And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: 11.04 Создание вида отчета с загрузкой из РС "VA - Price"
+Scenario: 11.04 Creating a report type with loading from RS "VA - Price"
 
-	И Я создаю вид отчета с именем "VA - Price" и родителем "VA - Calculation rules (group)"
+	And I create report type with name "VA - Price" and parent "VA - Calculation rules (group)"
 
-	* Редактируем структуру отчета
-		И Я открываю контруктор отчета с именем "VA - Price"
-		И Я в конструкторе отчета добавляю строку с именем "Product range"
-		И Я в конструкторе отчета добавляю колонку с именем "Price"
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R2C2' 
+	* Editing the report structure
+		And I open report wizard with name "VA - Price"
+		And I add row with name "Product range" in report wizard
+		And I add column with name "Price" in report wizard
+		And I add dimension with code "VA0Product" in cell 'R2C2' in report wizard
 
-	* Вводим формулы расчета
-		Тогда открылось окно "Report wizard"
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'AddOperand1'
-		Тогда открылось окно "Data sources"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Data source (create)"
-		И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Current infobase information register"
-		И я нажимаю кнопку выбора у поля с именем 'DBInformationRegister'
-		Тогда открылось окно "Infobase information registers"
-		И я нажимаю на кнопку с именем 'FormFind'
-		Тогда открылось окно "Find"
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Register"
-		И я меняю значение переключателя с именем 'CompareType' на "At beginning of line"
-		Если '$$IsERPCPM$$' Тогда
-			И в поле с именем 'Pattern' я ввожу текст "Product range prices 2.5"	
-		Иначе
-			И в поле с именем 'Pattern' я ввожу текст "Product range prices"		
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Infobase information registers"
-		И в таблице 'List' я выбираю текущую строку			
-		И из выпадающего списка с именем 'InfoRegisterResource' я выбираю точное значение "Price"
-		И из выпадающего списка с именем 'SliceType' я выбираю точное значение "Slice of the last ones"
-		И я перехожу к закладке с именем 'FiltersPage'
-		И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
-		И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
-		И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Report period start date"
-		И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
-		И в таблице 'FieldsTreeDB' я разворачиваю текущую строку
-		Если '$$IsCPM$$' Тогда		
-			И в таблице 'FieldsTreeDB' я перехожу к строке:
+	* Entering calculation formulas
+		Then "Report wizard" window is opened
+		And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'AddOperand1'
+		Then "Data sources" window is opened
+		And I click the button named 'FormCreate'
+		Then "Data source (create)" window is opened
+		And I select "Current infobase information register" exact value from the drop-down list named 'MethodOfObtaining'
+		And I click Choice button of the field named 'DBInformationRegister'
+		Then "Infobase information registers" window is opened
+		And I click the button named 'FormFind'
+		Then "Find" window is opened
+		And I select "Register" exact value from the drop-down list named 'FieldSelector'
+		And I change the radio button named 'CompareType' value to "At beginning of line"
+		If '$$IsERPCPM$$' Then
+			And I input "Product range prices 2.5" text in the field named 'Pattern'
+		Else
+			And I input "Product range prices" text in the field named 'Pattern'
+		And I click the button named 'Find'
+		Then "Infobase information registers" window is opened
+		And I select current line in 'List' table
+		And I select "Price" exact value from the drop-down list named 'InfoRegisterResource'
+		And I select "Slice of the last ones" exact value from the drop-down list named 'SliceType'
+		And I move to the tab named 'FiltersPage'
+		And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+		And I select current line in 'TreeOfFilterParametersDB' table
+		And I select "Report period start date" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+		And I finish line editing in 'TreeOfFilterParametersDB' table
+		And I expand current line in 'FieldsTreeDB' table
+		If '$$IsCPM$$' Then
+			And I go to line in 'FieldsTreeDB' table:
 				| "Field"    |
 				| "Price type" |
-			И я нажимаю на кнопку с именем 'AddConditionItem'
-			И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+			And I click the button named 'AddConditionItem'
+			And I go to line in 'TreeOfFilterParametersDB' table:
 			| "Field"      |
 			| "[Price type]" |
-		Если '$$IsERPCPM$$' Тогда
-			И в таблице 'FieldsTreeDB' я перехожу к строке:
+		If '$$IsERPCPM$$' Then
+			And I go to line in 'FieldsTreeDB' table:
 				| "Field"     |
 				| 'Price type' |
-			И я нажимаю на кнопку с именем 'AddConditionItem'
-			И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+			And I click the button named 'AddConditionItem'
+			And I go to line in 'TreeOfFilterParametersDB' table:
 			| "Field"       |
 			| '[Price type]' |
-		И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
-		И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Fixed value"
-		И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'DefiningMethodClarification' я выбираю по строке "VA - Products"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-		Тогда открылось окно "Data sources"
-		И в таблице 'List' я выбираю текущую строку	
-		Тогда открылось окно "Report wizard *"
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
+		And I select current line in 'TreeOfFilterParametersDB' table
+		And I select "Fixed value" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+		And I select "VA - Products" by string from the drop-down list named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Data source (create) *" window closing in 20 seconds
+		Then "Data sources" window is opened
+		And I select current line in 'List' table
+		Then "Report wizard *" window is opened
+		And I click the button named 'WriteAndCollapse'
 
-	И Я Для вида отчета "VA - Price" создаю бланк по умолчанию
-	И Я Для вида отчета "VA - Price" в бланке для группы раскрытия с адресом 'R8C1' задаю сортировку "Product range" "Product ID"
+	And I create default template for report type "VA - Price"
+	And I set sorting "Product range" "Product ID" in template for expansion group with address 'R8C1' for report type "VA - Price"
 
-Сценарий: 11.05 Создание экземпляра отчета - "VA - Price"
+Scenario: 11.05 Creating a report instance - "VA - Price"
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Price" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Price" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 
-	* Запишем документ
-		И я нажимаю на кнопку с именем 'FormFillByDefault'
-		И я нажимаю на кнопку с именем 'Write'
+	* Saving document
+		And I click the button named 'FormFillByDefault'
+		And I click the button named 'Write'
 
-	* Проверим результат
-		Когда Открылся экземпляр отчета для вида отчета "VA - Price" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' ''
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Checking the result
+		When I open report instance for report type "VA - Price" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Price"                                                       | ''               | ''                | ''             | ''           |
 			| ''                                                                | ''               | ''                | ''             | ''           |
 			| ''                                                                | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
@@ -180,69 +180,69 @@
 			| "1C:ERP. Corporate performance management "                                   | '1,950,000'      | '2,145,000'       | '2,423,900'    | '6,518,900'  |
 			| "3C:Enterprise 8 CORP. Client license for 100 users " | '600,000'        | '660,000'         | '745,800'      | '2,005,800'  |
 
-Сценарий: 11.06 Создание вида отчета с рассчитываемыми показателями - "VA - Sales"
+Scenario: 11.06 Creating a report type with calculated indicators - "VA - Sales"
 
-	И Я создаю вид отчета с именем "VA - Sales" и родителем "VA - Calculation rules (group)"
+	And I create report type with name "VA - Sales" and parent "VA - Calculation rules (group)"
 
-	* Редактируем структуру отчета
-		И Я открываю контруктор отчета с именем "VA - Sales"
-		И Я в конструкторе отчета добавляю строку с именем "Product range"
-		И Я в конструкторе отчета добавляю колонку с именем "Count"
-		И Я в конструкторе отчета добавляю колонку с именем "Price"
-		И Я в конструкторе отчета добавляю колонку с именем "Amount"
-		И Я в конструкторе отчета в ячейке 'R2C2' меняю свойство показателя 'NonFinancial' на 'True'
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R2C2' 
+	* Editing the report structure
+		And I open report wizard with name "VA - Sales"
+		And I add row with name "Product range" in report wizard
+		And I add column with name "Count" in report wizard
+		And I add column with name "Price" in report wizard
+		And I add column with name "Amount" in report wizard
+		And I change indicator property 'NonFinancial' to 'True' in cell 'R2C2' in report wizard
+		And I add dimension with code "VA0Product" in cell 'R2C2' in report wizard
 
-	* Вводим формулы расчета
-		Тогда открылось окно "Report wizard"
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'RefToIndicator1'
-		И Я выбираю показатель с кодом "ProductRange_count" вида отчета  "VA - Count"
-		Тогда открылось окно "Report wizard *"
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		Тогда открылось окно "Report wizard"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C3'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'RefToIndicator1'
-		И Я выбираю показатель с кодом "ProductRange_Price" вида отчета "VA - Price"
-		Тогда открылось окно "Report wizard *"
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		Тогда открылось окно "Report wizard"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C4'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'RefToIndicator1'
-		И Я выбираю показатель с кодом "ProductRange_count"
-		Тогда открылось окно "Report wizard *"
-		И я нажимаю на кнопку с именем 'ButtonMultiply'
-		И я нажимаю на кнопку с именем 'RefToIndicator1'
-		И Я выбираю показатель с кодом "ProductRange_Price"
-		Тогда открылось окно "Report wizard *"
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'	
-		Когда открылось окно "Report wizard"
-		И Я закрываю окно "Report wizard"
+	* Entering calculation formulas
+		Then "Report wizard" window is opened
+		And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'RefToIndicator1'
+		And I select indicator with code "ProductRange_count" of report type "VA - Count"
+		Then "Report wizard *" window is opened
+		And I click the button named 'WriteAndCollapse'
+		Then "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C3' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'RefToIndicator1'
+		And I select indicator with code "ProductRange_Price" of report type "VA - Price"
+		Then "Report wizard *" window is opened
+		And I click the button named 'WriteAndCollapse'
+		Then "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C4' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'RefToIndicator1'
+		And I select indicator with code "ProductRange_count"
+		Then "Report wizard *" window is opened
+		And I click the button named 'ButtonMultiply'
+		And I click the button named 'RefToIndicator1'
+		And I select indicator with code "ProductRange_Price"
+		Then "Report wizard *" window is opened
+		And I click the button named 'WriteAndCollapse'
+		When "Report wizard" window is opened
+		And I close "Report wizard" window
 
-	И Я Для вида отчета "VA - Sales" создаю бланк по умолчанию
-	И Я Для вида отчета "VA - Sales" в бланке для группы раскрытия с адресом 'R8C1' задаю сортировку "Product range" "Product ID"
+	And I create default template for report type "VA - Sales"
+	And I set sorting "Product range" "Product ID" in template for expansion group with address 'R8C1' for report type "VA - Sales"
 		
-Сценарий: 11.07 Создание экземпляра отчета - "VA - Sales" без записи
+Scenario: 11.07 Creating a report instance - "VA - Sales" without saving
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Sales" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Sales" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 
-	* Документ должен быть пустой
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* The document should be empty
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Sales" | ''               | ''     | ''      | ''                | ''     | ''      | ''             | ''     | ''      | ''           | ''     | ''      |
 			| ''             | ''               | ''     | ''      | ''                | ''     | ''      | ''             | ''     | ''      | ''           | ''     | ''      |
 			| ''             | "January 2024" | ''     | ''      | "February 2024" | ''     | ''      | "March 2024" | ''     | ''      | "TOTAL"      | ''     | ''      |
 			| ''             | "Count"     | "Price" | "Amount" | "Count"      | "Price" | "Amount" | "Count"   | "Price" | "Amount" | "Count" | "Price" | "Amount" |
 			| "Product range" | '0'              | '0'    | '0'     | '0'               | '0'    | '0'     | '0'            | '0'    | '0'     | '0'          | '0'    | '0'     |
 
-	* Расчитаем документ
-		И я нажимаю на кнопку с именем 'FormFillByDefault'
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Calculating the document
+		And I click the button named 'FormFillByDefault'
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Sales"                                                    | ''               | ''          | ''           | ''                | ''          | ''            | ''             | ''          | ''            | ''           | ''           | ''            |
 			| ''                                                                | ''               | ''          | ''           | ''                | ''          | ''            | ''             | ''          | ''            | ''           | ''           | ''            |
 			| ''                                                                | "January 2024" | ''          | ''           | "February 2024" | ''          | ''            | "March 2024" | ''          | ''            | "TOTAL"      | ''           | ''            |
@@ -254,30 +254,30 @@
 			| "1C:ERP. Corporate performance management "                                   | '8'              | '1,950,000' | '15,600,000' | '18'              | '2,145,000' | '38,610,000'  | '16'           | '2,423,900' | '38,782,400'  | '42'         | '6,518,900'  | '92,992,400'  |
 			| "3C:Enterprise 8 CORP. Client license for 100 users " | '40'             | '600,000'   | '24,000,000' | '50'              | '660,000'   | '33,000,000'  | '80'           | '745,800'   | '59,664,000'  | '170'        | '2,005,800'  | '116,664,000' |
 	
-	* Закроем документ без записи
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+	* Closing the document without saving
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 
-Сценарий: 11.08 Создание экземпляра отчета - "VA - Sales"
+Scenario: 11.08 Creating a report instance - "VA - Sales"
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Sales" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Sales" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 
-	* Документ должен быть пустой
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* The document should be empty
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Sales" | ''               | ''     | ''      | ''                | ''     | ''      | ''             | ''     | ''      | ''           | ''     | ''      |
 			| ''             | ''               | ''     | ''      | ''                | ''     | ''      | ''             | ''     | ''      | ''           | ''     | ''      |
 			| ''             | "January 2024" | ''     | ''      | "February 2024" | ''     | ''      | "March 2024" | ''     | ''      | "TOTAL"      | ''     | ''      |
 			| ''             | "Count"     | "Price" | "Amount" | "Count"      | "Price" | "Amount" | "Count"   | "Price" | "Amount" | "Count" | "Price" | "Amount" |
 			| "Product range" | '0'              | '0'    | '0'     | '0'               | '0'    | '0'     | '0'            | '0'    | '0'     | '0'          | '0'    | '0'     |
 
-	* Рассчитаем документ
-		И я нажимаю на кнопку с именем 'FormFillByDefault'
-		И я нажимаю на кнопку с именем 'Write'
-		И я запоминаю текущее окно как 'WindowTitle'
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Calculating the document
+		And I click the button named 'FormFillByDefault'
+		And I click the button named 'Write'
+		And I save the window as 'WindowTitle'
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Sales"                                                    | ''               | ''          | ''           | ''                | ''          | ''            | ''             | ''          | ''            | ''           | ''           | ''            |
 			| ''                                                                | ''               | ''          | ''           | ''                | ''          | ''            | ''             | ''          | ''            | ''           | ''           | ''            |
 			| ''                                                                | "January 2024" | ''          | ''           | "February 2024" | ''          | ''            | "March 2024" | ''          | ''            | "TOTAL"      | ''           | ''            |
@@ -289,29 +289,29 @@
 			| "1C:ERP. Corporate performance management "                                   | '8'              | '1,950,000' | '15,600,000' | '18'              | '2,145,000' | '38,610,000'  | '16'           | '2,423,900' | '38,782,400'  | '42'         | '6,518,900'  | '92,992,400'  |
 			| "3C:Enterprise 8 CORP. Client license for 100 users " | '40'             | '600,000'   | '24,000,000' | '50'              | '660,000'   | '33,000,000'  | '80'           | '745,800'   | '59,664,000'  | '170'        | '2,005,800'  | '116,664,000' |
 	
-	* Запишем документ
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'WriteAndClose'
-		И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	* Saving document
+		When '$WindowTitle$' window is opened
+		And I click the button named 'WriteAndClose'
+		And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: 11.09 Проверка поведения формы редактирования процедур
+Scenario: 11.09 Checking behavior of the procedure editing form
 
-	* Откроем правило обработки
-		И Я открываю контруктор отчета с именем "VA - Sales"
-		И я нажимаю на кнопку открытия поля с именем 'ProcessingRule'
-		Тогда Открылась правило расчета для вида отчета "VA - Sales"
-		И я запоминаю текущее окно как 'WindowTitle'
+	* Opening the processing rule
+		And I open report wizard with name "VA - Sales"
+		And I click Open button of the field named 'ProcessingRule'
+		Then I open calculation rule for report type "VA - Sales"
+		And I save the window as 'WindowTitle'
 
-	* Откроем процедуру ДО вычисления
-		И я нажимаю на кнопку с именем 'FormProcedureOfCalculation'
-		Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+	* Opening the BEFORE calculation procedure
+		And I click the button named 'FormProcedureOfCalculation'
+		Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 			|''|
 			|''|
-		И таблица 'UsedReportTypes' стала равной:
+		And 'UsedReportTypes' table became equal
 			| "Report type"   |
 			| "VA - Sales" |
-		Если '$$InterfaceLanguage$$ = "Ru"' Тогда
-			И таблица 'Definitions' стала равной:
+		If '$$LanguageInterface$$ = "Ru"' Then
+			And 'Definitions' table became equal
 				| "Method"                                        |
 				| 'ObjectOfARAP'                                |
 				| 'GetIndicatorsValue()'                |
@@ -323,8 +323,8 @@
 				| 'PerimeterContentForElimination()'               |
 				| 'CompaniesControllingPerimeter()' |
 				| 'ClearAll()'                                |
-		Иначе
-			И таблица 'Definitions' стала равной:
+		Else
+			And 'Definitions' table became equal
 				| 'Method'                            |
 				| 'CalcStructure'                     |
 				| 'UGetIndicatorsValue()'             |
@@ -337,298 +337,298 @@
 				| 'UPerimeterControllingCompanies()'  |
 				| 'UClearAll()'                       |
 
-	* Видимость ВидыОтчетов
-		И у элемента формы с именем 'FormReportsTypesVisibility' установлена пометка
-		И элемент формы с именем 'UsedReportTypes' присутствует на форме	 	
-		И я нажимаю на кнопку с именем 'FormReportsTypesVisibility'
-		И у элемента формы с именем 'FormReportsTypesVisibility' не установлена пометка
-		И элемент формы с именем 'UsedReportTypes' отсутствует на форме
-		И я нажимаю на кнопку с именем 'FormReportsTypesVisibility'
-		И у элемента формы с именем 'FormReportsTypesVisibility' установлена пометка
+	* Visibility of ReportsKinds
+		And form attribute named 'FormReportsTypesVisibility' is marked
+		And the field named 'UsedReportTypes' exists on the form
+		And I click the button named 'FormReportsTypesVisibility'
+		And form attribute named 'FormReportsTypesVisibility' is not marked
+		And the field named 'UsedReportTypes' does not exist on the form
+		And I click the button named 'FormReportsTypesVisibility'
+		And form attribute named 'FormReportsTypesVisibility' is marked
 
-	* Видимость Процедуры и функции
-		И у элемента формы с именем 'FormProceduresAndFunctionsVisibility' установлена пометка
-		И элемент формы с именем 'GroupMethods' присутствует на форме	 	
-		И я нажимаю на кнопку с именем 'FormProceduresAndFunctionsVisibility'
-		И у элемента формы с именем 'FormProceduresAndFunctionsVisibility' не установлена пометка
-		И элемент формы с именем 'GroupMethods' отсутствует на форме
-		И я нажимаю на кнопку с именем 'FormProceduresAndFunctionsVisibility'
-		И у элемента формы с именем 'FormProceduresAndFunctionsVisibility' установлена пометка
+	* Visibility of Procedure and function
+		And form attribute named 'FormProceduresAndFunctionsVisibility' is marked
+		And the field named 'GroupMethods' exists on the form
+		And I click the button named 'FormProceduresAndFunctionsVisibility'
+		And form attribute named 'FormProceduresAndFunctionsVisibility' is not marked
+		And the field named 'GroupMethods' does not exist on the form
+		And I click the button named 'FormProceduresAndFunctionsVisibility'
+		And form attribute named 'FormProceduresAndFunctionsVisibility' is marked
 
-	* Ввод показателей
-		И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-		И в таблице 'UsedReportTypes' я нажимаю на кнопку с именем 'UsedReportTypesInsertIndicators'
-		И Я выбираю показатель с кодом "ProductRange_count"
-		Когда открылось окно "VA - Sales, VA - Sales: Procedure before calculation *"
-		Если '$$InterfaceLanguage$$ = "Ru"' Тогда
-			Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+	* Input of indicators
+		And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+		And in the table 'UsedReportTypes' I click the button named 'UsedReportTypesInsertIndicators'
+		And I select indicator with code "ProductRange_count"
+		When "VA - Sales, VA - Sales: Procedure before calculation *" window is opened
+		If '$$LanguageInterface$$ = "Ru"' Then
+			Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 				|' ArrayOfIndicators = New Array;'|
 				|'ArrayOfIndicators.Add(\"DimenKindSales:Products_Count\");'|
 				|'tIndicatorsValues = GetIndicatorsValue(New Structure(\"ReportsIndicators\", ArrayOfIndicators));'|
 				|''|							
-		Иначе
-			Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+		Else
+			Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 				|' ArrayIndicators = New Array;'|
 				|'ArrayIndicators.Add(\"VASales:ProductRange_Count\");'|
 				|'tValuesIndicators = UGetIndicatorsValue(New Structure(\"IndicatorsReports\", ArrayIndicators));'|
 				|''|
-		И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-		И в таблице 'UsedReportTypes' я нажимаю на кнопку с именем 'UsedReportTypesAdd'
-		И в таблице 'UsedReportTypes' из выпадающего списка с именем 'UsedReportTypesReportKind' я выбираю по строке "VA - Price"
-		И в таблице 'UsedReportTypes' я завершаю редактирование строки
-		И в таблице 'UsedReportTypes' я нажимаю на кнопку с именем 'UsedReportTypesInsertIndicators'
-		И Я выбираю показатель с кодом "ProductRange_Price"
-		Если '$$InterfaceLanguage$$ = "Ru"' Тогда
-			Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+		And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+		And in the table 'UsedReportTypes' I click the button named 'UsedReportTypesAdd'
+		And I select "VA - Price" by string from the drop-down list named 'UsedReportTypesReportKind' in 'UsedReportTypes' table
+		And I finish line editing in 'UsedReportTypes' table
+		And in the table 'UsedReportTypes' I click the button named 'UsedReportTypesInsertIndicators'
+		And I select indicator with code "ProductRange_Price"
+		If '$$LanguageInterface$$ = "Ru"' Then
+			Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 				|' ArrayOfIndicators = New Array;'|
 				|'ArrayOfIndicators.Add(\"DimenKindPrice:Products_Price\");'|
 				|'tIndicatorsValues = GetIndicatorsValue(New Structure(\"ReportsIndicators\", ArrayOfIndicators));'|
 				|''|						
-		Иначе
-			Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+		Else
+			Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 				|' ArrayIndicators = New Array;'|
 				|'ArrayIndicators.Add(\"VAPrice:ProductRange_Price\");'|
 				|'tValuesIndicators = UGetIndicatorsValue(New Structure(\"IndicatorsReports\", ArrayIndicators));'|
 				|''|
-		И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '	
+		And I input ' ' text in the field named 'TextDocumentFieldProcedure'
 
-	* Ввод функций
-		Если '$$InterfaceLanguage$$ = "Ru"' Тогда
-			* ОбъектРасчета
-				И в таблице 'Definitions' я перехожу к строке:
+	* Input of functions
+		If '$$LanguageInterface$$ = "Ru"' Then
+			* ObjectOfARAP
+				And I go to line in 'Definitions' table:
 						| "Method"         |
 						| 'ObjectOfARAP' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' ObjectOfARAP.'|
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ПолучитьЗначениеПоказателей
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* GetValueIndicators
+				And I go to line in 'Definitions' table:
 					| "Method"                         |
 					| 'GetIndicatorsValue()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' GetIndicatorsValue('|
 					|'	<FilterParameterStructure>,'|
 					|'	[DimensionsToDrillDown], '|
 					|'	[AdditionalParameters]);'|
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* УстановитьЗначениеПоказателя
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* InstallValueIndicator
+				And I go to line in 'Definitions' table:
 					| "Method"                          |
 					| 'SetIndicatorValue()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' SetIndicatorValue('|
-					|'	<код показателя или ссылка to1 показатель>,'|
-					|'	<значение показателя>,'|
-					|'	[<период>],'|
-					|'	[<аналитика 1>],'|
-					|'	[<аналитика 2>],'|
-					|'	[<аналитика 3>],'|
-					|'	[<аналитика 4>],'|
-					|'	[<аналитика 5>],'|
-					|'	[<аналитика 6>]);'|	
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ДатаПринадлежитПериоду
-				И в таблице 'Definitions' я перехожу к строке:
+					|'	<indicator code or reference to indicator>,'|
+					|'	<indicator value>,'|
+					|'	[<period>],'|
+					|'	[<dimension 1>],'|
+					|'	[<dimension 2>],'|
+					|'	[<dimension 3>],'|
+					|'	[<dimension 4>],'|
+					|'	[<dimension 5>],'|
+					|'	[<dimension 6>]);'|
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* DateBelongsToPeriod
+				And I go to line in 'Definitions' table:
 					| "Method"                    |
 					| 'DateBelongsToPeriod()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен ' DateBelongsToPeriod(<дата>, <период>);'
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ОтносительныйПериод
-				И в таблице 'Definitions' я перехожу к строке:
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to ' DateBelongsToPeriod(<date>, <period>);'
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* RelativePeriod
+				And I go to line in 'Definitions' table:
 					| "Method"                 |
 					| 'RelativePeriod()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
-					|' RelativePeriod(<исходный период>, [<смещение>]);'|
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
+					|' RelativePeriod(<source period>, [<offset>]);'|
 					|''|
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ОтносительныйПериодГод
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* RelativePeriodYear
+				And I go to line in 'Definitions' table:
 					| "Method"                 |
 					| 'RelativePeriodYear()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
-					|' RelativePeriodYear(<исходный период>, [<смещение>]);'|
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
+					|' RelativePeriodYear(<source period>, [<offset>]);'|
 					|''|
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* СоставПериметра
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* ContentPerimeter
+				And I go to line in 'Definitions' table:
 					| "Method"             |
 					| 'PerimeterContent()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
-					|' PerimeterContent([<сценарий>],'|
-					|'	[<период>],'|
-					|'	[<организационная единица>],'|
-					|'	[<метод консолидации>],'|
-					|'	[<максимальная полная доля владения>],'|
-					|'	[<минимальная полная доля владения>],'|
-					|'	[<типы организаций>]);'|
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* СоставПериметраДляЭлиминации
-				И в таблице 'Definitions' я перехожу к строке:
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
+					|' PerimeterContent([<scenario>],'|
+					|'	[<period>],'|
+					|'	[<organizational unit>],'|
+					|'	[<consolidation method>],'|
+					|'	[<maximum full ownership share>],'|
+					|'	[<minimum full ownership share>],'|
+					|'	[<organization types>]);'|
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* ContentPerimeterForElimination
+				And I go to line in 'Definitions' table:
 					| "Method"                          |
 					| 'PerimeterContentForElimination()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' PerimeterContentForElimination();'|
 					|''|
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ВернутьМассивОрганизацийОсуществляющихКонтрольПериметра
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* ReturnValue_ArrayOfCompaniesPerformingPerimeterControl
+				And I go to line in 'Definitions' table:
 					| "Method"                                        |
 					| 'CompaniesControllingPerimeter()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен ' CompaniesControllingPerimeter();'
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ОчиститьВсе
-				И в таблице 'Definitions' я перехожу к строке:
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to ' CompaniesControllingPerimeter();'
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* ClearAll
+				And I go to line in 'Definitions' table:
 					| "Method"         |
 					| 'ClearAll()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' ClearAll();'|
-					|''|											
-		Иначе
-			* ОбъектРасчета
-				И в таблице 'Definitions' я перехожу к строке:
+					|''|
+		Else
+			* ObjectOfARAP
+				And I go to line in 'Definitions' table:
 					| "Method"         |
 					| "CalcStructure" |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' CalcStructure.'|
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ПолучитьЗначениеПоказателей
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* GetValueIndicators
+				And I go to line in 'Definitions' table:
 					| "Method"                 |
 					| 'UGetIndicatorsValue()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' UGetIndicatorsValue('|
 					|'	<SelectionParametersStructure>,'|
 					|'	[<Dimension>],'|
 					|'	[<Options>]);'|
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '			
-			* УстановитьЗначениеПоказателя
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* InstallValueIndicator
+				And I go to line in 'Definitions' table:
 					| "Method"                 |
 					| 'USetIndicatorsValue()' |
-				И в таблице 'Definitions' я выбираю текущую строку	
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' USetIndicatorsValue(<CodeReferenceIndicators>, <Value>, '|
 					|'	[<ReportPeriod>],'|
 					|'	[<Dimension1>], [<Dimension2>], [<Dimension3>], [<Dimension4>], [<Dimension5>], [<Dimension6>],'|
 					|'	[<DimensionCurrency>]);'|	
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ДатаПринадлежитПериоду
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* DateBelongsToPeriod
+				And I go to line in 'Definitions' table:
 					| "Method"                  |
 					| 'UDateBelongsToPeriod()' |
-				И в таблице 'Definitions' я выбираю текущую строку	
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен ' UDateBelongsToPeriod(<StringDate>, <Period>);'				
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ОтносительныйПериод
-				И в таблице 'Definitions' я перехожу к строке:
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to ' UDateBelongsToPeriod(<StringDate>, <Period>);'
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* RelativePeriod
+				And I go to line in 'Definitions' table:
 					| "Method"             |
 					| 'URelativePeriod()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' URelativePeriod(<ReportPeriod>, [<Offset>]);'|
 					|''|				
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ОтносительныйПериодГод
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* RelativePeriodYear
+				And I go to line in 'Definitions' table:
 					| "Method"                 |
 					| 'URelativePeriodYear()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' URelativePeriodYear(<ReportPeriod>, [<Offset>]);'|
 					|''|
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* СоставПериметра
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* ContentPerimeter
+				And I go to line in 'Definitions' table:
 					| "Method"               |
 					| 'UPerimeterContent()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' UPerimeterContent('|
 					|'	[<Scenario>], [<ReportPeriod>], [<Organization>],'|
 					|'	[<ConsolidationMethod>], [<MinTotalOwnershipShare>], [<MaxTotalOwnershipShare>],'|
 					|'	[<OrganizationTypes>], [<PerimeterOwner>]);'|
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* СоставПериметраДляЭлиминации
-				И в таблице 'Definitions' я перехожу к строке:
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* ContentPerimeterForElimination
+				And I go to line in 'Definitions' table:
 					| "Method"                             |
 					| 'UPerimeterContentForElimination()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен ' UPerimeterContentForElimination();'
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ВернутьМассивОрганизацийОсуществляющихКонтрольПериметра
-				И в таблице 'Definitions' я перехожу к строке:
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to ' UPerimeterContentForElimination();'
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* ReturnValue_ArrayOfCompaniesPerformingPerimeterControl
+				And I go to line in 'Definitions' table:
 					| "Method"                            |
 					| 'UPerimeterControllingCompanies()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен ' UPerimeterControllingCompanies();'
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-			* ОчиститьВсе
-				И в таблице 'Definitions' я перехожу к строке:
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to ' UPerimeterControllingCompanies();'
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+			* ClearAll
+				And I go to line in 'Definitions' table:
 					| "Method"       |
 					| 'UClearAll()' |
-				И в таблице 'Definitions' я выбираю текущую строку
-				Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+				And I select current line in 'Definitions' table
+				Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 					|' UClearAll();'|
 					|''|
 
-	* Сохраним изменения
-		И я нажимаю на кнопку с именем 'FormValidate'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		Тогда открылось окно "VA - Sales, VA - Sales: Procedure before calculation *"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		Тогда открылось окно '$WindowTitle$ *'
-		И я нажимаю на кнопку с именем 'FormWrite'
+	* Saving changes
+		And I click the button named 'FormValidate'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		Then "VA - Sales, VA - Sales: Procedure before calculation *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		Then '$WindowTitle$ *' window is opened
+		And I click the button named 'FormWrite'
 
-	* Процедура ПОСЛЕ вычисления
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'FormProcedureOfCalculation'
-		Когда открылось окно "VA - Sales, VA - Sales: Procedure before calculation"
-		Если '$$InterfaceLanguage$$ = "Ru"' Тогда
-			Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+	* AFTER calculation procedure
+		When '$WindowTitle$' window is opened
+		And I click the button named 'FormProcedureOfCalculation'
+		When "VA - Sales, VA - Sales: Procedure before calculation" window is opened
+		If '$$LanguageInterface$$ = "Ru"' Then
+			Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 				|' ClearAll();'|
 				|''|
 				|''|
-		Иначе
-			Тогда элемент формы с именем 'TextDocumentFieldProcedure' стал равен 
+		Else
+			Then the form attribute named 'TextDocumentFieldProcedure' became equal to
 				|' UClearAll();'|
 				|''|
 				|''|
-		И я нажимаю на кнопку с именем 'FormClose'
+		And I click the button named 'FormClose'
 
-	* Закрытие форм
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "Report wizard"
-		И Я закрываю окно "Report wizard"
+	* Closing forms
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		Then "Report wizard" window is opened
+		And I close "Report wizard" window
 
-Сценарий: 11.10 Проверка работы произвольных функций расчета
+Scenario: 11.10 Checking operation of custom calculation functions
 
-	* Откроем правило обработки
-		И Я открываю контруктор отчета с именем "VA - Sales"
-		И я нажимаю на кнопку открытия поля с именем 'ProcessingRule'
-		Тогда Открылась правило расчета для вида отчета "VA - Sales"
-		И я запоминаю текущее окно как 'WindowTitle'
+	* Opening the processing rule
+		And I open report wizard with name "VA - Sales"
+		And I click Open button of the field named 'ProcessingRule'
+		Then I open calculation rule for report type "VA - Sales"
+		And I save the window as 'WindowTitle'
 
-	* Вводим текст процедуры
-		И я нажимаю на кнопку с именем 'FormProcedureAfterCalculation'
-		Когда открылось окно "VA - Sales, VA - Sales: Procedure after calculation"
-		Если '$$InterfaceLanguage$$ = "Ru"' Тогда
-			И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст 
+	* Filling the procedure text
+		And I click the button named 'FormProcedureAfterCalculation'
+		When "VA - Sales, VA - Sales: Procedure after calculation" window is opened
+		If '$$LanguageInterface$$ = "Ru"' Then
+			And I input text in the field named 'TextDocumentFieldProcedure'
 				|'ReportData = New Structure("Organization,Scenario,Currency,ReportPeriod",'|
 				|' ObjectOfARAP.Organization,ObjectOfARAP.Scenario,ObjectOfARAP.MainCurrency,ObjectOfARAP.ArrayOfPeriods);'|
 				|'DimensionsToDrillDown = New Structure("Dimension1");'|
@@ -684,8 +684,8 @@
 				|' EndIf;  '|
 				|'  '|
 				|'EndOfTheCycle;'|
-		Иначе
-			И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст 
+		Else
+			And I input text in the field named 'TextDocumentFieldProcedure'
 				|'ReportData = New Structure(\"Organization,Scenario,Currency,ReportPeriod\",'|
 				|'  CalcStructure.Organization, CalcStructure.Scenario, CalcStructure.MainCurrency, CalcStructure.PeriodsArray);'|
 				|'DisclosedAnalysts = New Structure(\"Dimension1\");'|
@@ -741,26 +741,26 @@
 				|' EndIf;  '|
 				|'  '|
 				|'EndDo;'|
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		Тогда открылось окно '$WindowTitle$ *'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна '$WindowTitle$ *' в течение 20 секунд
-		Тогда открылось окно "Report wizard"
-		И Я закрываю окно "Report wizard"
+		And I click the button named 'FormWriteAndClose'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		Then '$WindowTitle$ *' window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait '$WindowTitle$ *' window closing in 20 seconds
+		Then "Report wizard" window is opened
+		And I close "Report wizard" window
 
-	* Рассчитаем документ
-		Тогда открылось окно "Report types and templates"
-		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListOpenInstancesList'
-		Тогда открылось окно "Report instances"
-		И в таблице 'List' я выбираю текущую строку
-		Тогда Открылся экземпляр отчета для вида отчета "VA - Sales" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' '' 
-		И я запоминаю текущее окно как 'WindowTitle'
-		И я нажимаю на кнопку с именем 'FormFillByDefault'
+	* Calculating the document
+		Then "Report types and templates" window is opened
+		And in the table 'ReportKindList' I click the button named 'ReportKindListOpenInstancesList'
+		Then "Report instances" window is opened
+		And I select current line in 'List' table
+		Then I open report instance for report type "VA - Sales" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		And I save the window as 'WindowTitle'
+		And I click the button named 'FormFillByDefault'
 
-	* Сравниваем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Comparing the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Sales"                                                    | ''               | ''     | ''      | ''                | ''           | ''      | ''             | ''           | ''      | ''           | ''           | ''      |
 			| ''                                                                | ''               | ''     | ''      | ''                | ''           | ''      | ''             | ''           | ''      | ''           | ''           | ''      |
 			| ''                                                                | "January 2024" | ''     | ''      | "February 2024" | ''           | ''      | "March 2024" | ''           | ''      | "TOTAL"      | ''           | ''      |
@@ -772,25 +772,25 @@
 			| "1C:ERP. Corporate performance management "                                   | '0'              | '0'    | '0'     | '18'              | '3,900,000'  | '0'     | '28'           | '4,290,000'  | '0'     | '46'         | '8,190,000'  | '0'     |
 			| "3C:Enterprise 8 CORP. Client license for 100 users " | '0'              | '0'    | '0'     | '50'              | '1,200,000'  | '0'     | '60'           | '1,320,000'  | '0'     | '110'        | '2,520,000'  | '0'     |
 	
-	* Сохраним и откроем документ
-		Когда открылось окно '$WindowTitle$ *'
-		И я нажимаю на кнопку с именем 'WriteAndClose'
-		И я жду закрытия окна '$WindowTitle$ *' в течение 20 секунд
+	* Saving and opening the document
+		When '$WindowTitle$ *' window is opened
+		And I click the button named 'WriteAndClose'
+		And I wait '$WindowTitle$ *' window closing in 20 seconds
 
-Сценарий: 11.11 Отображение экземпляра в валюте после расчетов
+Scenario: 11.11 Display of the instance in currency after calculations
 
-	И Я открываю первый экземпляр отчета для вида отчета "VA - Sales"
-	Тогда Открылся экземпляр отчета для вида отчета "VA - Sales" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' '' 
+	And I open first report instance for report type "VA - Sales"
+	Then I open report instance for report type "VA - Sales" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
 	
-	* Проверим суммы в валюте
-		И я нажимаю на кнопку с именем 'FormOpenSettings'
-		Тогда открылось окно "Document settings"
-		И я перехожу к закладке с именем 'GroupPageReportSettings'
-		И из выпадающего списка с именем 'DisplayCurrency' я выбираю точное значение "EUR"
-		И я нажимаю на кнопку с именем 'FormApplyAndClose'
-		Когда Открылся экземпляр отчета для вида отчета "VA - Sales" валюта 'EUR' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' ''
-		И я запоминаю текущее окно как 'WindowTitle' 
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Checking amounts in currency
+		And I click the button named 'FormOpenSettings'
+		Then "Document settings" window is opened
+		And I move to the tab named 'GroupPageReportSettings'
+		And I select "EUR" exact value from the drop-down list named 'DisplayCurrency'
+		And I click the button named 'FormApplyAndClose'
+		When I open report instance for report type "VA - Sales" currency 'EUR' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		And I save the window as 'WindowTitle'
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Sales"                                                    | ''               | ''     | ''      | ''                | ''        | ''      | ''             | ''        | ''      | ''           | ''        | ''      |
 			| ''                                                                | ''               | ''     | ''      | ''                | ''        | ''      | ''             | ''        | ''      | ''           | ''        | ''      |
 			| ''                                                                | "January 2024" | ''     | ''      | "February 2024" | ''        | ''      | "March 2024" | ''        | ''      | "TOTAL"      | ''        | ''      |
@@ -802,35 +802,35 @@
 			| "1C:ERP. Corporate performance management "                                   | '0'              | '0'    | '0'     | '18'              | '43,366'  | '0'     | '28'           | '48,375'  | '0'     | '46'         | '91,741'  | '0'     |
 			| "3C:Enterprise 8 CORP. Client license for 100 users " | '0'              | '0'    | '0'     | '50'              | '13,343'  | '0'     | '60'           | '14,885'  | '0'     | '110'        | '28,228'  | '0'     |
 					
-	* Запишем документ
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'WriteAndClose'
-		И я жду закрытия окна '$WindowTitle$' в течение 20 секунд
+	* Saving document
+		When '$WindowTitle$' window is opened
+		And I click the button named 'WriteAndClose'
+		And I wait '$WindowTitle$' window closing in 20 seconds
 
-Сценарий: 11.12 Удаление версий при автоматическом расчете
+Scenario: 11.12 Deleting versions during automatic calculation
 
-	И Я открываю первый экземпляр отчета для вида отчета "VA - Sales"
-	Тогда Открылся экземпляр отчета для вида отчета "VA - Sales" валюта 'EUR' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' ''
-	И я запоминаю текущее окно как 'WindowTitle'
+	And I open first report instance for report type "VA - Sales"
+	Then I open report instance for report type "VA - Sales" currency 'EUR' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
+	And I save the window as 'WindowTitle'
 	
-	* Удалим версию
-		И я нажимаю на кнопку с именем 'FormVersionsManagement'
-		Тогда открылось окно "Indicator version management"
-		И я нажимаю на кнопку с именем 'ListDeleteVersions'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
+	* Deleting a version
+		And I click the button named 'FormVersionsManagement'
+		Then "Indicator version management" window is opened
+		And I click the button named 'ListDeleteVersions'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
 
-	* Закрываем окна
-		Тогда открылось окно "Indicator version management *"
-		И Я закрываю окно "Indicator version management *"
-		Тогда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
+	* Closing windows
+		Then "Indicator version management *" window is opened
+		And I close "Indicator version management *" window
+		Then '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
 		
-	* Проверим результат
-		Тогда открылось окно "Report instances"
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Checking the result
+		Then "Report instances" window is opened
+		And I select current line in 'List' table
+		Then '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Sales"                                                    | ''               | ''       | ''        | ''                | ''       | ''          | ''             | ''       | ''          | ''           | ''        | ''          |
 			| ''                                                                | ''               | ''       | ''        | ''                | ''       | ''          | ''             | ''       | ''          | ''           | ''        | ''          |
 			| ''                                                                | "January 2024" | ''       | ''        | "February 2024" | ''       | ''          | "March 2024" | ''       | ''          | "TOTAL"      | ''        | ''          |

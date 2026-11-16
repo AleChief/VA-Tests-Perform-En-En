@@ -1,430 +1,430 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 05. Проверка видов отчета без сохранения истории, проверка заполнения данных из РБ
+Feature: 05. Checking report types without saving history, checking data filling from RB
 
-	Как Администратор я хочу
-	Проверить что виды отчетов без истории корректно сохраняют версии
-	чтобы версии записывались без ошибок
+	As Administrator I want to
+	Check that report types without history correctly save versions
+	so that versions are saved without errors
 
-Контекст:
+Background:
 	
-	И я закрыл все окна клиентского приложения
+	And I close all client application windows
 
-Сценарий: 05.00 Определение типа приложения
+Scenario: 05.00 Determining the application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 05.01 Создание вида отчета "VA - Filling from PH (no history)"
+Scenario: 05.01 Creating report type "VA - Filling from PH (no history)"
 
-	И Я создаю вид отчета с именем "VA - Filling from PH (no history)" и родителем "VA - Report group"
-	И Я для вида отчета "VA - Filling from PH (no history)" изменяю флаг 'IsChangeTrackingEnabled'
-	И Я для вида отчета "VA - Filling from PH (no history)" изменяю флаг 'ProjectSeparation'
+	And I create report type with name "VA - Filling from PH (no history)" and parent "VA - Report group"
+	And I change flag 'IsChangeTrackingEnabled' for report type "VA - Filling from PH (no history)"
+	And I change flag 'ProjectSeparation' for report type "VA - Filling from PH (no history)"
 	
-	* Редактируем структуру отчета
-		И Я открываю контруктор отчета с именем "VA - Filling from PH (no history)"
-		И Я в конструкторе отчета добавляю строку с именем "Cash flow items"
-		И Я в конструкторе отчета добавляю колонку с именем "Amount"
-		И Я в конструкторе отчета добавляю аналитику с кодом "VA0CFItems" в ячейку 'R2C2'
+	* Editing the report structure
+		And I open report wizard with name "VA - Filling from PH (no history)"
+		And I add row with name "Cash flow items" in report wizard
+		And I add column with name "Amount" in report wizard
+		And I add dimension with code "VA0CFItems" in cell 'R2C2' in report wizard
 
-	И Я Для вида отчета "VA - Filling from PH (no history)" создаю бланк по умолчанию
+	And I create default template for report type "VA - Filling from PH (no history)"
 
-Сценарий: 05.02 Создаем бланк сводной таблицы
+Scenario: 05.02 Creating pivot table template
 
-	И Я нахожу в списке вид отчета с именем "VA - Filling from PH (no history)"
+	And I find report type with name "VA - Filling from PH (no history)" in list
 					
-	* Создаем бланк сводной таблицы
-		Когда открылось окно "Report types and templates"
-		И в таблице 'List' я перехожу к строке:
+	* Creating pivot table template
+		When "Report types and templates" window is opened
+		And I go to line in 'List' table:
 			| "Description"                                          |
 			| "VA - Filling from PH (no history) (pivot table)" |
-		И в таблице 'List' я выбираю текущую строку
-		* Состав строк
-			Когда Открылся бланк сводной таблицы для вида отчета "VA - Filling from PH (no history)"
-			И я нажимаю на кнопку с именем 'ShowListOfRows'
-			Тогда открылось окно "Set up line list"
-			И в таблице 'SettingTree' я перехожу к строке:
+		And I select current line in 'List' table
+		* Row composition
+			When I open pivot table template for report type "VA - Filling from PH (no history)"
+			And I click the button named 'ShowListOfRows'
+			Then "Set up line list" window is opened
+			And I go to line in 'SettingTree' table:
 				| "Dimension kind 1" | "Dimension group" | "Code"       | "Purpose"      | "Report line" |
 				| "Cash flow items"      | "DG_Cash flow items"   | "CashFlowItems" | "Arbitrary data" | "Cash flow items"    |
-			И я нажимаю на кнопку с именем 'MoveLeft'
-			И я нажимаю на кнопку с именем 'ApplyTheChanges'
-		* Состав колонок	
-			Тогда Открылся бланк сводной таблицы для вида отчета "VA - Filling from PH (no history)"
-			И я запоминаю заголовок формы в переменную 'WindowTitle'				
-			И я нажимаю на кнопку с именем 'ShowListOfColumns'
-			Тогда открылось окно "Set up column list"
-			И в таблице 'PivotTableColumnsListSettings' я нажимаю на кнопку с именем 'PivotTableColumnsListSettingsAdd'
-			И в таблице 'PivotTableColumnsListSettings' я нажимаю кнопку выбора у реквизита с именем 'PivotTableColumnsListSettingsReportColumn'
-			Тогда открылось окно "Report columns"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Set up column list"
-			И в таблице 'PivotTableColumnsListSettings' я завершаю редактирование строки
-			И я нажимаю на кнопку с именем 'FormApply'
-		* Расположение группировок
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'ShowTableSettingsByAxes'
-			Тогда открылось окно "Set up field location"
-			И в таблице 'TableAvailableFields' я перехожу к строке:
+			And I click the button named 'MoveLeft'
+			And I click the button named 'ApplyTheChanges'
+		* Column composition
+			Then I open pivot table template for report type "VA - Filling from PH (no history)"
+			And I save form header as 'WindowTitle' variable
+			And I click the button named 'ShowListOfColumns'
+			Then "Set up column list" window is opened
+			And in the table 'PivotTableColumnsListSettings' I click the button named 'PivotTableColumnsListSettingsAdd'
+			And I click choice button of the attribute named 'PivotTableColumnsListSettingsReportColumn' in 'PivotTableColumnsListSettings' table
+			Then "Report columns" window is opened
+			And I select current line in 'List' table
+			Then "Set up column list" window is opened
+			And I finish line editing in 'PivotTableColumnsListSettings' table
+			And I click the button named 'FormApply'
+		* Grouping layout
+			When '$WindowTitle$' window is opened
+			And I click the button named 'ShowTableSettingsByAxes'
+			Then "Set up field location" window is opened
+			And I go to line in 'TableAvailableFields' table:
 				| "Available dimensions" |
 				| "Project"              |
-			И я выбираю пункт контекстного меню с именем 'TableAvailableFieldsContextMenuMoveToFilters' на элементе формы с именем 'TableAvailableFields'
-			И в таблице 'TableAvailableFields' я перехожу к строке:
+			And I select context menu item named 'TableAvailableFieldsContextMenuMoveToFilters' of the form attribute named 'TableAvailableFields'
+			And I go to line in 'TableAvailableFields' table:
 				| "Available dimensions" |
 				| "Cash flow items"          |
-			И я выбираю пункт контекстного меню с именем 'TableAvailableFieldsContextMenuMoveToRows' на элементе формы с именем 'TableAvailableFields'
-			И я нажимаю на кнопку с именем 'ButtonApply'
-		* Шкала с периодами
-			Тогда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'ShowPeriodsSettings'
-			И из выпадающего списка с именем 'Periodicity' я выбираю точное значение "Quarter"
-			И из выпадающего списка с именем 'Periodicity' я выбираю точное значение "Month"
-			И я изменяю флаг с именем 'ShouldShowTotalYear'
-			И я изменяю флаг с именем 'ShouldShowTotalYear'
-			И я изменяю флаг с именем 'ShouldShowTotal6Months'
-			И я изменяю флаг с именем 'ShouldShowTotal6Months'
-			И я изменяю флаг с именем 'ShouldShowTotalQuarter'
-			И я изменяю флаг с именем 'ShouldShowTotalQuarter'
-			И я нажимаю на кнопку с именем 'FormApply'
-		* Расположение полей 
-			Тогда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'ShowDimensionCompositionSettings'
-			Тогда открылось окно "Row and column dimension list settings"
-			И я нажимаю на кнопку с именем 'FormApply'
-		* Запись бланка
-			Тогда открылось окно '$WindowTitle$'
-			И я разворачиваю группу с именем 'GroupOfMainAttributes'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна '$WindowTitle$ *' в течение 20 секунд		
+			And I select context menu item named 'TableAvailableFieldsContextMenuMoveToRows' of the form attribute named 'TableAvailableFields'
+			And I click the button named 'ButtonApply'
+		* Scale with periods
+			Then '$WindowTitle$' window is opened
+			And I click the button named 'ShowPeriodsSettings'
+			And I select "Quarter" exact value from the drop-down list named 'Periodicity'
+			And I select "Month" exact value from the drop-down list named 'Periodicity'
+			And I change checkbox named 'ShouldShowTotalYear'
+			And I change checkbox named 'ShouldShowTotalYear'
+			And I change checkbox named 'ShouldShowTotal6Months'
+			And I change checkbox named 'ShouldShowTotal6Months'
+			And I change checkbox named 'ShouldShowTotalQuarter'
+			And I change checkbox named 'ShouldShowTotalQuarter'
+			And I click the button named 'FormApply'
+		* Field layout
+			Then '$WindowTitle$' window is opened
+			And I click the button named 'ShowDimensionCompositionSettings'
+			Then "Row and column dimension list settings" window is opened
+			And I click the button named 'FormApply'
+		* Saving template
+			Then '$WindowTitle$' window is opened
+			And I expand the group named 'GroupOfMainAttributes'
+			And I click the button named 'FormWriteAndClose'
+			And I wait '$WindowTitle$ *' window closing in 20 seconds
 
-Сценарий: 05.03 Создаем формулу расчета с заполнением из РН
+Scenario: 05.03 Creating calculation formula with filling from PH
 
-	Если 'NOT $$ЭтоPerform$$' Тогда
+	If 'NOT $$IsPerform$$' Then
 
-		И Я открываю контруктор отчета с именем "VA - Filling from PH (no history)"
+		And I open report wizard with name "VA - Filling from PH (no history)"
 					
-		* Вводим формулу расчета
-			* Создаем новый элемент	
-				Тогда открылось окно "Report wizard"
-				И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-				И я нажимаю на кнопку с именем 'AddOperand1'
-				Когда открылось окно "Data sources"
-				И я нажимаю на кнопку с именем 'FormCreate'
-			* Заполняем источник получения, проверяем заполнение полей				
-				Когда открылось окно "Data source (create)"
-				И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Current infobase accumulation register"
-				Если '$$IsERPCPM$$' Тогда
-					И из выпадающего списка с именем 'DBAccumulationRegister' я выбираю по строке 'BudgetsOperations'
-					И у элемента с именем 'DBRegisterResource' я жду значения "Amount" в течение 3 секунд
-					И у элемента с именем 'TotalKindDB' я жду значения "Turnover" в течение 3 секунд	
-					И из выпадающего списка с именем 'DBRegisterResource' я выбираю точное значение "Amount executed"										
-					Когда открылось окно "Data source (create) *"
-					И в таблице "FieldsTreeDB" я разворачиваю текущую строку
-					И в таблице "FieldsTreeDB" я разворачиваю строку:
+		* Entering the calculation formula
+			* Creating a new element
+				Then "Report wizard" window is opened
+				And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+				And I click the button named 'AddOperand1'
+				When "Data sources" window is opened
+				And I click the button named 'FormCreate'
+			* Filling source of obtaining, checking field filling
+				When "Data source (create)" window is opened
+				And I select "Current infobase accumulation register" exact value from the drop-down list named 'MethodOfObtaining'
+				If '$$IsERPCPM$$' Then
+					And I select from the drop-down list named 'DBAccumulationRegister'  by 'BudgetsOperations' string
+					And I wait "Amount" value of the attribute named 'DBRegisterResource' for 3 seconds
+					And I wait "Turnover" value of the attribute named 'TotalKindDB' for 3 seconds
+					And I select "Amount executed" exact value from the drop-down list named 'DBRegisterResource'
+					When "Data source (create) *" window is opened
+					And I expand current line in "FieldsTreeDB" table
+					And I expand a line in "FieldsTreeDB" table
 						| 'Field'                      |
 						| 'Dimension of budget items' |
-					И в таблице "FieldsTreeDB" я разворачиваю строку:
+					And I expand a line in "FieldsTreeDB" table
 						| 'Field'           |
 						| 'Budget item' |
-					И в таблице "FieldsTreeDB" я перехожу к строке:
+					And I go to line in "FieldsTreeDB" table:
 						| 'Field'                                     |
 						| 'Catalog.CashFlowReportItems' |
-					И я выбираю пункт контекстного меню с именем 'ButtonMapDimensions' на элементе формы с именем "ComplianceTable"
-					Тогда таблица "ComplianceTable" стала равной:
-						| 'Destination dimension'     | 'Filling method' | 'Column name'                                  | 'Dimension type' |
-						| 'Dimension 1: ARTICLES__ Cash_Flow' | 'Field источника'    | '[Dimension статей бюджетов].[AssetRef бюджета]' | 'ARTICLES__ Cash_Flow'    |																									
-				Иначе
-					И из выпадающего списка с именем 'DBAccumulationRegister' я выбираю по строке 'CashFlowCPM'
-					И у элемента с именем 'DBRegisterResource' я жду значения "Amount" в течение 3 секунд
-					И у элемента с именем 'TotalKindDB' я жду значения "Turnover" в течение 3 секунд					
-					Тогда таблица 'ComplianceTable' стала равной:
-						| 'Destination dimension'     | 'Filling method' | 'Column name'                        | 'Dimension type' |
-						| "Dimension 1: Cash flow items" | 'Source field'    | '[Cash flow item]' | "Cash flow items"    |							
-			* Заполняем отборы		
-				И я перехожу к закладке с именем 'FiltersPage'
-				Если '$$IsERPCPM$$' Тогда
-					И в таблице "FieldsTreeDB" я разворачиваю строку:
-						| 'Field'                |
-						| 'Dimension of structure' |
-					И в таблице "FieldsTreeDB" я перехожу к строке:
-						| 'Field'        |
-						| 'Organization' |
-					И я нажимаю на кнопку с именем 'AddConditionItem'
-					И в таблице "TreeOfFilterParametersDB" я перехожу к строке:
-						| 'Field'                                |
-						| '[Structure dimension].[Organization]' |
-					И в таблице "TreeOfFilterParametersDB" из выпадающего списка с именем "ParameterCalculationMethod" я выбираю точное значение 'Organization Report_'
-					И в таблице "TreeOfFilterParametersDB" я завершаю редактирование строки											
-				Иначе
-					И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
-						| 'Filter'         | 'Field'         |
-						| 'Project Report_' | '[Dimension1]' |
-					И я нажимаю на кнопку с именем 'TreeOfFilterParametersDBDelete'	
-					И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
-						| 'Filter'           | 'Field'         |
-						| 'Scenario Report_' | '[Dimension2]' |
-					И я нажимаю на кнопку с именем 'TreeOfFilterParametersDBDelete'
-					И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
-						| 'Filter'         | 'Field'         |
-						| "Report period" | '[Dimension3]' |
-					И я нажимаю на кнопку с именем 'TreeOfFilterParametersDBDelete'	
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-
-		* Сохраняем элемент		
-			Тогда открылось окно "Data sources"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Report wizard *"
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
-
-Сценарий: 05.04 Создание экземпляра отчета - "VA - Filling from PH (no history)" без записи 
-
-	Если 'NOT $$ЭтоPerform$$' Тогда
-
-		И Я создаю экземпляр отчета для вида отчета "VA - Filling from PH (no history)" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность 'Month' организация "Mercury LLC" проект "VA - Main project" аналитики '' '' '' '' '' '' 
-		
-		* Документ должен быть пустой
-			И табличный документ 'SpreadsheetFieldTemlate' равен:
-				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''      |
-				| ''                                    | ''               | ''                | ''             | ''      |
-				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
-				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount" |
-				| "Cash flow items"                          | '0'              | '0'               | '0'            | '0'     |
-
-		* Рассчитываем значения показателей	
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'FormFillByDefault'
-			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
-				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''           |
-				| ''                                    | ''               | ''                | ''             | ''           |
-				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
-				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount"      |
-				| "Cash flow items"                          | '3,120,000'      | '16,000,000'      | '0'            | '19,120,000' |
-				| "1Software upgrade "      | '0'              | '3,450,000'       | '0'            | '3,450,000'  |
-				| "2Software implementation "    | '2,340,000'      | '7,350,000'       | '0'            | '9,690,000'  |
-				| "3Software sale "   | '780,000'        | '5,200,000'       | '0'            | '5,980,000'  |
-
-		* Закрываем без записи
-			Когда открылось окно '$WindowTitle$'
-			И Я закрываю окно '$WindowTitle$'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button1'
-
-Сценарий: 05.05 Создание экземпляра отчета - "VA - Filling from PH (no history)" с записью 
-
-	Если 'NOT $$ЭтоPerform$$' Тогда
-
-		И Я создаю экземпляр отчета для вида отчета "VA - Filling from PH (no history)" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность 'Month' организация "Mercury LLC" проект "VA - Main project" аналитики '' '' '' '' '' '' 
-
-		* Документ должен быть пустой
-			И табличный документ 'SpreadsheetFieldTemlate' равен:
-				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''      |
-				| ''                                    | ''               | ''                | ''             | ''      |
-				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
-				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount" |
-				| "Cash flow items"                          | '0'              | '0'               | '0'            | '0'     |
-
-		* Рассчитываем значения показателей	
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'FormFillByDefault'
-			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
-				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''           |
-				| ''                                    | ''               | ''                | ''             | ''           |
-				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
-				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount"      |
-				| "Cash flow items"                          | '3,120,000'      | '16,000,000'      | '0'            | '19,120,000' |
-				| "1Software upgrade "      | '0'              | '3,450,000'       | '0'            | '3,450,000'  |
-				| "2Software implementation "    | '2,340,000'      | '7,350,000'       | '0'            | '9,690,000'  |
-				| "3Software sale "   | '780,000'        | '5,200,000'       | '0'            | '5,980,000'  |
-
-		* Записываем документ, проверяем движения
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'Write'
-			И я жду открытия формы '$WindowTitle$' в течение 30 секунд
-
-		* Проверяем движения
-			И Движения экземпляра отчета стали равны '3_Budgeting\Templates\05\DimenKind_FillTypeFromRН_Движения_1.mxl'
-		
-Сценарий: 05.06 Создаем формулу расчета с заполнением из РН по основной таблице
-
-	Если 'NOT $$ЭтоPerform$$' Тогда
-
-		И Я открываю контруктор отчета с именем "VA - Filling from PH (no history)"
-					
-		* Вводим формулу расчета
-			* Создаем новый элемент	
-				Тогда открылось окно "Report wizard"
-				И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-				И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-				И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-				И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
-				И я нажимаю на кнопку с именем 'AddOperand1'
-				Когда открылось окно "Data sources"
-				И я нажимаю на кнопку с именем 'FormCreate'
-			* Заполняем источник получения, проверяем заполнение полей				
-				Когда открылось окно "Data source (create)"
-				И из выпадающего списка с именем 'MethodOfObtaining' я выбираю точное значение "Current infobase accumulation register"
-				Если '$$IsERPCPM$$' Тогда
-					И из выпадающего списка с именем 'DBAccumulationRegister' я выбираю по строке 'BudgetsOperations'
-				Иначе
-					И из выпадающего списка с именем 'DBAccumulationRegister' я выбираю по строке 'CashFlowCPM'
-				И я устанавливаю флаг с именем 'IsRegisterMainTable'						
-				И у элемента с именем 'DBRegisterResource' я жду значения "Amount" в течение 10 секунд
-				Тогда таблица 'FieldsTreeDB' стала равной по шаблону:
-					| 'Field'                  |
-					| 'Recorder'           |
-					| 'Dimensions регистра(*)' |
-					| 'Attributes регистра(*)' |
-				Если '$$IsERPCPM$$' Тогда
-					И из выпадающего списка с именем 'DBRegisterResource' я выбираю точное значение "Amount executed"										
-					Когда открылось окно "Data source (create) *"
-					И в таблице "FieldsTreeDB" я разворачиваю строку:
-						| 'Field'                   |
-						| 'Dimensions регистра(12)' |
-					И в таблице "FieldsTreeDB" я разворачиваю строку:
-						| 'Field'                      |
-						| 'Dimension of budget items' |
-					И в таблице "FieldsTreeDB" я разворачиваю строку:
-						| 'Field'           |
-						| 'Budget item' |
-					И в таблице "FieldsTreeDB" я перехожу к строке:
-						| 'Field'                                     |
-						| 'Catalog.CashFlowReportItems' |
-					И я выбираю пункт контекстного меню с именем 'ButtonMapDimensions' на элементе формы с именем "ComplianceTable"
-					Тогда таблица "ComplianceTable" стала равной:
+					And I select context menu item named 'ButtonMapDimensions' of the form attribute named "ComplianceTable"
+					Then "ComplianceTable" table became equal
 						| 'Destination dimension'     | 'Filling method' | 'Column name'                                  | 'Dimension type' |
 						| 'Dimension 1: ARTICLES__ Cash_Flow' | 'Source field'    | '[Budget items dimension].[Budget item]' | 'ARTICLES__ Cash_Flow'    |
-				Иначе
-					Тогда таблица 'ComplianceTable' стала равной:
+				Else
+					And I select from the drop-down list named 'DBAccumulationRegister'  by 'CashFlowCPM' string
+					And I wait "Amount" value of the attribute named 'DBRegisterResource' for 3 seconds
+					And I wait "Turnover" value of the attribute named 'TotalKindDB' for 3 seconds
+					Then 'ComplianceTable' table became equal
+						| 'Destination dimension'     | 'Filling method' | 'Column name'                        | 'Dimension type' |
+						| "Dimension 1: Cash flow items" | 'Source field'    | '[Cash flow item]' | "Cash flow items"    |
+			* Filling filters
+				And I move to the tab named 'FiltersPage'
+				If '$$IsERPCPM$$' Then
+					And I expand a line in "FieldsTreeDB" table
+						| 'Field'                |
+						| 'Dimension of structure' |
+					And I go to line in "FieldsTreeDB" table:
+						| 'Field'        |
+						| 'Organization' |
+					And I click the button named 'AddConditionItem'
+					And I go to line in "TreeOfFilterParametersDB" table:
+						| 'Field'                                |
+						| '[Structure dimension].[Organization]' |
+					And I select 'Organization Report_' exact value from the drop-down list named "ParameterCalculationMethod" in "TreeOfFilterParametersDB" table
+					And I finish line editing in "TreeOfFilterParametersDB" table
+				Else
+					And I go to line in 'TreeOfFilterParametersDB' table:
+						| 'Filter'         | 'Field'         |
+						| 'Project Report_' | '[Dimension1]' |
+					And I click the button named 'TreeOfFilterParametersDBDelete'
+					And I go to line in 'TreeOfFilterParametersDB' table:
+						| 'Filter'           | 'Field'         |
+						| 'Scenario Report_' | '[Dimension2]' |
+					And I click the button named 'TreeOfFilterParametersDBDelete'
+					And I go to line in 'TreeOfFilterParametersDB' table:
+						| 'Filter'         | 'Field'         |
+						| "Report period" | '[Dimension3]' |
+					And I click the button named 'TreeOfFilterParametersDBDelete'
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Data source (create) *" window closing in 20 seconds
+
+		* Saving an element
+			Then "Data sources" window is opened
+			And I select current line in 'List' table
+			Then "Report wizard *" window is opened
+			And I click the button named 'WriteAndCollapse'
+
+Scenario: 05.04 Creating report instance - "VA - Filling from PH (no history)" without saving
+
+	If 'NOT $$IsPerform$$' Then
+
+		And I create report instance for report type "VA - Filling from PH (no history)" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency 'Month' company "Mercury LLC" project "VA - Main project" dimensions '' '' '' '' '' ''
+		
+		* The document should be empty
+			And 'SpreadsheetFieldTemlate' spreadsheet document is equal
+				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''      |
+				| ''                                    | ''               | ''                | ''             | ''      |
+				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
+				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount" |
+				| "Cash flow items"                          | '0'              | '0'               | '0'            | '0'     |
+
+		* Calculating indicator values
+			When '$WindowTitle$' window is opened
+			And I click the button named 'FormFillByDefault'
+			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
+				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''           |
+				| ''                                    | ''               | ''                | ''             | ''           |
+				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
+				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount"      |
+				| "Cash flow items"                          | '3,120,000'      | '16,000,000'      | '0'            | '19,120,000' |
+				| "1Software upgrade "      | '0'              | '3,450,000'       | '0'            | '3,450,000'  |
+				| "2Software implementation "    | '2,340,000'      | '7,350,000'       | '0'            | '9,690,000'  |
+				| "3Software sale "   | '780,000'        | '5,200,000'       | '0'            | '5,980,000'  |
+
+		* Closing without saving
+			When '$WindowTitle$' window is opened
+			And I close '$WindowTitle$' window
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button1'
+
+Scenario: 05.05 Creating report instance - "VA - Filling from PH (no history)" with saving
+
+	If 'NOT $$IsPerform$$' Then
+
+		And I create report instance for report type "VA - Filling from PH (no history)" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency 'Month' company "Mercury LLC" project "VA - Main project" dimensions '' '' '' '' '' ''
+
+		* The document should be empty
+			And 'SpreadsheetFieldTemlate' spreadsheet document is equal
+				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''      |
+				| ''                                    | ''               | ''                | ''             | ''      |
+				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
+				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount" |
+				| "Cash flow items"                          | '0'              | '0'               | '0'            | '0'     |
+
+		* Calculating indicator values
+			When '$WindowTitle$' window is opened
+			And I click the button named 'FormFillByDefault'
+			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
+				| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''           |
+				| ''                                    | ''               | ''                | ''             | ''           |
+				| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL"      |
+				| ''                                    | "Amount"          | "Amount"           | "Amount"        | "Amount"      |
+				| "Cash flow items"                          | '3,120,000'      | '16,000,000'      | '0'            | '19,120,000' |
+				| "1Software upgrade "      | '0'              | '3,450,000'       | '0'            | '3,450,000'  |
+				| "2Software implementation "    | '2,340,000'      | '7,350,000'       | '0'            | '9,690,000'  |
+				| "3Software sale "   | '780,000'        | '5,200,000'       | '0'            | '5,980,000'  |
+
+		* Saving document, checking movements
+			When '$WindowTitle$' window is opened
+			And I click the button named 'Write'
+			And I wait for '$WindowTitle$' form opening for 30 seconds
+
+		* Checking the movements
+			And I check report instance movements are equal to '3_Budgeting\Layouts\05\VA_FillFromAccumulationRegister_Movements_1.mxl'
+		
+Scenario: 05.06 Creating calculation formula with filling from PH for the main table
+
+	If 'NOT $$IsPerform$$' Then
+
+		And I open report wizard with name "VA - Filling from PH (no history)"
+					
+		* Entering the calculation formula
+			* Creating a new element
+				Then "Report wizard" window is opened
+				And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+				And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+				And I input ' ' text in the field named 'TextDocumentFieldProcedure'
+				And I click the button named 'AddOperand1'
+				When "Data sources" window is opened
+				And I click the button named 'FormCreate'
+			* Filling source of obtaining, checking field filling
+				When "Data source (create)" window is opened
+				And I select "Current infobase accumulation register" exact value from the drop-down list named 'MethodOfObtaining'
+				If '$$IsERPCPM$$' Then
+					And I select from the drop-down list named 'DBAccumulationRegister'  by 'BudgetsOperations' string
+				Else
+					And I select from the drop-down list named 'DBAccumulationRegister'  by 'CashFlowCPM' string
+				And I set checkbox named 'IsRegisterMainTable'
+				And I wait "Amount" value of the attribute named 'DBRegisterResource' for 10 seconds
+				Then 'FieldsTreeDB' table became equal by template
+					| 'Field'                  |
+					| 'Recorder'           |
+					| 'Register dimensions(*)' |
+					| 'Register attributes(*)' |
+				If '$$IsERPCPM$$' Then
+					And I select "Amount executed" exact value from the drop-down list named 'DBRegisterResource'
+					When "Data source (create) *" window is opened
+					And I expand a line in "FieldsTreeDB" table
+						| 'Field'                   |
+						| 'Register dimensions(12)' |
+					And I expand a line in "FieldsTreeDB" table
+						| 'Field'                      |
+						| 'Dimension of budget items' |
+					And I expand a line in "FieldsTreeDB" table
+						| 'Field'           |
+						| 'Budget item' |
+					And I go to line in "FieldsTreeDB" table:
+						| 'Field'                                     |
+						| 'Catalog.CashFlowReportItems' |
+					And I select context menu item named 'ButtonMapDimensions' of the form attribute named "ComplianceTable"
+					Then "ComplianceTable" table became equal
+						| 'Destination dimension'     | 'Filling method' | 'Column name'                                  | 'Dimension type' |
+						| 'Dimension 1: ARTICLES__ Cash_Flow' | 'Source field'    | '[Budget items dimension].[Budget item]' | 'ARTICLES__ Cash_Flow'    |
+				Else
+					Then 'ComplianceTable' table became equal
 						| 'Destination dimension'     | 'Filling method' | 'Column name'                        | 'Dimension type' |
 						| "Dimension 1: Cash flow items" | 'Source field'    | '[Cash flow item]' | "Cash flow items"    |
 
-			* Добавляем отборы
-				И я перехожу к закладке с именем 'FiltersPage'	
-				Когда открылось окно "Data source (create) *"
-				И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+			* Adding filters
+				And I move to the tab named 'FiltersPage'
+				When "Data source (create) *" window is opened
+				And I go to line in 'TreeOfFilterParametersDB' table:
 					| 'Filter'                      | 'Field'                      |
 					| 'Report period start date' | 'Data selection start date' |
-				И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Start date of report period with a shift"
-				И в таблице 'TreeOfFilterParametersDB' в поле с именем 'DefiningMethodClarification' я ввожу текст '-1'
-				И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
-				И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+				And I select "Start date of report period with a shift" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+				And I input '-1' text in the field named 'DefiningMethodClarification' of 'TreeOfFilterParametersDB' table
+				And I finish line editing in 'TreeOfFilterParametersDB' table
+				And I go to line in 'TreeOfFilterParametersDB' table:
 					| 'Filter'                     | 'Field'                         |
 					| 'Report period end date' | 'Data selection end date' |
-				И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Reporting period end date with a shift"
-				И в таблице 'TreeOfFilterParametersDB' в поле с именем 'DefiningMethodClarification' я ввожу текст '-1'
-				И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки	
-				Если '$$IsERPCPM$$' Тогда
-					* Добавляем поля отбора
-						И в таблице "FieldsTreeDB" я разворачиваю строку:
+				And I select "Reporting period end date with a shift" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+				And I input '-1' text in the field named 'DefiningMethodClarification' of 'TreeOfFilterParametersDB' table
+				And I finish line editing in 'TreeOfFilterParametersDB' table
+				If '$$IsERPCPM$$' Then
+					* Adding filter fields
+						And I expand a line in "FieldsTreeDB" table
 							| 'Field'                |
 							| 'Dimension of structure' |
-						И в таблице "FieldsTreeDB" я перехожу к строке:
+						And I go to line in "FieldsTreeDB" table:
 							| 'Field'        |
 							| 'Organization' |
-						И я нажимаю на кнопку с именем 'AddConditionItem'
-						И в таблице "TreeOfFilterParametersDB" я перехожу к строке:
+						And I click the button named 'AddConditionItem'
+						And I go to line in "TreeOfFilterParametersDB" table:
 							| 'Field'                                |
 							| '[Structure dimension].[Organization]' |
-						И в таблице "TreeOfFilterParametersDB" из выпадающего списка с именем "ParameterCalculationMethod" я выбираю точное значение 'Organization Report_'
-						И в таблице "TreeOfFilterParametersDB" я завершаю редактирование строки	
+						And I select 'Organization Report_' exact value from the drop-down list named "ParameterCalculationMethod" in "TreeOfFilterParametersDB" table
+						And I finish line editing in "TreeOfFilterParametersDB" table
 
-				Иначе	
-					* Удаляем текущие отборы
-						И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+				Else
+					* Deleting current filters
+						And I go to line in 'TreeOfFilterParametersDB' table:
 							| 'Filter'         | 'Field'         |
 							| 'Project Report_' | '[Dimension1]' |
-						И я нажимаю на кнопку с именем 'TreeOfFilterParametersDBDelete'
-						И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+						And I click the button named 'TreeOfFilterParametersDBDelete'
+						And I go to line in 'TreeOfFilterParametersDB' table:
 							| 'Filter'           | 'Field'         |
 							| 'Scenario Report_' | '[Dimension2]' |
-						И я нажимаю на кнопку с именем 'TreeOfFilterParametersDBDelete'
-						И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+						And I click the button named 'TreeOfFilterParametersDBDelete'
+						And I go to line in 'TreeOfFilterParametersDB' table:
 							| 'Filter'         | 'Field'         |
 							| "Report period" | '[Dimension3]' |
-						И я нажимаю на кнопку с именем 'TreeOfFilterParametersDBDelete''			
-				* Добавляем поля отбора
-					Когда открылось окно "Data source (create) *"
-					И в таблице 'FieldsTreeDB' я разворачиваю строку:
+						And I click the button named 'TreeOfFilterParametersDBDelete''
+				* Adding filter fields
+					When "Data source (create) *" window is opened
+					And I expand a line in 'FieldsTreeDB' table
 						| 'Field'        |
 						| 'Recorder' |
-					Если '$$IsERPCPM$$' Тогда
-						И в таблице 'FieldsTreeDB' я перехожу к строке:
+					If '$$IsERPCPM$$' Then
+						And I go to line in 'FieldsTreeDB' table:
 							| 'Field'                                              |
 							| 'Document.BudgetingActualDataRecording' |
-						И в таблице 'FieldsTreeDB' я разворачиваю текущую строку	
-					И в таблице 'FieldsTreeDB' я разворачиваю строку:
+						And I expand current line in 'FieldsTreeDB' table
+					And I expand a line in 'FieldsTreeDB' table
 						| 'Field'       |
 						| 'Counterparty' |
-					И в таблице 'FieldsTreeDB' я разворачиваю строку:
+					And I expand a line in 'FieldsTreeDB' table
 						| 'Field'       |
 						| 'Catalog.Counterparties' |
-					И я нажимаю на кнопку с именем 'AddConditionItem'
-					И в таблице 'FieldsTreeDB' я перехожу к строке:
+					And I click the button named 'AddConditionItem'
+					And I go to line in 'FieldsTreeDB' table:
 						| 'Field'     |
 						| 'Scenario' |
-					И я нажимаю на кнопку с именем 'AddConditionItem'
-				* Добавляем значения отбора
-					Когда открылось окно "Data source (create) *"													
-					И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+					And I click the button named 'AddConditionItem'
+				* Adding filter values
+					When "Data source (create) *" window is opened
+					And I go to line in 'TreeOfFilterParametersDB' table:
 						| 'Field'                     |
 						| '[Recorder].[Scenario]' |
-					И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
-					И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Report scenario"
-					И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки				
-					И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+					And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+					And I select "Report scenario" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+					And I finish line editing in 'TreeOfFilterParametersDB' table
+					And I go to line in 'TreeOfFilterParametersDB' table:
 						| 'Field'                       |
 						| '[Recorder].[Counterparty]' |
-					И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Fixed value"
-					И в таблице 'TreeOfFilterParametersDB' я нажимаю кнопку выбора у реквизита с именем 'DefiningMethodClarification'
-					Когда открылось окно "Counterparties*"
-					И Я закрываю окно "Counterparties*"
-					И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'DefiningMethodClarification' я выбираю по строке "LLC \"Ganymede\""
-					И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
+					And I select "Fixed value" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+					And I click choice button of the attribute named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+					When "Counterparties*" window is opened
+					And I close "Counterparties*" window
+					And I select "LLC \"Ganymede\"" by string from the drop-down list named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+					And I finish line editing in 'TreeOfFilterParametersDB' table
 						
-			* Записываем элемент
-				Когда открылось окно "Data source (create) *"
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна "Data source (create) *" в течение 20 секунд
+			* Saving the element
+				When "Data source (create) *" window is opened
+				And I click the button named 'FormWriteAndClose'
+				And I wait "Data source (create) *" window closing in 20 seconds
 		
-		* Выбираем элемент в форме конструктура			
-			Тогда открылось окно "Data sources"
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Report wizard *"
-			И я нажимаю на кнопку с именем 'WriteAndCollapse'
+		* Selecting element in the wizard form
+			Then "Data sources" window is opened
+			And I select current line in 'List' table
+			Then "Report wizard *" window is opened
+			And I click the button named 'WriteAndCollapse'
 
-Сценарий: 05.07 Настройка прав для пользователей
+Scenario: 05.07 Configuring rights for users
 
-	Если 'NOT $$ЭтоPerform$$' Тогда
+	If 'NOT $$IsPerform$$' Then
 
-		И Я добавляю право "Read, write" для вида отчета "VA - Filling from PH (no history)" пользователя "Budgeting1" по всем организациям
-		И я закрываю TestClient "CPM - Budget"
-		И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''			
+		And I add right "Read, write" for report type "VA - Filling from PH (no history)" user "Budgeting1" for all companies
+		And I close "CPM - Budget" TestClient
+		And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-Сценарий: 05.08 Создаем сводную таблицу
+Scenario: 05.08 Creating pivot table
 
-	Если 'NOT $$ЭтоPerform$$' Тогда
+	If 'NOT $$IsPerform$$' Then
 
-		И Я нахожу в списке вид отчета с именем "VA - Filling from PH (no history)"
+		And I find report type with name "VA - Filling from PH (no history)" in list
 
-		* Создаем сводную таблицу			
-			Когда открылось окно "Report types and templates"
-			И в таблице "List" я перехожу к строке:
+		* Creating pivot table
+			When "Report types and templates" window is opened
+			And I go to line in "List" table:
 				| 'Description'                                          |
 				| 'VA - Filling from PH (no history) (pivot table)' |
-			И я нажимаю на кнопку с именем 'SwitchToDataDisplayMode'
-			И Открылась сводная таблица для вида отчета "VA - Filling from PH (no history)"
-			И Я устанавливаю отборы сводной таблицы: дата начала '1/1/2024', дата конца '3/31/2024', валюта 'RUB', сценарий "VA - Main scenario", организация "Mercury LLC"
-			И Я устанавливаю отбор сводной таблицы 'Project' со значением "VA - Main project"	
-			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+			And I click the button named 'SwitchToDataDisplayMode'
+			And I open pivot table for report type "VA - Filling from PH (no history)"
+			And I set pivot table filters: start date '1/1/2024', end date '3/31/2024', currency 'RUB', scenario "VA - Main scenario", company "Mercury LLC"
+			And I set pivot table filter 'Project' with value "VA - Main project"
+			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
 				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
 				| "Cash flow items"                                            | '3,120,000'      | '16,000,000'      | '0'            |
@@ -432,20 +432,20 @@
 				| "2Software implementation"                       | '2,340,000'      | '7,350,000'       | '0'            |
 				| "3Software sale"                      | '780,000'        | '5,200,000'       | '0'            |
 		
-		* Рассчитываем по регламенту
-			И Открылась сводная таблица для вида отчета "VA - Filling from PH (no history)"
-			И я нажимаю на кнопку с именем 'RecalculateAccordingToRegulations'
-			И я жду открытия формы '$WindowTitle$' в течение 30 секунд
-			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		* Calculating by regulation
+			And I open pivot table for report type "VA - Filling from PH (no history)"
+			And I click the button named 'RecalculateAccordingToRegulations'
+			And I wait for '$WindowTitle$' form opening for 30 seconds
+			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
 				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
 				| "Cash flow items"                                            | '0'              | '3,120,000'       | '0'            |
 				| "2Software implementation"                       | '0'              | '2,340,000'       | '0'            |
 				| "3Software sale"                      | '0'              | '780,000'         | '0'            |
 
-		* Отменим транзакцию
-			И я нажимаю на кнопку с именем 'CancelAction'
-			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		* Canceling transaction
+			And I click the button named 'CancelAction'
+			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
 				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
 				| "Cash flow items"                                            | '3,120,000'      | '16,000,000'      | '0'            |
@@ -453,32 +453,32 @@
 				| "2Software implementation"                       | '2,340,000'      | '7,350,000'       | '0'            |
 				| "3Software sale"                      | '780,000'        | '5,200,000'       | '0'            |								
 
-		* Рассчитываем по правилу
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'RecalculateOther'
-			Тогда открылось окно "Select method to calculate indicators"
-			И я нажимаю на кнопку с именем 'FormSelect'
-			И я жду открытия формы '$WindowTitle$' в течение 30 секунд
-			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		* Calculating by rule
+			When '$WindowTitle$' window is opened
+			And I click the button named 'RecalculateOther'
+			Then "Select method to calculate indicators" window is opened
+			And I click the button named 'FormSelect'
+			And I wait for '$WindowTitle$' form opening for 30 seconds
+			Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
 				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
 				| "Cash flow items"                                            | '0'              | '3,120,000'       | '0'            |
 				| "2Software implementation"                       | '0'              | '2,340,000'       | '0'            |
 				| "3Software sale"                      | '0'              | '780,000'         | '0'            |
 
-		* Сохраняем таблицу
-			Когда открылось окно '$WindowTitle$'
-			И Я закрываю окно '$WindowTitle$'
-			Тогда открылось окно '1C:Enterprise'
-			И я нажимаю на кнопку с именем 'Button0'
+		* Saving table
+			When '$WindowTitle$' window is opened
+			And I close '$WindowTitle$' window
+			Then '1C:Enterprise' window is opened
+			And I click the button named 'Button0'
 
-Сценарий: 05.09 Проверяем движения экземпляра отчета
+Scenario: 05.09 Checking movements of report instance
 
-	Если 'NOT $$ЭтоPerform$$' Тогда
+	If 'NOT $$IsPerform$$' Then
 
-		И Я открываю первый экземпляр отчета для вида отчета "VA - Filling from PH (no history)"
-		И Открылся экземпляр отчета для вида отчета "VA - Filling from PH (no history)" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект "VA - Main project" аналитики '' '' '' '' '' '' 
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		And I open first report instance for report type "VA - Filling from PH (no history)"
+		And I open report instance for report type "VA - Filling from PH (no history)" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project "VA - Main project" dimensions '' '' '' '' '' ''
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Filling from PH (no history)" | ''               | ''                | ''             | ''          |
 			| ''                                    | ''               | ''                | ''             | ''          |
 			| ''                                    | "January 2024" | "February 2024" | "March 2024" | "TOTAL"     |
@@ -487,20 +487,20 @@
 			| "2Software implementation "    | '0'              | '2,340,000'       | '0'            | '2,340,000' |
 			| "3Software sale "   | '0'              | '780,000'         | '0'            | '780,000'   |
 
-		* Проверяем, движения после сводной таблицы
-			Когда открылось окно '$WindowTitle$'
-			И Движения экземпляра отчета стали равны '3_Budgeting\Templates\05\DimenKind_FillTypeFromRН_Движения_2.mxl'
+		* Checking movements after the pivot table
+			When '$WindowTitle$' window is opened
+			And I check report instance movements are equal to '3_Budgeting\Layouts\05\VA_FillFromAccumulationRegister_Movements_2.mxl'
 
-		* Рассчитываем документ
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'FormFillByDefault'
+		* Calculating document
+			When '$WindowTitle$' window is opened
+			And I click the button named 'FormFillByDefault'
 
-		* Проверяем движения
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'FormDocumentRegisterRecords'
-			Тогда открылось окно "1C:Enterprise"
-			И я нажимаю на кнопку с именем 'Button1'
-			Когда открылось окно '$WindowTitle$'
-			И я нажимаю на кнопку с именем 'Write'
-			И я жду открытия формы '$WindowTitle$' в течение 30 секунд
-			И Движения экземпляра отчета стали равны '3_Budgeting\Templates\05\DimenKind_FillTypeFromRН_Движения_2.mxl'
+		* Checking the movements
+			When '$WindowTitle$' window is opened
+			And I click the button named 'FormDocumentRegisterRecords'
+			Then "1C:Enterprise" window is opened
+			And I click the button named 'Button1'
+			When '$WindowTitle$' window is opened
+			And I click the button named 'Write'
+			And I wait for '$WindowTitle$' form opening for 30 seconds
+			And I check report instance movements are equal to '3_Budgeting\Layouts\05\VA_FillFromAccumulationRegister_Movements_2.mxl'

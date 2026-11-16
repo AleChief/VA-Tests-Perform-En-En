@@ -1,167 +1,167 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 13. Рекурсия в расчетах
+Feature: 13. Recursion in calculations
 
-	Как Администратор я хочу
-	Проверить что рекурсия в расчетах отлавливается
+	As Administrator I want to
+	Checking that recursion in calculations is caught
 
-Контекст: 
+Background:
 
-	И я закрыл все окна клиентского приложения	
+	And I close all client application windows
 
-Сценарий: 13.00 Определеняем тип приложения
+Scenario: 13.00 Determining application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 13.01 Создаем вид отчета с рекурсией расчета показателей
+Scenario: 13.01 Creating report type with indicator calculation recursion
 
-	* Создаем вид отчета
-		И Я создаю группу видов отчетов с именем "VA - Transformations period (group)" и родителем "VA - Report group"
-		И Я создаю вид отчета с именем "VA - Transformation period" и родителем "VA - Transformations period (group)"
+	* Creating a report type
+		And I create report type group with name "VA - Transformations period (group)" and parent "VA - Report group"
+		And I create report type with name "VA - Transformation period" and parent "VA - Transformations period (group)"
 		
-	* Настраиваем структуру вида отчета
-		И Я открываю контруктор отчета с именем "VA - Transformation period"
-		И Я в конструкторе отчета добавляю строку с именем "Source"
-		И Я в конструкторе отчета добавляю строку с именем "Destination"
-		И Я в конструкторе отчета добавляю строку с именем "Accumulation"
-		И Я в конструкторе отчета добавляю строку с именем "Total"
-		И Я в конструкторе отчета добавляю колонку с именем "Amount"
+	* Configuring report type structure
+		And I open report wizard with name "VA - Transformation period"
+		And I add row with name "Source" in report wizard
+		And I add row with name "Destination" in report wizard
+		And I add row with name "Accumulation" in report wizard
+		And I add row with name "Total" in report wizard
+		And I add column with name "Amount" in report wizard
 
-	* Настраиваем формулы расчета
-		Когда открылось окно "Report wizard"
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'ButtonPlus'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		Тогда открылось окно "Report wizard"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		Тогда открылось окно "Report wizard"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'				
+	* Configuring calculation formulas
+		When "Report wizard" window is opened
+		And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'ButtonPlus'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'WriteAndCollapse'
+		Then "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'WriteAndCollapse'
+		Then "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'WriteAndCollapse'
 
-	* Создаем бланк сводной таблицы
-		И Я для вида отчета "VA - Transformation period" создаю бланк сводной таблицы по умолчанию с отборами "Cash flow items"
+	* Creating pivot table template
+		And I for report type "Cash flow items" create default pivot table template with filters "VA - Transformation period"
 
-Сценарий: 13.02 Вводим данные в сводную таблицу, получаем ошибку рекурсивного расчета
+Scenario: 13.02 Entering data into pivot table, getting recursive calculation error
 
-	* Открываем сводную таблицу
-		И Я октрываю сводную таблицу отчета с именем "VA - Transformation period"
-		И Я устанавливаю отборы сводной таблицы: дата начала '1/1/2024', дата конца '3/31/2024', валюта 'RUB', сценарий "VA - Main scenario", организация "Mercury LLC"	
-		И я запоминаю заголовок формы в переменную 'WindowTitle'	
+	* Opening a pivot table
+		And I open report pivot table with name "VA - Transformation period"
+		And I set pivot table filters: start date '1/1/2024', end date '3/31/2024', currency 'RUB', scenario "VA - Main scenario", company "Mercury LLC"
+		And I save form header as 'WindowTitle' variable
 
-	* Вводим значение
-		Когда открылось окно '$WindowTitle$'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C3'
-		Тогда открылось окно "Protocol"
-		И я нажимаю на кнопку с именем 'FormTechnicalInformation'
-		Тогда табличный документ 'SpreadsheetDocumentField' равен:
+	* Entering a value
+		When '$WindowTitle$' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C3' cell
+		Then "Protocol" window is opened
+		And I click the button named 'FormTechnicalInformation'
+		Then 'SpreadsheetDocumentField' spreadsheet document is equal
 				| "Errors"                                                                                                                                | '' | ''                                                                                                                     |
 				| "Recursion is found in links when calculating the indicator: \"Destination amount\".\nCheck calculation formulas and rewrite the calculation rule."   | '' | "{\"S\",\"Calculation tree:\n	Total amount\n		Accumulation amount\n			Destination amount\n				Source amount\n				Total amount\"}"      |
 				| "Recursion is found in links when calculating the indicator: \"Accumulation amount\".\nCheck calculation formulas and rewrite the calculation rule." | '' | "{\"S\",\"Calculation tree:\n	Destination amount\n		Source amount\n		Total amount\n			Accumulation amount\n				Destination amount\"}"    |
 				| "Recursion is found in links when calculating the indicator: \"Total amount\".\nCheck calculation formulas and rewrite the calculation rule."       | '' | "{\"S\",\"Calculation tree:\n	Accumulation amount\n		Destination amount\n			Source amount\n			Total amount\n				Accumulation amount\"}" |
-		И Я закрываю окно "Protocol"
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+		And I close "Protocol" window
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 
-Сценарий: 13.03 Перенастраиваем структуру вида отчета
+Scenario: 13.03 Reconfiguring report type structure
 
-	* Настраиваем структуру вида отчета
-		И Я открываю контруктор отчета с именем "VA - Transformation period"
+	* Configuring report type structure
+		And I open report wizard with name "VA - Transformation period"
 
-	* Приемник
-		Когда открылось окно "Report wizard"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст "[VATransformationPeriod_Source_Amount]"
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'				
+	* Receiver
+		When "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R3C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I input "[VATransformationPeriod_Source_Amount]" text in the field named 'TextDocumentFieldProcedure'
+		And I click the button named 'WriteAndCollapse'
 
-	* Накопление
-		Когда открылось окно "Report wizard"	
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'AddOperand1'
-		Тогда открылось окно "Data sources"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Data source (create)"
-		И из выпадающего списка с именем 'ReportTypeFilter' я выбираю по строке "VA - Transformation period"
-		И я нажимаю кнопку выбора у поля с именем 'IndicatorFilter'
-		И Я выбираю показатель с кодом "Accumulation_Amount"
-		Тогда открылось окно "Data source (create) *"
-		И я перехожу к закладке с именем 'FiltersPage'
-		И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+	* Accumulation
+		When "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'AddOperand1'
+		Then "Data sources" window is opened
+		And I click the button named 'FormCreate'
+		Then "Data source (create)" window is opened
+		And I select from the drop-down list named 'ReportTypeFilter'  by "VA - Transformation period" string
+		And I click Choice button of the field named 'IndicatorFilter'
+		And I select indicator with code "Accumulation_Amount"
+		Then "Data source (create) *" window is opened
+		And I move to the tab named 'FiltersPage'
+		And I go to line in 'TreeOfFilterParametersDB' table:
 			| "Filter"         | "Field"            |
 			| "Report period" | "[Report period]" |
-		И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
-		И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Report period with a shift"
-		И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'DefiningMethodClarification'
- 		И в таблице 'TreeOfFilterParametersDB' в поле с именем 'DefiningMethodClarification' я ввожу текст '-1'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Data source (create) *" в течение 20 секунд
-		Тогда открылось окно "Data sources"
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "Report wizard *"
-		И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст "[VATransformationPeriod_Accumulation_Amount01] + [VATransformationPeriod_Destination_Amount]"
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
+		And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+		And I select "Report period with a shift" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+		And I activate field named 'DefiningMethodClarification' in 'TreeOfFilterParametersDB' table
+ 		And I input '-1' text in the field named 'DefiningMethodClarification' of 'TreeOfFilterParametersDB' table
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Data source (create) *" window closing in 20 seconds
+		Then "Data sources" window is opened
+		And I select current line in 'List' table
+		Then "Report wizard *" window is opened
+		And I input "[VATransformationPeriod_Accumulation_Amount01] + [VATransformationPeriod_Destination_Amount]" text in the field named 'TextDocumentFieldProcedure'
+		And I click the button named 'WriteAndCollapse'
 
-	* Итог
-		Когда открылось окно "Report wizard"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'AddOperand1'
-		Тогда открылось окно "Data sources"
-		И я выбираю пункт контекстного меню с именем 'ListContextMenuChange' на элементе формы с именем 'List'
-		Тогда открылось окно "VA - Transformation period_Accumulation Amount (Data source)"
-		И я перехожу к закладке с именем 'FiltersPage'
-		И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
+	* Total
+		When "Report wizard" window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R5C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'AddOperand1'
+		Then "Data sources" window is opened
+		And I select context menu item named 'ListContextMenuChange' of the form attribute named 'List'
+		Then "VA - Transformation period_Accumulation Amount (Data source)" window is opened
+		And I move to the tab named 'FiltersPage'
+		And I go to line in 'TreeOfFilterParametersDB' table:
 			| "Filter"         | "Field"            |
 			| "Report period" | "[Report period]" |
-		И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
-		И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
-		И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
-		И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Not filtered"
-		И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "VA - Transformation period_Accumulation Amount (Data source) *" в течение 20 секунд
-		Тогда открылось окно "Data sources"
-		И Я закрываю окно "Data sources"
-		Тогда открылось окно "Report wizard"
-		И я нажимаю на кнопку с именем 'UndoFormulaEdit'
+		And I activate field named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+		And I select current line in 'TreeOfFilterParametersDB' table
+		And I select current line in 'TreeOfFilterParametersDB' table
+		And I select "Not filtered" exact value from the drop-down list named 'ParameterCalculationMethod' in 'TreeOfFilterParametersDB' table
+		And I finish line editing in 'TreeOfFilterParametersDB' table
+		And I click the button named 'FormWriteAndClose'
+		And I wait "VA - Transformation period_Accumulation Amount (Data source) *" window closing in 20 seconds
+		Then "Data sources" window is opened
+		And I close "Data sources" window
+		Then "Report wizard" window is opened
+		And I click the button named 'UndoFormulaEdit'
 				
-Сценарий: 13.04 Проверяем расчет в сводной таблице
+Scenario: 13.04 Checking calculation in pivot table
 
-	* Открываем сводную таблиц
-		И Я октрываю сводную таблицу отчета с именем "VA - Transformation period"
+	* Opening pivot table
+		And I open report pivot table with name "VA - Transformation period"
 
-	* Вводим значения
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '100.00000'
-		Когда открылось окно '$WindowTitle$ *'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Entering values
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '100.00000'
+		When '$WindowTitle$ *' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Transformation period (pivot table)" | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
 			| "VA - Transformation period (pivot table)" | "Amount"          | "Amount"           | "Amount"        | "Amount" |
 			| "Source"                                      | '100'            | '0'               | '0'            | '100'   |
@@ -169,15 +169,15 @@
 			| "Accumulation"                                    | '100'            | '100'             | '100'          | '300'   |
 			| "Total"                                          | '300'            | '300'             | '300'          | '900'   |
 
-	* Вводим значения			
-		Когда открылось окно '$WindowTitle$ *'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C3'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '200.00000'
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C4'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст '300.00000'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Entering values
+		When '$WindowTitle$ *' window is opened
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C3' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '200.00000'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R4C4' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I input text '300.00000'
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Transformation period (pivot table)" | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
 			| "VA - Transformation period (pivot table)" | "Amount"          | "Amount"           | "Amount"        | "Amount" |
 			| "Source"                                      | '100'            | '200'             | '300'          | '600'   |
@@ -185,9 +185,9 @@
 			| "Accumulation"                                    | '100'            | '300'             | '600'          | '1,000' |
 			| "Total"                                          | '1,000'          | '1,000'           | '1,000'        | '3,000' |
 			
-	* Сохраняем результат
-		Когда открылось окно '$WindowTitle$ *'
-		И Я закрываю окно '$WindowTitle$ *'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
+	* Saving result
+		When '$WindowTitle$ *' window is opened
+		And I close '$WindowTitle$ *' window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
 									

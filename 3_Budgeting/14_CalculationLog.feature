@@ -1,186 +1,186 @@
-﻿#language: ru
+﻿#language: en
 @tree
 
 @UH32_Budget
 @ERPUH32_Budget
 @Perform_Budget
 
-Функционал: 14. Проверка отображения протокола
+Feature: 14. Checking display of protocol
 
-	Как Администратор я хочу
-	Проверить что протокол расчета отображается
-	чтобы пользователь видел протокол расчета
+	As Administrator I want to
+	Check that calculation protocol is displayed
+	so that the user can see the calculation protocol
 
-Контекст: 
+Background:
 
-	И я закрыл все окна клиентского приложения	
+	And I close all client application windows
 
-Сценарий: 14.00 Определение типа приложения
+Scenario: 14.00 Determining application type
 
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Administrator" пароль ''
-	Пусть Инициализация переменных
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Administrator" login and '' password
+	Given I initialize variables
 
-Сценарий: 14.01 Создание вида отчета "VA - Calculation protocol"
+Scenario: 14.01 Creating report type "VA - Calculation protocol"
 
-	И Я создаю вид отчета с именем "VA - Calculation protocol" и родителем "VA - Report group"
+	And I create report type with name "VA - Calculation protocol" and parent "VA - Report group"
 
-	* Редактируем структуру отчета
-		И Я открываю контруктор отчета с именем "VA - Calculation protocol"
-		И Я в конструкторе отчета добавляю строку с именем "ReportLine"
-		И Я в конструкторе отчета добавляю колонку с именем "Amount"
+	* Editing the report structure
+		And I open report wizard with name "VA - Calculation protocol"
+		And I add row with name "ReportLine" in report wizard
+		And I add column with name "Amount" in report wizard
 	
-	* Вводим формулы расчета
-		Тогда открылось окно "Report wizard"
-		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"
-		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
-		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И я нажимаю на кнопку с именем 'ArbitraryCode'
-		И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст 
+	* Entering calculation formulas
+		Then "Report wizard" window is opened
+		And I select "Indicators calculation formulas" exact value from the drop-down list named 'WorkMode'
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I move to 'R2C2' cell
+		And in 'SpreadsheetFieldTemlate' spreadsheet document I double-click the current cell
+		And I click the button named 'ArbitraryCode'
+		And I input text in the field named 'TextDocumentFieldProcedure'
 			|'Result = 123;'|
-		И я нажимаю на кнопку с именем 'WriteAndCollapse'
-		И Я закрываю окно "Report wizard"				
+		And I click the button named 'WriteAndCollapse'
+		And I close "Report wizard" window
 
-	И Я Для вида отчета "VA - Calculation protocol" создаю бланк по умолчанию
-	И Я для вида отчета "VA - Calculation protocol" создаю бланк сводной таблицы по умолчанию с отборами ''	
+	And I create default template for report type "VA - Calculation protocol"
+	And I for report type "" create default pivot table template with filters 'VA - Calculation protocol'
 
-Сценарий: 14.02 Настройка прав для пользователя "Budgeting1"
+Scenario: 14.02 Configuring rights for user "Budgeting1"
 
-	И Я добавляю право "Read, write" для вида отчета "VA - Calculation protocol" пользователя "Budgeting1" по всем организациям
-	И я закрываю TestClient "CPM - Budget"
-	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
+	And I add right "Read, write" for report type "VA - Calculation protocol" user "Budgeting1" for all companies
+	And I close "CPM - Budget" TestClient
+	And I connect "CPM - Budget" TestClient using "Budgeting1" login and '' password
 
-Сценарий: 14.03 Создание экземпляра отчета "VA - Calculation protocol" для организации "Mercury LLC"	
+Scenario: 14.03 Creating report instance "VA - Calculation protocol" for company "Mercury LLC"
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Calculation protocol" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Mercury LLC" проект '' аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Calculation protocol" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Mercury LLC" project '' dimensions '' '' '' '' '' ''
 
-	* Запишем документ
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'Write'				
+	* Saving document
+		When '$WindowTitle$' window is opened
+		And I click the button named 'Write'
 
-	* Расчитаем документ
-		И я нажимаю на кнопку с именем 'FormFillByDefault'		
+	* Calculating the document
+		And I click the button named 'FormFillByDefault'
 
-	* Сверяем результат
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Verifying the result
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Calculation protocol" | ''               | ''                | ''             | ''      |
 			| ''                      | ''               | ''                | ''             | ''      |
 			| ''                      | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
 			| ''                      | "Amount"          | "Amount"           | "Amount"        | "Amount" |
 			| "ReportLine"          | '123'            | '123'             | '123'          | '369'   |
 		
-	* Закроем не сохраняя
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+	* Closing without saving
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 
-Сценарий: 14.04 Создание экземпляра отчета "VA - Calculation protocol" для организации "Earth LLC"	
+Scenario: 14.04 Creating report instance "VA - Calculation protocol" for company "Earth LLC"
 
-	И Я создаю экземпляр отчета для вида отчета "VA - Calculation protocol" сценарий "VA - Main scenario" период '1/1/2024' '3/31/2024' периодичность "Month" организация "Earth LLC" проект '' аналитики '' '' '' '' '' ''
+	And I create report instance for report type "VA - Calculation protocol" scenario "VA - Main scenario" period '1/1/2024' '3/31/2024' frequency "Month" company "Earth LLC" project '' dimensions '' '' '' '' '' ''
 
-	* Запишем документ
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'Write'				
+	* Saving document
+		When '$WindowTitle$' window is opened
+		And I click the button named 'Write'
 
-	* Расчитаем документ
-		И я нажимаю на кнопку с именем 'FormFillByDefault'
-		Когда открылось окно "Protocol"
-		Тогда табличный документ 'SpreadsheetDocumentField' равен:
+	* Calculating the document
+		And I click the button named 'FormFillByDefault'
+		When "Protocol" window is opened
+		Then 'SpreadsheetDocumentField' spreadsheet document is equal
 			| "Errors"                                                                                                                                                                                                       |
 			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"January 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
 			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"February 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
-		И я нажимаю на кнопку с именем 'FormTechnicalInformation'
-		И Я закрываю окно "Protocol"	
+		And I click the button named 'FormTechnicalInformation'
+		And I close "Protocol" window
 
-	* Сверяем результат
-		Когда открылось окно '$WindowTitle$'
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Verifying the result
+		When '$WindowTitle$' window is opened
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Calculation protocol" | ''               | ''                | ''             | ''      |
 			| ''                      | ''               | ''                | ''             | ''      |
 			| ''                      | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
 			| ''                      | "Amount"          | "Amount"           | "Amount"        | "Amount" |
 			| "ReportLine"          | '0'              | '0'               | '123'          | '123'   |
 		
-	* Закроем не сохраняя
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button1'
+	* Closing without saving
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button1'
 				
-Сценарий: 14.05 Выполняем расчет экземплятров отчетов из списка
+Scenario: 14.05 Running calculation of report instances from list
 
-	И Я нахожу в списке вид отчета с именем "VA - Calculation protocol"
-	И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListOpenInstancesList'
+	And I find report type with name "VA - Calculation protocol" in list
+	And in the table 'ReportKindList' I click the button named 'ReportKindListOpenInstancesList'
 	
-	* Выполняем расчет
-		Тогда открылось окно "Report instances"
-		И в таблице 'List' я выделяю все строки
-		И я нажимаю на кнопку с именем 'ImportOfData'
+	* Running calculation
+		Then "Report instances" window is opened
+		And I select all lines of 'List' table
+		And I click the button named 'ImportOfData'
 		
-	* Проверяем протокол
-		Тогда открылось окно "Protocol"
-		Тогда табличный документ 'SpreadsheetDocumentField' равен:
+	* Checking protocol
+		Then "Protocol" window is opened
+		Then 'SpreadsheetDocumentField' spreadsheet document is equal
 			| "Errors"                                                                                                                                                                                                       |
 			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"January 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
 			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"February 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
-		И я нажимаю на кнопку с именем 'FormTechnicalInformation'
-		И Я закрываю окно "Protocol"
+		And I click the button named 'FormTechnicalInformation'
+		And I close "Protocol" window
 
-	* Проверяем расчет для "Mercury LLC"
-		Тогда открылось окно "Report instances"
-		И в таблице 'List' я перехожу к строке:
+	* Checking calculation for "Mercury LLC"
+		Then "Report instances" window is opened
+		And I go to line in 'List' table:
 			| "Primary currency" | "Report type"            | "Company"  | "Report period"  | "End period" | "Scenario"               |
 			| 'RUB'             | "VA - Calculation protocol" | "Mercury LLC" | "January 2024" | "March 2024"     | "VA - Main scenario" |
-		И в таблице 'List' я выбираю текущую строку
-		Тогда Открылся экземпляр отчета для вида отчета "VA - Calculation protocol" валюта 'RUB' организация "Mercury LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' '' 
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		And I select current line in 'List' table
+		Then I open report instance for report type "VA - Calculation protocol" currency 'RUB' company "Mercury LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Calculation protocol" | ''               | ''                | ''             | ''      |
 			| ''                      | ''               | ''                | ''             | ''      |
 			| ''                      | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
 			| ''                      | "Amount"          | "Amount"           | "Amount"        | "Amount" |
 			| "ReportLine"          | '123'            | '123'             | '123'          | '369'   |
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'				
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
 		
-	* Проверяем расчет для "Mercury LLC"
-		Тогда открылось окно "Report instances"
-		И в таблице 'List' я перехожу к строке:
+	* Checking calculation for "Mercury LLC"
+		Then "Report instances" window is opened
+		And I go to line in 'List' table:
 			| "Primary currency" | "Report type"            | "Company" | "Report period"  | "End period" | "Scenario"               |
 			| 'RUB'             | "VA - Calculation protocol" | "Earth LLC"   | "January 2024" | "March 2024"     | "VA - Main scenario" |
-		И в таблице 'List' я выбираю текущую строку
-		Тогда Открылся экземпляр отчета для вида отчета "VA - Calculation protocol" валюта 'RUB' организация "Earth LLC" сценарий "VA - Main scenario" периодичность "Month" проект '' аналитики '' '' '' '' '' '' 
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+		And I select current line in 'List' table
+		Then I open report instance for report type "VA - Calculation protocol" currency 'RUB' company "Earth LLC" scenario "VA - Main scenario" frequency "Month" project '' dimensions '' '' '' '' '' ''
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Calculation protocol" | ''               | ''                | ''             | ''      |
 			| ''                      | ''               | ''                | ''             | ''      |
 			| ''                      | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
 			| ''                      | "Amount"          | "Amount"           | "Amount"        | "Amount" |
 			| "ReportLine"          | '0'              | '0'               | '123'          | '123'   |
-		Когда открылось окно '$WindowTitle$'
-		И Я закрываю окно '$WindowTitle$'	
+		When '$WindowTitle$' window is opened
+		And I close '$WindowTitle$' window
 
-Сценарий: 14.06 Выполняем расчет экземплятров отчетов из списка
+Scenario: 14.06 Running calculation of report instances from list
 
-	* Открываем сводную таблицу
-		И Я октрываю сводную таблицу отчета с именем "VA - Calculation protocol"
-		И Я устанавливаю отборы сводной таблицы: дата начала '1/1/2024', дата конца '3/31/2024', валюта 'RUB', сценарий "VA - Main scenario", организация "Earth LLC"		
+	* Opening a pivot table
+		And I open report pivot table with name "VA - Calculation protocol"
+		And I set pivot table filters: start date '1/1/2024', end date '3/31/2024', currency 'RUB', scenario "VA - Main scenario", company "Earth LLC"
 
-	* Выполняем расчет
-		Когда открылось окно '$WindowTitle$'
-		И я нажимаю на кнопку с именем 'RecalculateAccordingToRegulations'
+	* Running calculation
+		When '$WindowTitle$' window is opened
+		And I click the button named 'RecalculateAccordingToRegulations'
 
-	* Проверяем протокол
-		Тогда открылось окно "Protocol"
-		Тогда табличный документ 'SpreadsheetDocumentField' равен:
+	* Checking protocol
+		Then "Protocol" window is opened
+		Then 'SpreadsheetDocumentField' spreadsheet document is equal
 			| "Errors"                                                                                                                                                                                                       |
 			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"January 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
 			| "Locked period is excluded from calculation by the following parameters:\n	Period: \"February 2024\"\n	Regulation: \"VA - Main regulations\",\n	Scenario: \"VA - Main scenario\",\n	Company: \"Earth LLC\""  |
-		И я нажимаю на кнопку с именем 'FormTechnicalInformation'
-		И Я закрываю окно "Protocol"
+		And I click the button named 'FormTechnicalInformation'
+		And I close "Protocol" window
 
-	* Сверяем результат
-		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
+	* Verifying the result
+		Then 'SpreadsheetFieldTemlate' spreadsheet document is equal
 			| "VA - Calculation protocol (pivot table)" | "January 2024" | "February 2024" | "March 2024" | "TOTAL" |
 			| "VA - Calculation protocol (pivot table)" | "Amount"          | "Amount"           | "Amount"        | "Amount" |
 			| "ReportLine"                            | '0'              | '0'               | '123'          | '123'   |

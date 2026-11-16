@@ -1,66 +1,66 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для работы с подсистемой "Budgeting" - "Pivot table"
+Feature: Export scenarios for working with the "Budgeting" subsystem - "Pivot table"
 
-Сценарий: Я в сводной таблице перемещаю аналитику с именем 'TheDimensionName' вверх
+Scenario: I move dimension with name 'TheDimensionName' up in pivot table
 
-	Тогда открылось окно "Set up field location"
-	И Я запоминаю значение выражения '[TheDimensionName]' в переменную "DimensionName"
+	Then "Set up field location" window is opened
+	And I save '[TheDimensionName]' in "DimensionName" variable
 	
-	И в таблице 'TableRows1' я перехожу к строке:
+	And I go to line in 'TableRows1' table:
 		| "Horizontally (in rows)" |
 		| '$DimensionName$'      |
 	
-	И я нажимаю на кнопку с именем 'RowsMoveUp'
-	И я нажимаю на кнопку с именем 'RowsMoveUp'
-	И я нажимаю на кнопку с именем 'RowsMoveUp'
-	И я нажимаю на кнопку с именем 'RowsMoveUp'
-	И я нажимаю на кнопку с именем 'RowsMoveUp'
-	И я нажимаю на кнопку с именем 'RowsMoveUp'
+	And I click the button named 'RowsMoveUp'
+	And I click the button named 'RowsMoveUp'
+	And I click the button named 'RowsMoveUp'
+	And I click the button named 'RowsMoveUp'
+	And I click the button named 'RowsMoveUp'
+	And I click the button named 'RowsMoveUp'
 
-Сценарий: Я октрываю сводную таблицу отчета с именем 'TheReportKindName'
+Scenario: I open report pivot table with name 'TheReportKindName'
 
-	И Я нахожу в списке вид отчета с именем '[TheReportKindName]'
+	And I find report type with name '[TheReportKindName]' in list
 
-	Когда открылось окно "Report types and templates"
-	И я запоминаю строку '[TheReportKindName]' в переменную 'ReportKindName'
-	И в таблице 'List' я перехожу к строке по шаблону:
+	When "Report types and templates" window is opened
+	And I save '[TheReportKindName]' line to the variable 'ReportKindName'
+	And I go to line in 'List' table by template:
 		| "Description"                       |
-		| '$ReportKindName$ (сводная таблица)' |
-	И я нажимаю на кнопку с именем 'SwitchToDataDisplayMode'
-	И я жду открытия формы "Pivot table: *" в течение 30 секунд
+		| '$ReportKindName$ (pivot table)' |
+	And I click the button named 'SwitchToDataDisplayMode'
+	And I wait for "Pivot table: *" form opening for 30 seconds
 
-	И Открылась сводная таблица для вида отчета 'TheReportKindName'	
+	And I open pivot table for report type 'TheReportKindName'
 		
-Сценарий: Я устанавливаю отбор сводной таблицы 'TheFilterName' со значением 'TheFilterValue'
+Scenario: I set pivot table filter 'TheFilterName' with value 'TheFilterValue'
 
-	Когда открылось окно "Pivot table: *"
-	И я нажимаю на гиперссылку с именем 'FilterHeading'
-	И я жду открытия формы "Pivot table: *" в течение 20 секунд
+	When "Pivot table: *" window is opened
+	And I click the hyperlink named 'FilterHeading'
+	And I wait for "Pivot table: *" form opening for 20 seconds
 	Если элемент '[TheFilterName]' присутствует на форме Тогда
-		И из выпадающего списка с именем '[TheFilterName]' я выбираю по строке '[TheFilterValue]'
-		И я нажимаю на кнопку с именем 'UpdateTabData1'
-	ИначеЕсли элемент 'Item_[TheFilterName]' присутствует на форме Тогда
-		И из выпадающего списка с именем 'Item_[TheFilterName]' я выбираю по строке '[TheFilterValue]'
-		И я нажимаю на кнопку с именем 'UpdateTabData1'	
-	И я жду открытия формы "Pivot table: *" в течение 20 секунд
+		And I select from the drop-down list named '[TheFilterName]'  by '[TheFilterValue]' string
+		And I click the button named 'UpdateTabData1'
+	ElseIf 'Item_[TheFilterName]' attribute is present on the form Then
+		And I select from the drop-down list named 'Item_[TheFilterName]'  by '[TheFilterValue]' string
+		And I click the button named 'UpdateTabData1'
+	And I wait for "Pivot table: *" form opening for 20 seconds
 
-Сценарий: Я устанавливаю отборы сводной таблицы: дата начала 'TheStartDate', дата конца 'TheEndDate', валюта 'TheCurrency', сценарий 'TheScenario', организация 'TheBusinessUnit'	
+Scenario: I set pivot table filters: start date 'TheStartDate', end date 'TheEndDate', currency 'TheCurrency', scenario 'TheScenario', company 'TheBusinessUnit'
 
-	Когда открылось окно "Pivot table: *"
-	И я нажимаю на гиперссылку с именем 'FilterHeading'
-	И я нажимаю на кнопку с именем 'ChangePeriod'
-	Тогда открылось окно "Select period"
-	И в поле с именем 'DateBegin' я ввожу текст '[TheStartDate]'
-	И я перехожу к следующему реквизиту
-	И в поле с именем 'DateEnd' я ввожу текст '[TheEndDate]'
-	И я нажимаю на кнопку с именем 'Select'
-	Тогда открылось окно "Pivot table: *"
-	И из выпадающего списка с именем 'DisplayCurrency' я выбираю по строке '[TheCurrency]'
-	И из выпадающего списка с именем 'Элемент_Сценарий' я выбираю по строке '[TheScenario]'
-	И из выпадающего списка с именем 'Item_Organization' я выбираю по строке '[TheBusinessUnit]'
-	И я нажимаю на кнопку с именем 'UpdateTabData1'
-	И я жду открытия формы "Pivot table: *" в течение 20 секунд
+	When "Pivot table: *" window is opened
+	And I click the hyperlink named 'FilterHeading'
+	And I click the button named 'ChangePeriod'
+	Then "Select period" window is opened
+	And I input '[TheStartDate]' text in the field named 'DateBegin'
+	And I move to the next attribute
+	And I input '[TheEndDate]' text in the field named 'DateEnd'
+	And I click the button named 'Select'
+	Then "Pivot table: *" window is opened
+	And I select from the drop-down list named 'DisplayCurrency'  by '[TheCurrency]' string
+	And I select from the drop-down list named 'Item_Scenario'  by '[TheScenario]' string
+	And I select from the drop-down list named 'Item_Organization'  by '[TheBusinessUnit]' string
+	And I click the button named 'UpdateTabData1'
+	And I wait for "Pivot table: *" form opening for 20 seconds

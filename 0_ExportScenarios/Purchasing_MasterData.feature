@@ -1,159 +1,159 @@
-﻿#language: ru
+﻿#language: en
 
 @tree
 @ExportScenarios
 @IgnoreOnCIMainBuild
  
-Функционал: Экспортные сценарии
+Feature: Export scenarios
 
-Как бизнес-аналитик я хочу
-упростить создание спрвочников и документов
-чтобы упростить поддержку сценарных тестов
+As a business analyst I want to
+simplify creating directories and documents
+to simplify maintaining scenario tests
 
 Сценарий: Я создаю НоваяОрганизация "ТекНаименование", ИНН = "ТекИНН", КПП = "ТекКПП", ОГРН = "ТекОГРН", дата регистрации = "ТекДатаРегистрации"
 
-		И В командном интерфейсе я выбираю 'General catalogs and settings' 'Business units'
-		Тогда открылось окно 'Business units'
+		And In the command interface I select 'General catalogs and settings' 'Business units'
+		Then 'Business units' window is opened
 		
-		И я нажимаю на кнопку с именем 'CreateNewCompany'
-		Тогда открылось окно 'Company type'
-		И я нажимаю на кнопку с именем 'SelectRussia'
-		Тогда открылось окно 'Company kind'
-		И я нажимаю на кнопку с именем 'SelectLegalEntity'
-		Тогда открылось окно 'Legal entity'
-		И я нажимаю на кнопку с именем 'SystemTaxationGeneralLegalEntity'
+		And I click the button named 'CreateNewCompany'
+		Then 'Company type' window is opened
+		And I click the button named 'SelectRussia'
+		Then 'Company kind' window is opened
+		And I click the button named 'SelectLegalEntity'
+		Then 'Legal entity' window is opened
+		And I click the button named 'SystemTaxationGeneralLegalEntity'
 		
-		И в поле с именем 'НаименованиеСокращенное' я ввожу текст '[ТекНаименование]'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'TIN' я ввожу текст '[TextTIN]'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'КПП' я ввожу текст '[ТекКПП]'
-		И я перехожу к следующему реквизиту
-		И в поле 'ОГРН' я ввожу текст '[ТекОГРН]'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'ДатаРегистрации' я ввожу текст '[ТекДатаРегистрации]'
-		И я перехожу к следующему реквизиту
-		И я нажимаю на кнопку 'Save'
+		And I input '[TextDescription]' text in the field named 'DescriptionShort'
+		And I move to the next attribute
+		And I input '[TextTIN]' text in the field named 'TIN'
+		And I move to the next attribute
+		And I input '[TextKPP]' text in the field named 'KPP'
+		And I move to the next attribute
+		And I input '[TextOGRN]' text in 'OGRN' field
+		And I move to the next attribute
+		And I input '[TextRegistrationDate]' text in the field named 'DateOfRegistration'
+		And I move to the next attribute
+		And I click 'Save' button
 		И я нажимаю на кнопку 'Записать и закрыть'
-		И я жду закрытия окна '[TextDescription] *' в течение 20 секунд
+		And I wait '[TextDescription] *' window closing in 20 seconds
 
-		И я закрываю все окна клиентского приложения
+		And I close all client application windows
 
 Сценарий: Я создаю НоваяОрганизация223 "ТекНаименование", ИНН = "ТекИНН", КПП = "ТекКПП", ОГРН = "ТекОГРН", дата регистрации = "ТекДатаРегистрации"
 
-		И В командном интерфейсе я выбираю 'General catalogs and settings' 'Business units'
-		Тогда открылось окно 'Business units'
+		And In the command interface I select 'General catalogs and settings' 'Business units'
+		Then 'Business units' window is opened
 		
-		И я нажимаю на кнопку с именем 'CreateNewCompany'
-		Тогда открылось окно 'Company type'
-		И я нажимаю на кнопку с именем 'SelectRussia'
-		Тогда открылось окно 'Company kind'
-		И я нажимаю на кнопку с именем 'SelectLegalEntity'
-		Тогда открылось окно 'Legal entity'
-		И я нажимаю на кнопку с именем 'SystemTaxationGeneralLegalEntity'
+		And I click the button named 'CreateNewCompany'
+		Then 'Company type' window is opened
+		And I click the button named 'SelectRussia'
+		Then 'Company kind' window is opened
+		And I click the button named 'SelectLegalEntity'
+		Then 'Legal entity' window is opened
+		And I click the button named 'SystemTaxationGeneralLegalEntity'
 		
-		И в поле с именем 'НаименованиеСокращенное' я ввожу текст '[ТекНаименование]'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'TIN' я ввожу текст '[TextTIN]'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'КПП' я ввожу текст '[ТекКПП]'
-		И я перехожу к следующему реквизиту
-		И в поле 'ОГРН' я ввожу текст '[ТекОГРН]'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'ДатаРегистрации' я ввожу текст '[ТекДатаРегистрации]'
-		И я перехожу к следующему реквизиту
-		И я устанавливаю флаг 'Accounting of purchases under 223-FZ'
-		И из выпадающего списка "Amount of small purchases" я выбираю точное значение '500 000'
-		И я нажимаю на кнопку 'Save'
+		And I input '[TextDescription]' text in the field named 'DescriptionShort'
+		And I move to the next attribute
+		And I input '[TextTIN]' text in the field named 'TIN'
+		And I move to the next attribute
+		And I input '[TextKPP]' text in the field named 'KPP'
+		And I move to the next attribute
+		And I input '[TextOGRN]' text in 'OGRN' field
+		And I move to the next attribute
+		And I input '[TextRegistrationDate]' text in the field named 'DateOfRegistration'
+		And I move to the next attribute
+		And I set checkbox 'Accounting of purchases under 223-FZ'
+		And I select '500 000' exact value from "Amount of small purchases" drop-down list
+		And I click 'Save' button
 		И я нажимаю на кнопку 'Записать и закрыть'
-		И я жду закрытия окна '[TextDescription] *' в течение 20 секунд
+		And I wait '[TextDescription] *' window closing in 20 seconds
 
-		И я закрываю все окна клиентского приложения
+		And I close all client application windows
 
 Сценарий: Я создаю НоваяОрганизацияИП "ТекФамилия", Имя = "ТекИмя", ИНН = "ТекИНН", ОГРНИП = "ТекОГРНИП", дата регистрации = "ТекДатаРегистрации"
 
-		И В командном интерфейсе я выбираю 'General catalogs and settings' 'Business units'
-		Тогда открылось окно 'Business units'
+		And In the command interface I select 'General catalogs and settings' 'Business units'
+		Then 'Business units' window is opened
 
-		И я нажимаю на кнопку с именем 'CreateNewCompany'
-		Тогда открылось окно 'Company type'
-		И я нажимаю на кнопку с именем 'SelectRussia'
-		Тогда открылось окно 'Company kind'
-		И я нажимаю на кнопку с именем 'SelectIndividualEntrepreneur'
-		Тогда открылось окно 'Individual entrepreneur'
-		И я нажимаю на кнопку с именем 'SystemTaxationTaxOnProfessionalIncomeIndividualEntrepreneur'
+		And I click the button named 'CreateNewCompany'
+		Then 'Company type' window is opened
+		And I click the button named 'SelectRussia'
+		Then 'Company kind' window is opened
+		And I click the button named 'SelectIndividualEntrepreneur'
+		Then 'Individual entrepreneur' window is opened
+		And I click the button named 'SystemTaxationTaxOnProfessionalIncomeIndividualEntrepreneur'
 		
-		И из выпадающего списка с именем "СтатусФизическогоЛица" я выбираю точное значение 'Самозанятый'
-		И из выпадающего списка с именем "СтатусФизическогоЛица" я выбираю точное значение 'Индивидуальный предприниматель'
+		And I select 'Self-employed' exact value from the drop-down list named "StatusNaturalPerson"
+		And I select 'Sole proprietor' exact value from the drop-down list named "StatusNaturalPerson"
 		
-		И в поле 'Фамилия' я ввожу текст '[ТекФамилия]'
-		И в поле 'Name' я ввожу текст '[TextName]'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'TIN' я ввожу текст '[TextTIN]'
-		И я перехожу к следующему реквизиту
-		И в поле 'ОГРНИП' я ввожу текст '[ТекОГРНИП]'
-		И я перехожу к следующему реквизиту
-		И в поле с именем 'ДатаРегистрации' я ввожу текст '[ТекДатаРегистрации]'
-		И я перехожу к следующему реквизиту
-		И я нажимаю на кнопку 'Save'
+		And I input '[TextLastName]' text in 'LastName' field
+		And I input '[TextName]' text in 'Name' field
+		And I move to the next attribute
+		And I input '[TextTIN]' text in the field named 'TIN'
+		And I move to the next attribute
+		And I input '[TextOGRNIP]' text in 'OGRNIP' field
+		And I move to the next attribute
+		And I input '[TextRegistrationDate]' text in the field named 'DateOfRegistration'
+		And I move to the next attribute
+		And I click 'Save' button
 		И я нажимаю на кнопку 'Записать и закрыть'
-		И я жду закрытия окна 'Business unit*' в течение 20 секунд
+		And I wait 'Business unit*' window closing in 20 seconds
 
-		И я закрываю все окна клиентского приложения
+		And I close all client application windows
 
 Сценарий: Я создаю НовоеЦФО "ТекНаименование", Группа = "ТекГруппа"
 
-		И В командном интерфейсе я выбираю 'General catalogs and settings' 'Business units'
-		Тогда открылось окно 'Business units'
+		And In the command interface I select 'General catalogs and settings' 'Business units'
+		Then 'Business units' window is opened
 		
-		И я нажимаю на кнопку с именем 'CreateNewCompany'
-		Тогда открылось окно 'Company type'
-		И я нажимаю на кнопку с именем 'ВыбратьЦФО'
-		Тогда открылось окно 'Business unit (create)'
-		И в поле с именем 'НаименованиеСокращенное' я ввожу текст '[ТекНаименование]'
-		И я перехожу к следующему реквизиту
+		And I click the button named 'CreateNewCompany'
+		Then 'Company type' window is opened
+		And I click the button named 'SelectCentralFederalDistrict'
+		Then 'Business unit (create)' window is opened
+		And I input '[TextDescription]' text in the field named 'DescriptionShort'
+		And I move to the next attribute
 
-		И я разворачиваю группу "Default regulation parameters"
-		И я нажимаю кнопку выбора у поля "Consolidating company"
-		Тогда открылось окно 'Business units'
-		И в таблице "List" я перехожу к строке:
+		And I expand "Default regulation parameters" group
+		And I click Select button of "Consolidating company" field
+		Then 'Business units' window is opened
+		And I go to line in "List" table:
 			| 'Name in the application' | 
-			| '[TextGroup]' | 
-		И в таблице "List" я выбираю текущую строку
+			| '[TextGroup]' |
+		And I select current line in "List" table
 		
 		И я нажимаю на кнопку 'Записать и закрыть'
-		И я жду закрытия окна 'Business unit *' в течение 20 секунд
+		And I wait 'Business unit *' window closing in 20 seconds
 
-		И я закрываю все окна клиентского приложения
+		And I close all client application windows
 
-Сценарий: Я создаю Склад "TextWarehouse"
+Scenario: I create warehouse "TextWarehouse"
 
-		И В командном интерфейсе я выбираю 'Catalogs' 'Warehouses'
-		Тогда открылось окно 'Warehouses'
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно 'Warehouse (create)'
-		И в поле 'Description' я ввожу текст '[TextWarehouse]'
-		И я нажимаю кнопку выбора у поля "Price type"
-		Тогда открылось окно 'Product range price types'
-		И в таблице "List" я перехожу к строке:
+		And In the command interface I select 'Catalogs' 'Warehouses'
+		Then 'Warehouses' window is opened
+		And I click the button named 'FormCreate'
+		Then 'Warehouse (create)' window is opened
+		And I input '[TextWarehouse]' text in 'Description' field
+		And I click Select button of "Price type" field
+		Then 'Product range price types' window is opened
+		And I go to line in "List" table:
 			| 'Description'  | 'Currency' |
 			| 'Delivery price' | 'RUB'    |
-		И в таблице "List" я выбираю текущую строку
+		And I select current line in "List" table
 		И я нажимаю на кнопку 'Записать и закрыть'
 
-		И я закрываю все окна клиентского приложения
+		And I close all client application windows
 
 Сценарий: Я устанавливаю УстановкаЦенНоменклатуры "ТекНоменклатура", цена = "ТекЦена"
 
-		И в таблице "Goods" я нажимаю на кнопку с именем 'GoodsAdd'
-		И в таблице "Goods" я нажимаю кнопку выбора у реквизита с именем "GoodsProductRange"
-		Тогда открылось окно 'Product range'
-		И в таблице "List" я перехожу к строке:
+		And in the table "Goods" I click the button named 'GoodsAdd'
+		And I click choice button of the attribute named "GoodsProductRange" in "Goods" table
+		Then 'Product range' window is opened
+		And I go to line in "List" table:
 			| 'Description'      |
 			| '[TextNomenclature]' |
-		И в таблице "List" я выбираю текущую строку
-		Тогда открылось окно 'Setting nomenclature prices (creating) *'
+		And I select current line in "List" table
+		Then 'Setting nomenclature prices (creating) *' window is opened
 		
-		И в таблице "Goods" я активизирую поле с именем "GoodsPrice"
-		И в таблице "Товары" в поле с именем 'ТоварыЦена' я ввожу текст '[ТекЦена]'
-		И в таблице "Goods" я завершаю редактирование строки
+		And I activate field named "GoodsPrice" in "Goods" table
+		And I input '[TextPrice]' text in the field named 'GoodsPrice' of "Goods" table
+		And I finish line editing in "Goods" table

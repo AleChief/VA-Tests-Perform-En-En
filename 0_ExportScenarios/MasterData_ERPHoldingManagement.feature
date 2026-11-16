@@ -1,389 +1,389 @@
-﻿#language: ru
+﻿#language: en
 
 @ExportScenarios
 @IgnoreOnCIMainBuild
 
-Функционал: Экспортные сценарии для создания НСИ в 1C:ERP УХ
+Feature: Export scenarios for creating reference data in 1C:ERP Business Management
 
 Сценарий: Я создаю вид номенклатуры с именем 'ТекИмяВидаНоменклатуры' тип 'ТекТип' в 1C:ERPУХ
 
-	* Удаляем товарные категории
-		И В командном интерфейсе я выбираю "CRM and marketing" "Settings and directories"
-		Тогда открылось окно "Settings and directories for CRM and marketing"
-		И я нажимаю на кнопку с именем 'OpenProductCategories'
-		Когда открылось окно "Product categories"
-		И я выбираю пункт контекстного меню с именем 'СписокВидовНоменклатурыКонтекстноеМенюНайти' на элементе формы с именем 'СписокВидовНоменклатуры'
-		Тогда открылась форма с именем 'UniversalListFindExtForm'
-		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Product range type"
-		И в поле с именем 'Pattern' я ввожу текст '[TextNomenclatureTypeName]'
-		И я меняю значение переключателя с именем 'CompareType' на "Exact match"
-		И я нажимаю на кнопку с именем 'Find'
-		Тогда открылось окно "Product categories"
-		Если в таблице 'СписокВидовНоменклатуры' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я нажимаю на кнопку с именем 'ListListSettings'
-			И Я устанавливаю отбор в форме списка 'Description' 'Does not begin with' 'Delete_'
-			И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-				* Ставим пометку на удаление
-					Если в таблице 'List' текущая строка не помечена на удаление Тогда	
-					И я выбираю пункт контекстного меню с именем 'ListContextMenuSetDeletionMark' на элементе формы с именем 'List'
-					Тогда открылось окно "1C:Enterprise"
-					И я нажимаю на кнопку с именем 'Button0'
-				* Переименовываем
-					И Я запоминаю значение выражения '"Удалить_" + СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-					И в таблице 'List' я выбираю текущую строку
-					Тогда открылось окно "* (Product categories)"
-					И в поле с именем 'Description' я ввожу значение переменной 'UID'
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					И я жду закрытия окна '* (Product categories)' в течение 20 секунд						
-			И в таблице 'List' я нажимаю на кнопку с именем 'ListListSettings'
-			И Я снимаю все отборы в форме списка
+	* Deleting product categories
+		And In the command interface I select "CRM and marketing" "Settings and directories"
+		Then "Settings and directories for CRM and marketing" window is opened
+		And I click the button named 'OpenProductCategories'
+		When "Product categories" window is opened
+		And I select context menu item named 'ListProductRangeKindsContextMenuFind' of the form attribute named 'ListProductRangeKinds'
+		Then the form named 'UniversalListFindExtForm' is opened
+		And I select "Product range type" exact value from the drop-down list named 'FieldSelector'
+		And I input '[TextNomenclatureTypeName]' text in the field named 'Pattern'
+		And I change the radio button named 'CompareType' value to "Exact match"
+		And I click the button named 'Find'
+		Then "Product categories" window is opened
+		If number of 'ListNomenclatureTypes' table lines is 'more' 0 Then
+			And in the table 'List' I click the button named 'ListListSettings'
+			And I set filter in list form 'Description' 'Does not begin with' 'Delete_'
+			And While the number of 'List' table lines 'more' 0 Then
+				* Marking for deletion
+					If the current row in 'List' table is not marked for deletion Then
+					And I select context menu item named 'ListContextMenuSetDeletionMark' of the form attribute named 'List'
+					Then "1C:Enterprise" window is opened
+					And I click the button named 'Button0'
+				* Renaming
+					And I save '"Delete_" + StrReplace(New UUID, "-", "")' in 'UID' variable
+					And I select current line in 'List' table
+					Then "* (Product categories)" window is opened
+					And I input 'UID' variable value in the field named 'Description'
+					And I click the button named 'FormWriteAndClose'
+					And I wait '* (Product categories)' window closing in 20 seconds
+			And in the table 'List' I click the button named 'ListListSettings'
+			And I remove all filters in list form
 
-			* Удаляем вид номенклатуры
-				Когда открылось окно "Product categories"
-				И в таблице 'ListProductRangeKinds' я выбираю текущую строку
-				Тогда открылось окно "[TextProductRangeTypeName] (Product range type)"
-				И я разворачиваю группу с именем 'PageGeneral'
-				И Я запоминаю значение выражения '"Удалить_" + СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormSetDeletionMark'
-				Тогда открылось окно "1C:Enterprise"
-				И я нажимаю на кнопку с именем 'Button0'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна '[TextNomenclatureTypeName] (Nomenclature type) *' в течение 20 секунд
-				Тогда открылось окно "Product categories"
-				И Я закрываю окно "Product categories"
+			* Deleting nomenclature type
+				When "Product categories" window is opened
+				And I select current line in 'ListProductRangeKinds' table
+				Then "[TextProductRangeTypeName] (Product range type)" window is opened
+				And I expand the group named 'PageGeneral'
+				And I save '"Delete_" + StrReplace(New UUID, "-", "")' in 'UID' variable
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormSetDeletionMark'
+				Then "1C:Enterprise" window is opened
+				And I click the button named 'Button0'
+				And I click the button named 'FormWriteAndClose'
+				And I wait '[TextNomenclatureTypeName] (Nomenclature type) *' window closing in 20 seconds
+				Then "Product categories" window is opened
+				And I close "Product categories" window
 
-	* Открываем  форму списка	
-		И В командном интерфейсе я выбираю "Quick menu" "Product range"
-		Когда открылось окно "Product range"
+	* Opening list form
+		And In the command interface I select "Quick menu" "Product range"
+		When "Product range" window is opened
 	
-	* Создаем новый элемент
-		И я устанавливаю флаг с именем 'UseFilters'
-		И я нажимаю на кнопку с именем 'CreateProductKind'
-		Тогда открылось окно "Product range type (creation)"
-		И у поля с именем 'ТипНоменклатуры' я нажимаю гиперссылку 'указать'
-		Тогда открылось окно "Select product range type"
-		И я меняю значение переключателя с именем 'ТипНоменклатурыТовар' на '[ТекТип]'
-		И я нажимаю на кнопку с именем 'OK'
-		Тогда открылось окно "Product range type (creation) *"
-		И в поле с именем 'Parent' я ввожу текст ''
-		И в поле с именем 'Description' я ввожу текст '[TextNomenclatureTypeName]'	
-		И я разворачиваю группу с именем 'PageValuesDefault'
-		И из выпадающего списка с именем 'VATRate' я выбираю точное значение '20%'
-		И из выпадающего списка с именем 'UnitOfMeasure' я выбираю по строке "PCs"
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна 'Nomenclature type (Creating) *' в течение 20 секунд
+	* Creating a new element
+		And I set checkbox named 'UseFilters'
+		And I click the button named 'CreateProductKind'
+		Then "Product range type (creation)" window is opened
+		And I click 'specify' hyperlink of the field named 'TypeProductRange'
+		Then "Select product range type" window is opened
+		And I change the radio button named 'TypeNomenclatureGoods' value to '[TextType]'
+		And I click the button named 'OK'
+		Then "Product range type (creation) *" window is opened
+		And I input '' text in the field named 'Parent'
+		And I input '[TextNomenclatureTypeName]' text in the field named 'Description'
+		And I expand the group named 'PageValuesDefault'
+		And I select '20%' exact value from the drop-down list named 'VATRate'
+		And I select from the drop-down list named 'UnitOfMeasure'  by "PCs" string
+		And I click the button named 'FormWriteAndClose'
+		And I wait 'Nomenclature type (Creating) *' window closing in 20 seconds
 
-	* Закрываем формы
-		Когда открылось окно "Product range"
-		И Я закрываю окно "Product range"
+	* Closing forms
+		When "Product range" window is opened
+		And I close "Product range" window
 
 Сценарий: Я создаю соглашение с клиентом с именем 'ТекИмяСоглашения' валютой 'ТекВалюта' в 1C:ERPУХ
 
-	* Удаляем существующие элементы
-		И В командном интерфейсе я выбираю "CRM and marketing" "Standard agreements with customers"
-		И Я в списке "Типовые соглашения об условиях продаж" по полю "Description" ищу элемент '[ТекИмяСоглашения]' "Exact match"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И Я удаляю текущую строку в списке 'List'					
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "Standard sales terms agreement"
-			И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-			И в поле с именем 'Description' я ввожу значение переменной 'UID'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна 'Standard sales terms agreement *' в течение 20 секунд
+	* Deleting existing elements
+		And In the command interface I select "CRM and marketing" "Standard agreements with customers"
+		And I search element '[TextNameAgreement]' "Exact match" by field "Description" in list "Standard sales terms agreements"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I delete current row in list 'List'
+			And I select current line in 'List' table
+			Then "Standard sales terms agreement" window is opened
+			And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+			And I input 'UID' variable value in the field named 'Description'
+			And I click the button named 'FormWriteAndClose'
+			And I wait 'Standard sales terms agreement *' window closing in 20 seconds
 
-	* Создаем элемент
-		Тогда открылось окно "Standard sales terms agreements"
-		И в таблице 'List' я нажимаю на кнопку с именем 'ListCreate'
-		Тогда открылось окно "Standard sales terms agreement (creation)"
-		И в поле с именем 'Description' я ввожу текст '[TextAgreementName]'
-		И я перехожу к закладке с именем 'PageSalesConditions'
-		И из выпадающего списка с именем 'Currency' я выбираю точное значение '[TextCurrency]'
-		И я изменяю флаг с именем 'PriceIncludesVAT'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		Тогда открылось окно "Standard sales terms agreement (creation) *"		
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Standard sales terms agreement (creation) *" в течение 20 секунд
+	* Creating an element
+		Then "Standard sales terms agreements" window is opened
+		And in the table 'List' I click the button named 'ListCreate'
+		Then "Standard sales terms agreement (creation)" window is opened
+		And I input '[TextAgreementName]' text in the field named 'Description'
+		And I move to the tab named 'PageSalesConditions'
+		And I select '[TextCurrency]' exact value from the drop-down list named 'Currency'
+		And I change checkbox named 'PriceIncludesVAT'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		Then "Standard sales terms agreement (creation) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Standard sales terms agreement (creation) *" window closing in 20 seconds
 
-	* Закрываем форму списка
-		Тогда открылось окно "Standard sales terms agreements"
-		И я закрываю окно "Standard sales terms agreements"
+	* Closing a list form
+		Then "Standard sales terms agreements" window is opened
+		And I close "Standard sales terms agreements" window
 
 Сценарий: Я создаю соглашение с поставщиком 'ТекПоставщик' с именем 'ТекИмяСоглашения' валютой 'ТекВалюта' в 1C:ERPУХ
 
-	* Удаляем существующие элементы
-		И В командном интерфейсе я выбираю "Purchases" "Agreements with suppliers"
-		И Я в списке "Соглашения об условиях закупок" по полю "Description" ищу элемент '[ТекИмяСоглашения]' "Exact match"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И Я удаляю текущую строку в списке 'List'					
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "[TextAgreementName] (Purchase terms agreement)"
-			И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-			И в поле с именем 'Description' я ввожу значение переменной 'UID'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна "[TextAgreementName] (Purchase terms agreement) *" в течение 20 секунд
+	* Deleting existing elements
+		And In the command interface I select "Purchases" "Agreements with suppliers"
+		And I search element '[TextAgreementName]' "Exact match" by field "Description" in list "Purchase Terms Agreements"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I delete current row in list 'List'
+			And I select current line in 'List' table
+			Then "[TextAgreementName] (Purchase terms agreement)" window is opened
+			And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+			And I input 'UID' variable value in the field named 'Description'
+			And I click the button named 'FormWriteAndClose'
+			And I wait "[TextAgreementName] (Purchase terms agreement) *" window closing in 20 seconds
 
-	* Создаем элемент
-		Тогда открылось окно "Purchase terms agreements"
-		И в таблице 'List' я нажимаю на кнопку с именем 'ListCreate'
-		Тогда открылось окно "Purchase terms agreement (creation)"
-		И в поле с именем 'Description' я ввожу текст '[TextAgreementName]'
-		И из выпадающего списка с именем "Партнер" я выбираю по строке '[ТекПоставщик]'				
-		И я перехожу к закладке с именем 'GroupPurchasesConditions'
-		И из выпадающего списка с именем 'Currency' я выбираю точное значение '[TextCurrency]'
-		И я изменяю флаг с именем 'PriceIncludesVAT'
-		Тогда открылось окно "1C:Enterprise"
-		И я нажимаю на кнопку с именем 'Button0'
-		Тогда открылось окно "Purchase terms agreement (creation) *"		
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Purchase terms agreement (creation) *" в течение 20 секунд
+	* Creating an element
+		Then "Purchase terms agreements" window is opened
+		And in the table 'List' I click the button named 'ListCreate'
+		Then "Purchase terms agreement (creation)" window is opened
+		And I input '[TextAgreementName]' text in the field named 'Description'
+		And I select from the drop-down list named "Partner"  by '[TextSupplier]' string
+		And I move to the tab named 'GroupPurchasesConditions'
+		And I select '[TextCurrency]' exact value from the drop-down list named 'Currency'
+		And I change checkbox named 'PriceIncludesVAT'
+		Then "1C:Enterprise" window is opened
+		And I click the button named 'Button0'
+		Then "Purchase terms agreement (creation) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Purchase terms agreement (creation) *" window closing in 20 seconds
 
-	* Закрываем форму списка
-		Тогда открылось окно "Purchase terms agreements"
-		И я закрываю окно "Agreements on purchase terms"		
+	* Closing a list form
+		Then "Purchase terms agreements" window is opened
+		And I close "Agreements on purchase terms" window
 
 Сценарий: Я создаю партнера с именем 'ТекИмяПартнера' тип 'ТекТип' в 1C:ERPУХ		
 
-	* Открываем форму списка
-		И В командном интерфейсе я выбираю "Quick menu" "Partners"
-		И я жду открытия окна 'Partners' в течение 20 секунд
-		И Пауза 1
+	* Opening list form
+		And In the command interface I select "Quick menu" "Partners"
+		And I wait 'Partners' window opening in 20 seconds
+		And Delay 1
 
-	* Удаляем существующие элементы	
-		И Я в списке "Партнеры" по полю "Description" ищу элемент '[ТекИмяПартнера]' "Exact match"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И Я удаляю текущую строку в списке 'List'	
-			И Я запоминаю значение выражения '"Удалить_" + СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "[TextPartnerName] (Partner)"
-			* Удаляем контрагентов
-				И В текущем окне я нажимаю кнопку командного интерфейса "Counterparties"
-				Когда открылось окно "[TextPartnerName] (Partner)"
-				И я нажимаю на кнопку с именем 'FormListSettings'
-				И Я устанавливаю отбор в форме списка 'Working name' 'Does not begin with' 'Delete_'
-				И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-					И Я удаляю текущую строку в списке 'List'
-					И в таблице 'List' я выбираю текущую строку
-					Тогда открылось окно "* (Counterparty*)"
-					И в поле с именем 'Description' я ввожу значение переменной 'UID'
-					И я нажимаю на кнопку с именем 'FormWriteAndClose'
-					И я жду закрытия окна '* (Counterparty*)' в течение 20 секунд
-				И я нажимаю на кнопку с именем 'FormListSettings'
-				И Я снимаю все отборы в форме списка
-			* Удаляем договоры
-				И В текущем окне я нажимаю кнопку командного интерфейса "Contracts"
-				И в таблице 'List' я нажимаю на кнопку с именем 'ListListSettings'
-				И Я устанавливаю отбор в форме списка 'Working name' 'Does not begin with' 'Delete_'
-				И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-					И Я удаляю текущую строку в списке 'List'
-					И в таблице 'List' я выбираю текущую строку
-					Тогда открылось окно "* (Contract*)"
-					Если элемент 'EditVersion' доступен для редактирования Тогда 
-						И я нажимаю на кнопку с именем 'EditVersion'
-					И в поле с именем 'Description' я ввожу значение переменной 'UID'
-					И я нажимаю на кнопку с именем 'FormWrite'
-					Тогда открылось окно "*"
-					И Я закрываю окно "*"
-				И в таблице 'List' я нажимаю на кнопку с именем 'ListListSettings'
-				И Я снимаю все отборы в форме списка
-			* Переименовываем
-				И В текущем окне я нажимаю кнопку командного интерфейса "IsMain"
-				Тогда открылось окно "* (Partner)"
-				И в поле с именем 'DescriptionFullCompany' я ввожу значение переменной 'UID'
-				И в поле с именем 'Description' я ввожу значение переменной 'UID'
-				И я нажимаю на кнопку с именем 'FormWriteAndClose'
-				И я жду закрытия окна '* (Partner) *' в течение 20 секунд
+	* Deleting existing elements
+		And I search element '[TextPartnerName]' "Exact match" by field "Description" in list "Partners"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I delete current row in list 'List'
+			And I save '"Delete_" + StrReplace(New UUID, "-", "")' in 'UID' variable
+			And I select current line in 'List' table
+			Then "[TextPartnerName] (Partner)" window is opened
+			* Deleting counterparties
+				And In this window I click command interface button "Counterparties"
+				When "[TextPartnerName] (Partner)" window is opened
+				And I click the button named 'FormListSettings'
+				And I set filter in list form 'Working name' 'Does not begin with' 'Delete_'
+				And While the number of 'List' table lines 'more' 0 Then
+					And I delete current row in list 'List'
+					And I select current line in 'List' table
+					Then "* (Counterparty*)" window is opened
+					And I input 'UID' variable value in the field named 'Description'
+					And I click the button named 'FormWriteAndClose'
+					And I wait '* (Counterparty*)' window closing in 20 seconds
+				And I click the button named 'FormListSettings'
+				And I remove all filters in list form
+			* Deleting contracts
+				And In this window I click command interface button "Contracts"
+				And in the table 'List' I click the button named 'ListListSettings'
+				And I set filter in list form 'Working name' 'Does not begin with' 'Delete_'
+				And While the number of 'List' table lines 'more' 0 Then
+					And I delete current row in list 'List'
+					And I select current line in 'List' table
+					Then "* (Contract*)" window is opened
+					If 'EditVersion' attribute is editable Then
+						And I click the button named 'EditVersion'
+					And I input 'UID' variable value in the field named 'Description'
+					And I click the button named 'FormWrite'
+					Then "*" window is opened
+					And I close "*" window
+				And in the table 'List' I click the button named 'ListListSettings'
+				And I remove all filters in list form
+			* Renaming
+				And In this window I click command interface button "IsMain"
+				Then "* (Partner)" window is opened
+				And I input 'UID' variable value in the field named 'DescriptionFullCompany'
+				And I input 'UID' variable value in the field named 'Description'
+				And I click the button named 'FormWriteAndClose'
+				And I wait '* (Partner) *' window closing in 20 seconds
 
-	* Создаем элемент
-		Тогда открылось окно "Partners"
-		И в таблице 'List' я нажимаю на кнопку с именем 'CreateNew'
-		Тогда открылось окно "Partner (Creating)"
-		И в поле с именем 'НаименованиеПолноеКомпания' я ввожу текст '[ТекИмяПартнера]'
-		И я изменяю флаг с именем '[ТекТип]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна 'Partner (Creating) *' в течение 20 секунд					
+	* Creating an element
+		Then "Partners" window is opened
+		And in the table 'List' I click the button named 'CreateNew'
+		Then "Partner (Creating)" window is opened
+		And I input '[TextPartnerName]' text in the field named 'DescriptionFullCompany'
+		And I change checkbox named 'CurrentType'
+		And I click the button named 'FormWriteAndClose'
+		And I wait 'Partner (Creating) *' window closing in 20 seconds
 
-	* Закрываем формы
-		Когда открылось окно "Partners"
-		И Я закрываю окно "Partners"
+	* Closing forms
+		When "Partners" window is opened
+		And I close "Partners" window
 
 Сценарий: Для партнера 'ТекИмяПартнера' я создаю контрагента с именем 'ТекИмяКонтрагента' вид 'ТекВидКонтрагента' в 1C:ERPУХ
 
-	* Открываем форму списка
-		И В командном интерфейсе я выбираю "Quick menu" "Partners"
-		И я жду открытия окна 'Partners' в течение 20 секунд
+	* Opening list form
+		And In the command interface I select "Quick menu" "Partners"
+		And I wait 'Partners' window opening in 20 seconds
 
-	* Находим партнера			
-		И Я в списке "Партнеры" по полю "Description" ищу и выбираю элемент '[ТекИмяПартнера]' "Exact match"
-		//И в таблице 'List' количество строк 'равно' 1
-		//И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "[TextPartnerName] (Partner)"		
+	* Finding a partner
+		And I search and select element '[TextPartnerName]' "Exact match" by field "Description" in list "Partners"
+		//And in table 'List' the number of rows 'equals' 1
+		//And in table 'List' I select the current row
+		Then "[TextPartnerName] (Partner)" window is opened
 
-	* Удаляем существующие элементы
-		И В текущем окне я нажимаю кнопку командного интерфейса "Counterparties"
-		И Я в списке "[ТекИмяПартнера] (Партнер)" по полю "Рабочее наименование" ищу элемент '[ТекИмяКонтрагента]' "Exact match"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И Я удаляю текущую строку в списке 'List'
-			И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "* (Counterparty*)"
-			И в поле с именем 'Description' я ввожу значение переменной 'UID'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
-			И я жду закрытия окна '* (Counterparty*)' в течение 20 секунд
+	* Deleting existing elements
+		And In this window I click command interface button "Counterparties"
+		And I search element '[TextCounterpartyName]' "Exact match" by field "Working name" in list "[TextPartnerName] (Partner)"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I delete current row in list 'List'
+			And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+			And I select current line in 'List' table
+			Then "* (Counterparty*)" window is opened
+			And I input 'UID' variable value in the field named 'Description'
+			And I click the button named 'FormWriteAndClose'
+			And I wait '* (Counterparty*)' window closing in 20 seconds
 
-	* Создаем контрагента
-		Тогда открылось окно "[TextPartnerName] (Partner)"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Counterparty (create)"
-		И в поле с именем 'Description' я ввожу текст '[TextCounterpartyName]'
-		Когда открылось окно "Counterparty (create)"
-		И из выпадающего списка с именем 'ВидКонтрагента' я выбираю точное значение '[ТекВидКонтрагента]'				
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
+	* Creating a counterparty
+		Then "[TextPartnerName] (Partner)" window is opened
+		And I click the button named 'FormCreate'
+		Then "Counterparty (create)" window is opened
+		And I input '[TextCounterpartyName]' text in the field named 'Description'
+		When "Counterparty (create)" window is opened
+		And I select '[CurrentCounterpartyKind]' exact value from the drop-down list named 'CounterpartyKind'
+		And I click the button named 'FormWriteAndClose'
 
-	* Закрываем форму
-		Когда открылось окно "[TextPartnerName] (Partner)"
-		И Я закрываю окно "[TextPartnerName] (Partner)"
-		Тогда открылось окно "Partners"
-		И Я закрываю окно "Partners"
+	* Closing the form
+		When "[TextPartnerName] (Partner)" window is opened
+		And I close "[TextPartnerName] (Partner)" window
+		Then "Partners" window is opened
+		And I close "Partners" window
 
 Сценарий: Для партнера 'ТекИмяПартнера' контрагента 'ТекИмяКонтрагента' я создаю договор с видом 'ТекВидДоговора' номер 'ТекНомер' от 'ТекДата' организация 'ТекОрганизация' валюта 'ТекВалюта' сумма 'ТекСумма' соглашение 'ТекСоглашение' в 1C:ERPУХ
 
-	* Открываем форму списка
-		И В командном интерфейсе я выбираю "Quick menu" "Partners"
-		И я жду открытия окна 'Partners' в течение 20 секунд
+	* Opening list form
+		And In the command interface I select "Quick menu" "Partners"
+		And I wait 'Partners' window opening in 20 seconds
 
-	* Находим партнера
-		И Я в списке "Партнеры" по полю "Description" ищу элемент '[ТекИмяПартнера]' "Exact match"			
-		И в таблице 'List' количество строк 'равно' 1
-		И в таблице 'List' я выбираю текущую строку
-		Тогда открылось окно "[TextPartnerName] (Partner)"		
+	* Finding a partner
+		And I search element '[TextPartnerName]' "Exact match" by field "Description" in list "Partners"
+		And the number of 'List' table lines is 'equal' 1
+		And I select current line in 'List' table
+		Then "[TextPartnerName] (Partner)" window is opened
 
-	* Находим контрагента
-		И В текущем окне я нажимаю кнопку командного интерфейса "Counterparties"
-		И Я в списке "[ТекИмяПартнера] (Партнер)" по полю "Рабочее наименование" ищу и выбираю элемент '[ТекИмяКонтрагента]' "Exact match"
-		Тогда открылось окно "[TextCounterpartyName] (Counterparty *)"		
+	* Finding a counterparty
+		And In this window I click command interface button "Counterparties"
+		And I search and select element '[CurrentCounterpartyName]' "Exact match" by field "Working name" in list "[CurrentPartnerName] (Partner)"
+		Then "[TextCounterpartyName] (Counterparty *)" window is opened
 
-	* Удаляем договор
-		И В текущем окне я нажимаю кнопку командного интерфейса "Contracts"
-		Тогда открылось окно '[TextCounterpartyName] (Counterparty *)'
-		Если открылось окно 'Check counterparties' Тогда
-			И я нажимаю на кнопку с именем 'ManualCheck'
-		И Я в списке "[ТекИмяКонтрагента] (Контрагент *)" по полю "Рабочее наименование" ищу элемент '[ТекНомер] от [ТекДата]' "Exact match"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И Я удаляю текущую строку в списке 'List'
-			И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "* (Contract*)"
-			Если элемент 'EditVersion' доступен для редактирования Тогда
-				И я нажимаю на кнопку с именем 'EditVersion'						
-			И в поле с именем 'Description' я ввожу значение переменной 'UID'
-			И я нажимаю на кнопку с именем 'FormWrite'
-			Тогда открылось окно "*"
-			И Я закрываю окно "*"
+	* Deleting a contract
+		And In this window I click command interface button "Contracts"
+		Then '[TextCounterpartyName] (Counterparty *)' window is opened
+		If 'Check counterparties' window is opened Then
+			And I click the button named 'ManualCheck'
+		And I search element '[TextNumber] from [TextDate]' "Exact match" by field "Working name" in list "[TextCounterpartyName] (Counterparty *)"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I delete current row in list 'List'
+			And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+			And I select current line in 'List' table
+			Then "* (Contract*)" window is opened
+			If 'EditVersion' attribute is editable Then
+				And I click the button named 'EditVersion'
+			And I input 'UID' variable value in the field named 'Description'
+			And I click the button named 'FormWrite'
+			Then "*" window is opened
+			And I close "*" window
 
-	* Создаем договор
-		И в таблице 'List' я нажимаю на кнопку с именем 'ListCreate'
-		Если открылось окно 'Check counterparties' Тогда
-			И я нажимаю на кнопку с именем 'ManualCheck'
-		Тогда открылось окно "Select contract type"
-		И в таблице 'TypesOfContracts' я перехожу к строке:
+	* Creating a contract
+		And in the table 'List' I click the button named 'ListCreate'
+		If 'Check counterparties' window is opened Then
+			And I click the button named 'ManualCheck'
+		Then "Select contract type" window is opened
+		And I go to line in 'TypesOfContracts' table:
 			| 'Contract kind'     |
 			| '[TextTypeOfAgreement]' |
-		И в таблице 'KindsOfContracts' я выбираю текущую строку
-		Тогда открылось окно "Contract * (create)"
-		И в поле с именем 'Number' я ввожу текст '[CurrentNumber]'
-		И в поле с именем 'Date' я ввожу текст '[CurrentDate]'
-		И в поле с именем 'Description' я ввожу текст "[CurrentNumber] from [CurrentDate]"
-		И из выпадающего списка с именем 'Organization' я выбираю по строке '[TextOrganization]'
-		И из выпадающего списка с именем 'ARAPCurrency' я выбираю точное значение '[CurrentCurrency]'
-		И я устанавливаю флаг с именем 'FixedContractAmount'
-		И в поле с именем 'СуммаДоговора' я ввожу текст '[ТекСумма]'		
-		Тогда открылось окно "Contract with * (Creating) *"
-		И я нажимаю на кнопку с именем 'FormPostAndClose'
-		И я жду закрытия окна 'Contract with * (Creating) *' в течение 20 секунд
+		And I select current line in 'KindsOfContracts' table
+		Then "Contract * (create)" window is opened
+		And I input '[CurrentNumber]' text in the field named 'Number'
+		And I input '[CurrentDate]' text in the field named 'Date'
+		And I input "[CurrentNumber] from [CurrentDate]" text in the field named 'Description'
+		And I select from the drop-down list named 'Organization'  by '[TextOrganization]' string
+		And I select '[CurrentCurrency]' exact value from the drop-down list named 'ARAPCurrency'
+		And I set checkbox named 'FixedContractAmount'
+		And I input '[CurrentAmount]' text in the field named 'AmountContract'
+		Then "Contract with * (Creating) *" window is opened
+		And I click the button named 'FormPostAndClose'
+		And I wait 'Contract with * (Creating) *' window closing in 20 seconds
 
-	* Закрываем форму
-		Когда открылось окно "[TextCounterpartyName] (Counterparty *)"
-		И Я закрываю окно "[TextCounterpartyName] (Counterparty *)"				
-		Когда открылось окно "[TextPartnerName] (Partner)"
-		И Я закрываю окно "[TextPartnerName] (Partner)"
-		Тогда открылось окно "Partners"
-		И Я закрываю окно "Partners"
+	* Closing the form
+		When "[TextCounterpartyName] (Counterparty *)" window is opened
+		And I close "[TextCounterpartyName] (Counterparty *)" window
+		When "[TextPartnerName] (Partner)" window is opened
+		And I close "[TextPartnerName] (Partner)" window
+		Then "Partners" window is opened
+		And I close "Partners" window
 
 Сценарий: Я для организации "ТекОрганизация" создаю подразделение с именем "ТекИмяПодразделения" в 1C:ERPУХ
 
-	* Удаляем существующие элементы
-		И В командном интерфейсе я выбираю "НСИ и администрирование" "Структура предприятия"
-		И Я в списке "Структура предприятия" по полю "Description" ищу элемент '[ТекИмяПодразделения]' "Exact match"
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И Я удаляю текущую строку в списке 'List'					
-			И в таблице 'List' я выбираю текущую строку
-			Тогда открылось окно "[TextDepartmentName] (Department)"
-			И Я запоминаю значение выражения 'СтрЗаменить(Новый УникальныйИдентификатор, "-", "")' в переменную 'UID'
-			И в поле с именем 'Description' я ввожу значение переменной 'UID'
-			И я нажимаю на кнопку с именем 'FormWriteAndClose'
+	* Deleting existing elements
+		And In the command interface I select "Reference data and administration" "Company structure"
+		And I search element '[TextDepartmentName]' "Exact match" by field "Description" in list "Enterprise Structure"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I delete current row in list 'List'
+			And I select current line in 'List' table
+			Then "[TextDepartmentName] (Department)" window is opened
+			And I save 'StrReplace(New UUID, "-", "")' in 'UID' variable
+			And I input 'UID' variable value in the field named 'Description'
+			And I click the button named 'FormWriteAndClose'
 
-	* Создаем элемент
-		Тогда открылось окно "Company structure"
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно "Department (create)"
-		И в поле с именем 'Description' я ввожу текст '[TextDepartmentName]'
-		И из выпадающего списка с именем 'ОрганизацияУХ' я выбираю по строке '[ТекОрганизация]'
-		И из выпадающего списка с именем 'ЦФО' я выбираю по строке '[ТекОрганизация]'
-		Тогда открылось окно "Department (create) *"		
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Department (create) *" в течение 20 секунд
+	* Creating an element
+		Then "Company structure" window is opened
+		And I click the button named 'FormCreate'
+		Then "Department (create)" window is opened
+		And I input '[TextDepartmentName]' text in the field named 'Description'
+		And I select from the drop-down list named 'OrganizationUH'  by '[TextOrganization]' string
+		And I select from the drop-down list named 'CenterForFinancialResponsibility'  by '[TextOrganization]' string
+		Then "Department (create) *" window is opened
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Department (create) *" window closing in 20 seconds
 
-	* Закрываем форму списка
-		Тогда открылось окно "Company structure"
-		И я закрываю окно "Enterprise structure"		
+	* Closing a list form
+		Then "Company structure" window is opened
+		And I close "Enterprise structure" window
 
-Сценарий: Я создаю группы финансового учета номенклатуры с именем 'TheName' в 1C:ERPУХ
+Scenario: I create nomenclature financial accounting groups with name 'TheName' in 1C:ERPUH
 
-	* Открываем список
-		И я открываю основную форму списка справочника 'GroupsFinancialAccountingNomenclature'
-		Тогда открылось окно 'Groups of financial accounting settings for nomenclature'			
+	* Opening a list
+		And I open 'GroupsFinancialAccountingNomenclature' catalog default form
+		Then 'Groups of financial accounting settings for nomenclature' window is opened
 
-	* Удаляем элемент
-		И Я в списке "Groups of financial accounting settings for nomenclature" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "[TheName] (Product range financial accounting settings group)" очищая
+	* Deleting an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Groups of financial accounting settings for nomenclature"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "[TheName] (Product range financial accounting settings group)" clearing
 
-	* Создаем элементм
-		И я нажимаю на кнопку с именем 'FormCreate'
-		И в поле с именем 'Description' я ввожу текст '[TheName]'
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Settings group of financial accounting of product range (creation) *" в течение 20 секунд	
+	* Creating element
+		And I click the button named 'FormCreate'
+		And I input '[TheName]' text in the field named 'Description'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Settings group of financial accounting of product range (creation) *" window closing in 20 seconds
 
-	* Закрываем список
-			И Я закрываю окно 'Groups of financial accounting settings for nomenclature'
+	* Closing a list
+			And I close 'Groups of financial accounting settings for nomenclature' window
 
-Сценарий: Я создаю вид цены с именем 'TheName' валютой 'TheCurrency' в 1C:ERPУХ
+Scenario: I create price kind with name 'TheName' currency 'TheCurrency' in 1C:ERPUH
 	
-	* Открываем форму справочника
-		Дано Я открываю основную форму списка справочника "PriceKinds"
-		Тогда открылось окно 'Price types '
+	* Opening a reference form
+		Given I open "PriceKinds" catalog default form
+		Then 'Price types ' window is opened
 	
-	* Удаляем элемент
-		И Я в списке "Price types" по полю "Description" ищу элемент '[TheName]' "At the beginning of the line"		
-		И Пока в таблице 'List' количество строк 'больше' 0 Тогда
-			И в таблице 'List' я выбираю текущую строку
-			И Я удаляю текущий элемент в окне "* (Price type)" очищая
+	* Deleting an element
+		And I search element '[TheName]' "At the beginning of the line" by field "Description" in list "Price types"
+		And While the number of 'List' table lines 'more' 0 Then
+			And I select current line in 'List' table
+			And I delete current element in window "* (Price type)" clearing
 
-	* Создаем элемент
+	* Creating an element
 
-		И я нажимаю на кнопку с именем 'FormCreate'
-		Тогда открылось окно 'Price type (creation)'
-		И в поле с именем 'Description' я ввожу текст '[TheName]'	
+		And I click the button named 'FormCreate'
+		Then 'Price type (creation)' window is opened
+		And I input '[TheName]' text in the field named 'Description'
 		Если элемент 'CurrencyPrice' присутствует на форме Тогда
-			И из выпадающего списка с именем 'CurrencyPrice' я выбираю точное значение '[TheCurrency]'
+			And I select '[TheCurrency]' exact value from the drop-down list named 'CurrencyPrice'
 		Если элемент 'PriceIncludesVAT' присутствует на форме Тогда
-			И я изменяю флаг с именем 'PriceIncludesVAT'		
-		И я нажимаю на кнопку с именем 'FormWriteAndClose'
-		И я жду закрытия окна "Price type (creation) *" в течение 20 секунд
+			And I change checkbox named 'PriceIncludesVAT'
+		And I click the button named 'FormWriteAndClose'
+		And I wait "Price type (creation) *" window closing in 20 seconds
 
-	* Закрываем список
-		Когда открылось окно "Price types*"
-		И Я закрываю окно "Price types*"
+	* Closing a list
+		When "Price types*" window is opened
+		And I close "Price types*" window
