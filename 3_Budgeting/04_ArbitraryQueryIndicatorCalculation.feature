@@ -80,7 +80,7 @@
 				|'	ItemsPrices.Period AS Date,'|
 				|'	ItemsPrices.Products AS Products,'|
 				|'	MAX(ItemsPrices.Price) AS Price'|
-				|'INTO втCalculated'|
+				|'INTO vtCalculation'|
 				|'FROM'|
 				|'	InformationRegister.ItemsPrices AS ItemsPrices'|
 				|'WHERE'|
@@ -95,18 +95,18 @@
 				|''|
 				|'////////////////////////////////////////////////////////////////////////////////'|
 				|'SELECT'|
-				|'	втCalculated.Date AS Date,'|
-				|'	втCalculated.Products AS Products,'|
-				|'	втCalculated.Price AS Price'|
+				|'	vtCalculation.Date AS Date,'|
+				|'	vtCalculation.Products AS Products,'|
+				|'	vtCalculation.Price AS Price'|
 				|'FROM'|
-				|'	втCalculated AS втCalculated'|
+				|'	vtCalculation AS vtCalculation'|
 		Если '$$IsERPCPM$$' Тогда
 			И в поле с именем 'QueryTextForm' я ввожу текст 
 				|'SELECT'|
 				|'	ItemsPrices.Period AS Date,'|
 				|'	ItemsPrices.Products AS Products,'|
 				|'	MAX(ItemsPrices.Price) AS Price'|
-				|'INTO втCalculated'|
+				|'INTO vtCalculation'|
 				|'FROM'|
 				|'	InformationRegister.ItemsPrices25 AS ItemsPrices'|
 				|'WHERE'|
@@ -121,11 +121,11 @@
 				|''|
 				|'////////////////////////////////////////////////////////////////////////////////'|
 				|'SELECT'|
-				|'	втCalculated.Date AS Date,'|
-				|'	втCalculated.Products AS Products,'|
-				|'	втCalculated.Price AS Price'|
+				|'	vtCalculation.Date AS Date,'|
+				|'	vtCalculation.Products AS Products,'|
+				|'	vtCalculation.Price AS Price'|
 				|'FROM'|
-				|'	втCalculated AS втCalculated'|
+				|'	vtCalculation AS vtCalculation'|
 		И я нажимаю на кнопку с именем 'QueryWizard'
 		Тогда открылось окно "Query wizard"
 		И Я закрываю окно "Query wizard"

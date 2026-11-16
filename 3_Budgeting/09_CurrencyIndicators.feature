@@ -91,7 +91,7 @@
 		И я нажимаю на кнопку с именем 'Union'
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C5'
 		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
-		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст 'Sum (вал)'
+		И в табличный документ 'SpreadsheetFieldTemlate' я ввожу текст 'Amount (currency)'
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C5:R10C5'
 		И я нажимаю на кнопку с именем 'ClearUpContent'
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R11C5'
@@ -142,7 +142,7 @@
 
 Сценарий: 09.04 Создание вида отчета "VA - Currency indicators (recipient)"
 
-	И Я создаю вид отчета с именем "VA - Currency indicators (recipient)" и родителем 'DimenKind - Currency показатели (group)'
+	И Я создаю вид отчета с именем "VA - Currency indicators (recipient)" и родителем 'VA - Currency indicators (group)'
 
 	И Я открываю вид отчета с именем "VA - Currency indicators (recipient)"
 	И я устанавливаю флаг с именем 'ProjectSeparation'	
@@ -854,7 +854,7 @@
 			| "VA - Currency indicators (source)" | ''               | ''            | ''                | ''            | ''             | ''            | ''          | ''         |
 			| ''                                    | ''               | ''            | ''                | ''            | ''             | ''            | ''          | ''         |
 			| ''                                    | "January 2024" | ''            | "February 2024" | ''            | "March 2024" | ''            | "TOTAL"     | "TOTAL"    |
-			| ''                                    | "Value"       | 'Sum (вал)' | "Value"        | 'Sum (вал)' | "Value"     | 'Sum (вал)' | "Value"  | "Value" |
+			| ''                                    | "Value"       | 'Amount (currency)' | "Value"        | 'Amount (currency)' | "Value"     | 'Amount (currency)' | "Value"  | "Value" |
 			| "Revenue"                             | '300,000'        | ''            | '300,000'         | ''            | '300,000'      | ''            | '900,000'   | ''         |
 			| "LLC \"Ganymede\" "                    | '100,000'        | ''            | '100,000'         | ''            | '100,000'      | ''            | '300,000'   | ''         |
 			| "LLC \"Io\" "                         | '200,000'        | ''            | '200,000'         | ''            | '200,000'      | ''            | '600,000'   | ''         |

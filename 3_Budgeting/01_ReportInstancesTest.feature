@@ -316,7 +316,7 @@
 
 	И Я открываю контруктор отчета с именем "VA - Manual entry for all analytics"
 	
-	* Зададим аналитику "Товарные категории"
+	* Зададим аналитику "Product categories"
 		Когда открылось окно "Report wizard"
 		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicator dimensions"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
@@ -334,7 +334,7 @@
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C2'
 		И я нажимаю на кнопку с именем 'CopyAndShiftDown1'		
 
-	* Зададим аналитику 'ВА0Номенклра' 
+	* Зададим аналитику 'VA0Nomenclature' 
 		Когда открылось окно "Report wizard"
 		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicator dimensions"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C3'
@@ -352,7 +352,7 @@
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C3'
 		И я нажимаю на кнопку с именем 'CopyAndShiftDown1'
 
-	* Зададим аналитику 'ВА0Контрагы' 
+	* Зададим аналитику 'VA0Counterparties' 
 		Когда открылось окно "Report wizard"
 		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicator dimensions"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C4'
@@ -370,7 +370,7 @@
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C4'
 		И я нажимаю на кнопку с именем 'CopyAndShiftDown1'
 
-	* Зададим аналитику 'Договоры ВА0Контрагов' 
+	* Зададим аналитику 'VA0Counterparties Contracts' 
 		Когда открылось окно "Report wizard"
 		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicator dimensions"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C5'
@@ -388,7 +388,7 @@
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R7C5'
 		И я нажимаю на кнопку с именем 'CopyAndShiftDown1'
 
-	* Зададим аналитику "Статьи ДДС" 
+	* Зададим аналитику "Cash flow items" 
 		Когда открылось окно "Report wizard"
 		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicator dimensions"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R8C6'
@@ -406,7 +406,7 @@
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R8C6'
 		И я нажимаю на кнопку с именем 'CopyAndShiftDown1'
 
-	* Зададим аналитику "Статьи доходов и расходов" 
+	* Зададим аналитику "Income and expense items" 
 		Когда открылось окно "Report wizard"
 		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicator dimensions"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R9C7'
@@ -565,7 +565,7 @@
 
 	И Я открываю контруктор отчета с именем "VA - Manual entry for all analytics"
 
-	* Снимем раскрытие по валюте у показателя "СтрокаАналитикаВалюта"
+	* Снимем раскрытие по валюте у показателя "LineDimensionCurrency"
 		Когда открылось окно "Report wizard"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R11C1'
 		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
@@ -604,7 +604,7 @@
 
 	И Я открываю контруктор отчета с именем "VA - Manual entry for all analytics"
 
-	* Проверяем кнопку 'Сумма показателей' - 'ГруппаСтрок - Количество'
+	* Проверяем кнопку 'Sum of indicators' - 'LinesGroup - Count'
 		Когда открылось окно "Report wizard*"
 		И из выпадающего списка с именем 'WorkMode' я выбираю точное значение "Indicators calculation formulas"				
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C2'
@@ -614,7 +614,7 @@
 		И я нажимаю на кнопку с именем 'ButtonSum'
 		И я нажимаю на кнопку с именем 'WriteAndCollapse'
 
-	* Вводим формулу вручную - 'ГруппаСтрок - Цена'
+	* Вводим формулу вручную - 'LinesGroup - Price'
 		Когда открылось окно "Report wizard*"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C3'
 		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
@@ -622,7 +622,7 @@
 		И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст "({VAManualEntryForAllAnalytics.LineSynthetic_Price1}+{VAManualEntryForAllAnalytics.LineDimension1_Price1}+{VAManualEntryForAllAnalytics.LineDimension2_Price1}+{VAManualEntryForAllAnalytics.LineDimension3_Price1}+{VAManualEntryForAllAnalytics.LineDimension4_Price1}+{VAManualEntryForAllAnalytics.LineDimension5_Price1}+{VAManualEntryForAllAnalytics.LineDimension6_Price1}+{VAManualEntryForAllAnalytics.LineDimension6Curren_Price1}+{VAManualEntryForAllAnalytics.LineDimensionCurrenc_Price1})/13"
 		И я нажимаю на кнопку с именем 'WriteAndCollapse'
 
-	* Вводим формулу кнопками - 'ГруппаСтрок - Сумма'	
+	* Вводим формулу кнопками - 'LinesGroup - Amount'	
 		Когда открылось окно "Report wizard*"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C4'
 		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
@@ -634,7 +634,7 @@
 		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
 		И я нажимаю на кнопку с именем 'WriteAndCollapse'
 
-	* Копируем формулу - 'СтрокаСинтетика - Сумма'
+	* Копируем формулу - 'LineSynthetic - Amount'
 		Когда открылось окно "Report wizard*"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R2C4'
 		И я нажимаю на кнопку с именем 'CopyFormula'
@@ -645,7 +645,7 @@
 		И в поле с именем 'TextDocumentFieldProcedure' я ввожу текст ' '
 		И я нажимаю на кнопку с именем 'WriteAndCollapse'
 
-	* Вводим формулу через конструктор - 'СтрокаСинтетика - Сумма'
+	* Вводим формулу через конструктор - 'LineSynthetic - Amount'
 		Когда открылось окно "Report wizard*"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R3C4'
 		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
@@ -658,7 +658,7 @@
 		Тогда открылось окно "Report wizard*"
 		И я нажимаю на кнопку с именем 'WriteAndCollapse'
 
-	* Вводим формулу кнопками - 'СтрокаАналитика1 - Сумма'
+	* Вводим формулу кнопками - 'LineDimension1 - Amount'
 		Когда открылось окно "Report wizard*"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C4'
 		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
@@ -670,7 +670,7 @@
 		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
 		И я нажимаю на кнопку с именем 'WriteAndCollapse'
 
-	* Вводим формулу копированием - 'СтрокаАналитика6Валюта - Сумма'
+	* Вводим формулу копированием - 'LineDimension6Currency - Amount'
 		Когда открылось окно "Report wizard*"
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R4C4'
 		И я нажимаю на кнопку с именем 'CopyFormula'
@@ -678,7 +678,7 @@
 		И я нажимаю на кнопку с именем 'InsertFormula'
 
 	* Редактируем формулу через форму источников данных
-		* Добавляем операнд "Количество"
+		* Добавляем операнд "Count"
 			Когда открылось окно "Report wizard*"
 			И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R10C4'
 			И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
@@ -697,7 +697,7 @@
 			Тогда открылось окно "VA - Manual entry for all analytics_LineDimension1 count (Data source) *"
 			И я нажимаю на кнопку с именем 'FormWriteAndClose'
 			И я жду закрытия окна "VA - Manual entry for all analytics_LineDimension1 count *" в течение 5 секунд
-		* Добавляем операнд "Цена"
+		* Добавляем операнд "Price"
 			Когда открылось окно "Data sources"
 			И я нажимаю на кнопку с именем 'FormFind'
 			Тогда открылась форма с именем 'UniversalListFindExtForm'
@@ -767,7 +767,7 @@
 		И я нажимаю на кнопку создать поля с именем 'AdditionalTemplatesForm'
 		Тогда открылось окно "Template *"
 		И я нажимаю на кнопку с именем 'ShowIndicatorsPanel'
-		И в поле с именем 'Description' я ввожу текст "Дополнительный бланк"
+		И в поле с именем 'Description' я ввожу текст "Additional template"
 		И из выпадающего списка с именем 'TemplateToDisplay' я выбираю точное значение "Only to display"
 		И я нажимаю на кнопку с именем 'CreateTemplateWithDesigner'
 		Тогда открылось окно "1C:Enterprise"
@@ -1008,7 +1008,7 @@
 		И Я ввожу значение '99.00000' в ячейку 'R46C9'
 		И я нажимаю на кнопку с именем 'SpreadsheetFieldTemplateCopyDataOnColumn'		
 
-	* Тестируем кнопку 'Отобразить примечания'
+	* Тестируем кнопку 'Show comments'
 		Когда открылось окно '$WindowTitle$'
 		И я нажимаю на кнопку с именем 'FormDisplayComments'
 		И в поле с именем 'AnalyticalTemplateNote' я ввожу текст "Comment"
@@ -1345,10 +1345,10 @@
 		И элемент формы с именем 'AdditionalCurrencies' стал равен ""
 		И у элемента формы с именем 'UnitOfMeasure' текст редактирования стал равен "units"
 		И элемент формы с именем 'CopyingValue' стал равен ""
-		И элемент формы с именем 'OuterИнформационнаяБаза' стал равен "Current infobase"
+		И элемент формы с именем 'ExternalInfobase' стал равен "Current infobase"
 		И элемент формы с именем 'Organization' стал равен "System LLC"
 		И элемент формы с именем 'MainCurrency' стал равен "RUB"
-		И элемент формы с именем 'PeriodicityОтчета' стал равен "Month"
+		И элемент формы с именем 'ReportFrequency' стал равен "Month"
 		И элемент формы с именем 'EndingPeriod' стал равен "March 2024"
 		И элемент формы с именем 'ReportPeriod' стал равен "January 2024"
 		И элемент формы с именем 'ProcessingRule' стал равен "VA - Manual entry for all analytics"
@@ -1387,7 +1387,7 @@
 		И элемент формы с именем 'AccuracyLevel' стал равен "2"
 		И элемент формы с именем 'ReportGenerationMethod' стал равен "Collapse by period"
 		И элемент формы с именем 'RollupFrequency' стал равен "Day"
-		И я нажимаю на кнопку с именем 'НастройкиОбработкиДокументов'
+		И я нажимаю на кнопку с именем 'DocumentsProcessingSettings'
 		Тогда открылось окно "1C:Enterprise"
 		И я нажимаю на кнопку с именем 'Button0'
 		И Я закрываю окно "Document settings"
@@ -1412,7 +1412,7 @@
 		Когда открылось окно '$WindowTitle$'
 		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\01\DimenKind_ReportKindFrom1Аналитиками_Пустой.mxl'
 
-	* Проверяем периодичность в "Свернуть по периоду"
+	* Проверяем периодичность в "Collapse by period"
 		Когда открылось окно '$WindowTitle$'
 		И я нажимаю на кнопку с именем 'FormFillInUsingAnotherApproach'
 		Тогда открылось окно "Select method to calculate indicators"
@@ -1422,7 +1422,7 @@
 		Когда открылось окно '$WindowTitle$'	
 		Дано Табличный документ 'SpreadsheetFieldTemlate' равен макету '3_Budgeting\Templates\01\DimenKind_ReportKindFrom1Аналитиками_Пустой.mxl'		
 
-	* Рассчитываем по "Консолидировать периметр (МСФО)"
+	* Рассчитываем по "Consolidate perimeter (IFRS)"
 		Когда открылось окно '$WindowTitle$'
 		И я нажимаю на кнопку с именем 'FormFillInUsingAnotherApproach'
 		И элемент формы с именем 'ReportGenerationMethod' стал равен "By processing rule"
@@ -1461,7 +1461,7 @@
 		И я нажимаю на кнопку с именем 'SpreadsheetFieldTemplateCopyDataOnColumn'
 		И я нажимаю на кнопку с именем 'SpreadsheetFieldTemplateCopyDataOnRow'
 				
-	* Рассчитываем по "Консолидировать периметр (Пропорционально)"
+	* Рассчитываем по "Consolidate perimeter (Proportionally)"
 		Когда открылось окно '$WindowTitle$'
 		И я нажимаю на кнопку с именем 'FormFillInUsingAnotherApproach'
 		Тогда открылось окно "Select method to calculate indicators"
@@ -2197,7 +2197,7 @@
 		Тогда открылось окно "Pivol table options"
 		И в таблице 'List' я выбираю текущую строку
 		Тогда Открылась сводная таблица для варианта "VA - Main variant"
-		И я запоминаю текущее окно как 'WindowTitleВарианта'
+		И я запоминаю текущее окно как 'WindowTitleVariant'
 		И я нажимаю на кнопку с именем 'UpdateTabData'
 		И я жду открытия формы '$WindowTitleВарианта$' в течение 20 секунд
 		И из выпадающего списка с именем 'Divisor' я выбираю точное значение "thousands"

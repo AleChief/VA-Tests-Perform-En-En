@@ -381,11 +381,11 @@
 					Если '$$IsERPCPM$$' Тогда
 						И в таблице 'FieldsTreeDB' я перехожу к строке:
 							| "Field"    |
-							| 'Kind цены' |
+							| 'Price type' |
 						И я нажимаю на кнопку с именем 'AddConditionItem'
 						И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
 							| "Field"       |
-							| "[Вид цены]" |
+							| "[Price type]" |
 					И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Fixed value"
 					И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'DefiningMethodClarification' я выбираю по строке "VA - Products"
 					И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
@@ -482,7 +482,7 @@
 Сценарий: 06.06 Проверка на рекурсивное вложение дополнения аналитик
 
 	И Я открываю контруктор отчета с именем "VA - Analysts from fields of other sources"
-	И Я в конструкторе отчета добавляю строку с именем 'Recursion в аналитиках'
+	И Я в конструкторе отчета добавляю строку с именем 'Recursion in analytics'
 	И Я в конструкторе отчета добавляю аналитику с кодом "VA0Product" в ячейку 'R7C3'
 
 	* Вводим источники данных	

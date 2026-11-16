@@ -269,11 +269,11 @@
 				Если '$$IsERPCPM$$' Тогда
 					И в таблице 'FieldsTreeDB' я перехожу к строке:
 						| "Field"    |
-						| 'Kind цены' |
+						| 'Price type' |
 					И я нажимаю на кнопку с именем 'AddConditionItem'
 					И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
 						| "Field"       |
-						| "[Вид цены]" | 
+						| "[Price type]" | 
 				И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
 				И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
 				И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Fixed value"
@@ -443,8 +443,8 @@
 					Когда открылось окно "Product range"
 					И Я закрываю окно "Product range"
 				Если '$$IsERPCPM$$' Тогда
-					Когда открылось окно "Виды номенклатуры"
-					И Я закрываю окно "Виды номенклатуры"
+					Когда открылось окно "Nomenclature types"
+					И Я закрываю окно "Nomenclature types"
 				И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'DefiningMethodClarification' я выбираю по строке "VA - Products"
 				И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
 				И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
@@ -539,11 +539,11 @@
 				Если '$$IsERPCPM$$' Тогда
 					И в таблице 'FieldsTreeDB' я перехожу к строке:
 						| "Field"             |
-						| 'Kind номенклатуры' |
+						| 'Product kind' |
 					И я нажимаю на кнопку с именем 'AddConditionItem'
 					И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
 						| "Field"               |
-						| '[Kind номенклатуры]' |
+						| '[Nomenclature type]' |
 					И в таблице 'TreeOfFilterParametersDB' я активизирую поле с именем 'ParameterCalculationMethod'
 					И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
 					И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Fixed value"
@@ -1308,10 +1308,10 @@
 		И элемент формы с именем 'AdditionalCurrencies' стал равен "USD; EUR"
 		И у элемента формы с именем 'UnitOfMeasure' текст редактирования стал равен "units"
 		И элемент формы с именем 'CopyingValue' стал равен "Report instance *" по шаблону
-		И элемент формы с именем 'OuterИнформационнаяБаза' стал равен "Current infobase"
+		И элемент формы с именем 'ExternalInfobase' стал равен "Current infobase"
 		И элемент формы с именем 'Organization' стал равен "Mercury LLC"
 		И элемент формы с именем 'MainCurrency' стал равен "RUB"
-		И элемент формы с именем 'PeriodicityОтчета' стал равен "Month"
+		И элемент формы с именем 'ReportFrequency' стал равен "Month"
 		И элемент формы с именем 'RollupFrequency' стал равен "Ten-day period"
 		И элемент формы с именем 'EndingPeriod' стал равен "March 2024"
 		И элемент формы с именем 'ReportPeriod' стал равен "January 2024"

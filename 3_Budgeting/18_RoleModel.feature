@@ -44,7 +44,7 @@
 
 	* Редактируем структуру отчета
 		И Я в конструкторе отчета добавляю строку с именем "ReportLine"
-		И Я в конструкторе отчета добавляю строку с именем "ReportLineХ2"
+		И Я в конструкторе отчета добавляю строку с именем "ReportRowX2"
 		И Я в конструкторе отчета добавляю колонку с именем "Amount"
 		И Я в конструкторе отчета добавляю аналитику с кодом "VA0IEItems" в ячейку 'R3C3'
 
@@ -186,7 +186,7 @@
 	И Для шаблона корректировки значений показателей с имененм <ТекВидОтчета> я заполняю таблицу корректировок значениями
 		| "Report type"   | "Indicator"           |
 		| <ТекВидОтчета> | "ReportLine amount"   |
-		| <ТекВидОтчета> | "ReportLineХ2 amount" |
+		| <ТекВидОтчета> | "ReportRowX2 amount" |
 
 Примеры:
 	| ТекВидОтчета                              |
@@ -271,7 +271,7 @@
 	
 	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
 
-	* Отчета "ВА - Проверка настроек доступа (нет)" не должно быть в списке
+	* Отчета "VA - Checking access settings (no)" не должно быть в списке
 		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report types and templates"
 		Тогда открылось окно "Report types and templates"
 		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
@@ -282,7 +282,7 @@
 		И я нажимаю на кнопку с именем 'Find'				
 		Тогда в таблице 'ReportKindList' количество строк "равно" 0
 				
-	* Ищем отчет "ВА - Проверка настроек доступа (запись)"
+	* Ищем отчет "VA - Checking access settings (record)"
 		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
 		Тогда открылась форма с именем 'UniversalListFindExtForm'
 		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
@@ -474,7 +474,7 @@
 		Тогда открылось окно "VA - Checking access settings (no) (Calculation rules)"
 		И Я закрываю окно "VA - Checking access settings (no) (Calculation rules)"
 		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'OuterИнформационнаяБаза'
+		И я нажимаю на кнопку открытия поля с именем 'ExternalInfobase'
 		Тогда открылось окно "Current infobase (External infobases)"
 		И Я закрываю окно "Current infobase (External infobases)"
 		Тогда открылось окно "Document settings"
@@ -495,7 +495,7 @@
 		И я очищаю окно сообщений пользователю
 		Тогда элемент формы с именем 'PeriodManagement' стал равен ""
 		Тогда элемент формы с именем 'Organization' стал равен ""	
-		Тогда элемент формы с именем 'PeriodicityОтчета' стал равен "Month"
+		Тогда элемент формы с именем 'ReportFrequency' стал равен "Month"
 		Тогда элемент формы с именем 'ReportPeriod' стал равен ""	
 		Тогда элемент формы с именем 'EndingPeriod' стал равен ""	
 		Тогда элемент формы с именем 'RegulationVersion' стал равен ""	
@@ -509,7 +509,7 @@
 		И элемент формы с именем 'AdditionalCurrencies' стал равен "USD; EUR"
 		И элемент формы с именем 'Organization' стал равен ""
 		И элемент формы с именем 'MainCurrency' стал равен "RUB"
-		И элемент формы с именем 'PeriodicityОтчета' стал равен "Month"
+		И элемент формы с именем 'ReportFrequency' стал равен "Month"
 		И элемент формы с именем 'EndingPeriod' стал равен "March 2024"
 		И элемент формы с именем 'ReportPeriod' стал равен "January 2024"
 		И элемент формы с именем 'RegulationVersion' стал равен "VA - Main regulations"
@@ -520,7 +520,7 @@
 		Когда открылось окно "Document settings *"
 		И я нажимаю кнопку очистить у поля с именем 'Scenario'
 		Тогда элемент формы с именем 'PeriodManagement' стал равен ""		
-		Тогда элемент формы с именем 'PeriodicityОтчета' стал равен "Month"
+		Тогда элемент формы с именем 'ReportFrequency' стал равен "Month"
 		Тогда элемент формы с именем 'ReportPeriod' стал равен ""	
 		Тогда элемент формы с именем 'EndingPeriod' стал равен ""	
 		Тогда элемент формы с именем 'RegulationVersion' стал равен ""	
@@ -532,7 +532,7 @@
 		Тогда элемент формы с именем 'Dimension1' стал равен "Administration"
 		И элемент формы с именем 'AdditionalCurrencies' стал равен "USD; EUR"
 		И элемент формы с именем 'MainCurrency' стал равен "RUB"
-		И элемент формы с именем 'PeriodicityОтчета' стал равен "Month"
+		И элемент формы с именем 'ReportFrequency' стал равен "Month"
 		И элемент формы с именем 'EndingPeriod' стал равен "March 2024"
 		И элемент формы с именем 'ReportPeriod' стал равен "January 2024"
 		И элемент формы с именем 'RegulationVersion' стал равен "VA - Main regulations"
@@ -820,7 +820,7 @@
 		Тогда открылось окно "VA - Checking access settings (no) (Calculation rules)"
 		И Я закрываю окно "VA - Checking access settings (no) (Calculation rules)"
 		Тогда открылось окно "Document settings"
-		И я нажимаю на кнопку открытия поля с именем 'OuterИнформационнаяБаза'
+		И я нажимаю на кнопку открытия поля с именем 'ExternalInfobase'
 		Тогда открылось окно "Current infobase (External infobases)"
 		И Я закрываю окно "Current infobase (External infobases)"
 		Тогда открылось окно "Document settings"
@@ -991,7 +991,7 @@
 
 		* Пользователь
 			И В командном интерфейсе я выбираю "Quick menu" "Personal settings"
-			Тогда открылось окно "Мои настройки"
+			Тогда открылось окно "My settings"
 			И я нажимаю на кнопку с именем 'UserInfo'
 			Тогда открылось окно "Budgeting1 (User)"
 			И В текущем окне я нажимаю кнопку командного интерфейса "Setup options"
@@ -1000,16 +1000,16 @@
 			И Я закрываю окно "Budgeting1 (User)"
 
 		* Мои настройки
-			Когда открылось окно "Мои настройки"
+			Когда открылось окно "My settings"
 			И я снимаю флаг с именем 'AskConfirmationOnExit'
-			И Я закрываю окно "Мои настройки"
+			И Я закрываю окно "My settings"
 
 		* Мои настройки еще раз	
 			И В командном интерфейсе я выбираю "Quick menu" "Personal settings"
 			Тогда элемент формы с именем 'AskConfirmationOnExit' стал равен "No"
 
 		* Закрываем форму	
-			И Я закрываю окно "Мои настройки"					
+			И Я закрываю окно "My settings"					
 
 	Иначе
 
@@ -1022,7 +1022,7 @@
 			Если 'NOT $$ЭтоPerform$$' Тогда
 				И из выпадающего списка с именем 'MainCompany' я выбираю по строке "Mercury LLC"
 				И из выпадающего списка с именем 'MainVATRate' я выбираю точное значение "20%"
-				И я устанавливаю флаг с именем 'ShowGLAccountsINДокументах'
+				И я устанавливаю флаг с именем 'ShowGLAccountsInDocuments'
 			И я снимаю флаг с именем 'AskConfirmationOnExit'				
 			Когда открылось окно "Personal settings *"				
 			И я нажимаю на кнопку с именем 'FormWriteAndClose'
@@ -1035,7 +1035,7 @@
 				И элемент формы с именем 'MainCompany' стал равен "Mercury LLC"
 				// ДОДЕЛАТЬ: Ошибка БП
 				//И элемент формы с именем 'MainVATRate' стал равен "20%"
-				И элемент формы с именем 'ShowGLAccountsINДокументах' стал равен "Yes"
+				И элемент формы с именем 'ShowGLAccountsInDocuments' стал равен "Yes"
 			Тогда элемент формы с именем 'AskConfirmationOnExit' стал равен "No"
 			
 		* Пользователь
@@ -1044,7 +1044,7 @@
 			Тогда открылось окно "Budgeting1 (User)"
 			И В текущем окне я нажимаю кнопку командного интерфейса "Setup options"
 			Если 'NOT $$ЭтоPerform$$' Тогда
-				И В текущем окне я нажимаю кнопку командного интерфейса "Контактные лица"
+				И В текущем окне я нажимаю кнопку командного интерфейса "Contact persons"
 			И В текущем окне я нажимаю кнопку командного интерфейса "Access rights"
 			И В текущем окне я нажимаю кнопку командного интерфейса "Settings"
 			И Я закрываю окно "Budgeting1 (User)"
@@ -1073,7 +1073,7 @@
 	И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Report types and templates"
 	Тогда открылось окно "Report types and templates"
 
-	* Ищем отчет "ВА - Проверка настроек доступа (запись)"
+	* Ищем отчет "VA - Checking access settings (record)"
 		И в таблице 'ReportKindList' я нажимаю на кнопку с именем 'ReportKindListFind'
 		Тогда открылась форма с именем 'UniversalListFindExtForm'
 		И из выпадающего списка с именем 'FieldSelector' я выбираю точное значение "Report type"
@@ -1298,7 +1298,7 @@
 	И таблица 'TableOfAdjustments' стала равной:
 		| "Report type"                              | "Indicator"           |
 		| "VA - Checking access settings (reading)" | "ReportLine amount"   |
-		| "VA - Checking access settings (reading)" | "ReportLineХ2 amount" |
+		| "VA - Checking access settings (reading)" | "ReportRowX2 amount" |
 	И Я закрываю окно "VA - Checking access settings (reading) (Indicator value adjustments templates)"
 	
 	Тогда открылось окно "Indicator value adjustments templates"
@@ -1445,10 +1445,10 @@
 		И в таблице 'List' я выбираю текущую строку
 
 		Тогда открылось окно "Mercury LLC (Company)"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Лandца From правом подпandFromand"
+		И В текущем окне я нажимаю кнопку командного интерфейса "Authorized signatories"
 		И В текущем окне я нажимаю кнопку командного интерфейса "Bank accounts"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Кассы предприятия"
-		И В текущем окне я нажимаю кнопку командного интерфейса "Налоговые инспекции to forлогу for прибыль to региоforм"
+		И В текущем окне я нажимаю кнопку командного интерфейса "Company cash registers"
+		И В текущем окне я нажимаю кнопку командного интерфейса "Tax authorities for profit tax by regions"
 		// ДОДЕЛАТЬ: Сейчас не работает
 		//И В текущем окне я нажимаю кнопку командного интерфейса "Accounting policy settings"
 		И В текущем окне я нажимаю кнопку командного интерфейса "Stored files of business units"
@@ -1471,12 +1471,12 @@
 			| "Name in the application" | "Company type"       |
 			| "Mercury LLC"             | "Tax resident" |	
 	
-		И я нажимаю на кнопку с именем 'FormUseОсновным'
-		И я нажимаю на кнопку с именем 'FormUseОсновным'
+		И я нажимаю на кнопку с именем 'FormUseAsMain'
+		И я нажимаю на кнопку с именем 'FormUseAsMain'
 	
 		И я нажимаю на кнопку с именем 'SubmenuPrintNormal__Attributes'
-		Тогда открылось окно "Print tools реквизитов Mercury LLC"
-		И Я закрываю окно "Print tools реквизитов Mercury LLC"
+		Тогда открылось окно "Print details of Mercury LLC"
+		И Я закрываю окно "Print details Mercury LLC"
 
 		Тогда открылось окно "Business units"
 		И я нажимаю на кнопку с именем 'CommonCommandAttachedFiles'
@@ -1490,12 +1490,12 @@
 		И Я закрываю окно "Additional information records"
 
 		Тогда открылось окно "Business units"
-		И я нажимаю на кнопку с именем 'FormРегламентированныеCPM'
+		И я нажимаю на кнопку с именем 'FormRegulatedManagementAccounting'
 		Тогда таблица 'List' содержит '2' строк из списка:
 			| "Name in the application" | "TIN" | "FNP" | "Company type"       |
 			| "Mercury LLC"             | ""    | ""    | "Tax resident" |
 			| "System LLC"              | ""    | ""    | "Tax resident" |
-		И я нажимаю на кнопку с именем 'FormРегламентированныеCPM'
+		И я нажимаю на кнопку с именем 'FormRegulatedManagementAccounting'
 
 		И в таблице 'List' я выбираю текущую строку
 		Тогда открылось окно "Mercury LLC (Business unit)"
@@ -1536,7 +1536,7 @@
 	ИначеЕсли '$$IsERPCPM$$' Тогда	
 		Тогда Таблица 'List' содержит '6' строк из списка:
 			| "Code"        | "Description"              | "Value type"                     | "Create if search failed during import" | "Update attributes during import" | "Divide by companies" |
-			| "VA0Contrac" | "Counterparty contracts"     | "Contract From контрагентом"           | "No"                                        | "No"                             | "No"                       |
+			| "VA0Contrac" | "Counterparty contracts"     | "Contract with counterparty"           | "No"                                        | "No"                             | "No"                       |
 			| "VA0Counter" | "Counterparties"               | "Counterparty"                       | "No"                                        | "No"                             | "No"                       |
 			| "VA0Product" | "Product range"              | "Product range"                     | "No"                                        | "No"                             | "No"                       |
 			| "VA0CFItems" | "Cash flow items"                | "Cash flow item" | "No"                                        | "No"                             | "No"                       |
@@ -1628,11 +1628,11 @@
 		
 		Тогда открылось окно "Report instance matrix"
 		И в таблице 'SettingsComposerSettingsFilter' я перехожу к строке:
-			| "Field"       | "Применение" | "Display mode" |
+			| "Field"       | "Application" | "Display mode" |
 			| "Report type" | "Обычное"    | "Quick access"    |
 		И в таблице 'SettingsComposerSettingsFilter' я устанавливаю флаг с именем 'SettingsComposerSettingsFilterUse'
 		И в таблице 'SettingsComposerSettingsFilter' я активизирую поле с именем 'SettingsComposerSettingsFilterComparisonType'
-		И в таблице 'SettingsComposerSettingsFilter' из выпадающего списка с именем 'SettingsComposerSettingsFilterComparisonType' я выбираю точное значение "IN группе"
+		И в таблице 'SettingsComposerSettingsFilter' из выпадающего списка с именем 'SettingsComposerSettingsFilterComparisonType' я выбираю точное значение "In group"
 		И в таблице 'SettingsComposerSettingsFilter' я активизирую поле с именем 'SettingsComposerSettingsFilterRightValue'
 		И в таблице 'SettingsComposerSettingsFilter' из выпадающего списка с именем 'SettingsComposerSettingsFilterRightValue' я выбираю по строке "VA - Checking access settings (group)"
 		И в таблице 'SettingsComposerSettingsFilter' я завершаю редактирование строки
@@ -1659,7 +1659,7 @@
 			| ''                                                                                              | ''                     | " - Report instance in состоянии \"Отпраinлен for уточнение\""   | ''           | ''          | ''         | ''             | ''            |
 			| ''                                                                                              | ''                     | " - Report instance in состоянии \"Утinержден\""                | ''           | ''          | ''         | ''             | ''            |
 			| ''                                                                                              | ''                     | " - Report instance in FromоFromтоянии \"Filled From ошибками\""      | ''           | ''          | ''         | ''             | ''            |
-			| ''                                                                                              | "Х"                    | " - Для report type данная аналитика не используется"          | ''           | ''          | ''         | ''             | ''            |
+			| ''                                                                                              | "X"                    | " - This dimension is not used for the report type"          | ''           | ''          | ''         | ''             | ''            |
 
 	* Закрываем отчет НЕ сохраняя вариант
 		Тогда открылось окно "Report instance matrix"
@@ -1672,40 +1672,40 @@
 	И я подключаю TestClient "CPM - Budget" логин "Budgeting1" пароль ''
 
 	* Открываем отчет
-		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Setting обработки документов"
-		Тогда открылось окно "Setting обработки документов"
+		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Document processing setting"
+		Тогда открылось окно "Document processing setting"
 		И я нажимаю на кнопку с именем 'FormSettings'
 		И из выпадающего списка с именем 'RegulationVersion' я выбираю по строке "VA - Main regulations"
-		Когда открылось окно "Setting обработки документов"		
+		Когда открылось окно "Document processing setting"		
 		И я нажимаю кнопку выбора у поля с именем 'PeriodManagement'
 		И Я нахожу и выбираю документ управления отчетным периодом по сценарию "VA - Main scenario" и периоду начала "January 2024"
 
-		Когда открылось окно "Setting обработки документов"
+		Когда открылось окно "Document processing setting"
 		И в таблице 'SettingsComposerSettingsFilter' я перехожу к строке:
-			| "Field"       | "Применение" | "Display mode" |
+			| "Field"       | "Application" | "Display mode" |
 			| "Report type" | "Обычное"    | "Quick access"    |
 		И в таблице 'SettingsComposerSettingsFilter' я устанавливаю флаг с именем 'SettingsComposerSettingsFilterUse'
 		И в таблице 'SettingsComposerSettingsFilter' я активизирую поле с именем 'SettingsComposerSettingsFilterComparisonType'
-		И в таблице 'SettingsComposerSettingsFilter' из выпадающего списка с именем 'SettingsComposerSettingsFilterComparisonType' я выбираю точное значение "IN группе"
+		И в таблице 'SettingsComposerSettingsFilter' из выпадающего списка с именем 'SettingsComposerSettingsFilterComparisonType' я выбираю точное значение "In group"
 		И в таблице 'SettingsComposerSettingsFilter' я активизирую поле с именем 'SettingsComposerSettingsFilterRightValue'
 		И в таблице 'SettingsComposerSettingsFilter' из выпадающего списка с именем 'SettingsComposerSettingsFilterRightValue' я выбираю по строке "VA - Checking access settings (group)"
 		И в таблице 'SettingsComposerSettingsFilter' я завершаю редактирование строки
 
 		И в таблице 'SettingsComposerSettingsFilter' я перехожу к строке:
-			| "Field"                                      | "Применение" | "Display mode" |
-			| "Template корректировок значений indicators" | "Обычное"    | "Quick access"    |
+			| "Field"                                      | "Application" | "Display mode" |
+			| "Indicator value adjustment template" | "Обычное"    | "Quick access"    |
 		И в таблице 'SettingsComposerSettingsFilter' я устанавливаю флаг с именем 'SettingsComposerSettingsFilterUse'
 		И в таблице 'SettingsComposerSettingsFilter' я завершаю редактирование строки
 
 		И в таблице 'SettingsComposerSettingsFilter' я перехожу к строке:
-			| "Field"              | "Применение" | "Display mode" |
-			| "Template трансляций" | "Обычное"    | "Quick access"    |
+			| "Field"              | "Application" | "Display mode" |
+			| "Translation template" | "Обычное"    | "Quick access"    |
 		И в таблице 'SettingsComposerSettingsFilter' я устанавливаю флаг с именем 'SettingsComposerSettingsFilterUse'
 		И в таблице 'SettingsComposerSettingsFilter' я завершаю редактирование строки
 
 		И в таблице 'SettingsComposerSettingsFilter' я перехожу к строке:
-			| "Field"                                   | "Применение" | "Display mode" |
-			| "Template трансформационных корректировок" | "Обычное"    | "Quick access"    |
+			| "Field"                                   | "Application" | "Display mode" |
+			| "Transformational adjustment template" | "Обычное"    | "Quick access"    |
 		И в таблице 'SettingsComposerSettingsFilter' я устанавливаю флаг с именем 'SettingsComposerSettingsFilterUse'
 		И в таблице 'SettingsComposerSettingsFilter' я завершаю редактирование строки
 		
@@ -1716,21 +1716,21 @@
 			| "Document template / Company"          | ''            | ''            | ''                      | "Venus LLC"                                             | "Earth LLC"                                              | "Mars LLC"                                               | "Mercury LLC"                                           | "System LLC"                                            |
 			| ''                                        | "Project"      | "Dimension1"  | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
 			| "VA - Checking access settings (record)" | ''            | ''            | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
-			| ''                                        | "< По всем >" | "< По всем >" | "Template для отображения" | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
+			| ''                                        | "< По всем >" | "< По всем >" | "Template to show" | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Pivot table template" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" |
 			| ''                                        | ''            | ''            | "Processing rule"     | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Check rule"      | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Generation method"   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   |
 			| "VA - Checking access settings (reading)" | ''            | ''            | ''                      | ''                                                       | ''                                                       | ''                                                       | ''                                                       | ''                                                       |
-			| ''                                        | "< По всем >" | "< По всем >" | "Template для отображения" | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
+			| ''                                        | "< По всем >" | "< По всем >" | "Template to show" | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Pivot table template" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" | "VA - Checking access settings (no) (pivot table)" |
 			| ''                                        | ''            | ''            | "Processing rule"     | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Check rule"      | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   | "VA - Checking access settings (no)"                   |
 			| ''                                        | ''            | ''            | "Generation method"   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   | 'On правилу обработки'                                   |
 		
 	* Закрываем отчет НЕ сохраняя вариант
-		Когда открылось окно "Setting обработки документов"
-		И Я закрываю окно "Setting обработки документов"
+		Когда открылось окно "Document processing setting"
+		И Я закрываю окно "Document processing setting"
 		Тогда открылось окно "1C:Enterprise"
 		И я нажимаю на кнопку с именем 'Button1'
 

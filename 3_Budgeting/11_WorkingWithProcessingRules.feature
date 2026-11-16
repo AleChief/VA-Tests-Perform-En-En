@@ -140,11 +140,11 @@
 		Если '$$IsERPCPM$$' Тогда
 			И в таблице 'FieldsTreeDB' я перехожу к строке:
 				| "Field"     |
-				| 'Kind цены' |
+				| 'Price type' |
 			И я нажимаю на кнопку с именем 'AddConditionItem'
 			И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
 			| "Field"       |
-			| '[Kind цены]' |
+			| '[Price type]' |
 		И в таблице 'TreeOfFilterParametersDB' я выбираю текущую строку
 		И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Fixed value"
 		И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'DefiningMethodClarification' я выбираю по строке "VA - Products"
@@ -649,7 +649,7 @@
 				|''|
 				|'ClearAll();'|
 				|''|
-				|'For Каждого StringValue2 From tIndicatorsValues_Count Cycle'|
+				|'For Each LineValue In tIndicatorValues_Count Do'|
 				|''|
 				|' PeriodOffset = RelativePeriod(StringValue2.ReportPeriod, 1);'|
 				|' If DateBelongsToPeriod(PeriodOffset.StartDate,ObjectOfARAP.ArrayOfPeriods.Get(1)) OR'|
@@ -665,7 +665,7 @@
 				|'  '|
 				|'EndOfTheCycle;'|
 				|''|
-				|'For Каждого StringValue2 From tIndicatorsValues_Price Cycle'|
+				|'For Each LineValue In tIndicatorValues_Price Do'|
 				|''|
 				|' If NOT ValueIsFilled(StringValue2.ReportPeriod) Then'|
 				|'  Continue;'|

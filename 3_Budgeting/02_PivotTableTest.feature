@@ -130,7 +130,7 @@
 Сценарий: 02.03 Создаем новый сценарий для индексации
 
 	И Я создаю сценарий с именем "VA - Script for indexing"
-	И Я для сценария "VA - Script for indexing" на закладке 'Budgeting' для реквизита 'ScenarioРаспределения' устанавливаю значение "True"
+	И Я для сценария "VA - Script for indexing" на закладке 'Budgeting' для реквизита 'AllocationScenario' устанавливаю значение "True"
 
 	* Документ управления перидом
 		И В командном интерфейсе я выбираю "Budgeting, reporting, and analysis" "Reporting period management"
@@ -353,7 +353,7 @@
 		Когда открылось окно '$WindowTitle$'
 		И Я ввожу комментарий "First cell" в ячейку 'R6C2'
 		Тогда открылось окно '$WindowTitle$'
-		И Я ввожу комментарий "Последняя ячейка" в ячейку 'R10C5'
+		И Я ввожу комментарий "Last cell" в ячейку 'R10C5'
 		Тогда открылось окно '$WindowTitle$'
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R6C2'
 		И я выбираю пункт контекстного меню с именем 'SpreadsheetFieldTemlateContextMenuInsertNote' на элементе формы с именем 'SpreadsheetFieldTemlate'
@@ -452,8 +452,8 @@
 		Тогда открылось окно "Save in Excel"
 		И я меняю значение переключателя с именем 'SavingOption' на "Create new file"				
 		И в поле с именем 'Directory' я ввожу текст "$DirectoryПроекта$\3_Budgeting\Templates\02"
-		И в поле с именем 'ExistingFile' я ввожу текст "ВА_КонтекстныйПересчетИсходный"
-		И в поле с именем 'SheetName' я ввожу текст "Лист_123"				
+		И в поле с именем 'ExistingFile' я ввожу текст "VA_ContextRecalculateInitial"
+		И в поле с именем 'SheetName' я ввожу текст "Sheet_123"				
 		И я нажимаю на кнопку с именем 'Save'
 		Затем я жду, что в сообщениях пользователю будет подстрока "saved successfully" в течение 60 секунд		
 		И я очищаю окно сообщений пользователю	
@@ -484,7 +484,7 @@
 		Тогда открылось окно "Import from Excel"
 		И в поле с именем 'ExistingFile' я ввожу текст "$DirectoryПроекта$\3_Budgeting\Templates\02\VA_КонтекстныйRecalculateИсходный.xlsx"
 		И я жду, что поле с именем 'SheetName' перестанет быть пустым в течение 30 секунд
-		Тогда элемент формы с именем 'SheetName' стал равен "Лист_123"
+		Тогда элемент формы с именем 'SheetName' стал равен "Sheet_123"
 		И я нажимаю на кнопку с именем 'Load'								
 		И я жду открытия формы '$WindowTitle$' в течение 30 секунд
 		Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
@@ -595,7 +595,7 @@
 		И в табличном документе 'SpreadsheetFieldTemlate' я перехожу к ячейке 'R5C1'
 		И в табличном документе 'SpreadsheetFieldTemlate' я делаю двойной клик на текущей ячейке
 		Когда открылось окно "Drill down indicators: *"
-		* Очищаем поле "Строка"
+		* Очищаем поле "String"
 			И в таблице 'IndicatorsDrilldown' я перехожу к строке:
 				| "Product range"                                         |
 				| "4C:Enterprise 8.3 CORP. Server License (x86-64)" |

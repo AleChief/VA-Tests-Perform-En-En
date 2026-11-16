@@ -125,44 +125,44 @@
 					И из выпадающего списка с именем 'DBAccumulationRegister' я выбираю по строке 'BudgetsOperations'
 					И у элемента с именем 'DBRegisterResource' я жду значения "Amount" в течение 3 секунд
 					И у элемента с именем 'TotalKindDB' я жду значения "Turnover" в течение 3 секунд	
-					И из выпадающего списка с именем 'DBRegisterResource' я выбираю точное значение "Amount исполнено"										
+					И из выпадающего списка с именем 'DBRegisterResource' я выбираю точное значение "Amount executed"										
 					Когда открылось окно "Data source (create) *"
-					И в таблице "TreeFieldsБД" я разворачиваю текущую строку
-					И в таблице "TreeFieldsБД" я разворачиваю строку:
+					И в таблице "FieldsTreeDB" я разворачиваю текущую строку
+					И в таблице "FieldsTreeDB" я разворачиваю строку:
 						| 'Field'                      |
-						| 'Dimension статей бюджетов' |
-					И в таблице "TreeFieldsБД" я разворачиваю строку:
+						| 'Dimension of budget items' |
+					И в таблице "FieldsTreeDB" я разворачиваю строку:
 						| 'Field'           |
-						| 'AssetRef бюджета' |
-					И в таблице "TreeFieldsБД" я перехожу к строке:
+						| 'Budget item' |
+					И в таблице "FieldsTreeDB" я перехожу к строке:
 						| 'Field'                                     |
 						| 'Catalog.CashFlowReportItems' |
-					И я выбираю пункт контекстного меню с именем 'ButtonMapDimensions' на элементе формы с именем "TableСоответствия"
-					Тогда таблица "TableСоответствия" стала равной:
-						| 'Dimension приемника'     | 'Method заполнения' | 'Name колонки'                                  | 'Kind аналитики' |
+					И я выбираю пункт контекстного меню с именем 'ButtonMapDimensions' на элементе формы с именем "ComplianceTable"
+					Тогда таблица "ComplianceTable" стала равной:
+						| 'Destination dimension'     | 'Filling method' | 'Column name'                                  | 'Dimension type' |
 						| 'Dimension 1: ARTICLES__ Cash_Flow' | 'Field источника'    | '[Dimension статей бюджетов].[AssetRef бюджета]' | 'ARTICLES__ Cash_Flow'    |																									
 				Иначе
 					И из выпадающего списка с именем 'DBAccumulationRegister' я выбираю по строке 'CashFlowCPM'
 					И у элемента с именем 'DBRegisterResource' я жду значения "Amount" в течение 3 секунд
 					И у элемента с именем 'TotalKindDB' я жду значения "Turnover" в течение 3 секунд					
 					Тогда таблица 'ComplianceTable' стала равной:
-						| 'Dimension приемника'     | 'Method заполнения' | 'Name колонки'                        | 'Kind аналитики' |
-						| "Dimension 1: Cash flow items" | 'Field источника'    | '[AssetRef движения денежных средств]' | "Cash flow items"    |							
+						| 'Destination dimension'     | 'Filling method' | 'Column name'                        | 'Dimension type' |
+						| "Dimension 1: Cash flow items" | 'Source field'    | '[Cash flow item]' | "Cash flow items"    |							
 			* Заполняем отборы		
 				И я перехожу к закладке с именем 'FiltersPage'
 				Если '$$IsERPCPM$$' Тогда
-					И в таблице "TreeFieldsБД" я разворачиваю строку:
+					И в таблице "FieldsTreeDB" я разворачиваю строку:
 						| 'Field'                |
-						| 'Dimension структуры' |
-					И в таблице "TreeFieldsБД" я перехожу к строке:
+						| 'Dimension of structure' |
+					И в таблице "FieldsTreeDB" я перехожу к строке:
 						| 'Field'        |
 						| 'Organization' |
 					И я нажимаю на кнопку с именем 'AddConditionItem'
-					И в таблице "TreeПараметровFilterБД" я перехожу к строке:
+					И в таблице "TreeOfFilterParametersDB" я перехожу к строке:
 						| 'Field'                                |
-						| '[Dimension структуры].[Organization]' |
-					И в таблице "TreeПараметровFilterБД" из выпадающего списка с именем "MethodВычисленияПараметра" я выбираю точное значение 'Organization Report_'
-					И в таблице "TreeПараметровFilterБД" я завершаю редактирование строки											
+						| '[Structure dimension].[Organization]' |
+					И в таблице "TreeOfFilterParametersDB" из выпадающего списка с именем "ParameterCalculationMethod" я выбираю точное значение 'Organization Report_'
+					И в таблице "TreeOfFilterParametersDB" я завершаю редактирование строки											
 				Иначе
 					И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
 						| 'Filter'         | 'Field'         |
@@ -284,58 +284,58 @@
 					| 'Dimensions регистра(*)' |
 					| 'Attributes регистра(*)' |
 				Если '$$IsERPCPM$$' Тогда
-					И из выпадающего списка с именем 'DBRegisterResource' я выбираю точное значение "Amount исполнено"										
+					И из выпадающего списка с именем 'DBRegisterResource' я выбираю точное значение "Amount executed"										
 					Когда открылось окно "Data source (create) *"
-					И в таблице "TreeFieldsБД" я разворачиваю строку:
+					И в таблице "FieldsTreeDB" я разворачиваю строку:
 						| 'Field'                   |
 						| 'Dimensions регистра(12)' |
-					И в таблице "TreeFieldsБД" я разворачиваю строку:
+					И в таблице "FieldsTreeDB" я разворачиваю строку:
 						| 'Field'                      |
-						| 'Dimension статей бюджетов' |
-					И в таблице "TreeFieldsБД" я разворачиваю строку:
+						| 'Dimension of budget items' |
+					И в таблице "FieldsTreeDB" я разворачиваю строку:
 						| 'Field'           |
-						| 'AssetRef бюджета' |
-					И в таблице "TreeFieldsБД" я перехожу к строке:
+						| 'Budget item' |
+					И в таблице "FieldsTreeDB" я перехожу к строке:
 						| 'Field'                                     |
 						| 'Catalog.CashFlowReportItems' |
-					И я выбираю пункт контекстного меню с именем 'ButtonMapDimensions' на элементе формы с именем "TableСоответствия"
-					Тогда таблица "TableСоответствия" стала равной:
-						| 'Dimension приемника'     | 'Method заполнения' | 'Name колонки'                                  | 'Kind аналитики' |
-						| 'Dimension 1: ARTICLES__ Cash_Flow' | 'Field источника'    | '[Dimension статей бюджетов].[AssetRef бюджета]' | 'ARTICLES__ Cash_Flow'    |
+					И я выбираю пункт контекстного меню с именем 'ButtonMapDimensions' на элементе формы с именем "ComplianceTable"
+					Тогда таблица "ComplianceTable" стала равной:
+						| 'Destination dimension'     | 'Filling method' | 'Column name'                                  | 'Dimension type' |
+						| 'Dimension 1: ARTICLES__ Cash_Flow' | 'Source field'    | '[Budget items dimension].[Budget item]' | 'ARTICLES__ Cash_Flow'    |
 				Иначе
 					Тогда таблица 'ComplianceTable' стала равной:
-						| 'Dimension приемника'     | 'Method заполнения' | 'Name колонки'                        | 'Kind аналитики' |
-						| "Dimension 1: Cash flow items" | 'Field источника'    | '[AssetRef движения денежных средств]' | "Cash flow items"    |
+						| 'Destination dimension'     | 'Filling method' | 'Column name'                        | 'Dimension type' |
+						| "Dimension 1: Cash flow items" | 'Source field'    | '[Cash flow item]' | "Cash flow items"    |
 
 			* Добавляем отборы
 				И я перехожу к закладке с именем 'FiltersPage'	
 				Когда открылось окно "Data source (create) *"
 				И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
 					| 'Filter'                      | 'Field'                      |
-					| 'Date beginning периода Report_' | 'Date beginning отбора data_' |
+					| 'Report period start date' | 'Data selection start date' |
 				И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Start date of report period with a shift"
 				И в таблице 'TreeOfFilterParametersDB' в поле с именем 'DefiningMethodClarification' я ввожу текст '-1'
 				И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки
 				И в таблице 'TreeOfFilterParametersDB' я перехожу к строке:
 					| 'Filter'                     | 'Field'                         |
-					| 'Date end периода Report_' | 'Date окончания отбора data_' |
+					| 'Report period end date' | 'Data selection end date' |
 				И в таблице 'TreeOfFilterParametersDB' из выпадающего списка с именем 'ParameterCalculationMethod' я выбираю точное значение "Reporting period end date with a shift"
 				И в таблице 'TreeOfFilterParametersDB' в поле с именем 'DefiningMethodClarification' я ввожу текст '-1'
 				И в таблице 'TreeOfFilterParametersDB' я завершаю редактирование строки	
 				Если '$$IsERPCPM$$' Тогда
 					* Добавляем поля отбора
-						И в таблице "TreeFieldsБД" я разворачиваю строку:
+						И в таблице "FieldsTreeDB" я разворачиваю строку:
 							| 'Field'                |
-							| 'Dimension структуры' |
-						И в таблице "TreeFieldsБД" я перехожу к строке:
+							| 'Dimension of structure' |
+						И в таблице "FieldsTreeDB" я перехожу к строке:
 							| 'Field'        |
 							| 'Organization' |
 						И я нажимаю на кнопку с именем 'AddConditionItem'
-						И в таблице "TreeПараметровFilterБД" я перехожу к строке:
+						И в таблице "TreeOfFilterParametersDB" я перехожу к строке:
 							| 'Field'                                |
-							| '[Dimension структуры].[Organization]' |
-						И в таблице "TreeПараметровFilterБД" из выпадающего списка с именем "MethodВычисленияПараметра" я выбираю точное значение 'Organization Report_'
-						И в таблице "TreeПараметровFilterБД" я завершаю редактирование строки	
+							| '[Structure dimension].[Organization]' |
+						И в таблице "TreeOfFilterParametersDB" из выпадающего списка с именем "ParameterCalculationMethod" я выбираю точное значение 'Organization Report_'
+						И в таблице "TreeOfFilterParametersDB" я завершаю редактирование строки	
 
 				Иначе	
 					* Удаляем текущие отборы
@@ -419,14 +419,14 @@
 			Когда открылось окно "Report types and templates"
 			И в таблице "List" я перехожу к строке:
 				| 'Description'                                          |
-				| 'DimenKind - FillType From_SSLy RН (Without истории) (pivot table)' |
+				| 'VA - Filling from PH (no history) (pivot table)' |
 			И я нажимаю на кнопку с именем 'SwitchToDataDisplayMode'
 			И Открылась сводная таблица для вида отчета "VA - Filling from PH (no history)"
 			И Я устанавливаю отборы сводной таблицы: дата начала '1/1/2024', дата конца '3/31/2024', валюта 'RUB', сценарий "VA - Main scenario", организация "Mercury LLC"
 			И Я устанавливаю отбор сводной таблицы 'Project' со значением "VA - Main project"	
 			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
-				| 'DimenKind - FillType From_SSLy RН (Without истории) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
-				| 'DimenKind - FillType From_SSLy RН (Without истории) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
+				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
+				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
 				| "Cash flow items"                                            | '3,120,000'      | '16,000,000'      | '0'            |
 				| "1Software upgrade"                         | '0'              | '3,450,000'       | '0'            |
 				| "2Software implementation"                       | '2,340,000'      | '7,350,000'       | '0'            |
@@ -437,8 +437,8 @@
 			И я нажимаю на кнопку с именем 'RecalculateAccordingToRegulations'
 			И я жду открытия формы '$WindowTitle$' в течение 30 секунд
 			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
-				| 'DimenKind - FillType From_SSLy RН (Without истории) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
-				| 'DimenKind - FillType From_SSLy RН (Without истории) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
+				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
+				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
 				| "Cash flow items"                                            | '0'              | '3,120,000'       | '0'            |
 				| "2Software implementation"                       | '0'              | '2,340,000'       | '0'            |
 				| "3Software sale"                      | '0'              | '780,000'         | '0'            |
@@ -446,8 +446,8 @@
 		* Отменим транзакцию
 			И я нажимаю на кнопку с именем 'CancelAction'
 			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
-				| 'DimenKind - FillType From_SSLy RН (Without истории) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
-				| 'DimenKind - FillType From_SSLy RН (Without истории) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
+				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
+				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
 				| "Cash flow items"                                            | '3,120,000'      | '16,000,000'      | '0'            |
 				| "1Software upgrade"                         | '0'              | '3,450,000'       | '0'            |
 				| "2Software implementation"                       | '2,340,000'      | '7,350,000'       | '0'            |
@@ -460,8 +460,8 @@
 			И я нажимаю на кнопку с именем 'FormSelect'
 			И я жду открытия формы '$WindowTitle$' в течение 30 секунд
 			Тогда табличный документ 'SpreadsheetFieldTemlate' равен:
-				| 'DimenKind - FillType From_SSLy RН (Without истории) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
-				| 'DimenKind - FillType From_SSLy RН (Without истории) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
+				| 'VA - Filling from PH (no history) (pivot table)' | "January 2024" | "February 2024" | "March 2024" |
+				| 'VA - Filling from PH (no history) (pivot table)' | "Amount"          | "Amount"           | "Amount"        |
 				| "Cash flow items"                                            | '0'              | '3,120,000'       | '0'            |
 				| "2Software implementation"                       | '0'              | '2,340,000'       | '0'            |
 				| "3Software sale"                      | '0'              | '780,000'         | '0'            |
@@ -469,7 +469,7 @@
 		* Сохраняем таблицу
 			Когда открылось окно '$WindowTitle$'
 			И Я закрываю окно '$WindowTitle$'
-			Тогда открылось окно '1C:Предприятие'
+			Тогда открылось окно '1C:Enterprise'
 			И я нажимаю на кнопку с именем 'Button0'
 
 Сценарий: 05.09 Проверяем движения экземпляра отчета
