@@ -40,8 +40,10 @@ Automated test scenarios for the 1C:Perform (En) configuration
 
 1C:Perform 3.2.9.56 EN, платформа 8.3.24.1528, Vanessa Automation 1.2.043.47, файловая база (ветка `file-base-env`):
 1_MasterData — 27 из 27; 3_Budgeting — 240 сценариев, из них 230 без ошибок на стенде без Microsoft Excel;
-02 и 10 (нужен Excel) — 26 из 26 на машине с Excel. 17 у вендора помечен `@IgnoreOnCIMainBuild` и в прогоне не
-исполнялся.
+02 и 10 (нужен Excel) — 26 из 26 на машине с Excel.
+17 «Аналитические отчёты и панели» у вендора помечен `@IgnoreOnCIMainBuild` и не исполняется. Тест устарел: в
+Perform 3.2.9.56 справочник аналитических отчётов выведен из употребления («(Не использовать) Аналитические отчеты»,
+команда скрыта), аналитические панели переделаны. Нужен новый тест, правкой старый не чинится.
 
 ---
 
@@ -81,8 +83,10 @@ Vanessa Automation itself (there is no English synonym); it works on a platform 
 
 1C:Perform 3.2.9.56 EN, platform 8.3.24.1528, Vanessa Automation 1.2.043.47, file infobase (branch `file-base-env`):
 1_MasterData — 27 of 27; 3_Budgeting — 240 scenarios, 230 of them pass on a stand without Microsoft Excel;
-02 and 10 (need Excel) — 26 of 26 on a machine with Excel. 17 is tagged `@IgnoreOnCIMainBuild` by the vendor and was
-not executed.
+02 and 10 (need Excel) — 26 of 26 on a machine with Excel.
+17 "Analytical reports and dashboards" is tagged `@IgnoreOnCIMainBuild` by the vendor and is not executed. The test is
+obsolete: in Perform 3.2.9.56 the analytical reports catalog is deprecated ("(Do not use) Analytical reports", command
+hidden) and analytical dashboards were redesigned; a new test is needed, the old one cannot be fixed.
 
 ## Ветка file-base-env
 
